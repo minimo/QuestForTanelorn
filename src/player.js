@@ -1,34 +1,35 @@
 /*
  *  player.js
- *  2014/09/05
+ *  2016/12/28
  *  @auther minimo  
  *  This Program is MIT license.
  */
 
 phina.define("qft.Player", {
-    superClass: "phina.display.DisplayElement",
+    superClass: "qft.Character",
 
-    init: function() {
-        this.superInit();
+    //加速度
+    vx: 0,
+    vy: 0,
 
-        this.sprite = phina.display.Sprite("player", 32, 32)
-            .addChildTo(this)
-            .setFrameIndex(0);
+    //ジャンプ中フラグ
+    jump: false,
 
-        //当り判定設定
+    //無敵フラグ
+    muteki: false,
+
+    //経過フレーム
+    time: 0,
+
+    init: function(parentScene) {
+        this.superInit({width: 32, height: 32}, parentScene);
         this.boundingType = "rect";
-        this.width = 32;
-        this.height = 32;
 
-        this.vx = 0;
-        this.vy = 0;
-        this.jump = false;
-        this.muteki = false;
+        //表示用スプライト
+        this.sprite = phina.display.Sprite("player", 32, 32).addChildTo(this).setFrameIndex(0);
 
         this.setupAnimation();
-
         this.tweener.setUpdateType('fps');
-        this.time = 0;
     },
 
     update: function(app) {
@@ -45,6 +46,8 @@ phina.define("qft.Player", {
                 this.frameIndex = this.frame[this.index];
             }
         }
+
+        this.getCollision();
 
         //プレイヤー操作
         var ct = app.controller;
@@ -66,7 +69,7 @@ phina.define("qft.Player", {
         }
         if (ct.up || ct.jump) {
             if (!this.jump) {
-                this.vy = -20;
+                this.vy = -10;
                 this.jump = true;
             }
         }
