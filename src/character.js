@@ -58,7 +58,14 @@ phina.define("qft.Character", {
             this.y += this.vy;
             this.vx *= 0.8;
             this.vy += 0.9;
-            if (Math.abs(this.vx) < 0.1) this.vx = 0;
+            if (Math.abs(this.vx) < 0.1) {
+                this.vx = 0;
+                this.x = Math.floor(this.x);
+            }
+            if (Math.abs(this.vy) < 0.1) {
+                this.vy = 0;
+                this.y = Math.floor(this.y);
+            }
 
             this._collision[0].setPosition(this.x, this.y - 16);
             this._collision[1].setPosition(this.x + 10, this.y);
