@@ -44,17 +44,21 @@ phina.display.Sprite.prototype.setFrameIndex = function(index, width, height) {
 
 //エレメント同士の接触判定
 phina.display.DisplayElement.prototype.isHitElement = function(elm) {
+    //自分とテスト対象をグローバルへ変換
+    var p = this.globalToLocal(elm);
+    var target = phina.display.DisplayElement({width: elm.width, height: elm.height}).setPosition(p.x, p.y);
+
     if (this.boundingType == 'rect') {
         if (elm.boundingType == 'rect') {
-            return phina.collision.testRectRect(this, elm);
+            return phina.geom.Collision.testRectRect(this, target);
         } else {
-            return phina.collision.testRectCircle(this, elm);
+            return phina.geom.Collision.testRectCircle(this, target);
         }
     } else {
         if (elm.boundingType == 'rect') {
-            return phina.collision.testCiecleRect(this, elm);
+            return phina.geom.Collision.testCiecleRect(this, target);
         } else {
-            return phina.collision.testCircleCircle(this, elm);
+            return phina.geom.Collision.testCircleCircle(this, target);
         }
     }
 }

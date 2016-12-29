@@ -12,7 +12,8 @@ phina.define("qft.Assets", {
                 case "common":
                     return {
                         image: {
-                            "player":   "assets/chara01.png",
+                            "player1":   "assets/actor4.png",
+                            "player2":   "assets/actor19.png",
                         },
                     };
                 default:
