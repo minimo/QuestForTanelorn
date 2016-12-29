@@ -28,7 +28,7 @@ phina.define("qft.Application", {
             this.updateController();
         });
     },
-    //コントローラー情報の更新
+
     updateController: function() {
         var gp = this.gamepad;
         var kb = this.keyboard;

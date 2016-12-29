@@ -11,6 +11,9 @@ phina.define("qft.MainScene", {
     init: function() {
         this.superInit();
 
+        //バックグラウンド
+        this.background = phina.display.Sprite("background", 640, 480).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.5);
+
         //地形判定用レイヤー
         this.collisionLayer = phina.display.DisplayElement().addChildTo(this);
         phina.display.RectangleShape({width: 200, height: 50}).addChildTo(this.collisionLayer).setPosition(SC_W*0.5, 200);
