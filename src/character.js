@@ -68,9 +68,9 @@ phina.define("qft.Character", {
             }
 
             this._collision[0].setPosition(this.x, this.y - 16);
-            this._collision[1].setPosition(this.x + 10, this.y);
+            this._collision[1].setPosition(this.x + 10, this.y-3);
             this._collision[2].setPosition(this.x, this.y + 16);
-            this._collision[3].setPosition(this.x - 10, this.y);
+            this._collision[3].setPosition(this.x - 10, this.y-3);
             this.getCollision();
 
             if (this.y > SC_H) {
@@ -134,6 +134,7 @@ phina.define("qft.Character", {
             }
             //左側
             if (that.vx < 0 && e.hitTestElement(that._collision[3])) {
+                var res = e.hitTestElement(that._collision[3]);
                 that.x = e.x+e.width*(1-e.originX)+10;
                 that.vx = 0;
             }
