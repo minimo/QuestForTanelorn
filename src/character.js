@@ -77,31 +77,11 @@ phina.define("qft.Character", {
                 this.dead = true;
             }
 
-            //アクション変更を検知
-            if (this.nowAction != this.beforeAction) {
-                this.time = 0;
-                this.index = -1;
-                this.isAdvanceAnimation = true;
-                this.advanceTime = 6;
-                if (this.nowAction == "attack") this.advanceTime = 3;
-
-            } else {
-                //歩行アニメーションの場合は移動している時のみ進める   
-                if (this.nowAction == "walk" && this.vx == 0) {
-                    this.isAdvanceAnimation = false;
-                } else {
-                    this.isAdvanceAnimation = true;
-                }
-            }
-
             //アニメーション
             if (this.isAdvanceAnimation && this.time % this.advanceTime == 0) {
                 this.index = (this.index+1) % this.frame[this.nowAction].length;
                 if (this.frame[this.nowAction][this.index] == "stop") this.index--;
                 this.sprite.frameIndex = this.frame[this.nowAction][this.index];
-                if (this.attack && this.index == 1) {
-                    this.attack = false;
-                }
             }
 
             this.time++;

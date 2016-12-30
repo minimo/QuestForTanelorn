@@ -14,6 +14,7 @@ phina.define("qft.Assets", {
                         image: {
                             "player1":    "assets/actor4.png",
                             "player2":    "assets/actor19.png",
+                            "item":       "assets/item.png",
                             "background": "assets/pipo-bg001.jpg",
                         },
                     };
