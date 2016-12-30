@@ -36,12 +36,12 @@ phina.define("qft.Player", {
         //プレイヤー操作
         var ct = app.controller;
         if (ct.left) {
-            if (!this.isJump) this.nowAction = "walk";
+            if (!this.isJump && !this.attack) this.nowAction = "walk";
             this.sprite.scaleX = 1;
             this.vx = -5;
         }
         if (ct.right) {
-            if (!this.isJump) this.nowAction = "walk";
+            if (!this.isJump && !this.attack) this.nowAction = "walk";
             this.sprite.scaleX = -1;
             this.vx = 5;
         }
@@ -106,7 +106,7 @@ phina.define("qft.Player", {
         this.frame["walk"] = [ 3,  4,  5,  4];
         this.frame["up"] =   [ 9, 10, 11, 10];
         this.frame["down"] = [ 0,  1,  2,  1];
-        this.frame["attack"] = [ 43, 43, 44, 44, 45, 45, 45, "stop"];
+        this.frame["attack"] = [ 43, 43, 44, 44, "stop"];
         this.index = 0;
     },
 });
