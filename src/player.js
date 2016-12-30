@@ -70,7 +70,7 @@ phina.define("qft.Player", {
                 var that = this;
                 this.weapon.tweener.clear()
                     .set({rotation: 180, alpha: 1.0})
-                    .to({rotation: 360}, 4)
+                    .to({rotation: 360}, 5)
                     .fadeOut(1)
                     .call(function() {
                         that.attack = false;
@@ -84,7 +84,7 @@ phina.define("qft.Player", {
             this.index = -1;
             this.isAdvanceAnimation = true;
             this.advanceTime = 6;
-            if (this.nowAction == "attack") this.advanceTime = 3;
+            if (this.nowAction == "attack") this.advanceTime = 2;
         } else {
             //歩行アニメーションの場合は移動している時のみ進める
             if (this.nowAction == "walk" && this.vx == 0 && !ct.left && !ct.right) {
