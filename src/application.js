@@ -20,7 +20,6 @@ phina.define("qft.Application", {
         });
         this.fps = FPS;
 
-        //ゲームパッド対応
         this.gamepadManager = phina.input.GamepadManager();
         this.gamepad = this.gamepadManager.get(0);
         this.on('enterframe', function() {
