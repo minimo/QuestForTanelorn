@@ -19,6 +19,11 @@ phina.define("qft.Assets", {
 
                             "monster":    "assets/image/chara08_a3.png",
                         },
+                        sound: {
+                            "attack": "assets/sound/sen_ka_katana_sasinuku01.mp3",
+                            "damage": "assets/sound/sen_ka_katana_sasu01.mp3",
+                            "bgm":    "assets/sound/DS-ba01m.mp3",
+                        },
                     };
                 default:
                     throw "invalid assetType: " + options.assetType;
