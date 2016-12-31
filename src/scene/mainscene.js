@@ -14,14 +14,17 @@ phina.define("qft.MainScene", {
         //バックグラウンド
         this.background = phina.display.Sprite("background", 640, 480).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.5);
 
+        //マップレイヤー
+        this.mapLayer = phina.display.DisplayElement().addChildTo(this);
+
         //地形判定用レイヤー
-        this.collisionLayer = phina.display.DisplayElement().addChildTo(this);
-        phina.display.RectangleShape({width: 200, height: 50}).addChildTo(this.collisionLayer).setPosition(SC_W*0.5, 200);
+        this.collisionLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
+        phina.display.RectangleShape({width: 200, height: 10}).addChildTo(this.collisionLayer).setPosition(SC_W*0.5, 250);
         phina.display.RectangleShape({width: 150, height: 30}).addChildTo(this.collisionLayer).setPosition(SC_W*0.2, 300);
         phina.display.RectangleShape({width: 150, height: 30}).addChildTo(this.collisionLayer).setPosition(SC_W*0.8, 300);
 
         //オブジェクト管理レイヤ
-        this.objLayer = phina.display.DisplayElement().addChildTo(this);
+        this.objLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
 
         //プレイヤーキャラクタ
         this.player = qft.Player(this).addChildTo(this.objLayer).setPosition(SC_W*0.5, SC_H*0.5);
@@ -30,6 +33,12 @@ phina.define("qft.MainScene", {
     },
 
     update: function(app) {
+        if (this.time % 30 == 0) this.spawnEnemy();
+
         this.time++;
+    },
+
+    spawnEnemy: function() {
+        var e = qft.Slime(this).addChildTo(this.objLayer).setPosition(SC_W*0.5, 20);
     },
 });

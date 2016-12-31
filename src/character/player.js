@@ -10,7 +10,6 @@ phina.define("qft.Player", {
 
     init: function(parentScene) {
         this.superInit({width: 32, height: 32}, parentScene);
-        this.boundingType = "rect";
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("player1", 32, 32).addChildTo(this).setFrameIndex(0);
@@ -20,8 +19,7 @@ phina.define("qft.Player", {
             .addChildTo(this.sprite)
             .setFrameIndex(0)
             .setOrigin(1, 1)
-            .setPosition(-7, 3)
-            .setRotation(270);
+            .setPosition(-7, 3);
         this.weapon.alpha = 0;
         this.weapon.tweener.setUpdateType('fps');
 
@@ -74,15 +72,7 @@ phina.define("qft.Player", {
                 this.attack = true;
                 this.nowAction = "attack";
                 this.index = 0;
-
-                var that = this;
-                this.weapon.tweener.clear()
-                    .set({rotation: 180, alpha: 1.0})
-                    .to({rotation: 360}, 5)
-                    .fadeOut(1)
-                    .call(function() {
-                        that.attack = false;
-                    });
+                this.weaponAttack();
             }
         }
 
@@ -104,6 +94,18 @@ phina.define("qft.Player", {
     },
 
     damage: function() {
+    },
+
+    //装備武器により攻撃モーションを変える
+    weaponAttack: function() {
+        var that = this;
+        this.weapon.tweener.clear()
+            .set({rotation: 200, alpha: 1.0})
+            .to({rotation: 360}, 5)
+            .fadeOut(1)
+            .call(function() {
+                that.attack = false;
+            });
     },
 
     setupAnimation: function() {

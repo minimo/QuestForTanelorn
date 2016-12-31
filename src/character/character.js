@@ -45,6 +45,7 @@ phina.define("qft.Character", {
     init: function(options, parentScene) {
         this.superInit(options);
         this.parentScene = parentScene;
+        this.boundingType = "rect";
 
         //当り判定用（0:上 1:右 2:下 3:左 4:攻撃）
         this._collision = [];
@@ -75,6 +76,7 @@ phina.define("qft.Character", {
 
             if (this.y > SC_H) {
                 this.dead = true;
+                this.remove();
             }
 
             //アニメーション
@@ -88,6 +90,13 @@ phina.define("qft.Character", {
             this.beforeAction = this.nowAction;
 
         });
+    },
+
+    //ノックバックモーション
+    knockback: function(pow, direction) {
+        var sx = Math.cos(direction.toRad());
+        var sy = Math.sin(direction.toRad());
+        this.tweener.clear().by({x: 16*pow*sx, y: 16*pow*sy}, 20, "easeOutElastic");
     },
 
     getCollision: function() {
