@@ -27,6 +27,9 @@ phina.define("qft.Character", {
     //落下死亡フラグ
     isDrop: false,
 
+    //操作停止時間
+    stopTime: 0,
+
     //無敵時間
     mutekiTime: 0,
 
@@ -71,23 +74,15 @@ phina.define("qft.Character", {
                 this.y = Math.floor(this.y);
             }
 
+            //地形当たり判定
             this._collision[0].setPosition(this.x, this.y - 16);
-            this._collision[1].setPosition(this.x + 10, this.y-3);
+            this._collision[1].setPosition(this.x + 10, this.y - 3);
             this._collision[2].setPosition(this.x, this.y + 16);
-            this._collision[3].setPosition(this.x - 10, this.y-3);
-            this.getCollision();
+            this._collision[3].setPosition(this.x - 10, this.y - 3);
+            this.checkMapCollision();
 
-            if (!this.isDead && this.y > SC_H) {
-                this.isDead = true;
-                this.isDrop = true;
-                this.vx = 0;
-                this.vy = -10;
-                this.tweener.clear()
-                    .wait(60)
-                    .call(function(){
-                      this.remove();
-                    }.bind(this));
-            }
+            //画面外落ち
+            if (!this.isDead && this.y > SC_H) this.dropDead();
 
             //アニメーション
             if (this.isAdvanceAnimation && this.time % this.advanceTime == 0) {
@@ -96,6 +91,7 @@ phina.define("qft.Character", {
                 this.sprite.frameIndex = this.frame[this.nowAction][this.index];
             }
 
+            //無敵時間処理
             if (this.mutekiTime > 0) {
                 if (this.mutekiTime % 2 == 0) this.visible = !this.visible;
                 this.mutekiTime--;
@@ -103,9 +99,25 @@ phina.define("qft.Character", {
                 this.visible = true;
             }
 
+            //操作停止時間
+            if (this.stopTime > 0) this.stopTime--;
+
             this.time++;
             this.beforeAction = this.nowAction;
         });
+    },
+
+    //画面外落ち
+    dropDead: function() {
+        this.isDead = true;
+        this.isDrop = true;
+        this.vx = 0;
+        this.vy = -10;
+        this.tweener.clear()
+            .wait(60)
+            .call(function(){
+                this.remove();
+            }.bind(this));
     },
 
     //ノックバックモーション
@@ -118,7 +130,8 @@ phina.define("qft.Character", {
         this.vy = 0;
     },
 
-    getCollision: function() {
+    //地形当たり判定
+    checkMapCollision: function() {
         var ret = [];
         var that = this;
         this.onFloor = false;
