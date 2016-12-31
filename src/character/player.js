@@ -116,7 +116,7 @@ phina.define("qft.Player", {
         this.frame["walk"] = [ 3,  4,  5,  4];
         this.frame["up"] =   [ 9, 10, 11, 10];
         this.frame["down"] = [ 0,  1,  2,  1];
-        this.frame["attack"] = [ 43, 43, 44, 44, "stop"];
+        this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
         this.index = 0;
     },
 });

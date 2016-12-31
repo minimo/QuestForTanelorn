@@ -19,7 +19,7 @@ phina.define("qft.MainScene", {
 
         //地形判定用レイヤー
         this.collisionLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
-        phina.display.RectangleShape({width: 200, height: 10}).addChildTo(this.collisionLayer).setPosition(SC_W*0.5, 250);
+        phina.display.RectangleShape({width: 200, height: 10}).addChildTo(this.collisionLayer).setPosition(SC_W*0.5, 230);
         phina.display.RectangleShape({width: 150, height: 30}).addChildTo(this.collisionLayer).setPosition(SC_W*0.2, 300);
         phina.display.RectangleShape({width: 150, height: 30}).addChildTo(this.collisionLayer).setPosition(SC_W*0.8, 300);
 
