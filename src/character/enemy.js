@@ -9,6 +9,12 @@
 phina.define("qft.Enemy", {
     superClass: "qft.Character",
 
+    //ヒットポイント
+    hp: 1,
+
+    //防御力
+    deffence: 1,
+
     //攻撃力
     power: 1,
 
@@ -19,12 +25,12 @@ phina.define("qft.Enemy", {
         this.on('enterframe', function() {
             var pl = this.parentScene.player;
             //プレイヤー攻撃との当たり判定
-            if (pl.attack) {
-                if (this.hitTestElement(pl.attackCollision)) this.damage(pl);
+            if (pl.attack && this.hitTestElement(pl.attackCollision)) {
+                this.damage(pl);
             }
 
             //プレイヤーとの当たり判定
-            if (this.hitTestElement(pl)) {
+            if (!this.isDead && this.hitTestElement(pl)) {
                 pl.damage(this);
             }
         });
@@ -34,13 +40,26 @@ phina.define("qft.Enemy", {
         if (this.mutekiTime > 0) return false;
         var dir = 0;
         if (this.x < target.x) dir = 180;
-        this.knockback(target.power, dir);
-        this.mutekiTime = 60;
+
+        var pow = Math.floor(target.power / this.deffence);
+        this.knockback(pow, dir);
+        this.mutekiTime = 10;
+        this.hp -= pow;
+        if (this.hp < 0) {
+            this.hp = 0;
+            this.dead();
+        }
         return true;
+    },
+
+    dead: function() {
+        this.remove();
+        return;
     },
 
     //プレイヤーが見える位置にいるのか判定
     isLookPlayer: function() {
+        // TODO
         return false;
     },
 });
@@ -53,7 +72,7 @@ phina.define("qft.Slime", {
     power: 1,
 
     init: function(parentScene) {
-        this.superInit({width: 32, height: 32}, parentScene);
+        this.superInit({width: 16, height: 16}, parentScene);
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("monster", 25, 32).addChildTo(this).setFrameIndex(0);

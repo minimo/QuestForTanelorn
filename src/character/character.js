@@ -24,6 +24,9 @@ phina.define("qft.Character", {
     //死亡フラグ
     isDead: false,
 
+    //落下死亡フラグ
+    isDrop: false,
+
     //無敵時間
     mutekiTime: 0,
 
@@ -74,9 +77,16 @@ phina.define("qft.Character", {
             this._collision[3].setPosition(this.x - 10, this.y-3);
             this.getCollision();
 
-            if (this.y > SC_H) {
-                this.dead = true;
-                this.remove();
+            if (!this.isDead && this.y > SC_H) {
+                this.isDead = true;
+                this.isDrop = true;
+                this.vx = 0;
+                this.vy = -10;
+                this.tweener.clear()
+                    .wait(60)
+                    .call(function(){
+                      this.remove();
+                    }.bind(this));
             }
 
             //アニメーション
@@ -86,8 +96,14 @@ phina.define("qft.Character", {
                 this.sprite.frameIndex = this.frame[this.nowAction][this.index];
             }
 
+            if (this.mutekiTime > 0) {
+                if (this.mutekiTime % 2 == 0) this.visible = !this.visible;
+                this.mutekiTime--;
+            } else {
+                this.visible = true;
+            }
+
             this.time++;
-            if (this.mutekiTime > 0) this.mutekiTime--;
             this.beforeAction = this.nowAction;
         });
     },
@@ -96,7 +112,10 @@ phina.define("qft.Character", {
     knockback: function(pow, direction) {
         var sx = Math.cos(direction.toRadian());
         var sy = Math.sin(direction.toRadian());
-        this.tweener.clear().by({x: 16*pow*sx, y: 16*pow*sy}, 10, "easeOutElastic");
+        var back = 16+16*pow;
+        this.tweener.clear().by({x: back*sx, y: back*sy}, 10, "easeOutElastic");
+        this.vx = 0;
+        this.vy = 0;
     },
 
     getCollision: function() {

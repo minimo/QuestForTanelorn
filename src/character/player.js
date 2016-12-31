@@ -44,27 +44,28 @@ phina.define("qft.Player", {
     update: function(app) {
         //プレイヤー操作
         var ct = app.controller;
-        if (ct.left) {
-            if (!this.isJump && !this.attack) this.nowAction = "walk";
-            this.sprite.scaleX = 1;
-            this.vx = -5;
-        }
-        if (ct.right) {
-            if (!this.isJump && !this.attack) this.nowAction = "walk";
-            this.sprite.scaleX = -1;
-            this.vx = 5;
-        }
-        if (ct.up || ct.isJump) {
-            if (!this.isJump && this.onFloor) {
-                this.nowAction = "jump";
-                this.isJump = true;
-                this.vy = -11;
+        if (!this.isDead) {
+            if (ct.left) {
+                if (!this.isJump && !this.attack) this.nowAction = "walk";
+                this.sprite.scaleX = 1;
+                this.vx = -5;
+            }
+            if (ct.right) {
+                if (!this.isJump && !this.attack) this.nowAction = "walk";
+                this.sprite.scaleX = -1;
+                this.vx = 5;
+            }
+            if (ct.up || ct.isJump) {
+                if (!this.isJump && this.onFloor) {
+                    this.nowAction = "jump";
+                    this.isJump = true;
+                    this.vy = -11;
+                }
+            }
+            if (ct.down) {
+                this.throughFloor = true;
             }
         }
-        if (ct.down) {
-            this.throughFloor = true;
-        }
-
         if (!this.attack) {
             if (this.onFloor) {
                 this.nowAction = "walk";
@@ -77,6 +78,11 @@ phina.define("qft.Player", {
                 this.index = 0;
                 this.weaponAttack();
             }
+        }
+
+        if (this.isDead && this.isDrop) {
+            this.nowAction = "dead";
+            this.index = -1;
         }
 
         //アクション変更を検知
@@ -129,6 +135,7 @@ phina.define("qft.Player", {
         this.frame["up"] =   [ 9, 10, 11, 10];
         this.frame["down"] = [ 0,  1,  2,  1];
         this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
+        this.frame["dead"] = [18, 19, 20];
         this.index = 0;
     },
 });
