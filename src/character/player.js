@@ -8,8 +8,11 @@
 phina.define("qft.Player", {
     superClass: "qft.Character",
 
+    //攻撃力
+    power: 1,
+
     init: function(parentScene) {
-        this.superInit({width: 32, height: 32}, parentScene);
+        this.superInit({width: 16, height: 20}, parentScene);
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("player1", 32, 32).addChildTo(this).setFrameIndex(0);
@@ -91,9 +94,18 @@ phina.define("qft.Player", {
                 this.isAdvanceAnimation = true;
             }
         }
+
+        this.attackCollision.x = this.x - this.sprite.scaleX*16;
+        this.attackCollision.y = this.y;
     },
 
-    damage: function() {
+    damage: function(target) {
+        if (this.mutekiTime > 0) return false;
+        var dir = 0;
+        if (this.x < target.x) dir = 180;
+        this.knockback(target.power, dir);
+        this.mutekiTime = 60;
+        return true;
     },
 
     //装備武器により攻撃モーションを変える

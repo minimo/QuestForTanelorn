@@ -9,9 +9,34 @@
 phina.define("qft.Enemy", {
     superClass: "qft.Character",
 
+    //攻撃力
+    power: 1,
+
     init: function(options, parentScene) {
         this.superInit(options, parentScene);
         this.setupAnimation();
+
+        this.on('enterframe', function() {
+            var pl = this.parentScene.player;
+            //プレイヤー攻撃との当たり判定
+            if (pl.attack) {
+                if (this.hitTestElement(pl.attackCollision)) this.damage(pl);
+            }
+
+            //プレイヤーとの当たり判定
+            if (this.hitTestElement(pl)) {
+                pl.damage(this);
+            }
+        });
+    },
+
+    damage: function(target) {
+        if (this.mutekiTime > 0) return false;
+        var dir = 0;
+        if (this.x < target.x) dir = 180;
+        this.knockback(target.power, dir);
+        this.mutekiTime = 60;
+        return true;
     },
 
     //プレイヤーが見える位置にいるのか判定
@@ -23,6 +48,10 @@ phina.define("qft.Enemy", {
 //スライム
 phina.define("qft.Slime", {
     superClass: "qft.Enemy",
+
+    //攻撃力
+    power: 1,
+
     init: function(parentScene) {
         this.superInit({width: 32, height: 32}, parentScene);
 

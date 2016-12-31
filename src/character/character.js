@@ -24,8 +24,8 @@ phina.define("qft.Character", {
     //死亡フラグ
     isDead: false,
 
-    //無敵フラグ
-    isMuteki: false,
+    //無敵時間
+    mutekiTime: 0,
 
     //現在実行中アクション
     nowAction: "stand",
@@ -87,16 +87,16 @@ phina.define("qft.Character", {
             }
 
             this.time++;
+            if (this.mutekiTime > 0) this.mutekiTime--;
             this.beforeAction = this.nowAction;
-
         });
     },
 
     //ノックバックモーション
     knockback: function(pow, direction) {
-        var sx = Math.cos(direction.toRad());
-        var sy = Math.sin(direction.toRad());
-        this.tweener.clear().by({x: 16*pow*sx, y: 16*pow*sy}, 20, "easeOutElastic");
+        var sx = Math.cos(direction.toRadian());
+        var sy = Math.sin(direction.toRadian());
+        this.tweener.clear().by({x: 16*pow*sx, y: 16*pow*sy}, 10, "easeOutElastic");
     },
 
     getCollision: function() {
