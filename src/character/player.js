@@ -21,9 +21,17 @@ phina.define("qft.Player", {
             .setFrameIndex(0)
             .setOrigin(1, 1)
             .setPosition(-7, 3)
-            .setRotation(180);
+            .setRotation(270);
         this.weapon.alpha = 0;
         this.weapon.tweener.setUpdateType('fps');
+
+        //攻撃判定用
+        var that = this;
+        this.attackCollision = phina.display.DisplayElement({width: 10, height: 26});
+        this.attackCollision.update = function() {
+            this.x = that.x - that.sprite.scaleX*16;
+            this.y = that.y;
+        }
 
         this.nowAction = "walk";
         this.beforeAction = "";

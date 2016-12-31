@@ -46,7 +46,7 @@ phina.define("qft.Character", {
         this.superInit(options);
         this.parentScene = parentScene;
 
-        //地形当り判定用（0:上 1:右 2:下 3:左）
+        //当り判定用（0:上 1:右 2:下 3:左 4:攻撃）
         this._collision = [];
         this._collision[0] = phina.display.DisplayElement({width: 8, height: 3});
         this._collision[1] = phina.display.DisplayElement({width: 3, height: 8});
@@ -91,6 +91,7 @@ phina.define("qft.Character", {
     },
 
     getCollision: function() {
+        var ret = [];
         var that = this;
         this.onFloor = false;
         this.parentScene.collisionLayer.children.forEach(function(e) {
@@ -99,6 +100,7 @@ phina.define("qft.Character", {
             if (that.vy < 0 && e.hitTestElement(that._collision[0])) {
                 that.y = e.y+e.height*(1-e.originY)+16;
                 that.vy = 1;
+                ret[0] = e;
             }
             //下側
             if (that.vy > 0 && e.hitTestElement(that._collision[2])) {
@@ -106,19 +108,23 @@ phina.define("qft.Character", {
                 that.vy = 0;
                 that.isJump = false;
                 that.onFloor = true;
+                ret[2] = e;
             }
             //右側
             if (that.vx > 0 && e.hitTestElement(that._collision[1])) {
                 that.x = e.x-e.width*e.originX-10;
                 that.vx = 0;
+                ret[1] = e;
             }
             //左側
             if (that.vx < 0 && e.hitTestElement(that._collision[3])) {
                 var res = e.hitTestElement(that._collision[3]);
                 that.x = e.x+e.width*(1-e.originX)+10;
                 that.vx = 0;
+                ret[3] = e;
             }
         });
+        return ret;
     },
 
     setupAnimation: function() {
