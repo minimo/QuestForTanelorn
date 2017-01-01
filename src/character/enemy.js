@@ -77,10 +77,23 @@ phina.define("qft.Slime", {
         //表示用スプライト
         this.sprite = phina.display.Sprite("monster", 25, 32).addChildTo(this).setFrameIndex(0);
         this.advanceTime = 10;
+
+        this.dir = 0;
     },
 
     update: function() {
-        this.x -= 2;
+        if (this.checkMapCollision2(this.x, this.y+20)) {
+            if (this.checkMapCollision2(this.x+5, this.y+20) == null) {
+                this.dir = 0;
+            } else if (this.checkMapCollision2(this.x-5, this.y+20) == null) {
+                this.dir = 90;
+            }
+            if (this.dir == 0) {
+                this.vx = -2;
+            } else {
+                this.vx = 2;
+            }
+        }
     },
 
     setupAnimation: function() {
