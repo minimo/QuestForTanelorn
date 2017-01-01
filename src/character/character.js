@@ -171,12 +171,12 @@ phina.define("qft.Character", {
     checkMapCollision2: function(x, y) {
         x = x || this.x;
         y = y || this.y;
-        var ret = [];
+        var ret = null;
         var that = this;
         this.parentScene.collisionLayer.children.forEach(function(e) {
-            if (e.hitTest(x, y)) return e;
+            if (e.hitTest(x, y)) ret = e;
         });
-        return null;
+        return ret;
     },
 
     setupAnimation: function() {
