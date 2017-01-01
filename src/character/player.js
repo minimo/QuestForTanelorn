@@ -22,7 +22,7 @@ phina.define("qft.Player", {
             .addChildTo(this.sprite)
             .setFrameIndex(0)
             .setOrigin(1, 1)
-            .setPosition(-7, 3);
+            .setPosition(-3, 3);
         this.weapon.alpha = 0;
         this.weapon.tweener.setUpdateType('fps');
 
@@ -75,14 +75,13 @@ phina.define("qft.Player", {
             if (ct.attack) {
                 this.attack = true;
                 this.nowAction = "attack";
-                this.index = 0;
+                this.index = -1;
                 this.weaponAttack();
             }
         }
 
         if (this.isDead && this.isDrop) {
             this.nowAction = "dead";
-            this.index = -1;
         }
 
         //アクション変更を検知
@@ -111,6 +110,7 @@ phina.define("qft.Player", {
         if (this.x < target.x) dir = 180;
         this.knockback(target.power, dir);
         this.mutekiTime = 60;
+        this.nowAction = "damage";
         return true;
     },
 
@@ -135,6 +135,7 @@ phina.define("qft.Player", {
         this.frame["up"] =   [ 9, 10, 11, 10];
         this.frame["down"] = [ 0,  1,  2,  1];
         this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
+        this.frame["damage"] = [ 18, 19, 20, "stop"];
         this.frame["dead"] = [18, 19, 20];
         this.index = 0;
     },
