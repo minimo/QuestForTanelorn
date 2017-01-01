@@ -14,7 +14,7 @@ phina.define("qft.SceneFlow", {
             startLabel: "load",
             scenes: [{
                 label: "load",
-                className: "phina.game.LoadingScene",
+                className: "qft.LoadingScene",
                 arguments: {
                     assets: qft.Assets.get({assetType: "common"})
                 },
