@@ -159,13 +159,24 @@ phina.define("qft.Character", {
             }
             //左側
             if (that.vx < 0 && e.hitTestElement(that._collision[3])) {
-                var res = e.hitTestElement(that._collision[3]);
                 that.x = e.x+e.width*(1-e.originX)+10;
                 that.vx = 0;
                 ret[3] = e;
             }
         });
         return ret;
+    },
+
+    //地形当たり判定（特定地点チェックのみ）
+    checkMapCollision2: function(x, y) {
+        x = x || this.x;
+        y = y || this.y;
+        var ret = [];
+        var that = this;
+        this.parentScene.collisionLayer.children.forEach(function(e) {
+            if (e.hitTest(x, y)) return e;
+        });
+        return null;
     },
 
     setupAnimation: function() {
