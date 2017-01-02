@@ -37,7 +37,7 @@ phina.define("qft.MainScene", {
     },
 
     update: function(app) {
-        if (this.time % 30 == 0) this.spawnEnemy();
+        if (this.time == 0) this.spawnEnemy();
         this.mapLayer.x = SC_W*0.5-this.player.x;
 //        if (this.mapLayer.x > 0) this.mapLayer.x = 0;
         this.time++;
@@ -65,6 +65,11 @@ phina.define("qft.MainScene", {
             var c = phina.display.DisplayElement({width: e.width, height: e.height})
                 .addChildTo(this.collisionLayer)
                 .setPosition(e.x+e.width/2, e.y+e.height/2);
+/*
+            phina.display.RectangleShape({width: e.width, height: e.height})
+                .addChildTo(this.collisionLayer)
+                .setPosition(e.x+e.width/2, e.y+e.height/2);
+*/
         }.bind(this));
     },
 

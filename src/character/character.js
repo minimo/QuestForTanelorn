@@ -172,7 +172,6 @@ phina.define("qft.Character", {
         x = x || this.x;
         y = y || this.y;
         var ret = null;
-        var that = this;
         this.parentScene.collisionLayer.children.forEach(function(e) {
             if (e.hitTest(x, y)) ret = e;
         });
