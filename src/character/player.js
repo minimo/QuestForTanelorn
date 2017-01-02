@@ -44,7 +44,7 @@ phina.define("qft.Player", {
     update: function(app) {
         //プレイヤー操作
         var ct = app.controller;
-        if (!this.isDead) {
+        if (!this.isDead && this.stopTime == 0) {
             if (ct.left) {
                 if (!this.isJump && !this.attack) this.nowAction = "walk";
                 this.sprite.scaleX = 1;
@@ -68,11 +68,11 @@ phina.define("qft.Player", {
         }
         if (!this.attack) {
             if (this.onFloor) {
-                this.nowAction = "walk";
+                if (this.nowAction != "damage") this.nowAction = "walk";
             } else {
                 this.nowAction = "jump";
             }
-            if (ct.attack) {
+            if (ct.attack && this.stopTime == 0) {
                 this.attack = true;
                 this.nowAction = "attack";
                 this.index = -1;
@@ -110,7 +110,9 @@ phina.define("qft.Player", {
         if (this.x < target.x) dir = 180;
         this.knockback(target.power, dir);
         this.mutekiTime = 60;
-        this.nowAction = "damage";
+        this.stopTime = 15;
+        if (this.nowAction != "jump") this.nowAction = "damage";
+
         return true;
     },
 
@@ -135,7 +137,7 @@ phina.define("qft.Player", {
         this.frame["up"] =   [ 9, 10, 11, 10];
         this.frame["down"] = [ 0,  1,  2,  1];
         this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
-        this.frame["damage"] = [ 18, 19, 20, "stop"];
+        this.frame["damage"] = [ 18, 19, 20];
         this.frame["dead"] = [18, 19, 20];
         this.index = 0;
     },
