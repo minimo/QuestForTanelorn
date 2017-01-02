@@ -8,6 +8,9 @@
 phina.define("qft.MainScene", {
     superClass: "phina.display.DisplayScene",
 
+    //マップ情報
+    stageNumber: 1,
+
     init: function() {
         this.superInit();
 
@@ -20,11 +23,7 @@ phina.define("qft.MainScene", {
 
         //地形判定用レイヤー
         this.collisionLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
-/*
-        phina.display.RectangleShape({width: 200, height: 10}).addChildTo(this.collisionLayer).setPosition(SC_W*0.5, 230);
-        phina.display.RectangleShape({width: 100, height: 30}).addChildTo(this.collisionLayer).setPosition(SC_W*0.2, 300);
-        phina.display.RectangleShape({width: 150, height: 30}).addChildTo(this.collisionLayer).setPosition(SC_W*0.8, 300);
-*/
+
         //オブジェクト管理レイヤ
         this.objLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
 
@@ -39,6 +38,8 @@ phina.define("qft.MainScene", {
 
     update: function(app) {
         if (this.time % 30 == 0) this.spawnEnemy();
+        this.mapLayer.x = SC_W*0.5-this.player.x;
+//        if (this.mapLayer.x > 0) this.mapLayer.x = 0;
         this.time++;
     },
 
@@ -48,13 +49,37 @@ phina.define("qft.MainScene", {
 
     setupStageMap: function(stageNumber) {
         stageNumber = stageNumber || 1;
+
+        //登録済みマップの消去
+        this.clearMap();
+
+        //マップ情報取得
         var tmx = phina.asset.AssetManager.get('tmx', "stage"+stageNumber);
+
+        //マップ画像取得
         this.map = phina.display.Sprite(tmx.image).addChildTo(this.mapImageLayer).setOrigin(0, 0);
+
+        //マップ当たり判定取得
         var objects = tmx.getObjectGroup("collision").objects;
         objects.forEach(function(e) {
             var c = phina.display.DisplayElement({width: e.width, height: e.height})
                 .addChildTo(this.collisionLayer)
                 .setPosition(e.x+e.width/2, e.y+e.height/2);
         }.bind(this));
+    },
+
+    //マップ情報の消去
+    clearMap: function() {
+        //マップ画像の消去
+        if (this.map) {
+            this.map.remove();
+            this.map = null;
+        }
+        //当たり判定、オブジェクトの全消去
+        this.collisionLayer.removeChildren();
+        this.objLayer.removeChildren();
+
+        //プレイヤーの再追加
+        this.player.addChildTo(this.objLayer);
     },
 });
