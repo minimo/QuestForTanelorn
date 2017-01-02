@@ -24,6 +24,9 @@ phina.define("qft.Assets", {
                             "damage": "assets/sound/sen_ka_katana_sasu01.mp3",
                             "bgm":    "assets/sound/DS-ba01m.mp3",
                         },
+                        tmx: {
+                            "stage1": "assets/map/stage1.tmx",
+                        },
                     };
                 default:
                     throw "invalid assetType: " + options.assetType;
