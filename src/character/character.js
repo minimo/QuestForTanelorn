@@ -63,7 +63,7 @@ phina.define("qft.Character", {
         this.on('enterframe', function(e) {
             this.x += this.vx;
             this.y += this.vy;
-            this.vx *= 0.8;
+            this.vx *= 0.5;
             this.vy += 0.9;
             if (Math.abs(this.vx) < 0.1) {
                 this.vx = 0;

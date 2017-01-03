@@ -62,6 +62,13 @@ phina.define("qft.Enemy", {
         // TODO
         return false;
     },
+
+    //プレイヤーからの直線距離
+    getDistancePlayer: function() {
+        var x = this.x-this.parentScene.player.x;
+        var y = this.y-this.parentScene.player.y;
+        return Math.sqrt(x*x+y*y);
+    },
 });
 
 //スライム
@@ -82,12 +89,24 @@ phina.define("qft.Slime", {
     },
 
     update: function() {
-        if (this.checkMapCollision2(this.x, this.y+20, 5, 5)) {
+        if (this.onFloor) {
             if (this.checkMapCollision2(this.x+5, this.y+20, 5, 5) == null) {
                 this.dir = 0;
             } else if (this.checkMapCollision2(this.x-5, this.y+20, 5, 5) == null) {
                 this.dir = 90;
             }
+            if (!this.isJump && this.getDistancePlayer() < 64) {
+                this.isJump = true;
+                this.vy = -8;
+                var pl = this.parentScene.player;
+                if (this.x > pl.x) {
+                    this.dir = 0;
+                } else {
+                    this.dir = 90;
+                }
+            }
+        }
+        if (this.onFloor || this.isJump) {
             if (this.dir == 0) {
                 this.vx = -2;
             } else {
