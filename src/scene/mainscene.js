@@ -65,11 +65,6 @@ phina.define("qft.MainScene", {
             var c = phina.display.DisplayElement({width: e.width, height: e.height})
                 .addChildTo(this.collisionLayer)
                 .setPosition(e.x+e.width/2, e.y+e.height/2);
-/*
-            phina.display.RectangleShape({width: e.width, height: e.height})
-                .addChildTo(this.collisionLayer)
-                .setPosition(e.x+e.width/2, e.y+e.height/2);
-*/
         }.bind(this));
     },
 

@@ -168,12 +168,15 @@ phina.define("qft.Character", {
     },
 
     //地形当たり判定（特定地点チェックのみ）
-    checkMapCollision2: function(x, y) {
+    checkMapCollision2: function(x, y, width, height) {
         x = x || this.x;
         y = y || this.y;
+        width = width || this.width;
+        height = height || this.height;
+        var c = phina.display.DisplayElement({width: width, height: height}).setPosition(x, y);
         var ret = null;
         this.parentScene.collisionLayer.children.forEach(function(e) {
-            if (e.hitTest(x, y)) ret = e;
+            if (e.hitTestElement(c)) ret = e;
         });
         return ret;
     },

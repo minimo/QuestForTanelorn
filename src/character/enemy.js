@@ -82,10 +82,10 @@ phina.define("qft.Slime", {
     },
 
     update: function() {
-        if (this.checkMapCollision2(this.x, this.y+20)) {
-            if (this.checkMapCollision2(this.x+5, this.y+20) == null) {
+        if (this.checkMapCollision2(this.x, this.y+20, 5, 5)) {
+            if (this.checkMapCollision2(this.x+5, this.y+20, 5, 5) == null) {
                 this.dir = 0;
-            } else if (this.checkMapCollision2(this.x-5, this.y+20) == null) {
+            } else if (this.checkMapCollision2(this.x-5, this.y+20, 5, 5) == null) {
                 this.dir = 90;
             }
             if (this.dir == 0) {
