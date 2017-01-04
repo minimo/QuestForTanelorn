@@ -15,8 +15,8 @@ phina.define("qft.Character", {
     //ジャンプ中フラグ
     isJump: false,
 
-    //床をスルーするか
-    throughFloor: false,
+    //スルーしたフロア
+    throughFloor: null,
 
     //床上フラグ
     onFloor: false,
@@ -137,29 +137,30 @@ phina.define("qft.Character", {
         var that = this;
         this.onFloor = false;
         this.parentScene.collisionLayer.children.forEach(function(e) {
-            if (that.throughFloor || that.isDrop) return;
+            if (that.isDrop) return;
             //上側
-            if (that.vy < 0 && e.hitTestElement(that._collision[0])) {
+            if (that.vy < 0 && e != that.throughFloor && e.hitTestElement(that._collision[0])) {
                 that.y = e.y+e.height*(1-e.originY)+16;
                 that.vy = 1;
                 ret[0] = e;
             }
             //下側
-            if (that.vy > 0 && e.hitTestElement(that._collision[2])) {
+            if (that.vy > 0 && e != that.throughFloor && e.hitTestElement(that._collision[2])) {
                 that.y = e.y-e.height*e.originY-16;
                 that.vy = 0;
                 that.isJump = false;
                 that.onFloor = true;
+                that.throughFloor = null;
                 ret[2] = e;
             }
             //右側
-            if (that.vx > 0 && e.hitTestElement(that._collision[1])) {
+            if (that.vx > 0 && e != that.throughFloor && e.hitTestElement(that._collision[1])) {
                 that.x = e.x-e.width*e.originX-10;
                 that.vx = 0;
                 ret[1] = e;
             }
             //左側
-            if (that.vx < 0 && e.hitTestElement(that._collision[3])) {
+            if (that.vx < 0 && e != that.throughFloor && e.hitTestElement(that._collision[3])) {
                 that.x = e.x+e.width*(1-e.originX)+10;
                 that.vx = 0;
                 ret[3] = e;

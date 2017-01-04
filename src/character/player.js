@@ -61,8 +61,9 @@ phina.define("qft.Player", {
                     this.vy = -11;
                 }
             }
-            if (ct.down) {
-                this.throughFloor = true;
+            if (ct.down && !this.throughFloor) {
+                var floor = this.checkMapCollision2(this.x, this.y+16, 5, 5);
+                if (!floor.disableThrough) this.throughFloor = floor;
             }
         }
         if (!this.attack) {
