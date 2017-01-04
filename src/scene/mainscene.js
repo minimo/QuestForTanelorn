@@ -37,7 +37,10 @@ phina.define("qft.MainScene", {
     },
 
     update: function(app) {
-        if (this.time == 0) this.spawnEnemy();
+        if (this.time == 0) {
+            this.spawnEnemy();
+            this.spawnItem();
+        }
         this.mapLayer.x = SC_W*0.5-this.player.x;
         this.mapLayer.y = SC_H*0.5-this.player.y;
         if (this.mapLayer.y < this.map.height-SC_H) this.mapLayer.y = this.map.height-SC_H;
@@ -46,6 +49,10 @@ phina.define("qft.MainScene", {
 
     spawnEnemy: function() {
         var e = qft.Slime(this).addChildTo(this.objLayer).setPosition(SC_W*0.5, 20);
+    },
+
+    spawnItem: function() {
+        var e = qft.Item(this).addChildTo(this.objLayer).setPosition(SC_W*0.2, 20);
     },
 
     setupStageMap: function(stageNumber) {

@@ -18,6 +18,9 @@ phina.define("qft.Character", {
     //横移動減衰率
     friction: 0.5,
 
+    //反発係数
+    rebound: 0,
+
     //ジャンプ中フラグ
     isJump: false,
 
@@ -158,6 +161,12 @@ phina.define("qft.Character", {
                 that.onFloor = true;
                 that.throughFloor = null;
                 ret[2] = e;
+                if (that.rebound > 0) {
+                    that.isJump = true;
+                    that.vy = -that.vy * that.rebound;
+                } else {
+                    that.vy = 0;
+                }
             }
             //右側
             if (that.vx > 0 && e != that.throughFloor && e.hitTestElement(that._collision[1])) {
