@@ -85,6 +85,8 @@ phina.define("qft.Slime", {
         this.sprite = phina.display.Sprite("monster", 25, 32).addChildTo(this).setFrameIndex(0);
         this.advanceTime = 10;
 
+        this.setAnimation("walk");
+
         this.dir = 0;
     },
 
@@ -116,7 +118,7 @@ phina.define("qft.Slime", {
     },
 
     setupAnimation: function() {
-        this.spcialAction = false;
+        this.spcialAnimation = false;
         this.frame = [];
         this.frame["stand"] = [0, 1, 2, 1];
         this.frame["jump"] = [1, "stop"];

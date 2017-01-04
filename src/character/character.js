@@ -34,10 +34,10 @@ phina.define("qft.Character", {
     mutekiTime: 0,
 
     //現在実行中アクション
-    nowAction: "stand",
+    nowAnimation: "stand",
 
     //前フレーム実行アクション
-    beforeAction: "",
+    beforeAnimation: "",
 
     //アニメーション進行可能フラグ   
     isAdvanceAnimation: true,
@@ -86,9 +86,9 @@ phina.define("qft.Character", {
 
             //アニメーション
             if (this.isAdvanceAnimation && this.time % this.advanceTime == 0) {
-                this.index = (this.index+1) % this.frame[this.nowAction].length;
-                if (this.frame[this.nowAction][this.index] == "stop") this.index--;
-                this.sprite.frameIndex = this.frame[this.nowAction][this.index];
+                this.index = (this.index+1) % this.frame[this.nowAnimation].length;
+                if (this.frame[this.nowAnimation][this.index] == "stop") this.index--;
+                this.sprite.frameIndex = this.frame[this.nowAnimation][this.index];
             }
 
             //無敵時間処理
@@ -103,7 +103,7 @@ phina.define("qft.Character", {
             if (this.stopTime > 0) this.stopTime--;
 
             this.time++;
-            this.beforeAction = this.nowAction;
+            this.beforeAnimation = this.nowAnimation;
         });
     },
 
@@ -182,7 +182,7 @@ phina.define("qft.Character", {
     },
 
     setupAnimation: function() {
-        this.spcialAction = false;
+        this.spcialAnimation = false;
         this.frame = [];
         this.frame["stand"] = [13, 14];
         this.frame["jump"] = [0, "stop"];
@@ -191,5 +191,11 @@ phina.define("qft.Character", {
         this.frame["down"] = [0];
         this.frame["attack"] = [0, "stop"];
         this.index = 0;
+    },
+
+    setAnimation: function(animName) {
+        if (!this.frame[animName]) return;
+        this.nowAnimation = animName;
+        this.index = -1;
     },
 });

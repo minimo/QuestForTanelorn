@@ -34,8 +34,8 @@ phina.define("qft.Player", {
             this.y = that.y;
         }
 
-        this.nowAction = "walk";
-        this.beforeAction = "";
+        this.setAnimation("walk");
+        this.beforeAnimation = "";
         this.setupAnimation();
 
         this.tweener.setUpdateType('fps');
@@ -46,18 +46,18 @@ phina.define("qft.Player", {
         var ct = app.controller;
         if (!this.isDead && this.stopTime == 0) {
             if (ct.left) {
-                if (!this.isJump && !this.attack) this.nowAction = "walk";
+                if (!this.isJump && !this.attack) this.setAnimation("walk");
                 this.sprite.scaleX = 1;
                 this.vx = -5;
             }
             if (ct.right) {
-                if (!this.isJump && !this.attack) this.nowAction = "walk";
+                if (!this.isJump && !this.attack) this.setAnimation("walk");
                 this.sprite.scaleX = -1;
                 this.vx = 5;
             }
             if (ct.up || ct.isJump) {
                 if (!this.isJump && this.onFloor) {
-                    this.nowAction = "jump";
+                    this.setAnimation("jump");
                     this.isJump = true;
                     this.vy = -11;
                 }
@@ -68,32 +68,30 @@ phina.define("qft.Player", {
         }
         if (!this.attack) {
             if (this.onFloor) {
-                if (this.nowAction != "damage") this.nowAction = "walk";
+                if (this.nowAnimation != "damage") this.nowAnimation = "walk";
             } else {
-                this.nowAction = "jump";
+                this.setAnimation("jump");
             }
             if (ct.attack && this.stopTime == 0) {
                 this.attack = true;
-                this.nowAction = "attack";
-                this.index = -1;
+                this.setAnimation("attack");
                 this.weaponAttack();
             }
         }
 
         if (this.isDead && this.isDrop) {
-            this.nowAction = "dead";
+            this.setAnimation("dead");
         }
 
         //アクション変更を検知
-        if (this.nowAction != this.beforeAction) {
+        if (this.nowAnimation != this.beforeAnimation) {
             this.time = 0;
-            this.index = -1;
             this.isAdvanceAnimation = true;
             this.advanceTime = 6;
-            if (this.nowAction == "attack") this.advanceTime = 2;
+            if (this.nowAnimation == "attack") this.advanceTime = 2;
         } else {
             //歩行アニメーションの場合は移動している時のみ進める
-            if (this.nowAction == "walk" && this.vx == 0 && !ct.left && !ct.right) {
+            if (this.nowAnimation == "walk" && this.vx == 0 && !ct.left && !ct.right) {
                 this.isAdvanceAnimation = false;
             } else {
                 this.isAdvanceAnimation = true;
@@ -111,7 +109,7 @@ phina.define("qft.Player", {
         this.knockback(target.power, dir);
         this.mutekiTime = 60;
         this.stopTime = 15;
-        if (this.nowAction != "jump") this.nowAction = "damage";
+        if (this.nowAnimation != "jump") this.setAnimation("damage");
 
         return true;
     },
@@ -129,7 +127,7 @@ phina.define("qft.Player", {
     },
 
     setupAnimation: function() {
-        this.spcialAction = false;
+        this.spcialAnimation = false;
         this.frame = [];
         this.frame["stand"] = [13, 14];
         this.frame["jump"] = [36, "stop"];
