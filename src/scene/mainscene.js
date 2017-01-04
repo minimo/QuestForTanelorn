@@ -33,6 +33,9 @@ phina.define("qft.MainScene", {
         //マップ初期化
         this.setupStageMap(1);
 
+        app.volumeBGM = 0.2;
+        app.volumeSE = 0.2;
+
         this.time = 0;
     },
 
@@ -79,7 +82,6 @@ phina.define("qft.MainScene", {
 
         //ＢＧＭ再生
         app.playBGM("bgm"+stageNumber);
-
     },
 
     //マップ情報の消去
