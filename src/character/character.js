@@ -136,7 +136,7 @@ phina.define("qft.Character", {
         var that = this;
         this.onFloor = false;
         this.parentScene.collisionLayer.children.forEach(function(e) {
-            if (that.throughFloor) return;
+            if (that.throughFloor || that.isDrop) return;
             //上側
             if (that.vy < 0 && e.hitTestElement(that._collision[0])) {
                 that.y = e.y+e.height*(1-e.originY)+16;
