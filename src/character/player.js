@@ -99,6 +99,7 @@ phina.define("qft.Player", {
             }
         }
 
+        //攻撃判定追従
         this.attackCollision.x = this.x - this.sprite.scaleX*16;
         this.attackCollision.y = this.y;
     },
@@ -113,6 +114,37 @@ phina.define("qft.Player", {
         if (this.nowAnimation != "jump") this.setAnimation("damage");
 
         return true;
+    },
+
+    //アイテム取得
+    getItem: function(item) {
+        //武器
+        if (item.weapon) {
+            this.setWeapon(item.kind);
+            return;
+        }
+        //装備品
+        if (item.equip) {
+        }
+        //食べ物
+        if (item.food) {
+            this.hp += item.power;
+        }
+    },
+
+    //武器変更
+    setWeapon: function(kind) {
+        switch (kind) {
+            case 0:
+            case 1:
+                this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
+                break;
+            case 2:
+                this.frame["attack"] = [ 44, 43, 42, 41, "stop"];
+                break;
+            
+        }
+        this.weapon.setFrameIndex(item.kind);
     },
 
     //装備武器により攻撃モーションを変える

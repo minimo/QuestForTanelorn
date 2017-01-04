@@ -53,6 +53,7 @@ phina.define("qft.MainScene", {
 
     spawnItem: function() {
         var e = qft.Item(this).addChildTo(this.objLayer).setPosition(SC_W*0.2, 20);
+        e.kind = 2;
     },
 
     setupStageMap: function(stageNumber) {

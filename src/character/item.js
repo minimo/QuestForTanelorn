@@ -9,6 +9,15 @@
 phina.define("qft.Item", {
     superClass: "qft.Character",
 
+    //アイテム種別
+    kind: 0,
+
+    //大まかな種別フラグ
+    weapon: false,
+    equip: false,
+    food: false,
+    item: false,
+
     //反発係数
     rebound: 0.3,
 
@@ -28,7 +37,18 @@ phina.define("qft.Item", {
         //プレイヤーとの当たり判定
         var pl = this.parentScene.player;
         if (!this.isDead && this.hitTestElement(pl)) {
+            pl.getItem(this);
             this.remove();
+        }
+        this.sprite.frameIndex = this.kind;
+    },
+
+    setItemKind: function(kind) {
+        this.kind = kind;
+        if (kind < 6) {
+            this.weapon = true;
+        } else if (kind < 12) {
+            this.equip = true;
         }
     },
 });
