@@ -75,6 +75,7 @@ phina.define("qft.Player", {
                 this.attack = true;
                 this.setAnimation("attack");
                 this.weaponAttack();
+                app.playSE("attack");
             }
         }
 

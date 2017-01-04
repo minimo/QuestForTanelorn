@@ -67,6 +67,10 @@ phina.define("qft.MainScene", {
                 .addChildTo(this.collisionLayer)
                 .setPosition(e.x+e.width/2, e.y+e.height/2);
         }.bind(this));
+
+        //ＢＧＭ再生
+        app.playBGM("bgm"+stageNumber);
+
     },
 
     //マップ情報の消去

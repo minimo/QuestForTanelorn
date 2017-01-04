@@ -21,8 +21,8 @@ phina.define("qft.Assets", {
                         },
                         sound: {
                             "attack": "assets/sound/sen_ka_katana_sasinuku01.mp3",
-                            "damage": "assets/sound/sen_ka_katana_sasu01.mp3",
-                            "bgm":    "assets/sound/DS-ba01m.mp3",
+                            "hit":    "assets/sound/sen_ka_katana_sasu01.mp3",
+                            "bgm1":   "assets/sound/DS-ba01m.mp3",
                         },
                         tmx: {
                             "stage1": "assets/map/stage1.tmx",

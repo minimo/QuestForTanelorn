@@ -49,6 +49,7 @@ phina.define("qft.Enemy", {
             this.hp = 0;
             this.dead();
         }
+        app.playSE("hit");
         return true;
     },
 
