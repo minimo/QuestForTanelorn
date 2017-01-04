@@ -203,6 +203,7 @@ phina.define("qft.Character", {
 
     setAnimation: function(animName) {
         if (!this.frame[animName]) return;
+        if (animName == this.nowAnimation) return;
         this.nowAnimation = animName;
         this.index = -1;
     },
