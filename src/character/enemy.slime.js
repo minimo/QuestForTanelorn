@@ -31,7 +31,7 @@ phina.define("qft.Slime", {
             } else if (this.checkMapCollision2(this.x-5, this.y+20, 5, 5) == null) {
                 this.dir = 90;
             }
-            if (!this.isJump && this.getDistancePlayer() < 64) {
+            if (!this.isJump && this.getDistancePlayer() < this.eyesight) {
                 this.isJump = true;
                 this.vy = -8;
                 var pl = this.parentScene.player;

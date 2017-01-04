@@ -18,6 +18,9 @@ phina.define("qft.Enemy", {
     //攻撃力
     power: 1,
 
+    //視力
+    eyesight: 64,
+
     init: function(options, parentScene) {
         this.superInit(options, parentScene);
         this.setupAnimation();
