@@ -61,7 +61,7 @@ phina.define("qft.Application", {
         };
     },
 
-    _onLoadAssets(): function() {
+    _onLoadAssets: function() {
         this.soundset.readAsset();
     },
 
