@@ -12,6 +12,12 @@ phina.define("qft.Character", {
     vx: 0,
     vy: 0,
 
+    //重力影響度
+    gravity: 0.9,
+
+    //横移動減衰率
+    friction: 0.5,
+
     //ジャンプ中フラグ
     isJump: false,
 
@@ -63,8 +69,8 @@ phina.define("qft.Character", {
         this.on('enterframe', function(e) {
             this.x += this.vx;
             this.y += this.vy;
-            this.vx *= 0.5;
-            this.vy += 0.9;
+            this.vx *= this.friction;
+            this.vy += this.gravity;
             if (Math.abs(this.vx) < 0.1) {
                 this.vx = 0;
                 this.x = Math.floor(this.x);
