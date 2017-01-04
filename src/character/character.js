@@ -105,6 +105,7 @@ phina.define("qft.Character", {
             this.time++;
             this.beforeAnimation = this.nowAnimation;
         });
+        this.setupAnimation();
     },
 
     //画面外落ち

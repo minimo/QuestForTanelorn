@@ -36,7 +36,6 @@ phina.define("qft.Player", {
 
         this.setAnimation("walk");
         this.beforeAnimation = "";
-        this.setupAnimation();
 
         this.tweener.setUpdateType('fps');
     },
