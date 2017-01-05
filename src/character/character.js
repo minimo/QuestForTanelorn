@@ -54,6 +54,9 @@ phina.define("qft.Character", {
     //アニメーション間隔
     advanceTime: 6,
 
+    //地形無視
+    ignoreCollision: false,
+
     //経過フレーム
     time: 0,
 
@@ -142,6 +145,7 @@ phina.define("qft.Character", {
 
     //地形当たり判定
     checkMapCollision: function() {
+        if (this.ignoreCollision) return;
         var ret = [];
         var that = this;
         this.onFloor = false;
