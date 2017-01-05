@@ -73,7 +73,13 @@ phina.define("qft.Enemy", {
         if (this.getDistancePlayer() > this.eyesight) return false;
 
         //視野角外の場合は見えない
-        //TODO
+        if (this.viewAngle != 360) {
+            var angle = this.getPlayerAngle() + this.direction;
+            if (angle > 360) angle -= 360;
+            if (angle < 0) angle += 360;
+            var va = this.viewAngle/2;
+            if (!(-va < angle && angle < va)) return false;
+        }
 
         var result = true;
         var that = this;
