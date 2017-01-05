@@ -12,7 +12,7 @@ phina.define("qft.Character", {
     vx: 0,
     vy: 0,
 
-    //重力影響度
+    //重力加速度
     gravity: 0.9,
 
     //横移動減衰率
