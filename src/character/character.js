@@ -94,7 +94,7 @@ phina.define("qft.Character", {
             this.checkMapCollision();
 
             //画面外落ち
-            if (!this.isDead && this.y > SC_H) this.dropDead();
+            if (!this.isDead && this.y > this.parentScene.map.height) this.dropDead();
 
             //アニメーション
             if (this.isAdvanceAnimation && this.time % this.advanceTime == 0) {
