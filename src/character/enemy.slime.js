@@ -9,8 +9,20 @@
 phina.define("qft.Slime", {
     superClass: "qft.Enemy",
 
+    //ヒットポイント
+    hp: 1,
+
+    //防御力
+    deffence: 1,
+
     //攻撃力
     power: 1,
+
+    //視力
+    eyesight: 128,
+
+    //視野角
+    viewAngle: 90,
 
     init: function(parentScene) {
         this.superInit({width: 16, height: 16}, parentScene);
@@ -27,18 +39,20 @@ phina.define("qft.Slime", {
     update: function() {
         if (this.onFloor) {
             if (this.checkMapCollision2(this.x+5, this.y+20, 5, 5) == null) {
-                this.dir = 0;
+                this.direction = 0;
             } else if (this.checkMapCollision2(this.x-5, this.y+20, 5, 5) == null) {
-                this.dir = 90;
+                this.direction = 180;
             }
-            if (!this.isJump && this.getDistancePlayer() < this.eyesight) {
+            //プレイヤーが近くにいたらジャンプ攻撃
+            if (!this.isJump && this.getDistancePlayer() < 64) {
                 this.isJump = true;
                 this.vy = -8;
+                this.attack = true;
                 var pl = this.parentScene.player;
                 if (this.x > pl.x) {
                     this.dir = 0;
                 } else {
-                    this.dir = 90;
+                    this.dir = 180;
                 }
             }
         }
@@ -48,6 +62,8 @@ phina.define("qft.Slime", {
             } else {
                 this.vx = 2;
             }
+            if (this.attack) this.attack *= 3;
+
         }
     },
 
