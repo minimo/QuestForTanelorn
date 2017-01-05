@@ -17,7 +17,9 @@ phina.define("qft.Assets", {
                             "item":       "assets/image/item.png",
                             "background": "assets/image/pipo-bg001.jpg",
 
-                            "monster":    "assets/image/chara08_a3.png",
+                            "monster07_a1":    "assets/image/chara07_a1.png",
+                            "monster08_a1":    "assets/image/chara08_a1.png",
+                            "monster08_a3":    "assets/image/chara08_a3.png",
                         },
                         sound: {
                             "attack": "assets/sound/sen_ka_katana_sasinuku01.mp3",

@@ -24,25 +24,27 @@ phina.define("qft.Slime", {
     //視野角
     viewAngle: 90,
 
-    init: function(parentScene) {
+    init: function(options, parentScene) {
         this.superInit({width: 16, height: 16}, parentScene);
 
         //表示用スプライト
-        this.sprite = phina.display.Sprite("monster", 25, 32).addChildTo(this).setFrameIndex(0);
+        this.sprite = phina.display.Sprite("monster08_a3", 24, 32).addChildTo(this).setFrameIndex(0);
         this.advanceTime = 10;
 
         this.setAnimation("walk");
 
-        this.dir = 0;
+        this.direction = 0;
     },
 
     update: function() {
         if (this.onFloor) {
+            //崖っぷちで折り返す
             if (this.checkMapCollision2(this.x+5, this.y+20, 5, 5) == null) {
                 this.direction = 0;
             } else if (this.checkMapCollision2(this.x-5, this.y+20, 5, 5) == null) {
                 this.direction = 180;
             }
+
             //プレイヤーが近くにいたらジャンプ攻撃
             if (!this.isJump && this.getDistancePlayer() < 64) {
                 this.isJump = true;
@@ -57,7 +59,7 @@ phina.define("qft.Slime", {
             }
         }
         if (this.onFloor || this.isJump) {
-            if (this.dir == 0) {
+            if (this.direction == 0) {
                 this.vx = -2;
             } else {
                 this.vx = 2;

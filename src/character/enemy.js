@@ -94,8 +94,8 @@ phina.define("qft.Enemy", {
 
     //自分とプレイヤーを結ぶ直線の角度
     getPlayerAngle: function() {
-        var p1 = phina.geom.Vector2(this.x, this.p);
-        var p2 = phina.geom.Vector2(this.parentScene.player.x, this.parentScene.player.p);
+        var p1 = phina.geom.Vector2(this.x, this.y);
+        var p2 = phina.geom.Vector2(this.parentScene.player.x, this.parentScene.player.y);
         var p = p2.sub(p1);
         return p.toDegree();
     },

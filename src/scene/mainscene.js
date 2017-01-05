@@ -51,7 +51,7 @@ phina.define("qft.MainScene", {
     },
 
     spawnEnemy: function() {
-        var e = qft.Slime(this).addChildTo(this.objLayer).setPosition(SC_W*0.5, 20);
+        var e = qft.Wisp({}, this).addChildTo(this.objLayer).setPosition(SC_W*0.5, 20);
     },
 
     spawnItem: function() {
