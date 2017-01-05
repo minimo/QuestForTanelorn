@@ -21,6 +21,12 @@ phina.define("qft.Enemy", {
     //視力
     eyesight: 64,
 
+    //視野角
+    viewAngle: 90,
+
+    //進行方向（0:右 180:左）
+    direction: 0,
+
     init: function(options, parentScene) {
         this.superInit(options, parentScene);
         this.setupAnimation();
@@ -63,8 +69,20 @@ phina.define("qft.Enemy", {
 
     //プレイヤーが見える位置にいるのか判定
     isLookPlayer: function() {
-        // TODO
-        return false;
+        //視力外の場合は見えない
+        if (this.getDistancePlayer() > this.eyesight) return false;
+
+        //視野角外の場合は見えない
+        //TODO
+
+        var result = true;
+        var that = this;
+        var player = this.parentScene.player;
+        this.parentScene.collisionLayer.children.forEach(function(e) {
+            //自分とプレイヤー間に地形当り判定がある場合見えない
+            if (phina.geom.Collision.testLineRect(that, player, e)) result = false;
+        });
+        return result;
     },
 
     //プレイヤーからの直線距離
@@ -72,5 +90,13 @@ phina.define("qft.Enemy", {
         var x = this.x-this.parentScene.player.x;
         var y = this.y-this.parentScene.player.y;
         return Math.sqrt(x*x+y*y);
+    },
+
+    //自分とプレイヤーを結ぶ直線の角度
+    getPlayerAngle: function() {
+        var p1 = phina.geom.Vector2(this.x, this.p);
+        var p2 = phina.geom.Vector2(this.parentScene.player.x, this.parentScene.player.p);
+        var p = p2.sub(p1);
+        return p.toDegree();
     },
 });
