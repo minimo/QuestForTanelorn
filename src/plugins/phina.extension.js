@@ -73,3 +73,66 @@ phina.app.Element.prototype.removeChildren = function(beginIndex) {
     }
     this.children = [];
 }
+
+/**
+ * @method testLineLine
+ * @static
+ * 2つの線分が重なっているかどうかを判定します
+ * 参考：http://www5d.biglobe.ne.jp/~tomoya03/shtml/algorithm/Intersection.htm
+ *
+ * ### Example
+ *     p1 = phina.geom.Vector2(100, 100);
+ *     p2 = phina.geom.Vector2(200, 200);
+ *     p3 = phina.geom.Vector2(150, 240);
+ *     p4 = phina.geom.Vector2(200, 100);
+ * phina.geom.Collision.testLineLine(p1, p2, p3, p4); // => true
+ *
+ * @param {phina.geom.Vector2} p1 線分1の端の座標
+ * @param {phina.geom.Vector2} p2 線分1の端の座標
+ * @param {phina.geom.Vector2} p3 線分2の端の座標
+ * @param {phina.geom.Vector2} p4 線分2の端の座標
+ * @return {Boolean} 線分と線分が重なっているかどうか
+ */
+phina.geom.Collision.testLineLine = function(p1, p2, p3, p4) {
+  var a = (p1.x - p2.x) * (p3.y - p1.y) + (p1.y - p2.y) * (p1.x - p3.x);
+  var b = (p1.x - p2.x) * (p4.y - p1.y) + (p1.y - p2.y) * (p1.x - p4.x);
+  var c = (p3.x - p4.x) * (p1.y - p3.y) + (p3.y - p4.y) * (p3.x - p1.x);
+  var d = (p3.x - p4.x) * (p2.y - p3.y) + (p3.y - p4.y) * (p3.x - p2.x);
+  return a * b <= 0 && c * d <= 0;
+}
+
+//線分abと矩形の交差判定
+/**
+ * @method testLineRect
+ * @static
+ * 線分と矩形が重なっているかどうかを判定します
+ *
+ * ### Example
+ *     p1 = phina.geom.Vector2(100, 100, 30);
+ *     p2 = phina.geom.Vector2(200, 200, 30);
+ *     rect = phina.geom.Rect(150, 150, 30, 40);
+ * phina.geom.Collision.testLineRect(p1, p2, rect); // => true
+ *
+ * @param {phina.geom.Vector2} p1 線分1の端の座標
+ * @param {phina.geom.Vector2} p2 線分1の端の座標
+ * @param {phina.geom.Rect} rect 矩形領域オブジェクト
+ * @return {Boolean} 線分と矩形が重なっているかどうか
+ */
+phina.geom.Collision.testLineRect = function(p1, p2, rect) {
+    //包含判定
+    if (rect.left <= p1.x && p1.x <= rect.right && rect.top <= p1.y && p1.y <= rect.bottom ) return true;
+    if (rect.left <= p2.x && p2.x <= rect.right && rect.top <= p2.y && p2.y <= rect.bottom ) return true;
+
+    //矩形の４点
+    var r1 = phina.geom.Vector2(rect.left, rect.top);     //左上
+    var r2 = phina.geom.Vector2(rect.right, rect.top);    //右上
+    var r3 = phina.geom.Vector2(rect.right, rect.bottom); //右下
+    var r4 = phina.geom.Vector2(rect.left, rect.bottom);  //左下
+
+    //矩形の４辺をなす線分との接触判定
+    if (phina.geom.Collision.testLineLine(p1, p2, r1, r2)) return true;
+    if (phina.geom.Collision.testLineLine(p1, p2, r2, r3)) return true;
+    if (phina.geom.Collision.testLineLine(p1, p2, r3, r4)) return true;
+    if (phina.geom.Collision.testLineLine(p1, p2, r1, r4)) return true;
+    return false;
+}
