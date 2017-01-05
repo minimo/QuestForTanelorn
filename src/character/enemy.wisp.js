@@ -25,7 +25,7 @@ phina.define("qft.Wisp", {
     eyesight: 128,
 
     //視野角
-    viewAngle: 90,
+    viewAngle: 360,
 
     //地形無視
     ignoreCollision: true,
@@ -62,7 +62,7 @@ phina.define("qft.Wisp", {
     setupAnimation: function() {
         this.spcialAnimation = false;
         this.frame = [];
-        this.frame["stand"] = [48, 49, 50];
+        this.frame["stand"] = [48, 49, 50, 49];
         this.frame["jump"] = [49, "stop"];
         this.frame["walk"] = [60, 61, 62];
         this.frame["up"] =   [48, 49, 50];
