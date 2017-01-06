@@ -85,7 +85,6 @@ phina.define("phina.asset.TiledMap", {
                     for (var r = 0; r < len2; r++) {
                         var obj2 = {
                             properties: {}.$safe(this.layers[i].objects[r].properties),
-                            executed: false,
                         }.$safe(this.layers[i].objects[r]);
                         obj.objects[r] = obj2;
                     }
@@ -102,6 +101,7 @@ phina.define("phina.asset.TiledMap", {
         var map = data.getElementsByTagName('map')[0];
         var attr = this._attrToJSON(map);
         this.$extend(attr);
+        this.properties = this._propertiesToJSON(map);
 
         //タイルセット取得
         this.tilesets = this._parseTilesets(data);
@@ -291,10 +291,14 @@ phina.define("phina.asset.TiledMap", {
                 //propertyにtype指定があったら変換
                 var type = p.getAttribute('type');
                 var value = p.getAttribute('value');
+                if (!value) value = p.textContent;
                 if (type == "int") {
                     obj[p.getAttribute('name')] = parseInt(value, 10);
                 } else if (type == "float") {
                     obj[p.getAttribute('name')] = parseFloat(value);
+                } else if (type == "bool" ) {
+                    if (value == "true") obj[p.getAttribute('name')] = true;
+                    else obj[p.getAttribute('name')] = false;
                 } else {
                     obj[p.getAttribute('name')] = value;
                 }
@@ -373,6 +377,7 @@ phina.define("phina.asset.TiledMap", {
 
                     var attr = this._attrToJSON(layer);
                     l.$extend(attr);
+                    l.properties = this._propertiesToJSON(layer);
 
                     data.push(l);
                     break;
@@ -390,6 +395,7 @@ phina.define("phina.asset.TiledMap", {
                         d.properties = this._propertiesToJSON(elm);
                         l.objects.push(d);
                     }.bind(this));
+                    l.properties = this._propertiesToJSON(layer);
 
                     data.push(l);
                     break;
