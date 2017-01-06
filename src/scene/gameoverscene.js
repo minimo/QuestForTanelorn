@@ -41,7 +41,7 @@ phina.define("qft.GameOverScene", {
             var pt = phina.display.Sprite("particle", 16, 16)
                 .setFrameIndex(48)
                 .setPosition(x, SC_H*0.5)
-                .setScale(2, 2)
+                .setScale(3, 3)
                 .addChildTo(this);
             pt.alpha = 0;
             pt.tweener.clear()
