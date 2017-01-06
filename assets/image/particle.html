@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ja">
+<head>
+    <meta charset=UTF-8>
+</head>
+
+<body>
+
+<div>
+    <button id="ok">save</button>
+</div>
+
+<script src="../../src/libs/phina.js"></script>
+
+<script>
+
+phina.globalize();
+
+var PARTICLE_RADIUS = 8;
+
+phina.define('MainScene', {
+  superClass: 'DisplayScene',
+  
+  init: function(options) {
+    this.superInit(options);
+    var y = 0;
+    for (var x = 0; x < 16; x++) {
+        var p = Particle(240, 240)
+            .addChildTo(this)
+            .setPosition(x * PARTICLE_RADIUS*2+PARTICLE_RADIUS, y+PARTICLE_RADIUS)
+            .setScale(1-(x*0.05));
+    }
+    y += PARTICLE_RADIUS*2;
+    for (var x = 0; x < 16; x++) {
+        var p = Particle(0, 0)
+            .addChildTo(this)
+            .setPosition(x * PARTICLE_RADIUS*2+PARTICLE_RADIUS, y+PARTICLE_RADIUS)
+            .setScale(1-(x*0.05));
+    }
+    y += PARTICLE_RADIUS*2;
+    for (var x = 0; x < 16; x++) {
+        var p = Particle(120, 120)
+            .addChildTo(this)
+            .setPosition(x * PARTICLE_RADIUS*2+PARTICLE_RADIUS, y+PARTICLE_RADIUS)
+            .setScale(1-(x*0.05));
+    }
+    y += PARTICLE_RADIUS*2;
+    for (var x = 0; x < 16; x++) {
+        var p = Particle(120, 120, 100)
+            .addChildTo(this)
+            .setPosition(x * PARTICLE_RADIUS*2+PARTICLE_RADIUS, y+PARTICLE_RADIUS)
+            .setScale(1-(x*0.05));
+    }
+
+    var that = this;
+    var save = document.querySelector("#ok");
+    save.onclick = function() {
+        app.focus = null;
+        app.canvas.clear();
+        app.backgroundColor = "transparent";
+        that.tweener.clear().wait(200).call(function() {
+            app.canvas.saveAsImage();
+            app.backgroundColor = "transparent";
+        });
+    };
+  },
+
+  update: function(app) {
+  },
+});
+
+phina.main(function() {
+  app = GameApp({
+    width: 256,
+    height: 64,
+    startLabel: 'main',
+    backgroundColor: "transparent"
+  });
+  app.run();
+});
+
+phina.define('Particle', {
+  superClass: 'CircleShape',
+  
+  init: function(start, end, shine) {
+    this.superInit({
+      stroke: false,
+      radius: PARTICLE_RADIUS,
+    });
+    
+//    this.blendMode = 'lighter';
+    this.blendMode = 'source-over';
+    
+    var grad = this.canvas.context.createRadialGradient(0, 0, 0, 0, 0, this.radius);
+    grad.addColorStop(0, 'hsla({0},100%,100%, 1.0)'.format(start));
+    if (shine) {
+        grad.addColorStop(1, 'hsla({0},100%,100%, 0.0)'.format(end));
+    } else {
+        grad.addColorStop(1, 'hsla({0}, 75%, 50%, 0.0)'.format(end));
+    }
+
+    this.fill = grad;
+  },
+});
+
+</script>
+
+</body>
+</html>
