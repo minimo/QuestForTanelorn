@@ -45,10 +45,10 @@ phina.define("qft.Application", {
             left: gp.getKey("left") || kb.getKey("left"),
             right: gp.getKey("right") || kb.getKey("right"),
 
-            attack: gp.getKey("A") || kb.getKey("Z"),
-            jump: gp.getKey("B") || kb.getKey("B"),
-            x: gp.getKey("X") || kb.getKey("X"),
-            y: gp.getKey("Y") || kb.getKey("C"),
+            jump: gp.getKey("A") || kb.getKey("Z"),
+            attack: gp.getKey("B") || kb.getKey("X"),
+            x: gp.getKey("X") || kb.getKey("C"),
+            y: gp.getKey("Y") || kb.getKey("V"),
 
             ok: gp.getKey("A") || kb.getKey("Z") || kb.getKey("space"),
             cancel: gp.getKey("B") || kb.getKey("X"),

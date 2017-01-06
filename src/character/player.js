@@ -58,14 +58,14 @@ phina.define("qft.Player", {
                 this.sprite.scaleX = -1;
                 this.vx = 5;
             }
-            if (ct.up || ct.isJump) {
-                if (!this.isJump && this.onFloor) {
+            if (ct.up || ct.jump) {
+                if (!ct.down && !this.isJump && this.onFloor) {
                     this.setAnimation("jump");
                     this.isJump = true;
                     this.vy = -11;
                 }
             }
-            if (ct.down && this.onFloor &&!this.throughFloor) {
+            if (ct.down && ct.jump && this.onFloor && !this.throughFloor) {
                 var floor = this.checkMapCollision2(this.x, this.y+16, 5, 5);
                 if (!floor.disableThrough) this.throughFloor = floor;
             }
