@@ -172,6 +172,11 @@ phina.define("qft.Character", {
                 } else {
                     that.vy = 0;
                 }
+                //めり込み時対応の為、補正を行う
+                that._collision[0].setPosition(that.x, that.y - 16);
+                that._collision[1].setPosition(that.x + 10, that.y - 3);
+                that._collision[2].setPosition(that.x, that.y + 16);
+                that._collision[3].setPosition(that.x - 10, that.y - 3);
             }
             //右側
             if (that.vx > 0 && e != that.throughFloor && e.hitTestElement(that._collision[1])) {
