@@ -26,6 +26,9 @@ phina.define("qft.Assets", {
                             "hit":    "assets/sound/sen_ka_katana_sasu01.mp3",
                             "bgm1":   "assets/sound/DS-ba01m.mp3",
                         },
+                        font: {
+                            "UbuntuMono": "assets/font/UbuntuMono-Bold.ttf",
+                        },
                         tmx: {
                             "stage1": "assets/map/stage1.tmx",
                         },
