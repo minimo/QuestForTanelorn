@@ -56,15 +56,14 @@ phina.define("qft.Enemy", {
         this.hp -= pow;
         if (this.hp <= 0) {
             this.hp = 0;
-            this.dead();
+            this.flare('dead');
         }
         app.playSE("hit");
         return true;
     },
 
-    dead: function() {
+    ondead: function() {
         this.remove();
-        return;
     },
 
     //プレイヤーが見える位置にいるのか判定
