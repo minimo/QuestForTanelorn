@@ -86,7 +86,7 @@ phina.define("qft.Enemy", {
         var player = this.parentScene.player;
         this.parentScene.collisionLayer.children.forEach(function(e) {
             //自分とプレイヤー間に地形当り判定がある場合見えない
-            if (phina.geom.Collision.testLineRect(that, player, e)) result = false;
+            if (phina.geom.Collision.testRectLine(e, that, player)) result = false;
         });
         return result;
     },

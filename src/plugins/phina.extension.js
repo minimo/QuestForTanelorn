@@ -91,7 +91,7 @@ phina.app.Element.prototype.removeChildren = function(beginIndex) {
  * @param {phina.geom.Vector2} p2 線分1の端の座標
  * @param {phina.geom.Vector2} p3 線分2の端の座標
  * @param {phina.geom.Vector2} p4 線分2の端の座標
- * @return {Boolean} 線分と線分が重なっているかどうか
+ * @return {Boolean} 線分1と線分2が重なっているかどうか
  */
 phina.geom.Collision.testLineLine = function(p1, p2, p3, p4) {
   var a = (p1.x - p2.x) * (p3.y - p1.y) + (p1.y - p2.y) * (p1.x - p3.x);
@@ -101,27 +101,25 @@ phina.geom.Collision.testLineLine = function(p1, p2, p3, p4) {
   return a * b <= 0 && c * d <= 0;
 }
 
-//線分abと矩形の交差判定
 /**
- * @method testLineRect
+ * @method testRectLine
  * @static
- * 線分と矩形が重なっているかどうかを判定します
+ * 矩形と線分が重なっているかどうかを判定します
  *
  * ### Example
- *     p1 = phina.geom.Vector2(100, 100, 30);
- *     p2 = phina.geom.Vector2(200, 200, 30);
- *     rect = phina.geom.Rect(150, 150, 30, 40);
- * phina.geom.Collision.testLineRect(p1, p2, rect); // => true
+ *     rect = phina.geom.Rect(120, 130, 40, 50);
+ *     p1 = phina.geom.Vector2(100, 100);
+ *     p2 = phina.geom.Vector2(200, 200);
+ * phina.geom.Collision.testRectLine(rect, p1, p2); // => true
  *
- * @param {phina.geom.Vector2} p1 線分1の端の座標
- * @param {phina.geom.Vector2} p2 線分1の端の座標
  * @param {phina.geom.Rect} rect 矩形領域オブジェクト
- * @return {Boolean} 線分と矩形が重なっているかどうか
+ * @param {phina.geom.Vector2} p1 線分の端の座標
+ * @param {phina.geom.Vector2} p2 線分の端の座標
+ * @return {Boolean} 矩形と線分が重なっているかどうか
  */
-phina.geom.Collision.testLineRect = function(p1, p2, rect) {
-    //包含判定
+phina.geom.Collision.testRectLine = function(rect, p1, p2) {
+    //包含判定(p1が含まれてれば良いのでp2の判定はしない）
     if (rect.left <= p1.x && p1.x <= rect.right && rect.top <= p1.y && p1.y <= rect.bottom ) return true;
-    if (rect.left <= p2.x && p2.x <= rect.right && rect.top <= p2.y && p2.y <= rect.bottom ) return true;
 
     //矩形の４点
     var r1 = phina.geom.Vector2(rect.left, rect.top);     //左上
