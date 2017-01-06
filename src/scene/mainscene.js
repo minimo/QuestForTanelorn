@@ -82,7 +82,7 @@ phina.define("qft.MainScene", {
             var c = phina.display.DisplayElement({width: e.width, height: e.height})
                 .addChildTo(this.collisionLayer)
                 .setPosition(e.x+e.width/2, e.y+e.height/2);
-            if (objects.disableThrough) c.disableThrough = true;
+            if (e.properties.disablethrough) c.disableThrough = true;
         }.bind(this));
 
         //ＢＧＭ再生
