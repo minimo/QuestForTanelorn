@@ -129,6 +129,7 @@ phina.define("qft.Character", {
         this.tweener.clear()
             .wait(60)
             .call(function(){
+                this.flare('dead');
                 this.remove();
             }.bind(this));
     },

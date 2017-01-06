@@ -38,6 +38,10 @@ phina.define("qft.Player", {
         this.beforeAnimation = "";
 
         this.tweener.setUpdateType('fps');
+
+        this.on('dead', function(e) {
+            this.parentScene.flare('gameover');
+        });
     },
 
     update: function(app) {

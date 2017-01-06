@@ -36,6 +36,11 @@ phina.define("qft.MainScene", {
         app.volumeBGM = 0.2;
         app.volumeSE = 0.2;
 
+        //ゲームオーバー
+        this.on('gameover', function(e) {
+            app.pushScene(qft.GameOverScene());
+        });
+
         this.time = 0;
     },
 
@@ -51,7 +56,7 @@ phina.define("qft.MainScene", {
     },
 
     spawnEnemy: function() {
-        var e = qft.Wisp({}, this).addChildTo(this.objLayer).setPosition(SC_W*0.5, 20);
+        var e = qft.Slime({}, this).addChildTo(this.objLayer).setPosition(SC_W*0.5, 20);
     },
 
     spawnItem: function() {
