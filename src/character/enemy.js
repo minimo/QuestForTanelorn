@@ -54,7 +54,7 @@ phina.define("qft.Enemy", {
         this.knockback(pow, dir);
         this.mutekiTime = 10;
         this.hp -= pow;
-        if (this.hp < 0) {
+        if (this.hp <= 0) {
             this.hp = 0;
             this.dead();
         }
