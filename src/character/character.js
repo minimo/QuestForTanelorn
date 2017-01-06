@@ -87,10 +87,7 @@ phina.define("qft.Character", {
             }
 
             //地形当たり判定
-            this._collision[0].setPosition(this.x, this.y - 16);
-            this._collision[1].setPosition(this.x + 10, this.y - 3);
-            this._collision[2].setPosition(this.x, this.y + 16);
-            this._collision[3].setPosition(this.x - 10, this.y - 3);
+            this.resetCollisionPosition();
             this.checkMapCollision();
 
             //画面外落ち
@@ -157,6 +154,7 @@ phina.define("qft.Character", {
                 that.y = e.y+e.height*(1-e.originY)+16;
                 that.vy = 1;
                 ret[0] = e;
+                that.resetCollisionPosition();
             }
             //下側
             if (that.vy > 0 && e != that.throughFloor && e.hitTestElement(that._collision[2])) {
@@ -172,23 +170,21 @@ phina.define("qft.Character", {
                 } else {
                     that.vy = 0;
                 }
-                //めり込み時対応の為、補正を行う
-                that._collision[0].setPosition(that.x, that.y - 16);
-                that._collision[1].setPosition(that.x + 10, that.y - 3);
-                that._collision[2].setPosition(that.x, that.y + 16);
-                that._collision[3].setPosition(that.x - 10, that.y - 3);
+                that.resetCollisionPosition();
             }
             //右側
             if (that.vx > 0 && e != that.throughFloor && e.hitTestElement(that._collision[1])) {
                 that.x = e.x-e.width*e.originX-10;
                 that.vx = 0;
                 ret[1] = e;
+                that.resetCollisionPosition();
             }
             //左側
             if (that.vx < 0 && e != that.throughFloor && e.hitTestElement(that._collision[3])) {
                 that.x = e.x+e.width*(1-e.originX)+10;
                 that.vx = 0;
                 ret[3] = e;
+                that.resetCollisionPosition();
             }
         });
         return ret;
@@ -206,6 +202,14 @@ phina.define("qft.Character", {
             if (e.hitTestElement(c)) ret = e;
         });
         return ret;
+    },
+
+    //当たり判定用エレメントの位置再セット
+    resetCollisionPosition: function() {
+        this._collision[0].setPosition(this.x, this.y - 16);
+        this._collision[1].setPosition(this.x + 10, this.y - 4);
+        this._collision[2].setPosition(this.x, this.y + 16);
+        this._collision[3].setPosition(this.x - 10, this.y - 4);
     },
 
     setupAnimation: function() {
