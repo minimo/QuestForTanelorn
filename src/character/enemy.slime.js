@@ -46,15 +46,14 @@ phina.define("qft.Slime", {
             }
 
             //プレイヤーが近くにいたらジャンプ攻撃
-            if (!this.isJump && this.getDistancePlayer() < 64) {
+            if (!this.isJump && this.getDistancePlayer() < 40) {
                 this.isJump = true;
-                this.vy = -8;
-                this.attack = true;
+                this.vy = -6;
                 var pl = this.parentScene.player;
                 if (this.x > pl.x) {
-                    this.dir = 0;
+                    this.direction = 0;
                 } else {
-                    this.dir = 180;
+                    this.direction = 180;
                 }
             }
         }
