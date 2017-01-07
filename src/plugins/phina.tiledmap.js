@@ -88,8 +88,8 @@ phina.define("phina.asset.TiledMap", {
                         }.$safe(this.layers[i].objects[r]);
                         obj.objects[r] = obj2;
                     }
+                    if (groupName !== null) return obj;
                 }
-                if (groupName !== null) return obj;
                 ls.push(obj);
             }
         }
