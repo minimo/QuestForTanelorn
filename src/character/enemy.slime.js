@@ -10,7 +10,7 @@ phina.define("qft.Enemy.Slime", {
     superClass: "qft.Enemy",
 
     //ヒットポイント
-    hp: 1,
+    hp: 2,
 
     //防御力
     deffence: 1,
@@ -43,6 +43,10 @@ phina.define("qft.Enemy.Slime", {
                 this.direction = 0;
             } else if (this.checkMapCollision2(this.x-5, this.y+20, 5, 5) == null) {
                 this.direction = 180;
+            } else if (this.checkMapCollision2(this.x-16, this.y, 5, 5)) {
+                this.direction = 180;
+            } else if (this.checkMapCollision2(this.x+16, this.y, 5, 5)) {
+                this.direction = 0;
             }
 
             //プレイヤーが近くにいたらジャンプ攻撃
