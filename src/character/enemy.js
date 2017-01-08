@@ -29,6 +29,7 @@ phina.define("qft.Enemy", {
 
     init: function(options, parentScene) {
         this.superInit(options, parentScene);
+        this.$extend(options);
         this.setupAnimation();
 
         this.on('enterframe', function() {
@@ -37,7 +38,6 @@ phina.define("qft.Enemy", {
             if (pl.attack && this.hitTestElement(pl.attackCollision)) {
                 this.damage(pl);
             }
-
             //プレイヤーとの当たり判定
             if (!this.isDead && this.hitTestElement(pl)) {
                 pl.damage(this);
