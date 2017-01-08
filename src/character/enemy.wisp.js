@@ -6,7 +6,7 @@
  */
 
 //ウィスプ
-phina.define("qft.Wisp", {
+phina.define("qft.Enemy.Wisp", {
     superClass: "qft.Enemy",
 
     //ヒットポイント

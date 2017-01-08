@@ -33,7 +33,7 @@ phina.define("qft.MainScene", {
         //マップ初期化
         this.setupStageMap(1);
 
-        app.volumeBGM = 0.2;
+        app.volumeBGM = 0.5;
         app.volumeSE = 0.2;
 
         //ゲームオーバー
@@ -45,21 +45,19 @@ phina.define("qft.MainScene", {
     },
 
     update: function(app) {
-        if (this.time == 0) {
-            this.spawnEnemy();
-            this.spawnItem();
-        }
         this.mapLayer.x = SC_W*0.5-this.player.x;
         this.mapLayer.y = SC_H*0.5-this.player.y;
         if (this.mapLayer.y < -(this.map.height-SC_H)) this.mapLayer.y = -(this.map.height-SC_H);
         this.time++;
     },
 
-    spawnEnemy: function() {
-        var e = qft.Slime({}, this).addChildTo(this.objLayer).setPosition(SC_W*0.5, 20);
+    spawnEnemy: function(options) {
+        var e = qft.Enemy[options.name](options.properties, this)
+            .addChildTo(this.objLayer)
+            .setPosition(options.x, options.y);
     },
 
-    spawnItem: function() {
+    spawnItem: function(options) {
         var e = qft.Item(this).addChildTo(this.objLayer).setPosition(SC_W*0.2, 20);
         e.kind = 2;
     },
@@ -83,6 +81,25 @@ phina.define("qft.MainScene", {
                 .addChildTo(this.collisionLayer)
                 .setPosition(e.x+e.width/2, e.y+e.height/2);
             if (e.properties.disablethrough) c.disableThrough = true;
+        }.bind(this));
+
+        //イベント取得
+        var events = tmx.getObjectGroup("event").objects;
+        events.forEach(function(e) {
+            switch (e.type) {
+                case "player":
+                    if (e.name == "start") {
+                        this.player.x = e.x;
+                        this.player.y = e.y;
+                    }
+                    break;
+                case "enemy":
+                    this.spawnEnemy(e);
+                    break;
+                case "item":
+                    this.spawnItem(e);
+                    break;
+            }
         }.bind(this));
 
         //ＢＧＭ再生

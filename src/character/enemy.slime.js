@@ -6,7 +6,7 @@
  */
 
 //スライム
-phina.define("qft.Slime", {
+phina.define("qft.Enemy.Slime", {
     superClass: "qft.Enemy",
 
     //ヒットポイント
