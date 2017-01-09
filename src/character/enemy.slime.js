@@ -43,9 +43,9 @@ phina.define("qft.Enemy.Slime", {
                 this.direction = 0;
             } else if (this.checkMapCollision2(this.x-5, this.y+20, 5, 5) == null) {
                 this.direction = 180;
-            } else if (this.checkMapCollision2(this.x-16, this.y, 5, 5)) {
+            } else if (this.checkMapCollision2(this.x-10, this.y, 5, 5)) {
                 this.direction = 180;
-            } else if (this.checkMapCollision2(this.x+16, this.y, 5, 5)) {
+            } else if (this.checkMapCollision2(this.x+10, this.y, 5, 5)) {
                 this.direction = 0;
             }
 
