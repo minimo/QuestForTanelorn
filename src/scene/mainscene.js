@@ -84,7 +84,7 @@ phina.define("qft.MainScene", {
             c.vy = 0;
             if (e.name) c.name = e.name;
             if (e.type) c.type = e.type;
-            if (e.properties.disablethrough) c.disableThrough = true;
+            c.$extend(e.properties);
         }.bind(this));
 
         //イベント取得
@@ -120,6 +120,7 @@ phina.define("qft.MainScene", {
         //当たり判定、オブジェクトの全消去
         this.collisionLayer.removeChildren();
         this.objLayer.removeChildren();
+        this.mapImageLayer.removeChildren();
 
         //プレイヤーの再追加
         this.player.addChildTo(this.objLayer);
