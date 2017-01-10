@@ -207,6 +207,55 @@ phina.define("qft.Character", {
         return ret;
     },
 
+    //キャラクタ同士当たり判定
+    checkCharacterCollision: function() {
+        if (this.ignoreCollision) return;
+        var ret = [];
+        var that = this;
+        this.parentScene.collisionLayer.children.forEach(function(e) {
+            if (that.isDrop) return;
+            //上側
+            if (that.vy < 0 && e.hitTestElement(that._collision[0])) {
+                that.y = e.y+e.height*(1-e.originY)+16;
+                that.vy = 1;
+                ret[0] = e;
+                that.resetCollisionPosition();
+            }
+            //下側
+            if (that.vy > 0 && e.hitTestElement(that._collision[2])) {
+                that.y = e.y-e.height*e.originY-16;
+                that.vx = e.vx;
+                that.vy = 0;
+                that.isJump = false;
+                that.onFloor = true;
+                that.throughFloor = null;
+                ret[2] = e;
+                if (that.rebound > 0) {
+                    that.isJump = true;
+                    that.vy = -that.vy * that.rebound;
+                } else {
+                    that.vy = 0;
+                }
+                that.resetCollisionPosition();
+            }
+            //右側
+            if (that.vx > 0 && e.hitTestElement(that._collision[1])) {
+                that.x = e.x-e.width*e.originX-10;
+                that.vx = 0;
+                ret[1] = e;
+                that.resetCollisionPosition();
+            }
+            //左側
+            if (that.vx < 0 && e.hitTestElement(that._collision[3])) {
+                that.x = e.x+e.width*(1-e.originX)+10;
+                that.vx = 0;
+                ret[3] = e;
+                that.resetCollisionPosition();
+            }
+        });
+        return ret;
+    },
+
     //当たり判定用エレメントの位置再セット
     resetCollisionPosition: function() {
         this._collision[0].setPosition(this.x, this.y - 16);
