@@ -197,8 +197,8 @@ phina.define("qft.Character", {
     checkMapCollision2: function(x, y, width, height) {
         x = x || this.x;
         y = y || this.y;
-        width = width || this.width;
-        height = height || this.height;
+        width = width || 1;
+        height = height || 1;
         var c = phina.display.DisplayElement({width: width, height: height}).setPosition(x, y);
         var ret = null;
         this.parentScene.collisionLayer.children.forEach(function(e) {
@@ -212,7 +212,7 @@ phina.define("qft.Character", {
         if (this.ignoreCollision) return;
         var ret = [];
         var that = this;
-        this.parentScene.collisionLayer.children.forEach(function(e) {
+        this.parentScene.objLayer.children.forEach(function(e) {
             if (that.isDrop) return;
             //上側
             if (that.vy < 0 && e.hitTestElement(that._collision[0])) {
