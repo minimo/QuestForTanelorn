@@ -80,6 +80,10 @@ phina.define("qft.MainScene", {
             var c = phina.display.DisplayElement({width: e.width, height: e.height})
                 .addChildTo(this.collisionLayer)
                 .setPosition(e.x+e.width/2, e.y+e.height/2);
+            c.vx = 0;
+            c.vy = 0;
+            if (e.name) c.name = e.name;
+            if (e.type) c.type = e.type;
             if (e.properties.disablethrough) c.disableThrough = true;
         }.bind(this));
 

@@ -86,7 +86,7 @@ phina.define("qft.Character", {
                 this.y = Math.floor(this.y);
             }
 
-            //地形当たり判定
+            //当たり判定
             this.resetCollisionPosition();
             this.checkMapCollision();
 
@@ -159,6 +159,7 @@ phina.define("qft.Character", {
             //下側
             if (that.vy > 0 && e != that.throughFloor && e.hitTestElement(that._collision[2])) {
                 that.y = e.y-e.height*e.originY-16;
+                that.vx = e.vx;
                 that.vy = 0;
                 that.isJump = false;
                 that.onFloor = true;
