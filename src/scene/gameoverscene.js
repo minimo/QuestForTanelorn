@@ -11,7 +11,6 @@ phina.define("qft.GameOverScene", {
     
     init: function() {
         this.superInit();
-        this.$extend(this._member);
 
         var labelParam = {
             fill: "white",
