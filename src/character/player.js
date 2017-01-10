@@ -110,6 +110,7 @@ phina.define("qft.Player", {
 
     damage: function(target) {
         if (this.mutekiTime > 0) return false;
+        if (target.power == 0) return false;
         var dir = 0;
         if (this.x < target.x) dir = 180;
         this.knockback(target.power, dir);
