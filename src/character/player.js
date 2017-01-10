@@ -96,7 +96,7 @@ phina.define("qft.Player", {
             if (this.nowAnimation == "attack") this.advanceTime = 2;
         } else {
             //歩行アニメーションの場合は移動している時のみ進める
-            if (this.nowAnimation == "walk" && this.vx == 0 && !ct.left && !ct.right) {
+            if (this.nowAnimation == "walk" && !ct.left && !ct.right) {
                 this.isAdvanceAnimation = false;
             } else {
                 this.isAdvanceAnimation = true;
