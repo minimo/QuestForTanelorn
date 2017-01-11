@@ -86,14 +86,8 @@ phina.define("qft.Character", {
             this.y += this.vy;
             this.vx *= this.friction;
             this.vy += this.gravity;
-            if (Math.abs(this.vx) < 0.01) {
-                this.vx = 0;
-//                this.x = Math.floor(this.x+0,5);
-            }
-            if (Math.abs(this.vy) < 0.01) {
-                this.vy = 0;
-//                this.y = Math.floor(this.y+0.5);
-            }
+            if (Math.abs(this.vx) < 0.01) this.vx = 0;
+            if (Math.abs(this.vy) < 0.01) this.vy = 0;
 
             //当たり判定
             this.resetCollisionPosition();
@@ -170,7 +164,7 @@ phina.define("qft.Character", {
                 that.resetCollisionPosition();
             }
             //下側
-            if (that.vy > 0 && e.hitTestElement(that._collision[2])) {
+            if (that.vy >= 0 && e.hitTestElement(that._collision[2])) {
                 that.y = e.y-e.height*e.originY-h;
                 that.vx += e.vx;
                 that.vy = 0;
