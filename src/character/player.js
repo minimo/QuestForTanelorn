@@ -125,7 +125,7 @@ phina.define("qft.Player", {
     getItem: function(item) {
         //武器
         if (item.weapon) {
-            this.setWeapon(item.kind);
+//            this.setWeapon(item.kind);
             return;
         }
         //装備品
@@ -149,7 +149,7 @@ phina.define("qft.Player", {
                 break;
             
         }
-        this.weapon.setFrameIndex(item.kind);
+        this.weapon.setFrameIndex(kind);
     },
 
     //装備武器により攻撃モーションを変える

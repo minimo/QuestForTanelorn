@@ -30,11 +30,14 @@ phina.define("qft.MainScene", {
         //オブジェクト管理レイヤ
         this.objLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
 
+        //プレイヤー表示レイヤ
+        this.playerLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
+
         //フォアグラウンドレイヤ
         this.foregroundLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
 
         //プレイヤーキャラクタ
-        this.player = qft.Player(this).addChildTo(this.objLayer).setPosition(SC_W*0.5, SC_H*0.5);
+        this.player = qft.Player(this).addChildTo(this.playerLayer).setPosition(SC_W*0.5, SC_H*0.5);
 
         //マップ初期化
         this.setupStageMap(1);
@@ -61,11 +64,17 @@ phina.define("qft.MainScene", {
         var e = qft.Enemy[options.name](options.properties, this)
             .addChildTo(this.objLayer)
             .setPosition(options.x, options.y);
+        return e;
     },
 
     spawnItem: function(options) {
-        var e = qft.Item(this).addChildTo(this.objLayer).setPosition(SC_W*0.2, 20);
-        e.kind = 2;
+        var e = qft.Item(options, this).addChildTo(this.objLayer).setPosition(options.x, options.y);
+        e.kind = options.kind || 0;
+        return e;
+    },
+
+    spawnItemBox: function(options) {
+        return qft.ItemBox(options, this).addChildTo(this.objLayer).setPosition(options.x, options.y);
     },
 
     setupStageMap: function(stageNumber) {
@@ -116,6 +125,9 @@ phina.define("qft.MainScene", {
                 case "item":
                     this.spawnItem(e);
                     break;
+                case "itembox":
+                    this.spawnItemBox(e);
+                    break;
             }
         }.bind(this));
 
@@ -134,8 +146,5 @@ phina.define("qft.MainScene", {
         this.collisionLayer.removeChildren();
         this.objLayer.removeChildren();
         this.mapImageLayer.removeChildren();
-
-        //プレイヤーの再追加
-        this.player.addChildTo(this.objLayer);
     },
 });
