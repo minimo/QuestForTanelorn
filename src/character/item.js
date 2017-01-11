@@ -25,7 +25,7 @@ phina.define("qft.Item", {
     isAdvanceAnimation: false,
 
     init: function(options, parentScene) {
-        this.superInit({width: 20, height: 20}, parentScene);
+        this.superInit({width: 10, height: 10}, parentScene);
 
         //アイテムスプライト
         this.sprite = phina.display.Sprite("item", 20, 20)
@@ -38,7 +38,7 @@ phina.define("qft.Item", {
     update: function() {
         //プレイヤーとの当たり判定
         var pl = this.parentScene.player;
-        if (!this.isDead && this.hitTestElement(pl)) {
+        if (this.time > 10 && this.hitTestElement(pl)) {
             pl.getItem(this);
             this.remove();
         }
