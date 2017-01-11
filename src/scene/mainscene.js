@@ -24,8 +24,14 @@ phina.define("qft.MainScene", {
         //地形判定用レイヤー
         this.collisionLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
 
+        //バックグラウンドレイヤ
+        this.backgroundLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
+
         //オブジェクト管理レイヤ
         this.objLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
+
+        //フォアグラウンドレイヤ
+        this.foregroundLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
 
         //プレイヤーキャラクタ
         this.player = qft.Player(this).addChildTo(this.objLayer).setPosition(SC_W*0.5, SC_H*0.5);
@@ -72,7 +78,13 @@ phina.define("qft.MainScene", {
         var tmx = phina.asset.AssetManager.get('tmx', "stage"+stageNumber);
 
         //マップ画像取得
-        this.map = phina.display.Sprite(tmx.image).addChildTo(this.mapImageLayer).setOrigin(0, 0);
+        var foreground = tmx.getImage("foreground");
+        var mapImage = tmx.getImage("map");
+        var background = tmx.getImage("background");
+        this.map = phina.display.Sprite(mapImage).addChildTo(this.mapImageLayer).setOrigin(0, 0);
+        phina.display.Sprite(background).addChildTo(this.backgroundLayer).setOrigin(0, 0);
+        phina.display.Sprite(foreground).addChildTo(this.foregroundLayer).setOrigin(0, 0);
+
 
         //マップ当たり判定取得
         var objects = tmx.getObjectGroup("collision").objects;
