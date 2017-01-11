@@ -77,9 +77,10 @@ phina.define("qft.MainScene", {
         //マップ当たり判定取得
         var objects = tmx.getObjectGroup("collision").objects;
         objects.forEach(function(e) {
-            var c = phina.display.DisplayElement({width: e.width, height: e.height})
+            var c = phina.display.RectangleShape({width: e.width, height: e.height})
                 .addChildTo(this.collisionLayer)
-                .setPosition(e.x+e.width/2, e.y+e.height/2);
+                .setPosition(e.x+e.width/2, e.y+e.height/2)
+                .setVisible(false);
             c.vx = 0;
             c.vy = 0;
             if (e.name) c.name = e.name;

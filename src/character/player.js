@@ -177,4 +177,14 @@ phina.define("qft.Player", {
         this.frame["dead"] = [18, 19, 20];
         this.index = 0;
     },
+
+    //当たり判定用エレメントの位置再セット
+    resetCollisionPosition: function() {
+        var w = Math.floor(this.width/2)+6;
+        var h = Math.floor(this.height/2)+6;
+        this._collision[0].setPosition(this.x, this.y - h);
+        this._collision[1].setPosition(this.x + w, this.y - 5);
+        this._collision[2].setPosition(this.x, this.y + h);
+        this._collision[3].setPosition(this.x - w, this.y - 5);
+    },
 });

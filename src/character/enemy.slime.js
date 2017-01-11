@@ -43,12 +43,11 @@ phina.define("qft.Enemy.Slime", {
                 this.direction = 0;
             } else if (this.checkMapCollision2(this.x-5, this.y+20, 5, 5) == null) {
                 this.direction = 180;
-            } else if (this.checkMapCollision2(this.x-10, this.y, 5, 5)) {
+            } else if (this.checkMapCollision2(this.x-12, this.y, 5, 5)) {
                 this.direction = 180;
-            } else if (this.checkMapCollision2(this.x+10, this.y, 5, 5)) {
+            } else if (this.checkMapCollision2(this.x+12, this.y, 5, 5)) {
                 this.direction = 0;
             }
-
             //プレイヤーが近くにいたらジャンプ攻撃
             if (!this.isJump && this.getDistancePlayer() < 40) {
                 this.isJump = true;

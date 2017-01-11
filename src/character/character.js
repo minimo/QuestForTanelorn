@@ -66,8 +66,8 @@ phina.define("qft.Character", {
         this.boundingType = "rect";
 
         //当り判定用（0:上 1:右 2:下 3:左）
-        var w = Math.floor(this.width/2);
-        var h = Math.floor(this.height/2);
+        var w = Math.floor(this.width/4);
+        var h = Math.floor(this.height/4);
         this._collision = [];
         this._collision[0] = phina.display.RectangleShape({width: w, height: 2})//.addChildTo(this.parentScene.objLayer);
         this._collision[1] = phina.display.RectangleShape({width: 2, height: h})//.addChildTo(this.parentScene.objLayer);
@@ -88,11 +88,11 @@ phina.define("qft.Character", {
             this.vy += this.gravity;
             if (Math.abs(this.vx) < 0.01) {
                 this.vx = 0;
-                this.x = Math.floor(this.x);
+//                this.x = Math.floor(this.x+0,5);
             }
             if (Math.abs(this.vy) < 0.01) {
                 this.vy = 0;
-                this.y = Math.floor(this.y);
+//                this.y = Math.floor(this.y+0.5);
             }
 
             //当たり判定
@@ -156,21 +156,23 @@ phina.define("qft.Character", {
         if (this.ignoreCollision) return;
         var ret = [];
         var that = this;
+        var w = Math.floor(this.width/2)+6;
+        var h = Math.floor(this.height/2)+6;
         this.onFloor = false;
         this.parentScene.collisionLayer.children.forEach(function(e) {
             if (that.isDrop) return;
             if (e == that.throughFloor) return;
             //上側
             if (that.vy < 0 && e.hitTestElement(that._collision[0])) {
-                that.y = e.y+e.height*(1-e.originY)+16;
-                that.vy = 1;
+                that.y = e.y+e.height*(1-e.originY)+h;
+                that.vy = 0;
                 ret[0] = e;
                 that.resetCollisionPosition();
             }
             //下側
             if (that.vy > 0 && e.hitTestElement(that._collision[2])) {
-                that.y = e.y-e.height*e.originY-16;
-                that.vx = e.vx;
+                that.y = e.y-e.height*e.originY-h;
+                that.vx += e.vx;
                 that.vy = 0;
                 that.isJump = false;
                 that.onFloor = true;
@@ -186,14 +188,14 @@ phina.define("qft.Character", {
             }
             //右側
             if (that.vx > 0 && e.hitTestElement(that._collision[1])) {
-                that.x = e.x-e.width*e.originX-10;
+                that.x = e.x-e.width*e.originX-w;
                 that.vx = 0;
                 ret[1] = e;
                 that.resetCollisionPosition();
             }
             //左側
             if (that.vx < 0 && e.hitTestElement(that._collision[3])) {
-                that.x = e.x+e.width*(1-e.originX)+10;
+                that.x = e.x+e.width*(1-e.originX)+w;
                 that.vx = 0;
                 ret[3] = e;
                 that.resetCollisionPosition();
