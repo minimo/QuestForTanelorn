@@ -65,23 +65,32 @@ phina.define("qft.Character", {
         this.parentScene = parentScene;
         this.boundingType = "rect";
 
-        //当り判定用（0:上 1:右 2:下 3:左 4:攻撃）
+        //当り判定用（0:上 1:右 2:下 3:左）
+        var w = Math.floor(this.width/2);
+        var h = Math.floor(this.height/2);
         this._collision = [];
-        this._collision[0] = phina.display.DisplayElement({width: 8, height: 3});
-        this._collision[1] = phina.display.DisplayElement({width: 3, height: 8});
-        this._collision[2] = phina.display.DisplayElement({width: 8, height: 3});
-        this._collision[3] = phina.display.DisplayElement({width: 3, height: 8});
+        this._collision[0] = phina.display.RectangleShape({width: w, height: 2})//.addChildTo(this.parentScene.objLayer);
+        this._collision[1] = phina.display.RectangleShape({width: 2, height: h})//.addChildTo(this.parentScene.objLayer);
+        this._collision[2] = phina.display.RectangleShape({width: w, height: 2})//.addChildTo(this.parentScene.objLayer);
+        this._collision[3] = phina.display.RectangleShape({width: 2, height: h})//.addChildTo(this.parentScene.objLayer);
+
+        this.on('removed', function(e) {
+            this._collision[0].remove();
+            this._collision[1].remove();
+            this._collision[2].remove();
+            this._collision[3].remove();
+        });
 
         this.on('enterframe', function(e) {
             this.x += this.vx;
             this.y += this.vy;
             this.vx *= this.friction;
             this.vy += this.gravity;
-            if (Math.abs(this.vx) < 0.1) {
+            if (Math.abs(this.vx) < 0.01) {
                 this.vx = 0;
                 this.x = Math.floor(this.x);
             }
-            if (Math.abs(this.vy) < 0.1) {
+            if (Math.abs(this.vy) < 0.01) {
                 this.vy = 0;
                 this.y = Math.floor(this.y);
             }
@@ -258,10 +267,12 @@ phina.define("qft.Character", {
 
     //当たり判定用エレメントの位置再セット
     resetCollisionPosition: function() {
-        this._collision[0].setPosition(this.x, this.y - 16);
-        this._collision[1].setPosition(this.x + 10, this.y - 4);
-        this._collision[2].setPosition(this.x, this.y + 16);
-        this._collision[3].setPosition(this.x - 10, this.y - 4);
+        var w = Math.floor(this.width/2)+6;
+        var h = Math.floor(this.height/2)+6;
+        this._collision[0].setPosition(this.x, this.y - h);
+        this._collision[1].setPosition(this.x + w, this.y);
+        this._collision[2].setPosition(this.x, this.y + h);
+        this._collision[3].setPosition(this.x - w, this.y);
     },
 
     setupAnimation: function() {

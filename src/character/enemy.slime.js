@@ -25,7 +25,7 @@ phina.define("qft.Enemy.Slime", {
     viewAngle: 90,
 
     init: function(options, parentScene) {
-        this.superInit({width: 16, height: 16}, parentScene);
+        this.superInit({width: 16, height: 18}, parentScene);
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("monster08_a3", 24, 32).addChildTo(this).setFrameIndex(0);
