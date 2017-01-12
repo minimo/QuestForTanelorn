@@ -59,6 +59,9 @@ phina.define("qft.Item", {
 phina.define("qft.ItemBox", {
     superClass: "qft.Character",
 
+    //耐久力
+    hp: 1,
+
     //アイテム種別
     kind: 0,
 
@@ -66,12 +69,13 @@ phina.define("qft.ItemBox", {
     advanceTime: 3,
 
     init: function(options, parentScene) {
-        this.superInit({width: 20, height: 20}, parentScene);
+        this.superInit({width: 16, height: 20}, parentScene);
 
         //アイテムボックススプライト
         this.sprite = phina.display.Sprite("itembox", 16, 32)
             .addChildTo(this)
             .setFrameIndex(0);
+        this.sprite.tweener.setUpdateType('fps');
 
         this.setAnimation("close");
         this.kind = options.kind || 0;
@@ -80,20 +84,33 @@ phina.define("qft.ItemBox", {
     update: function() {
         //プレイヤー攻撃との当たり判定
         var pl = this.parentScene.player;
-        if (pl.attack && this.hitTestElement(pl.attackCollision)) {
-            this.open(pl);
+        if (this.hp > 0 && this.mutekiTime == 0 && pl.attack && this.hitTestElement(pl.attackCollision)) {
+            this.hp -= pl.power;
+            this.mutekiTime = 10;
+            if (this.hp <= 0) {
+                this.open(pl);
+            }
+            if (this.x < pl.x) {
+                this.sprite.tweener.clear().moveBy(-5, 0, 2).moveBy(5, 0, 2);
+            } else {
+                this.sprite.tweener.clear().moveBy(5, 0, 2).moveBy(-5, 0, 2);
+            }
         }
+        this.visible = true;
     },
 
     open: function(target) {
         this.isAdvanceAnimation = true;
         this.setAnimation("open");
-        this.tweener.clear()
-            .wait(10)
-            .call(function() {
-                var i = this.parentScene.spawnItem(this);
-                i.vy = -5;
-            }.bind(this))
+        if (this.empty) {
+        } else {
+            this.tweener.clear()
+                .wait(10)
+                .call(function() {
+                    var i = this.parentScene.spawnItem(this);
+                    i.vy = -5;
+                }.bind(this))
+        }
     },
 
     setupAnimation: function() {
