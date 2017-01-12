@@ -37,8 +37,6 @@ phina.define("qft.Player", {
         this.setAnimation("walk");
         this.beforeAnimation = "";
 
-        this.tweener.setUpdateType('fps');
-
         this.on('dead', function(e) {
             this.parentScene.flare('gameover');
         });
