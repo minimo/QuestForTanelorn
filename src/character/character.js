@@ -298,4 +298,15 @@ phina.define("qft.Character", {
         this.nowAnimation = animName;
         this.index = -1;
     },
+
+    //物理現象情報のみオブジェクトで取得
+    getPhisics: function() {
+        return {
+            vx: this.vx,
+            vy: this.vy,
+            gravity: this.gravity,
+            friction: this.friction,
+            rebound: this.rebound,
+        };
+    },
 });
