@@ -107,7 +107,7 @@ phina.define("qft.Character", {
             if (!this.isDead && this.y > this.parentScene.map.height) this.dropDead();
 
             //アニメーション
-            if (this.isAdvanceAnimation && this.time % this.advanceTime == 0) {
+            if (this.sprite && this.isAdvanceAnimation && this.time % this.advanceTime == 0) {
                 this.index = (this.index+1) % this.frame[this.nowAnimation].length;
                 if (this.frame[this.nowAnimation][this.index] == "stop") this.index--;
                 this.sprite.frameIndex = this.frame[this.nowAnimation][this.index];
