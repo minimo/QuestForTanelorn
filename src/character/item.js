@@ -116,7 +116,7 @@ phina.define("qft.ItemBox", {
     setupAnimation: function(options) {
         this.spcialAnimation = false;
         this.frame = [];
-        if (options.color == undefined || options.color == "gold") {
+        if (options.color == "gold") {
             this.frame["close"] = [0];
             this.frame["open"] = [0, 6, 12, 18, "stop"];
         } else if (options.color == "red") {
@@ -125,6 +125,9 @@ phina.define("qft.ItemBox", {
         } else if (options.color == "blue") {
             this.frame["close"] = [2];
             this.frame["open"] = [2, 8, 14, 20, "stop"];
+        } else {
+            this.frame["close"] = [0];
+            this.frame["open"] = [0, 6, 12, 18, "stop"];
         }
         this.index = 0;
     },
