@@ -65,6 +65,7 @@ phina.define("qft.Character", {
         this.parentScene = parentScene;
         this.boundingType = "rect";
         this.tweener.setUpdateType('fps');
+        this.setupAnimation(options);
 
         //当り判定用（0:上 1:右 2:下 3:左）
         var w = Math.floor(this.width/4);
@@ -127,7 +128,6 @@ phina.define("qft.Character", {
             this.time++;
             this.beforeAnimation = this.nowAnimation;
         });
-        this.setupAnimation(options);
     },
 
     //画面外落ち
