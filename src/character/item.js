@@ -113,11 +113,19 @@ phina.define("qft.ItemBox", {
         }
     },
 
-    setupAnimation: function() {
+    setupAnimation: function(options) {
         this.spcialAnimation = false;
         this.frame = [];
-        this.frame["close"] = [0];
-        this.frame["open"] = [0, 6, 12, 18, "stop"];
+        if (options.color == undefined || options.color == "gold") {
+            this.frame["close"] = [0];
+            this.frame["open"] = [0, 6, 12, 18, "stop"];
+        } else if (options.color == "red") {
+            this.frame["close"] = [1];
+            this.frame["open"] = [1, 7, 13, 19, "stop"];
+        } else if (options.color == "blue") {
+            this.frame["close"] = [2];
+            this.frame["open"] = [2, 8, 14, 20, "stop"];
+        }
         this.index = 0;
     },
 });
