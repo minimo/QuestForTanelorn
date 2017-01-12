@@ -30,6 +30,9 @@ phina.define("qft.MainScene", {
         //オブジェクト管理レイヤ
         this.objLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
 
+        //エフェクト管理レイヤ
+        this.effectLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
+
         //プレイヤー表示レイヤ
         this.playerLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
 
@@ -60,23 +63,22 @@ phina.define("qft.MainScene", {
         this.time++;
     },
 
+    //敵キャラクタ投入
     spawnEnemy: function(options) {
-        var e = qft.Enemy[options.name](options.properties, this)
-            .addChildTo(this.objLayer)
-            .setPosition(options.x, options.y);
-        return e;
+        return qft.Enemy[options.name](options.properties, this).addChildTo(this.objLayer).setPosition(options.x, options.y);
     },
 
+    //アイテム投入
     spawnItem: function(options) {
-        var e = qft.Item(options, this).addChildTo(this.objLayer).setPosition(options.x, options.y);
-        e.kind = options.kind || 0;
-        return e;
+        return qft.Item(options, this).addChildTo(this.objLayer).setPosition(options.x, options.y);
     },
 
+    //アイテムボックス投入
     spawnItemBox: function(options) {
         return qft.ItemBox(options, this).addChildTo(this.objLayer).setPosition(options.x, options.y);
     },
 
+    //マップ情報の初期化
     setupStageMap: function(stageNumber) {
         stageNumber = stageNumber || 1;
 
@@ -137,14 +139,12 @@ phina.define("qft.MainScene", {
 
     //マップ情報の消去
     clearMap: function() {
-        //マップ画像の消去
-        if (this.map) {
-            this.map.remove();
-            this.map = null;
-        }
         //当たり判定、オブジェクトの全消去
+        this.backgroundLayer.removeChildren();
+        this.foregroundLayer.removeChildren();
         this.collisionLayer.removeChildren();
         this.objLayer.removeChildren();
         this.mapImageLayer.removeChildren();
+        this.effectLayer.removeChildren();
     },
 });
