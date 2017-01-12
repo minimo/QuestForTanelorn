@@ -176,7 +176,6 @@ phina.define("qft.Character", {
             if (that.vy >= 0 && e.hitTestElement(that._collision[2])) {
                 that.y = e.y-e.height*e.originY-h;
                 that.vx += e.vx;
-                that.vy = 0;
                 that.isJump = false;
                 that.onFloor = true;
                 that.throughFloor = null;
