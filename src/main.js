@@ -7,6 +7,10 @@
 
 //phina.globalize();
 
+//デバッグフラグ
+DEBUG = false;
+DEBUG_COLLISION = false;
+
 //定数
 SC_W = 480;
 SC_H = 320;

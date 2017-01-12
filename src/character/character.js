@@ -69,17 +69,26 @@ phina.define("qft.Character", {
         var w = Math.floor(this.width/4);
         var h = Math.floor(this.height/4);
         this._collision = [];
-        this._collision[0] = phina.display.RectangleShape({width: w, height: 2})//.addChildTo(this.parentScene.objLayer);
-        this._collision[1] = phina.display.RectangleShape({width: 2, height: h})//.addChildTo(this.parentScene.objLayer);
-        this._collision[2] = phina.display.RectangleShape({width: w, height: 2})//.addChildTo(this.parentScene.objLayer);
-        this._collision[3] = phina.display.RectangleShape({width: 2, height: h})//.addChildTo(this.parentScene.objLayer);
+        this._collision[0] = phina.display.RectangleShape({width: w, height: 2});
+        this._collision[1] = phina.display.RectangleShape({width: 2, height: h});
+        this._collision[2] = phina.display.RectangleShape({width: w, height: 2});
+        this._collision[3] = phina.display.RectangleShape({width: 2, height: h});
 
-        this.on('removed', function(e) {
-            this._collision[0].remove();
-            this._collision[1].remove();
-            this._collision[2].remove();
-            this._collision[3].remove();
-        });
+        //当たり判定デバッグ用
+        if (DEBUG_COLLISION) {
+            this.on('added', function(e) {
+                this._collision[0].addChildTo(this.parentScene.objLayer);
+                this._collision[1].addChildTo(this.parentScene.objLayer);
+                this._collision[2].addChildTo(this.parentScene.objLayer);
+                this._collision[3].addChildTo(this.parentScene.objLayer);
+            });
+            this.on('removed', function(e) {
+                this._collision[0].remove();
+                this._collision[1].remove();
+                this._collision[2].remove();
+                this._collision[3].remove();
+            });
+        }
 
         this.on('enterframe', function(e) {
             this.x += this.vx;
