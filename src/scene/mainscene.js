@@ -70,12 +70,12 @@ phina.define("qft.MainScene", {
 
     //アイテム投入
     spawnItem: function(options) {
-        return qft.Item(options, this).addChildTo(this.objLayer).setPosition(options.x, options.y);
+        return qft.Item(options.properties, this).addChildTo(this.objLayer).setPosition(options.x, options.y);
     },
 
     //アイテムボックス投入
     spawnItemBox: function(options) {
-        return qft.ItemBox(options, this).addChildTo(this.objLayer).setPosition(options.x, options.y);
+        return qft.ItemBox(options.properties, this).addChildTo(this.objLayer).setPosition(options.x, options.y);
     },
 
     //マップ情報の初期化
@@ -119,6 +119,11 @@ phina.define("qft.MainScene", {
                     if (e.name == "start") {
                         this.player.x = e.x;
                         this.player.y = e.y;
+                        if (e.properties.direction == 0) {
+                            this.player.sprite.scaleX = -1;
+                        } else {
+                            this.player.sprite.scaleX = 1;
+                        }
                     }
                     break;
                 case "enemy":
