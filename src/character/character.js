@@ -127,7 +127,7 @@ phina.define("qft.Character", {
             this.time++;
             this.beforeAnimation = this.nowAnimation;
         });
-        this.setupAnimation();
+        this.setupAnimation(options);
     },
 
     //画面外落ち
@@ -280,7 +280,7 @@ phina.define("qft.Character", {
         this._collision[3].setPosition(this.x - w, this.y);
     },
 
-    setupAnimation: function() {
+    setupAnimation: function(options) {
         this.spcialAnimation = false;
         this.frame = [];
         this.frame["stand"] = [13, 14];
