@@ -149,7 +149,7 @@ phina.define("qft.Character", {
         if (pow == 0) return;
         var sx = Math.cos(direction.toRadian());
         var sy = Math.sin(direction.toRadian());
-        var back = 16+16*pow;
+        var back = 32;
         this.tweener.clear().by({x: back*sx, y: back*sy}, 10, "easeOutElastic");
         this.vx = 0;
         this.vy = 0;

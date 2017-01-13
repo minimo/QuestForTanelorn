@@ -10,13 +10,13 @@ phina.define("qft.Enemy.Slime", {
     superClass: "qft.Enemy",
 
     //ヒットポイント
-    hp: 2,
+    hp: 20,
 
     //防御力
-    deffence: 1,
+    deffence: 10,
 
     //攻撃力
-    power: 1,
+    power: 10,
 
     //視力
     eyesight: 128,

@@ -10,13 +10,13 @@ phina.define("qft.Enemy", {
     superClass: "qft.Character",
 
     //ヒットポイント
-    hp: 1,
+    hp: 10,
 
     //防御力
     deffence: 1,
 
     //攻撃力
-    power: 1,
+    power: 10,
 
     //視力
     eyesight: 64,
@@ -50,7 +50,7 @@ phina.define("qft.Enemy", {
         var dir = 0;
         if (this.x < target.x) dir = 180;
 
-        var pow = Math.floor(target.power / this.deffence);
+        var pow = target.power;
         this.knockback(pow, dir);
         this.mutekiTime = 10;
         this.hp -= pow;

@@ -9,7 +9,10 @@ phina.define("qft.Player", {
     superClass: "qft.Character",
 
     //攻撃力
-    power: 1,
+    power: 10,
+
+    //防御力
+    deffence: 10,
 
     init: function(parentScene) {
         this.superInit({width: 16, height: 20}, parentScene);

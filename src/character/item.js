@@ -60,7 +60,7 @@ phina.define("qft.ItemBox", {
     superClass: "qft.Character",
 
     //耐久力
-    hp: 1,
+    hp: 10,
 
     //アイテム種別
     kind: 0,

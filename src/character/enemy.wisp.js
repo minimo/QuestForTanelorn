@@ -10,16 +10,16 @@ phina.define("qft.Enemy.Wisp", {
     superClass: "qft.Enemy",
 
     //ヒットポイント
-    hp: 1,
+    hp: 10,
 
     //重力加速度
     gravity: 0,
 
     //防御力
-    deffence: 1,
+    deffence: 10,
 
     //攻撃力
-    power: 1,
+    power: 10,
 
     //視力
     eyesight: 128,
