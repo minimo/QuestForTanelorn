@@ -34,7 +34,7 @@ phina.define("qft.Player", {
         this.weapon.tweener.setUpdateType('fps');
 
         //攻撃判定用
-        this.attackCollision = phina.display.DisplayElement({width: 10, height: 26});
+        this.attackCollision = phina.display.RectangleShape({width: 10, height: 26})//.addChildTo(this.parentScene.playerLayer);
         this.attackCollision.update = function() {
             this.x = that.x + that.scaleX*16;
             this.y = that.y;
@@ -146,23 +146,31 @@ phina.define("qft.Player", {
         switch (kind) {
             case 0:
                 this.power = 10;
-                this.attackCollision.width = 10;
+                this.attackCollision.width = 12;
+                this.attackCollision.height = 30;
                 this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
+                this.weapon.setPosition(-3, 3);
                 break;
             case 1:
                 this.power = 15;
                 this.attackCollision.width = 20;
+                this.attackCollision.height = 35;
                 this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
+                this.weapon.setPosition(-3, 3);
                 break;
             case 2:
                 this.power = 20;
-                this.attackCollision.width = 5;
+                this.attackCollision.width = 10;
+                this.attackCollision.height = 26;
                 this.frame["attack"] = [ 44, 44, 44, 43, 43, 43, 42, 42, 42, 41, 41, 41, "stop"];
+                this.weapon.setPosition(-3, 3);
                 break;
-            case 2:
+            case 3:
                 this.power = 10;
-                this.attackCollision.width = 30;
+                this.attackCollision.width = 35;
+                this.attackCollision.height = 10;
                 this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
+                this.weapon.setPosition(0, 0);
                 break;
         }
         this.weapon.setFrameIndex(kind);
@@ -202,10 +210,10 @@ phina.define("qft.Player", {
                 break;
             case 3:
                 this.weapon.tweener.clear()
-                    .set({rotation: 0, alpha: 1.0})
-                    .to({x: 10}, 8)
+                    .set({rotation: -45, alpha: 1.0})
+                    .by({x: -10}, 2)
+                    .by({x: 10}, 5)
                     .fadeOut(1)
-                    .set({x: 0})
                     .call(function() {
                         that.attack = false;
                     });
