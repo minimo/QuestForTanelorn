@@ -146,15 +146,18 @@ phina.define("qft.Player", {
         switch (kind) {
             case 0:
                 this.power = 10;
+                this.attackCollision.width = 10;
                 this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
                 break;
             case 1:
                 this.power = 15;
+                this.attackCollision.width = 20;
                 this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
                 break;
             case 2:
                 this.power = 20;
-                this.frame["attack"] = [ 44, 44, 43, 43, 42, 42, 41, 41, "stop"];
+                this.attackCollision.width = 5;
+                this.frame["attack"] = [ 44, 44, 44, 43, 43, 43, 42, 42, 42, 41, 41, 41, "stop"];
                 break;
             
         }
@@ -167,7 +170,6 @@ phina.define("qft.Player", {
         var that = this;
         switch (this.weapon.frameIndex) {
             case 0:
-            case 1:
                 this.weapon.tweener.clear()
                     .set({rotation: 200, alpha: 1.0})
                     .to({rotation: 360}, 5)
@@ -176,10 +178,19 @@ phina.define("qft.Player", {
                         that.attack = false;
                     });
                 break;
+            case 1:
+                this.weapon.tweener.clear()
+                    .set({rotation: 200, alpha: 1.0})
+                    .to({rotation: 360}, 6)
+                    .fadeOut(1)
+                    .call(function() {
+                        that.attack = false;
+                    });
+                break;
             case 2:
                 this.weapon.tweener.clear()
                     .set({rotation: 400, alpha: 1.0})
-                    .to({rotation: 270}, 7)
+                    .to({rotation: 270}, 8)
                     .fadeOut(1)
                     .call(function() {
                         that.attack = false;
