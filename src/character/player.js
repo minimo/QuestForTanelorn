@@ -19,6 +19,7 @@ phina.define("qft.Player", {
 
     init: function(parentScene) {
         this.superInit({width: 16, height: 20}, parentScene);
+        var that = this;
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("player1", 32, 32).addChildTo(this).setFrameIndex(0);
@@ -33,10 +34,9 @@ phina.define("qft.Player", {
         this.weapon.tweener.setUpdateType('fps');
 
         //攻撃判定用
-        var that = this;
         this.attackCollision = phina.display.DisplayElement({width: 10, height: 26});
         this.attackCollision.update = function() {
-            this.x = that.x - that.sprite.scaleX*16;
+            this.x = that.x + that.scaleX*16;
             this.y = that.y;
         }
 
@@ -54,12 +54,12 @@ phina.define("qft.Player", {
         if (!this.isDead && this.stopTime == 0) {
             if (ct.left) {
                 if (!this.isJump && !this.attack) this.setAnimation("walk");
-                this.sprite.scaleX = 1;
+                this.scaleX = -1;
                 this.vx = -5;
             }
             if (ct.right) {
                 if (!this.isJump && !this.attack) this.setAnimation("walk");
-                this.sprite.scaleX = -1;
+                this.scaleX = 1;
                 this.vx = 5;
             }
             if (ct.up || ct.jump) {
@@ -81,7 +81,6 @@ phina.define("qft.Player", {
                 this.setAnimation("jump");
             }
             if (ct.attack && this.stopTime == 0) {
-                this.attack = true;
                 this.setAnimation("attack");
                 this.weaponAttack();
                 app.playSE("attack");
@@ -108,7 +107,7 @@ phina.define("qft.Player", {
         }
 
         //攻撃判定追従
-        this.attackCollision.x = this.x - this.sprite.scaleX*16;
+        this.attackCollision.x = this.x + this.scaleX*16;
         this.attackCollision.y = this.y;
     },
 
@@ -130,7 +129,7 @@ phina.define("qft.Player", {
     getItem: function(item) {
         //武器
         if (item.weapon) {
-//            this.setWeapon(item.kind);
+            this.setWeapon(item.kind);
             return;
         }
         //装備品
@@ -146,11 +145,16 @@ phina.define("qft.Player", {
     setWeapon: function(kind) {
         switch (kind) {
             case 0:
+                this.power = 10;
+                this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
+                break;
             case 1:
+                this.power = 15;
                 this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
                 break;
             case 2:
-                this.frame["attack"] = [ 44, 43, 42, 41, "stop"];
+                this.power = 20;
+                this.frame["attack"] = [ 44, 44, 43, 43, 42, 42, 41, 41, "stop"];
                 break;
             
         }
@@ -159,14 +163,29 @@ phina.define("qft.Player", {
 
     //装備武器により攻撃モーションを変える
     weaponAttack: function() {
+        this.attack = true;
         var that = this;
-        this.weapon.tweener.clear()
-            .set({rotation: 200, alpha: 1.0})
-            .to({rotation: 360}, 5)
-            .fadeOut(1)
-            .call(function() {
-                that.attack = false;
-            });
+        switch (this.weapon.frameIndex) {
+            case 0:
+            case 1:
+                this.weapon.tweener.clear()
+                    .set({rotation: 200, alpha: 1.0})
+                    .to({rotation: 360}, 5)
+                    .fadeOut(1)
+                    .call(function() {
+                        that.attack = false;
+                    });
+                break;
+            case 2:
+                this.weapon.tweener.clear()
+                    .set({rotation: 400, alpha: 1.0})
+                    .to({rotation: 270}, 7)
+                    .fadeOut(1)
+                    .call(function() {
+                        that.attack = false;
+                    });
+                break;
+        }
     },
 
     setupAnimation: function() {
