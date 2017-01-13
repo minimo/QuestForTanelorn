@@ -32,6 +32,7 @@ phina.define("qft.Enemy.Slime", {
         this.advanceTime = 10;
 
         this.setAnimation("walk");
+        this.setupLifeGauge();
 
         this.direction = 0;
     },

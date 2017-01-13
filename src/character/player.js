@@ -8,6 +8,9 @@
 phina.define("qft.Player", {
     superClass: "qft.Character",
 
+    //ヒットポイント
+    hp: 100,
+
     //攻撃力
     power: 10,
 
@@ -117,6 +120,7 @@ phina.define("qft.Player", {
         this.knockback(target.power, dir);
         this.mutekiTime = 60;
         this.stopTime = 15;
+        this.hp -= target.power;
         if (this.nowAnimation != "jump") this.setAnimation("damage");
 
         return true;

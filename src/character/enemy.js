@@ -104,4 +104,27 @@ phina.define("qft.Enemy", {
         var p = p2.sub(p1);
         return p.toDegree();
     },
+
+    //体力ゲージ設置
+    setupLifeGauge: function() {
+        var that = this;
+        //体力ゲージ
+        var options = {
+            width:  32,
+            height: 2,
+            backgroundColor: 'transparent',
+            fill: 'red',
+            stroke: 'white',
+            strokeWidth: 1,
+            gaugeColor: 'lime',
+            cornerRadius: 0,
+            value: this.hp,
+            maxValue: this.hp,
+        };
+        this.lifeGauge = phina.ui.Gauge(options).addChildTo(this).setPosition(0, 0);
+        this.lifeGauge.update = function() {
+            this.visible = (that.hp != this.maxValue);
+            this.value = that.hp;
+        };
+    },
 });

@@ -38,6 +38,7 @@ phina.define("qft.Enemy.Wisp", {
         this.advanceTime = 10;
 
         this.setAnimation("stand");
+        this.setupLifeGauge();
 
         this.direction = 0;
         this.move = false;

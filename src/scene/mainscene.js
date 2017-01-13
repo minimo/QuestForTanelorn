@@ -42,6 +42,9 @@ phina.define("qft.MainScene", {
         //プレイヤーキャラクタ
         this.player = qft.Player(this).addChildTo(this.playerLayer).setPosition(SC_W*0.5, SC_H*0.5);
 
+        //スクリーン初期化
+        this.setupScreen();
+
         //マップ初期化
         this.setupStageMap(1);
 
@@ -121,6 +124,27 @@ phina.define("qft.MainScene", {
             x += between;
             n++;
         }.bind(this));
+    },
+
+    setupScreen: function() {
+        var that = this;
+        //体力ゲージ
+        var options = {
+            width:  256,
+            height: 5,
+            backgroundColor: 'transparent',
+            fill: 'red',
+            stroke: 'white',
+            strokeWidth: 1,
+            gaugeColor: 'lime',
+            cornerRadius: 0,
+            value: this.player.hp,
+            maxValue: this.player.hp,
+        };
+        this.lifeGauge = phina.ui.Gauge(options).addChildTo(this).setOrigin(0, 0).setPosition(0, 0);
+        this.lifeGauge.update = function() {
+            this.value = that.player.hp;
+        };
     },
 
     //マップ情報の初期化
