@@ -107,9 +107,6 @@ phina.define("qft.ItemBox", {
             this.tweener.clear()
                 .wait(10)
                 .call(function() {
-                    this.properties = {
-                        kind: this.kind,
-                    };
                     var i = this.parentScene.spawnItem(this.x, this.y, {kind: this.kind});
                     i.vy = -5;
                 }.bind(this))
