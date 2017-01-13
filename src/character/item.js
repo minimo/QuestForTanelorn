@@ -69,7 +69,7 @@ phina.define("qft.ItemBox", {
     advanceTime: 3,
 
     init: function(options, parentScene) {
-        this.superInit({width: 16, height: 20}, parentScene);
+        this.superInit({width: 20, height: 20}, parentScene);
 
         //アイテムボックススプライト
         this.sprite = phina.display.Sprite("itembox", 16, 32)
@@ -110,7 +110,7 @@ phina.define("qft.ItemBox", {
                     this.properties = {
                         kind: this.kind,
                     };
-                    var i = this.parentScene.spawnItem(this);
+                    var i = this.parentScene.spawnItem(this.x, this.y, {kind: this.kind});
                     i.vy = -5;
                 }.bind(this))
         }

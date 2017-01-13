@@ -64,18 +64,18 @@ phina.define("qft.MainScene", {
     },
 
     //敵キャラクタ投入
-    spawnEnemy: function(options) {
-        return qft.Enemy[options.name](options.properties, this).addChildTo(this.objLayer).setPosition(options.x, options.y);
+    spawnEnemy: function(x, y, name, options) {
+        return qft.Enemy[name](options, this).addChildTo(this.objLayer).setPosition(x, y);
     },
 
     //アイテム投入
-    spawnItem: function(options) {
-        return qft.Item(options.properties, this).addChildTo(this.objLayer).setPosition(options.x, options.y);
+    spawnItem: function(x, y, options) {
+        return qft.Item(options, this).addChildTo(this.objLayer).setPosition(x, y);
     },
 
     //アイテムボックス投入
-    spawnItemBox: function(options) {
-        return qft.ItemBox(options.properties, this).addChildTo(this.objLayer).setPosition(options.x, options.y);
+    spawnItemBox: function(x, y, options) {
+        return qft.ItemBox(options, this).addChildTo(this.objLayer).setPosition(x, y);
     },
 
     //メッセージ投入
@@ -144,7 +144,6 @@ phina.define("qft.MainScene", {
         phina.display.Sprite(background).addChildTo(this.backgroundLayer).setOrigin(0, 0);
         phina.display.Sprite(foreground).addChildTo(this.foregroundLayer).setOrigin(0, 0);
 
-
         //マップ当たり判定取得
         var objects = tmx.getObjectGroup("collision").objects;
         objects.forEach(function(e) {
@@ -175,13 +174,13 @@ phina.define("qft.MainScene", {
                     }
                     break;
                 case "enemy":
-                    this.spawnEnemy(e);
+                    this.spawnEnemy(e.x, e.y, e.name, e.properties);
                     break;
                 case "item":
-                    this.spawnItem(e);
+                    this.spawnItem(e.x, e.y, e.properties);
                     break;
                 case "itembox":
-                    this.spawnItemBox(e);
+                    this.spawnItemBox(e.x, e.y, e.properties);
                     break;
             }
         }.bind(this));
