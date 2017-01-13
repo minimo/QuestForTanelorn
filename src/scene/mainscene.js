@@ -8,8 +8,11 @@
 phina.define("qft.MainScene", {
     superClass: "phina.display.DisplayScene",
 
-    //マップ情報
+    //現在ステージ番号
     stageNumber: 1,
+
+    //残り時間
+    timeLimit: FPS*60*5,
 
     init: function() {
         this.superInit();
@@ -64,6 +67,7 @@ phina.define("qft.MainScene", {
         this.mapLayer.y = SC_H*0.5-this.player.y;
         if (this.mapLayer.y < -(this.map.height-SC_H)) this.mapLayer.y = -(this.map.height-SC_H);
         this.time++;
+        this.timeLimit--;
     },
 
     //敵キャラクタ投入
@@ -126,8 +130,22 @@ phina.define("qft.MainScene", {
         }.bind(this));
     },
 
+    //スクリーン初期化
     setupScreen: function() {
         var that = this;
+        var labelParam = {
+            fill: "white",
+            stroke: "black",
+            strokeWidth: 1,
+
+            fontFamily: "UbuntuMono",
+            align: "left",
+            baseline: "middle",
+            fontSize: 20,
+            fontWeight: ''
+        };
+        phina.display.Label({text: "LIFE"}.$safe(labelParam)).addChildTo(this).setPosition(0, 10);
+
         //体力ゲージ
         var options = {
             width:  256,
@@ -135,16 +153,21 @@ phina.define("qft.MainScene", {
             backgroundColor: 'transparent',
             fill: 'red',
             stroke: 'white',
-            strokeWidth: 1,
+            strokeWidth: 2,
             gaugeColor: 'lime',
             cornerRadius: 0,
             value: this.player.hp,
             maxValue: this.player.hp,
         };
-        this.lifeGauge = phina.ui.Gauge(options).addChildTo(this).setOrigin(0, 0).setPosition(0, 0);
+        this.lifeGauge = phina.ui.Gauge(options).addChildTo(this).setOrigin(0, 0.5).setPosition(40, 10);
         this.lifeGauge.update = function() {
             this.value = that.player.hp;
         };
+
+        var tl = phina.display.Label({text: "TIME:", align: "right"}.$safe(labelParam)).addChildTo(this).setPosition(SC_W, 10);
+        tl.update = function() {
+            this.text = "TIME:"+Math.floor(that.timeLimit/30);
+        }
     },
 
     //マップ情報の初期化
