@@ -159,7 +159,11 @@ phina.define("qft.Player", {
                 this.attackCollision.width = 5;
                 this.frame["attack"] = [ 44, 44, 44, 43, 43, 43, 42, 42, 42, 41, 41, 41, "stop"];
                 break;
-            
+            case 2:
+                this.power = 10;
+                this.attackCollision.width = 30;
+                this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
+                break;
         }
         this.weapon.setFrameIndex(kind);
     },
@@ -192,6 +196,16 @@ phina.define("qft.Player", {
                     .set({rotation: 400, alpha: 1.0})
                     .to({rotation: 270}, 8)
                     .fadeOut(1)
+                    .call(function() {
+                        that.attack = false;
+                    });
+                break;
+            case 3:
+                this.weapon.tweener.clear()
+                    .set({rotation: 0, alpha: 1.0})
+                    .to({x: 10}, 8)
+                    .fadeOut(1)
+                    .set({x: 0})
                     .call(function() {
                         that.attack = false;
                     });
