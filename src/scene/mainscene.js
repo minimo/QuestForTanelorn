@@ -211,8 +211,8 @@ phina.define("qft.MainScene", {
             switch (e.type) {
                 case "player":
                     if (e.name == "start") {
-                        this.player.x = e.x;
-                        this.player.y = e.y;
+                        this.player.x = e.x + e.width / 2;
+                        this.player.y = e.y + e.height / 2;
                         if (e.properties.direction == 0) {
                             this.player.sprite.scaleX = -1;
                         } else {
@@ -221,13 +221,24 @@ phina.define("qft.MainScene", {
                     }
                     break;
                 case "enemy":
-                    this.spawnEnemy(e.x, e.y, e.name, e.properties);
+                    var x = e.x + e.width / 2;
+                    var y = e.y + e.height / 2;
+                    this.spawnEnemy(x, y, e.name, e.properties);
                     break;
                 case "item":
-                    this.spawnItem(e.x, e.y, e.properties);
+                    var x = e.x + e.width / 2;
+                    var y = e.y + e.height / 2;
+                    this.spawnItem(x, y, e.properties);
                     break;
                 case "itembox":
-                    this.spawnItemBox(e.x, e.y, e.properties);
+                    var x = e.x + e.width / 2;
+                    var y = e.y + e.height / 2;
+                    this.spawnItemBox(x, y, e.properties);
+                    break;
+                case "door":
+                    var x = e.x + e.width / 2;
+                    var y = e.y + e.height / 2;
+                    qft.MapObject.Door(this).addChildTo(this.objLayer).setPosition(x, y);
                     break;
             }
         }.bind(this));

@@ -38,6 +38,7 @@ phina.define("qft.Enemy.Slime", {
     },
 
     update: function() {
+        if (this.isDead) return;
         if (this.onFloor) {
             //崖っぷちで折り返す
             if (this.checkMapCollision2(this.x+5, this.y+20, 5, 5) == null) {
@@ -67,7 +68,7 @@ phina.define("qft.Enemy.Slime", {
             } else {
                 this.vx = 2;
             }
-            if (this.attack) this.attack *= 3;
+            if (this.attack) this.vx *= 3;
 
         }
     },
