@@ -90,13 +90,6 @@ phina.define("qft.Enemy", {
         return result;
     },
 
-    //プレイヤーからの直線距離
-    getDistancePlayer: function() {
-        var x = this.x-this.parentScene.player.x;
-        var y = this.y-this.parentScene.player.y;
-        return Math.sqrt(x*x+y*y);
-    },
-
     //自分とプレイヤーを結ぶ直線の角度
     getPlayerAngle: function() {
         var p1 = phina.geom.Vector2(this.x, this.y);

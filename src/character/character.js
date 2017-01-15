@@ -299,6 +299,13 @@ phina.define("qft.Character", {
         this.index = -1;
     },
 
+    //プレイヤーからの直線距離
+    getDistancePlayer: function() {
+        var x = this.x-this.parentScene.player.x;
+        var y = this.y-this.parentScene.player.y;
+        return Math.sqrt(x*x+y*y);
+    },
+
     //物理現象情報のみオブジェクトで取得
     getPhisics: function() {
         return {
