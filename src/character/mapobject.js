@@ -23,6 +23,13 @@ phina.define("qft.MapObject.Door", {
     },
 
     update: function(e) {
+        if (this.getDistancePlayer() < 64) {
+            this.setAnimation("open");
+        } else {
+            if (this.nowAnimation == "open") {
+                this.setAnimation("close");
+            }
+        }
     },
 
     setupAnimation: function(options) {
