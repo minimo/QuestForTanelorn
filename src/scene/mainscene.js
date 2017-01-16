@@ -86,9 +86,9 @@ phina.define("qft.MainScene", {
     },
 
     //メッセージ投入
-    spawnMessage: function(text, between, waitTime) {
+    spawnMessage: function(text, between, waitFrame) {
         between = between || 32;
-        waitTime = waitTime || 1000;
+        waitFrame = waitFrame || 30;
         var arrayText = text.split("");
         var labelParam = {
             fill: "white",
@@ -106,27 +106,18 @@ phina.define("qft.MainScene", {
         arrayText.forEach(function(e) {
             if (e == " ") {
                 x += between;
-                n++;
                 return;
             }
             var lb = phina.display.Label({text: e}.$safe(labelParam)).setPosition(x, SC_H*0.5+32).setScale(0, 1).addChildTo(this);
-            lb.tweener.clear()
+            lb.tweener.clear().setUpdateType('fps')
                 .set({alpha: 0})
-                .wait(n*50)
-                .to({scaleX: 1.0, alpha: 1, y: SC_H*0.5}, 500, "easeOutSine")
-                .wait(waitTime-n*50)
-                .set({alpha: 0})
-                .to({scaleX: 0.0, alpha: 0, y: SC_H*0.5-32}, 500, "easeOutSine")
+                .wait(n)
+                .to({scaleX: 1.0, alpha: 1, y: SC_H*0.5}, 15, "easeOutSine")
+                .wait(waitFrame)
+                .to({scaleX: 0.0, y: SC_H*0.5-32}, 10, "easeOutSine")
                 .call(function(){this.remove()}.bind(lb));
-            var pt = phina.display.Sprite("particle", 16, 16).setFrameIndex(48).setPosition(x, SC_H*0.5).setScale(3, 3).addChildTo(this);
-            pt.alpha = 0;
-            pt.tweener.clear()
-                .wait(n*50+waitTime)
-                .to({alpha: 1}, waitTime-n*50, "easeOutSine")
-                .to({scaleX: 0.0, alpha: 0, y: SC_H*0.5-32}, waitTime, "easeOutSine")
-                .call(function(){this.remove()}.bind(pt));
             x += between;
-            n++;
+            n += 5;
         }.bind(this));
     },
 
@@ -175,7 +166,7 @@ phina.define("qft.MainScene", {
         stageNumber = stageNumber || 1;
 
         //ステージ開始メッセージ投入
-        this.spawnMessage("STAGE "+stageNumber, 24, 1000);
+        this.spawnMessage("STAGE "+stageNumber, 24);
 
         //登録済みマップの消去
         this.clearMap();
