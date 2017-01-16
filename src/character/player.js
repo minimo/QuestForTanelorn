@@ -17,6 +17,18 @@ phina.define("qft.Player", {
     //防御力
     deffence: 10,
 
+    //下押し連続フレーム数
+    downFrame: 0,
+
+    //前フレームの情報
+    before: {
+        //操作系
+        up: false,
+        down: false,
+        attack: false,
+        jump: false,
+    },
+
     init: function(parentScene) {
         this.superInit({width: 16, height: 20}, parentScene);
         var that = this;
@@ -52,26 +64,32 @@ phina.define("qft.Player", {
         //プレイヤー操作
         var ct = app.controller;
         if (!this.isDead && this.stopTime == 0) {
+            //左移動
             if (ct.left) {
                 if (!this.isJump && !this.attack) this.setAnimation("walk");
                 this.scaleX = -1;
                 this.vx = -5;
             }
+            //右移動
             if (ct.right) {
                 if (!this.isJump && !this.attack) this.setAnimation("walk");
                 this.scaleX = 1;
                 this.vx = 5;
             }
+            //ジャンプ
             if (ct.up || ct.jump) {
-                if (!ct.down && !this.isJump && this.onFloor) {
+                if (!this.before.jump && !ct.down && !this.isJump && this.onFloor) {
                     this.setAnimation("jump");
                     this.isJump = true;
                     this.vy = -11;
                 }
             }
-            if (ct.down && ct.jump && this.onFloor && !this.throughFloor) {
-                var floor = this.checkMapCollision2(this.x, this.y+16, 5, 5);
-                if (!floor.disableThrough) this.throughFloor = floor;
+            //床スルー
+            if (this.downFrame > 6 || ct.down && ct.jump) {
+                if (this.onFloor && !this.throughFloor) {
+                    var floor = this.checkMapCollision2(this.x, this.y+16, 5, 5);
+                    if (!floor.disableThrough) this.throughFloor = floor;
+                }
             }
         }
         if (!this.attack) {
@@ -80,7 +98,7 @@ phina.define("qft.Player", {
             } else {
                 this.setAnimation("jump");
             }
-            if (ct.attack && this.stopTime == 0) {
+            if (ct.attack && !this.before.attack && this.stopTime == 0) {
                 this.setAnimation("attack");
                 this.weaponAttack();
                 app.playSE("attack");
@@ -109,6 +127,18 @@ phina.define("qft.Player", {
         //攻撃判定追従
         this.attackCollision.x = this.x + this.scaleX*16;
         this.attackCollision.y = this.y;
+
+        //情報保存
+        this.before.up = ct.up;
+        this.before.down = ct.down;
+        this.before.attack = ct.attack;
+        this.before.jump = ct.up || ct.jump;
+
+        if (this.onFloor && ct.down) {
+            this.downFrame++;
+        } else {
+            this.downFrame = 0;
+        }
     },
 
     damage: function(target) {
