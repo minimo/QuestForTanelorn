@@ -46,11 +46,7 @@ phina.define("qft.Player", {
         this.weapon.tweener.setUpdateType('fps');
 
         //攻撃判定用
-        this.attackCollision = phina.display.RectangleShape({width: 10, height: 26})//.addChildTo(this.parentScene.playerLayer);
-        this.attackCollision.update = function() {
-            this.x = that.x + that.scaleX*16;
-            this.y = that.y;
-        }
+        this.attackCollision = phina.display.RectangleShape({width: 14, height: 26})//.addChildTo(this.parentScene.playerLayer);
 
         this.setAnimation("walk");
         this.beforeAnimation = "";
@@ -125,7 +121,7 @@ phina.define("qft.Player", {
         }
 
         //攻撃判定追従
-        this.attackCollision.x = this.x + this.scaleX*16;
+        this.attackCollision.x = this.x + this.scaleX*12;
         this.attackCollision.y = this.y;
 
         //情報保存
@@ -176,28 +172,28 @@ phina.define("qft.Player", {
         switch (kind) {
             case 0:
                 this.power = 10;
-                this.attackCollision.width = 12;
+                this.attackCollision.width = 14;
                 this.attackCollision.height = 30;
                 this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
                 this.weapon.setPosition(-3, 3);
                 break;
             case 1:
                 this.power = 15;
-                this.attackCollision.width = 20;
+                this.attackCollision.width = 24;
                 this.attackCollision.height = 35;
                 this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
                 this.weapon.setPosition(-3, 3);
                 break;
             case 2:
                 this.power = 20;
-                this.attackCollision.width = 10;
+                this.attackCollision.width = 14;
                 this.attackCollision.height = 26;
                 this.frame["attack"] = [ 44, 44, 44, 43, 43, 43, 42, 42, 42, 41, 41, 41, "stop"];
                 this.weapon.setPosition(-3, 3);
                 break;
             case 3:
                 this.power = 10;
-                this.attackCollision.width = 35;
+                this.attackCollision.width = 39;
                 this.attackCollision.height = 10;
                 this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
                 this.weapon.setPosition(0, 0);
