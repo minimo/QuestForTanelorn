@@ -20,6 +20,12 @@ phina.define("qft.Player", {
     //下押し連続フレーム数
     downFrame: 0,
 
+    //アイテム所持最大数
+    maxItem: 10,
+
+    //所持アイテム
+    items: [0],
+
     //前フレームの情報
     before: {
         //操作系
@@ -46,7 +52,15 @@ phina.define("qft.Player", {
         this.weapon.tweener.setUpdateType('fps');
 
         //攻撃判定用
-        this.attackCollision = phina.display.RectangleShape({width: 14, height: 26})//.addChildTo(this.parentScene.playerLayer);
+        this.attackCollision = phina.display.RectangleShape({width: 14, height: 26});
+        //当たり判定デバッグ用
+        if (DEBUG_COLLISION) {
+            this.attackCollision.addChildTo(this.parentScene.playerLayer);
+            this.attackCollision.alpha = 0.5;
+            this.on('removed', function(e) {
+                this.attackCollision.remove();
+            });
+        }
 
         this.setAnimation("walk");
         this.beforeAnimation = "";

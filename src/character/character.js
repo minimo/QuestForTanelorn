@@ -83,6 +83,13 @@ phina.define("qft.Character", {
                 this._collision[1].addChildTo(this.parentScene.objLayer);
                 this._collision[2].addChildTo(this.parentScene.objLayer);
                 this._collision[3].addChildTo(this.parentScene.objLayer);
+                this._collision[0].alpha = 0.5;
+                this._collision[1].alpha = 0.5;
+                this._collision[2].alpha = 0.5;
+                this._collision[3].alpha = 0.5;
+                //ダメージ当たり判定表示
+                var c = phina.display.RectangleShape({width: this.width, height: this.height}).addChildTo(this);
+                c.alpha = 0.5;
             });
             this.on('removed', function(e) {
                 this._collision[0].remove();
