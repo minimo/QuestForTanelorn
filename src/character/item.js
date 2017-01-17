@@ -69,7 +69,7 @@ phina.define("qft.ItemBox", {
     advanceTime: 3,
 
     init: function(options, parentScene) {
-        this.superInit({width: 20, height: 20}, parentScene);
+        this.superInit({width: 26, height: 26}, parentScene);
 
         //アイテムボックススプライト
         this.sprite = phina.display.Sprite("itembox", 32, 32)
