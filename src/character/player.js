@@ -81,7 +81,7 @@ phina.define("qft.Player", {
                 }
             }
             //床スルー
-            if (this.downFrame > 6 || ct.down && ct.jump) {
+            if (this.downFrame > 6) {
                 if (this.onFloor && !this.throughFloor) {
                     var floor = this.checkMapCollision2(this.x, this.y+16, 5, 5);
                     if (!floor.disableThrough) this.throughFloor = floor;
@@ -130,7 +130,7 @@ phina.define("qft.Player", {
         this.before.attack = ct.attack;
         this.before.jump = ct.up || ct.jump;
 
-        if (this.onFloor && ct.down) {
+        if (this.onFloor && ct.down && !ct.right && !ct.left && !ct.up && !ct.attack) {
             this.downFrame++;
         } else {
             this.downFrame = 0;
