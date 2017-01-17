@@ -78,7 +78,7 @@ phina.define("qft.Player", {
             }
             //ジャンプ
             if (ct.up || ct.jump) {
-                if (!this.before.jump && !ct.down && !this.isJump && this.onFloor) {
+                if (!ct.down && !this.isJump && this.onFloor) {
                     this.setAnimation("jump");
                     this.isJump = true;
                     this.vy = -11;
