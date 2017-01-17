@@ -54,6 +54,11 @@ phina.define("qft.MainScene", {
         app.volumeBGM = 0.5;
         app.volumeSE = 0.2;
 
+        //メニューを開く
+        this.on('openmenu', function(e) {
+            app.pushScene(qft.MenuScene());
+        });
+
         //ゲームオーバー
         this.on('gameover', function(e) {
             app.pushScene(qft.GameOverScene());
@@ -63,6 +68,12 @@ phina.define("qft.MainScene", {
     },
 
     update: function(app) {
+        var ct = app.controller;
+        //メニューシーンへ移行
+        if (ct.pause) {
+            this.flare('openmenu');
+        }
+
         this.mapLayer.x = SC_W*0.5-this.player.x;
         this.mapLayer.y = SC_H*0.5-this.player.y;
         if (this.mapLayer.y < -(this.map.height-SC_H)) this.mapLayer.y = -(this.map.height-SC_H);
