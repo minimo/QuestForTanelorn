@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="60" tilewidth="16" tileheight="16" nextobjectid="11">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="60" tilewidth="16" tileheight="16" nextobjectid="12">
  <tileset firstgid="1" name="A" tilewidth="16" tileheight="16" tilecount="768" columns="32">
   <image source="TileA1.png" width="512" height="384"/>
  </tileset>
  <tileset firstgid="769" name="TileA2" tilewidth="32" tileheight="32" tilecount="192" columns="16">
   <image source="TileA2.png" width="512" height="384"/>
  </tileset>
- <layer name="map" width="40" height="60">
+ <layer name="map" width="40" height="60" offsetx="1" offsety="0">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 789,0,790,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -87,5 +87,7 @@
   <object id="9" gid="80" x="188" y="332" width="16" height="16"/>
   <object id="10" gid="77" x="124" y="348" width="16" height="16"/>
  </objectgroup>
- <objectgroup name="test" offsetx="-12" offsety="88"/>
+ <objectgroup color="#0000ff" draworder="index" name="test" offsetx="-12" offsety="88">
+  <object id="11" x="496" y="-28" width="76" height="76"/>
+ </objectgroup>
 </map>
