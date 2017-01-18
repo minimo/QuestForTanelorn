@@ -57,6 +57,9 @@ phina.define("qft.Character", {
     //地形無視
     ignoreCollision: false,
 
+    //スクリーン内フラグ
+    onScreen: false,
+
     //経過フレーム
     time: 0,
 
@@ -110,6 +113,13 @@ phina.define("qft.Character", {
             //当たり判定
             this.resetCollisionPosition();
             this.checkMapCollision();
+
+            //スクリーン内判定
+            if (this.hitTestElement(this.parentScene.screen)) {
+                this.onScreen = true;
+            } else {
+                this.onScreen = false;
+            }
 
             //画面外落ち
             if (!this.isDead && this.y > this.parentScene.map.height) this.dropDead();
