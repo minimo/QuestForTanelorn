@@ -200,11 +200,21 @@ phina.define("qft.MainScene", {
                 .addChildTo(this.collisionLayer)
                 .setPosition(e.x+e.width/2, e.y+e.height/2)
                 .setVisible(false);
+            c.on('enterframe', function() {
+                this.x += this.vx;
+                this.y += this.vy;
+            });
             c.vx = 0;
             c.vy = 0;
             if (e.name) c.name = e.name;
             if (e.type) c.type = e.type;
             c.$extend(e.properties);
+
+            //個別スクリプトの実行
+            if (c.script) {
+                var sc = "(function(app) {"+c.script+"})";
+                c.update = eval(sc);
+            }
         }.bind(this));
 
         //イベント取得
