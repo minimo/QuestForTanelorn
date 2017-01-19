@@ -250,8 +250,20 @@ phina.define("phina.asset.TiledMap", {
                     }
                 }
             }
+            //オブジェクトグループ
+            if (this.layers[i].type == "objectgroup" && this.layers[i].visible != "0") {
+                if (layerName === undefined || layerName === this.layers[i].name) {
+                    var layer = this.layers[i];
+                    var opacity = layer.opacity || 1.0;
+                    layer.objects.forEach(function(e) {
+                        if (e.gid) {
+                            this._setMapChip(canvas, e.gid, e.x, e.y, opacity);
+                        }
+                    }.bind(this));
+                }
+            }
             //イメージレイヤー
-            if (this.layers[i].type == "imagelayer") {
+            if (this.layers[i].type == "imagelayer" && this.layers[i].visible != "0") {
                 if (layerName === undefined || layerName === this.layers[i].name) {
                     var len = this.layers[i];
                     var image = phina.asset.AssetManager.get('image', this.layers[i].image.source);
