@@ -402,7 +402,7 @@ phina.define("phina.asset.TiledMap", {
                         y: parseFloat(layer.getAttribute("offsety")) || 0,
                         alpha: layer.getAttribute("opacity") || 1,
                         color: layer.getAttribute("color") || null,
-                        draeorder: layer.getAttribute("draworder") || null,
+                        draworder: layer.getAttribute("draworder") || null,
                     };
                     each.call(layer.childNodes, function(elm) {
                         if (elm.nodeType == 3) return;
