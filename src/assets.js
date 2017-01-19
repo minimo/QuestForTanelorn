@@ -34,6 +34,7 @@ phina.define("qft.Assets", {
                         },
                         tmx: {
                             "stage1": "assets/map/stage1.tmx",
+                            "stage2": "assets/map/stage2.tmx",
                         },
                     };
                 default:
