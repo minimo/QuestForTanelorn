@@ -318,6 +318,16 @@ phina.define("phina.asset.TiledMap", {
         return obj;
     },
 
+    //XML属性をJSONに変換（Stringで返す）
+    _attrToJSON_str: function(source) {
+        var obj = {};
+        for (var i = 0; i < source.attributes.length; i++) {
+            var val = source.attributes[i].value;
+            obj[source.attributes[i].name] = val;
+        }
+        return obj;
+    },
+
     //タイルセットのパース
     _parseTilesets: function(xml) {
         var each = Array.prototype.forEach;
@@ -388,11 +398,46 @@ phina.define("phina.asset.TiledMap", {
                         type: "objectgroup",
                         objects: [],
                         name: layer.getAttribute("name"),
+                        x: parseFloat(layer.getAttribute("offsetx")) || 0,
+                        y: parseFloat(layer.getAttribute("offsety")) || 0,
+                        alpha: layer.getAttribute("opacity") || 1,
+                        color: layer.getAttribute("color") || null,
+                        draeorder: layer.getAttribute("draworder") || null,
                     };
                     each.call(layer.childNodes, function(elm) {
                         if (elm.nodeType == 3) return;
                         var d = this._attrToJSON(elm);
                         d.properties = this._propertiesToJSON(elm);
+                        //子要素の解析
+                        if (elm.childNodes.length) {
+                            elm.childNodes.forEach(function(e) {
+                                if (e.nodeType == 3) return;
+                                //楕円
+                                if (e.nodeName == 'ellipse') {
+                                    d.ellipse = true;
+                                }
+                                //多角形
+                                if (e.nodeName == 'polygon') {
+                                    d.polygon = [];
+                                    var attr = this._attrToJSON_str(e);
+                                    var pl = attr.points.split(" ");
+                                    pl.forEach(function(str) {
+                                        var pts = str.split(",");
+                                        d.polygon.push({x: parseFloat(pts[0]), y: parseFloat(pts[1])});
+                                    });
+                                }
+                                //線分
+                                if (e.nodeName == 'polyline') {
+                                    d.polyline = [];
+                                    var attr = this._attrToJSON_str(e);
+                                    var pl = attr.points.split(" ");
+                                    pl.forEach(function(str) {
+                                        var pts = str.split(",");
+                                        d.polyline.push({x: parseFloat(pts[0]), y: parseFloat(pts[1])});
+                                    });
+                                }
+                            }.bind(this));
+                        }
                         l.objects.push(d);
                     }.bind(this));
                     l.properties = this._propertiesToJSON(layer);
