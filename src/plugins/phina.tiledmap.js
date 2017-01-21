@@ -70,7 +70,7 @@ phina.define("phina.asset.TiledMap", {
         return null;
     },
 
-    //オブジェクトグループを配列にして取得
+    //オブジェクトグループを取得（指定が無い場合、全レイヤーを配列にして返す）
     getObjectGroup: function(groupName) {
         groupName = groupName || null;
         var ls = [];
@@ -78,22 +78,32 @@ phina.define("phina.asset.TiledMap", {
         for (var i = 0; i < len; i++) {
             if (this.layers[i].type == "objectgroup") {
                 if (groupName == null || groupName == this.layers[i].name) {
-                    //ディープコピー
-                    var obj = {}.$safe(this.layers[i]);
-                    obj.objects = [];
-                    var len2 = this.layers[i].objects.length;
-                    for (var r = 0; r < len2; r++) {
-                        var obj2 = {
-                            properties: {}.$safe(this.layers[i].objects[r].properties),
-                        }.$safe(this.layers[i].objects[r]);
-                        obj.objects[r] = obj2;
-                    }
+                    //レイヤー情報をクローンする
+                    var obj = this._cloneObjectLayer(this.layers[i]);
                     if (groupName !== null) return obj;
                 }
                 ls.push(obj);
             }
         }
         return ls;
+    },
+
+    //オブジェクトレイヤーをクローンして返す
+    _cloneObjectLayer: function(srcLayer) {
+        var result = {}.$safe(srcLayer);
+        result.objects = [];
+        //レイヤー内オブジェクトのコピー
+        srcLayer.objects.forEach(function(obj){
+            var resObj = {
+                properties: {}.$safe(obj.properties),
+            }.$extend(obj);
+            if (obj.ellipse) resObj.ellipse = obj.ellipse;
+            if (obj.gid) resObj.gid = obj.gid;
+            if (obj.polygon) resObj.polygon = obj.polygon.clone();
+            if (obj.polyline) resObj.polyline = obj.polyline.clone();
+            result.objects.push(resObj);
+        });
+        return result;
     },
 
     _parse: function(data) {
