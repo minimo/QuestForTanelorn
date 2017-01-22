@@ -18,7 +18,7 @@ phina.define("qft.MainScene", {
         this.superInit();
 
         //バックグラウンド
-        this.background = phina.display.Sprite("background", 640, 480).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.5);
+        this.background = phina.display.Sprite("background").addChildTo(this).setPosition(SC_W*0.5, SC_H*0.5);
 
         //マップレイヤー
         this.mapLayer = phina.display.DisplayElement().addChildTo(this);
