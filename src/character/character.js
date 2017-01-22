@@ -30,6 +30,12 @@ phina.define("qft.Character", {
     //床上フラグ
     onFloor: false,
 
+    //はしご上フラグ
+    onLadder: false,
+
+    //階段上フラグ
+    onStairs: false,
+
     //死亡フラグ
     isDead: false,
 
@@ -180,9 +186,22 @@ phina.define("qft.Character", {
         var w = Math.floor(this.width/2)+6;
         var h = Math.floor(this.height/2)+6;
         this.onFloor = false;
+        this.onLadder = false;
+        this.onStairs = false;
         this.parentScene.collisionLayer.children.forEach(function(e) {
             if (that.isDrop) return;
             if (e == that.throughFloor) return;
+            //はしご判定
+            if (e.type == "ladder") {
+                this.onLadder = e.hitTestElement(that);
+                return;
+            };
+            //階段判定
+            if (e.type == "stairs") {
+                this.onStairs = e.hitTestElement(that);
+                return;
+            };
+
             //上側
             if (that.vy < 0 && e.hitTestElement(that._collision[0])) {
                 that.y = e.y+e.height*(1-e.originY)+h;
