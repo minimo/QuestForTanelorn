@@ -16,7 +16,8 @@ phina.define("qft.Assets", {
                             "player2":    "assets/image/actor19.png",
                             "item":       "assets/image/item.png",
                             "itembox":    "assets/image/takarabako.png",
-                            "background": "assets/image/pipo-bg001.jpg",
+//                            "background": "assets/image/pipo-bg001.jpg",
+                            "background":"assets/image/back-s03b.png",
                             "particle":   "assets/image/particle.png",
                             "door":       "assets/image/door.png",
 
