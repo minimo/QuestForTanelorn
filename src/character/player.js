@@ -99,13 +99,11 @@ phina.define("qft.Player", {
             if (this.onLadder) {
                 if (ct.up) {
                     this.vx = 0;
-                    this.vy = 0;
-                    this.y -= 4;
+                    this.vy = -4;
                     this.isCatchLadder = true;
                 } else if (ct.down) {
                     this.vx = 0;
-                    this.vy = 0;
-                    this.y += 4;
+                    this.vy = 4;
                     this.isCatchLadder = true;
                 }
             } else {

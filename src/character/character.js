@@ -120,7 +120,10 @@ phina.define("qft.Character", {
         this.on('enterframe', function(e) {
             this.x += this.vx;
             this.vx *= this.friction;
-            if (!this.isCatchLadder) {
+            if (this.isCatchLadder) {
+                this.y += this.vy;
+                this.vy = 0;
+            } else {
                 this.y += this.vy;
                 this.vy += this.gravity;
             }
@@ -200,7 +203,7 @@ phina.define("qft.Character", {
         var h = Math.floor(this.height/2)+6;
         this.onFloor = false;
         this.onLadder = false;
-        
+
         //地形接触判定
         this.parentScene.collisionLayer.children.forEach(function(e) {
             if (that.isDrop) return;
@@ -212,45 +215,49 @@ phina.define("qft.Character", {
                 that.onStairs = that.onLadder && (e.type == "stairs");
                 return;
             };
-
             //上側
-            if (that.vy < 0 && e.hitTestElement(that._collision[0])) {
-                that.y = e.y+e.height*(1-e.originY)+h;
-                that.vy = 0;
-                ret[0] = e;
-                that.resetCollisionPosition();
-            }
+            if (that.vy < 0 && e.hitTestElement(that._collision[0])) ret[0] = e;
             //下側
-            if (that.vy >= 0 && e.hitTestElement(that._collision[2])) {
-                that.y = e.y-e.height*e.originY-h;
-                that.vx += e.vx;
-                that.isJump = false;
-                that.onFloor = true;
-                that.throughFloor = null;
-                ret[2] = e;
-                if (that.rebound > 0) {
-                    that.isJump = true;
-                    that.vy = -that.vy * that.rebound;
-                } else {
-                    that.vy = 0;
-                }
-                that.resetCollisionPosition();
-            }
+            if (that.vy >= 0 && e.hitTestElement(that._collision[2])) ret[2] = e;
             //右側
-            if (that.vx > 0 && e.hitTestElement(that._collision[1])) {
-                that.x = e.x-e.width*e.originX-w;
-                that.vx = 0;
-                ret[1] = e;
-                that.resetCollisionPosition();
-            }
+            if (that.vx > 0 && e.hitTestElement(that._collision[1])) ret[1] = e;
             //左側
-            if (that.vx < 0 && e.hitTestElement(that._collision[3])) {
-                that.x = e.x+e.width*(1-e.originX)+w;
-                that.vx = 0;
-                ret[3] = e;
-                that.resetCollisionPosition();
-            }
+            if (that.vx < 0 && e.hitTestElement(that._collision[3])) ret[3] = e;
         });
+
+        //上側接触
+        if (ret[0] && !this.isCatchLadder) {
+            this.y = ret[0].y+ret[0].height*(1-ret[0].originY)+h;
+            this.vy = 0;
+            this.resetCollisionPosition();
+        }
+        //下側接触
+        if (ret[2] && !this.isCatchLadder) {
+            this.y = ret[2].y-ret[2].height*ret[2].originY-h;
+            this.vx += ret[2].vx;
+            this.isJump = false;
+            this.onFloor = true;
+            this.throughFloor = null;
+            if (this.rebound > 0) {
+                this.isJump = true;
+                this.vy = -this.vy * this.rebound;
+            } else {
+                this.vy = 0;
+            }
+            this.resetCollisionPosition();
+        }
+        //右側接触
+        if (ret[1] && !this.isCatchLadder) {
+            this.x = ret[1].x-ret[1].width*ret[1].originX-w;
+            this.vx = 0;
+            this.resetCollisionPosition();
+        }
+        //左側接触
+        if (ret[3] && !this.isCatchLadder) {
+           this.x = ret[3].x+ret[3].width*(1-ret[3].originX)+w;
+           this.vx = 0;
+           this.resetCollisionPosition();
+        }
 
         return ret;
     },
@@ -264,6 +271,7 @@ phina.define("qft.Character", {
         var c = phina.display.DisplayElement({width: width, height: height}).setPosition(x, y);
         var ret = null;
         this.parentScene.collisionLayer.children.forEach(function(e) {
+            if (e.type == "ladder" || e.type == "stairs") return;
             if (e.hitTestElement(c)) ret = e;
         });
         return ret;
