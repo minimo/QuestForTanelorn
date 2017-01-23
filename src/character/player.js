@@ -90,15 +90,29 @@ phina.define("qft.Player", {
                 this.vx = 5;
             }
             //ジャンプ
-            if (ct.up || ct.jump) {
-                if (!ct.down && !this.isJump && this.onFloor) {
-                    this.setAnimation("jump");
-                    this.isJump = true;
-                    this.vy = -11;
+            if (ct.up && !ct.down && !this.isJump && this.onFloor && !this.onLadder) {
+                this.setAnimation("jump");
+                this.isJump = true;
+                this.vy = -11;
+            }
+            //梯子
+            if (this.onLadder) {
+                if (ct.up) {
+                    this.vx = 0;
+                    this.vy = 0;
+                    this.y -= 4;
+                    this.isCatchLadder = true;
+                } else if (ct.down) {
+                    this.vx = 0;
+                    this.vy = 0;
+                    this.y += 4;
+                    this.isCatchLadder = true;
                 }
+            } else {
+                this.isCatchLadder = false;
             }
             //床スルー
-            if (this.downFrame > 6) {
+            if (this.downFrame > 6 && !this.onLadder && !this.jump) {
                 if (this.onFloor && !this.throughFloor) {
                     var floor = this.checkMapCollision2(this.x, this.y+16, 5, 5);
                     if (!floor.disableThrough) this.throughFloor = floor;
@@ -107,11 +121,22 @@ phina.define("qft.Player", {
         }
         if (!this.attack) {
             if (this.onFloor) {
-                if (this.nowAnimation != "damage") this.nowAnimation = "walk";
-            } else {
+                if (this.nowAnimation != "damage") this.setAnimation("walk");
+            } else if (this.isCatchLadder) {
+                if (ct.up) {
+                    this.setAnimation("up");
+                } else if (ct.down) {
+                    if (this.onStairs) {
+                        this.setAnimation("down");
+                    } else {
+                        this.setAnimation("up");
+                    }
+                }
+            }else {
                 this.setAnimation("jump");
             }
             if (ct.attack && !this.before.attack && this.stopTime == 0) {
+                this.isCatchLadder = false;
                 this.setAnimation("attack");
                 this.weaponAttack();
                 app.playSE("attack");
@@ -135,6 +160,12 @@ phina.define("qft.Player", {
             } else {
                 this.isAdvanceAnimation = true;
             }
+            if (this.nowAnimation == "up" || this.nowAnimation == "down")
+                if (ct.up || ct.down) {
+                    this.isAdvanceAnimation = true;
+                } else {
+                    this.isAdvanceAnimation = false;
+                }
         }
 
         //攻撃判定追従

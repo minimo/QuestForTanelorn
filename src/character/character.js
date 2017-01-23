@@ -36,6 +36,9 @@ phina.define("qft.Character", {
     //階段上フラグ
     onStairs: false,
 
+    //はしご掴みフラグ
+    isCatchLadder: false,
+
     //死亡フラグ
     isDead: false,
 
@@ -116,9 +119,11 @@ phina.define("qft.Character", {
 
         this.on('enterframe', function(e) {
             this.x += this.vx;
-            this.y += this.vy;
             this.vx *= this.friction;
-            this.vy += this.gravity;
+            if (!this.isCatchLadder) {
+                this.y += this.vy;
+                this.vy += this.gravity;
+            }
             if (Math.abs(this.vx) < 0.01) this.vx = 0;
             if (Math.abs(this.vy) < 0.01) this.vy = 0;
 
@@ -195,18 +200,16 @@ phina.define("qft.Character", {
         var h = Math.floor(this.height/2)+6;
         this.onFloor = false;
         this.onLadder = false;
-        this.onStairs = false;
+        
+        //地形接触判定
         this.parentScene.collisionLayer.children.forEach(function(e) {
             if (that.isDrop) return;
             if (e == that.throughFloor) return;
-            //はしご判定
-            if (e.type == "ladder") {
-                this.onLadder = e.hitTestElement(that);
-                return;
-            };
-            //階段判定
-            if (e.type == "stairs") {
-                this.onStairs = e.hitTestElement(that);
+
+            //梯子判定
+            if (e.type == "ladder" || e.type == "stairs") {
+                that.onLadder = e.hitTestElement(that);
+                that.onStairs = that.onLadder && (e.type == "stairs");
                 return;
             };
 
@@ -248,6 +251,7 @@ phina.define("qft.Character", {
                 that.resetCollisionPosition();
             }
         });
+
         return ret;
     },
 
