@@ -79,13 +79,13 @@ phina.define("qft.Player", {
         if (!this.isDead && this.stopTime == 0) {
             //左移動
             if (ct.left) {
-                if (!this.isJump && !this.attack) this.setAnimation("walk");
+                if (!this.isJump && !this.attack && !this.isCatchLadder) this.setAnimation("walk");
                 this.scaleX = -1;
                 this.vx = -5;
             }
             //右移動
             if (ct.right) {
-                if (!this.isJump && !this.attack) this.setAnimation("walk");
+                if (!this.isJump && !this.attack && !this.isCatchLadder) this.setAnimation("walk");
                 this.scaleX = 1;
                 this.vx = 5;
             }
