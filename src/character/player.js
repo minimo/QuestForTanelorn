@@ -96,26 +96,38 @@ phina.define("qft.Player", {
                 this.vy = -11;
             }
             //梯子
-            if (this.onLadder) {
-                if (ct.up) {
-                    this.vx = 0;
-                    this.vy = -4;
-                    this.isCatchLadder = true;
-                } else if (ct.down) {
+            var footLadder = this.checkFootLadder();
+            if (ct.up && this.onLadder) {
+                this.vx = 0;
+                this.vy = -4;
+                this.isCatchLadder = true;
+            }
+            if (ct.down) {
+                if (this.onLadder || footLadder) {
                     this.vx = 0;
                     this.vy = 4;
                     this.isCatchLadder = true;
                 }
-            } else {
-                this.isCatchLadder = false;
             }
+            if (!this.onLadder && !footLadder) this.isCatchLadder = false;
+
             //床スルー
-            if (this.downFrame > 6 && !this.onLadder && !this.jump) {
+            if (this.downFrame > 6 && !this.jump && !footLadder) {
                 if (this.onFloor && !this.throughFloor) {
                     var floor = this.checkMapCollision2(this.x, this.y+16, 5, 5);
-                    if (!floor.disableThrough) this.throughFloor = floor;
+                    if (!floor[0].disableThrough) this.throughFloor = floor[0];
                 }
             }
+            //足下にはしごあり
+            if (this.onFloor && footLadder) {
+                if (ct.down) {
+                    this.vx = 0;
+                    this.vy = 4;
+                    this.isCatchLadder = true;
+                    this.throughFloor = null;
+                }
+            }
+
         }
         if (!this.attack) {
             if (this.onFloor) {
@@ -176,7 +188,7 @@ phina.define("qft.Player", {
         this.before.attack = ct.attack;
         this.before.jump = ct.up || ct.jump;
 
-        if (this.onFloor && ct.down && !ct.right && !ct.left && !ct.up && !ct.attack) {
+        if (this.onFloor && !this.isCatchLadder && ct.down && !ct.right && !ct.left && !ct.up && !ct.attack) {
             this.downFrame++;
         } else {
             this.downFrame = 0;
@@ -320,5 +332,59 @@ phina.define("qft.Player", {
         this._collision[2].setPosition(this.x, this.y + h);
         this._collision[3].setPosition(this.x - w, this.y - 5);
         return this;
+    },
+
+    //足下はしごチェック
+    checkFootLadder: function() {
+        var ret = null;
+        this.parentScene.collisionLayer.children.forEach(function(e) {
+            if (e.hitTestElement(this._collision[2])) {
+                if (e.type == "ladder" || e.type == "stairs") ret = e;
+            }
+        }.bind(this));
+        return ret;
+    },
+
+    //当たり判定結果反映処理
+    collisionProcess: function(ret) {
+        if (!ret) return;
+
+        var w = Math.floor(this.width/2)+6;
+        var h = Math.floor(this.height/2)+6;
+        this.onFloor = false;
+
+        //上側接触
+        if (ret[0] && !this.isCatchLadder) {
+            this.y = ret[0].y+ret[0].height*(1-ret[0].originY)+h;
+            this.vy = 0;
+            this.resetCollisionPosition();
+        }
+        //下側接触
+        if (ret[2] && !this.isCatchLadder) {
+            this.y = ret[2].y-ret[2].height*ret[2].originY-h;
+            this.vx += ret[2].vx;
+            this.isJump = false;
+            this.onFloor = true;
+            this.throughFloor = null;
+            if (this.rebound > 0) {
+                this.isJump = true;
+                this.vy = -this.vy * this.rebound;
+            } else {
+                this.vy = 0;
+            }
+            this.resetCollisionPosition();
+        }
+        //右側接触
+        if (ret[1] && !this.isCatchLadder) {
+            this.x = ret[1].x-ret[1].width*ret[1].originX-w;
+            this.vx = 0;
+            this.resetCollisionPosition();
+        }
+        //左側接触
+        if (ret[3] && !this.isCatchLadder) {
+           this.x = ret[3].x+ret[3].width*(1-ret[3].originX)+w;
+           this.vx = 0;
+           this.resetCollisionPosition();
+        }
     },
 });

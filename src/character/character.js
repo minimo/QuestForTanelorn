@@ -93,6 +93,7 @@ phina.define("qft.Character", {
         this._collision[1] = phina.display.RectangleShape({width: 2, height: h});
         this._collision[2] = phina.display.RectangleShape({width: w, height: 2});
         this._collision[3] = phina.display.RectangleShape({width: 2, height: h});
+        this.collisionResult = null;
 
         //当たり判定デバッグ用
         if (DEBUG_COLLISION) {
@@ -132,7 +133,7 @@ phina.define("qft.Character", {
 
             //当たり判定
             this.resetCollisionPosition();
-            this.checkMapCollision();
+            this.collisionProcess(this.checkMapCollision());
 
             //スクリーン内判定
             if (this.hitTestElement(this.parentScene.screen)) {
@@ -196,13 +197,11 @@ phina.define("qft.Character", {
 
     //地形当たり判定
     checkMapCollision: function() {
-        if (this.ignoreCollision) return;
+        if (this.ignoreCollision) return null;
         var ret = [];
         var that = this;
-        var w = Math.floor(this.width/2)+6;
-        var h = Math.floor(this.height/2)+6;
-        this.onFloor = false;
         this.onLadder = false;
+        this.onStairs = false;
 
         //地形接触判定
         this.parentScene.collisionLayer.children.forEach(function(e) {
@@ -224,6 +223,16 @@ phina.define("qft.Character", {
             //左側
             if (that.vx < 0 && e.hitTestElement(that._collision[3])) ret[3] = e;
         });
+        return ret;
+    },
+
+    //当たり判定結果反映処理
+    collisionProcess: function(ret) {
+        if (!ret) return;
+
+        var w = Math.floor(this.width/2)+6;
+        var h = Math.floor(this.height/2)+6;
+        this.onFloor = false;
 
         //上側接触
         if (ret[0] && !this.isCatchLadder) {
@@ -258,8 +267,6 @@ phina.define("qft.Character", {
            this.vx = 0;
            this.resetCollisionPosition();
         }
-
-        return ret;
     },
 
     //地形当たり判定（特定地点チェックのみ）衝突したものを配列で返す
