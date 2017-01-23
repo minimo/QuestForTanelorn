@@ -66,6 +66,12 @@ phina.define("qft.Character", {
     //スクリーン内フラグ
     onScreen: false,
 
+    //識別フラグ
+    isPlayer: false,
+    isEnemy: false,
+    isItemBox: false,
+    isItem: false,
+
     //経過フレーム
     time: 0,
 

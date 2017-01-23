@@ -9,6 +9,9 @@
 phina.define("qft.Item", {
     superClass: "qft.Character",
 
+    //識別フラグ
+    isItem: true,
+
     //アイテム種別
     kind: 0,
 
@@ -58,6 +61,9 @@ phina.define("qft.Item", {
 //アイテムボックスクラス
 phina.define("qft.ItemBox", {
     superClass: "qft.Character",
+
+    //識別フラグ
+    isItemBox: true,
 
     //耐久力
     hp: 10,

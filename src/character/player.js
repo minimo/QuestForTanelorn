@@ -8,6 +8,9 @@
 phina.define("qft.Player", {
     superClass: "qft.Character",
 
+    //識別フラグ
+    isPlayer: true,
+
     //ヒットポイント
     hp: 100,
 

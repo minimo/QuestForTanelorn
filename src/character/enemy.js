@@ -9,6 +9,9 @@
 phina.define("qft.Enemy", {
     superClass: "qft.Character",
 
+    //識別フラグ
+    isEnemy: true,
+
     //ヒットポイント
     hp: 10,
 
