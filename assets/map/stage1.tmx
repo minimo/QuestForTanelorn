@@ -280,7 +280,7 @@
     <property name="disableThrough" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="85" type="ladder" x="2760" y="320" width="16" height="208"/>
+  <object id="85" type="ladder" x="2752" y="320" width="32" height="208"/>
   <object id="90" type="ladder" x="368" y="304" width="32" height="240"/>
   <object id="91" x="352" y="304" width="64" height="48"/>
  </objectgroup>
