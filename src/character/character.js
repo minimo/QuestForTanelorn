@@ -262,7 +262,7 @@ phina.define("qft.Character", {
         return ret;
     },
 
-    //地形当たり判定（特定地点チェックのみ）
+    //地形当たり判定（特定地点チェックのみ）衝突したものを配列で返す
     checkMapCollision2: function(x, y, width, height) {
         x = x || this.x;
         y = y || this.y;
@@ -272,7 +272,10 @@ phina.define("qft.Character", {
         var ret = null;
         this.parentScene.collisionLayer.children.forEach(function(e) {
             if (e.type == "ladder" || e.type == "stairs") return;
-            if (e.hitTestElement(c)) ret = e;
+            if (e.hitTestElement(c)) {
+                if (ret == null) ret = [];
+                ret.push(e);
+            }
         });
         return ret;
     },
