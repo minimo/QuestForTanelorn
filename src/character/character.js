@@ -165,6 +165,7 @@ phina.define("qft.Character", {
                 this.flare('dead');
                 this.remove();
             }.bind(this));
+        return this;
     },
 
     //ノックバックモーション
@@ -176,6 +177,7 @@ phina.define("qft.Character", {
         this.tweener.clear().by({x: back*sx, y: back*sy}, 10, "easeOutElastic");
         this.vx = 0;
         this.vy = 0;
+        return this;
     },
 
     //地形当たり判定
@@ -314,6 +316,7 @@ phina.define("qft.Character", {
         this._collision[1].setPosition(this.x + w, this.y);
         this._collision[2].setPosition(this.x, this.y + h);
         this._collision[3].setPosition(this.x - w, this.y);
+        return this;
     },
 
     setupAnimation: function(options) {
@@ -326,6 +329,7 @@ phina.define("qft.Character", {
         this.frame["down"] = [0];
         this.frame["attack"] = [0, "stop"];
         this.index = 0;
+        return this;
     },
 
     setAnimation: function(animName) {
@@ -333,6 +337,7 @@ phina.define("qft.Character", {
         if (animName == this.nowAnimation) return;
         this.nowAnimation = animName;
         this.index = -1;
+        return this;
     },
 
     //プレイヤーからの直線距離

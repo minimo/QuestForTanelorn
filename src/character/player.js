@@ -179,6 +179,7 @@ phina.define("qft.Player", {
         if (item.food) {
             this.hp += item.power;
         }
+        return this;
     },
 
     //武器変更
@@ -214,6 +215,7 @@ phina.define("qft.Player", {
                 break;
         }
         this.weapon.setFrameIndex(kind);
+        return this;
     },
 
     //装備武器により攻撃モーションを変える
@@ -259,6 +261,7 @@ phina.define("qft.Player", {
                     });
                 break;
         }
+        return this;
     },
 
     setupAnimation: function() {
@@ -273,6 +276,7 @@ phina.define("qft.Player", {
         this.frame["damage"] = [ 18, 19, 20];
         this.frame["dead"] = [18, 19, 20];
         this.index = 0;
+        return this;
     },
 
     //当たり判定用エレメントの位置再セット
@@ -283,5 +287,6 @@ phina.define("qft.Player", {
         this._collision[1].setPosition(this.x + w, this.y - 5);
         this._collision[2].setPosition(this.x, this.y + h);
         this._collision[3].setPosition(this.x - w, this.y - 5);
+        return this;
     },
 });
