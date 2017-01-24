@@ -82,7 +82,7 @@ phina.define("qft.Player", {
                 if (!this.isJump && !this.attack && !this.isCatchLadder) this.setAnimation("walk");
                 //はしご掴み状態で左に壁がある場合は不可
                 var c = this._collision[3];
-                if (!(this.isCatchLadder && this.checkMapCollision2(c.x, c.y, c.width, c.height))) {
+                if (!(this.isCatchLadder && this.checkMapCollision2(c.x+6, c.y, c.width, c.height))) {
                     this.scaleX = -1;
                     this.vx = -5;
                 }
@@ -92,7 +92,7 @@ phina.define("qft.Player", {
                 if (!this.isJump && !this.attack && !this.isCatchLadder) this.setAnimation("walk");
                 //はしご掴み状態で右に壁がある場合は不可
                 var c = this._collision[1];
-                if (!(this.isCatchLadder && this.checkMapCollision2(c.x, c.y, c.width, c.height))) {
+                if (!(this.isCatchLadder && this.checkMapCollision2(c.x-6, c.y, c.width, c.height))) {
                     this.scaleX = 1;
                     this.vx = 5;
                 }
@@ -125,6 +125,7 @@ phina.define("qft.Player", {
                         this.vx = 0;
                         this.vy = 0;
                         this.isCatchLadder = true;
+                        this.throughFloor = null;
                     }
                 }
                 //下キー押下
@@ -135,6 +136,7 @@ phina.define("qft.Player", {
                         this.vx = 0;
                         this.vy = 0;
                         this.isCatchLadder = true;
+                        this.throughFloor = null;
                     }
                     //床スルー
                     if (this.downFrame > 6 && !this.jump && !footLadder) {
