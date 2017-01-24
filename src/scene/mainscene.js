@@ -62,7 +62,12 @@ phina.define("qft.MainScene", {
 
         //ゲームオーバー
         this.on('gameover', function(e) {
-            app.pushScene(qft.GameOverScene());
+            app.pushScene(qft.GameOverScene(this));
+        });
+
+        //コンティニュー
+        this.on('continue', function(e) {
+            this.restart();
         });
 
         this.time = 0;
@@ -277,5 +282,11 @@ phina.define("qft.MainScene", {
         this.objLayer.removeChildren();
         this.mapImageLayer.removeChildren();
         this.effectLayer.removeChildren();
+    },
+
+    //リスタート
+    restart: function() {
+        this.setupStageMap();
+        this.player.reset().addChildTo(this.playerLayer);
     },
 });

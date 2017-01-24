@@ -9,8 +9,9 @@
 phina.define("qft.GameOverScene", {
     superClass: "phina.display.DisplayScene",
     
-    init: function() {
+    init: function(parentScene) {
         this.superInit();
+        this.parentScene = parentScene;
 
         var labelParam = {
             fill: "white",
@@ -55,6 +56,13 @@ phina.define("qft.GameOverScene", {
     },
 
     update: function(app) {
+        var ct = app.controller;
+        if (this.time > 120) {
+            if (ct.ok || ct.cancel) {
+                this.parentScene.flare('continue');
+                this.exit();
+            }
+        }
         this.time++;
     },
 });

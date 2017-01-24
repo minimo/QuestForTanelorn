@@ -375,4 +375,42 @@ phina.define("qft.Player", {
         }.bind(this));
         return ret;
     },
+
+    //プレイヤー情報リセット
+    reset: function() {
+        //移動情報
+        this.vx = 0;
+        this.vy = 0;
+
+        //ステータス
+        this.hp = 100;
+
+        //各種フラグ
+        this.isJump = false;
+        this.isDead = false;
+        this.isCatchLadder = false;
+        this.isDrop = false;
+        this.onFloor = false;
+        this.isAdvanceAnimation = true;
+        this.ignoreCollision = false;
+
+        //経過時間系
+        this.mutekiTime = 0;
+        this.stopTime = 0;
+        this.downFrame = 0;
+        this.time = 0;
+
+        //アニメーション
+        this.setAnimation("walk");
+        this.beforeAnimation = "";
+        this.advanceTime = 6;
+
+        //所持武器
+        this.setWeapon(0);
+
+        //所持アイテム
+        this.items = [0];
+
+        return this;
+    },
 });
