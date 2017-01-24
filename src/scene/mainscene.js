@@ -60,6 +60,11 @@ phina.define("qft.MainScene", {
             app.pushScene(qft.MenuScene());
         });
 
+        //ステージクリア
+        this.on('stageclear', function(e) {
+            this.stageClear();
+        });
+
         //ゲームオーバー
         this.on('gameover', function(e) {
             app.pushScene(qft.GameOverScene(this));
@@ -288,5 +293,12 @@ phina.define("qft.MainScene", {
     restart: function() {
         this.setupStageMap();
         this.player.reset().addChildTo(this.playerLayer);
+    },
+
+    //ステージクリア
+    stageClear: function() {
+        //クリアメッセージ投入
+        this.spawnMessage("STAGE "+this.stageNumber+" CLEAR!", 24);
+        this.stageNumber++;
     },
 });
