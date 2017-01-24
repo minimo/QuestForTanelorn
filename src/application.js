@@ -86,6 +86,7 @@ phina.define("qft.Application", {
     },
 
     playSE: function(asset, loop) {
+        if (loop === undefined) loop = false;
         this.soundset.playSE(asset, loop);
     },
 
