@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="40" tilewidth="16" tileheight="16" nextobjectid="92">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="40" tilewidth="16" tileheight="16" nextobjectid="93">
  <tileset firstgid="1" name="A1" tilewidth="16" tileheight="16" tilecount="768" columns="32">
   <image source="TileA1.png" width="512" height="384"/>
  </tileset>
@@ -280,9 +280,9 @@
     <property name="disableThrough" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="85" type="ladder" x="2752" y="320" width="32" height="208"/>
   <object id="90" type="ladder" x="368" y="304" width="32" height="240"/>
   <object id="91" x="352" y="304" width="64" height="48"/>
+  <object id="92" type="ladder" x="2752" y="320" width="32" height="208"/>
  </objectgroup>
  <objectgroup name="event">
   <object id="18" name="start" type="player" x="16" y="464" width="32" height="32">

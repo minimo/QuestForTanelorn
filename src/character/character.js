@@ -212,10 +212,12 @@ phina.define("qft.Character", {
 
             //梯子判定
             if (e.type == "ladder" || e.type == "stairs") {
-                that.onLadder = e.hitTestElement(that);
-                that.onStairs = that.onLadder && (e.type == "stairs");
+                if (e.hitTestElement(that)) {
+                    that.onLadder = true;
+                    that.onStairs = (e.type == "stairs");
+                }
                 return;
-            };
+            }
             //上側
             if (that.vy < 0 && e.hitTestElement(that._collision[0])) ret[0] = e;
             //下側
