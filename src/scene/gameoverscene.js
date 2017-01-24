@@ -52,6 +52,8 @@ phina.define("qft.GameOverScene", {
             n++;
         }.bind(this));
 
+        app.playBGM("gameover");
+
         this.time = 0;
     },
 

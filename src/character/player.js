@@ -235,6 +235,7 @@ phina.define("qft.Player", {
         this.hp -= target.power;
         if (this.nowAnimation != "jump") this.setAnimation("damage");
         this.isCatchLadder = false;
+        app.playSE("damage");
         return true;
     },
 
