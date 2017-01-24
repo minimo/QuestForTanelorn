@@ -80,55 +80,79 @@ phina.define("qft.Player", {
             //左移動
             if (ct.left) {
                 if (!this.isJump && !this.attack && !this.isCatchLadder) this.setAnimation("walk");
-                this.scaleX = -1;
-                this.vx = -5;
+                //はしご掴み状態で左に壁がある場合は不可
+                var c = this._collision[3];
+                if (!(this.isCatchLadder && this.checkMapCollision2(c.x, c.y, c.width, c.height))) {
+                    this.scaleX = -1;
+                    this.vx = -5;
+                }
             }
             //右移動
             if (ct.right) {
                 if (!this.isJump && !this.attack && !this.isCatchLadder) this.setAnimation("walk");
-                this.scaleX = 1;
-                this.vx = 5;
-            }
-            //ジャンプ
-            if (ct.up && !ct.down && !this.isJump && this.onFloor && !this.onLadder) {
-                this.setAnimation("jump");
-                this.isJump = true;
-                this.vy = -11;
-            }
-            //梯子
-            var footLadder = this.checkFootLadder();
-            if (ct.up && this.onLadder) {
-                this.vx = 0;
-                this.vy = -4;
-                this.isCatchLadder = true;
-            }
-            if (ct.down) {
-                if (this.onLadder && footLadder) {
-                    this.vx = 0;
-                    this.vy = 4;
-                    this.isCatchLadder = true;
+                //はしご掴み状態で右に壁がある場合は不可
+                var c = this._collision[1];
+                if (!(this.isCatchLadder && this.checkMapCollision2(c.x, c.y, c.width, c.height))) {
+                    this.scaleX = 1;
+                    this.vx = 5;
                 }
             }
-            if (!this.onLadder && !footLadder) this.isCatchLadder = false;
 
-            //床スルー
-            if (this.downFrame > 6 && !this.jump && !footLadder) {
-                if (this.onFloor && !this.throughFloor) {
-                    var floor = this.checkMapCollision2(this.x, this.y+16, 5, 5);
-                    if (!floor[0].disableThrough) this.throughFloor = floor[0];
+            //足元はしご検知
+            var footLadder = this.checkFootLadder();
+            //はしご掴み状態で操作分岐
+            if (this.isCatchLadder) {
+                if (ct.up) {
+                    this.vx = 0;
+                    this.vy = -4;
                 }
-            }
-            //足下にはしごあり
-            if (this.onFloor && footLadder) {
                 if (ct.down) {
                     this.vx = 0;
                     this.vy = 4;
-                    this.isCatchLadder = true;
-                    this.throughFloor = null;
+                }
+            } else {
+                //上キー押下
+                if (ct.up) {
+                    //ジャンプ
+                    if (!this.isJump && this.onFloor && !this.onLadder) {
+                        this.setAnimation("jump");
+                        this.isJump = true;
+                        this.vy = -11;
+                    }
+                    //はしごを昇る
+                    if (this.onLadder) {
+                        this.setAnimation("up");
+                        this.vx = 0;
+                        this.vy = 0;
+                        this.isCatchLadder = true;
+                    }
+                }
+                //下キー押下
+                if (ct.down) {
+                    //はしごを降りる
+                    if (footLadder) {
+                        this.setAnimation("up");
+                        this.vx = 0;
+                        this.vy = 0;
+                        this.isCatchLadder = true;
+                    }
+                    //床スルー
+                    if (this.downFrame > 6 && !this.jump && !footLadder) {
+                        if (this.onFloor && !this.throughFloor) {
+                            var floor = this.checkMapCollision2(this.x, this.y+16, 5, 5);
+                            if (!floor[0].disableThrough) this.throughFloor = floor[0];
+                        }
+                    }
                 }
             }
 
         }
+        //はしごから外れたら梯子掴み状態キャンセル
+        if (this.isCatchLadder) {
+            if (!this.onLadder && !ct.down || this.onLadder && !footLadder && !ct.up) this.isCatchLadder = false;
+        }
+
+        //攻撃
         if (!this.attack) {
             if (this.onFloor) {
                 if (this.nowAnimation != "damage") this.setAnimation("walk");
@@ -159,7 +183,7 @@ phina.define("qft.Player", {
             this.setAnimation("dead");
         }
 
-        //アクション変更を検知
+        //アニメーション変更を検知
         if (this.nowAnimation != this.beforeAnimation) {
             this.time = 0;
             this.isAdvanceAnimation = true;
@@ -190,6 +214,7 @@ phina.define("qft.Player", {
         this.before.attack = ct.attack;
         this.before.jump = ct.up || ct.jump;
 
+        //ダウンキー連続押下フレームカウント
         if (this.onFloor && !this.isCatchLadder && ct.down && !ct.right && !ct.left && !ct.up && !ct.attack) {
             this.downFrame++;
         } else {
@@ -207,7 +232,7 @@ phina.define("qft.Player", {
         this.stopTime = 15;
         this.hp -= target.power;
         if (this.nowAnimation != "jump") this.setAnimation("damage");
-
+        this.isCatchLadder = false;
         return true;
     },
 
@@ -338,55 +363,14 @@ phina.define("qft.Player", {
 
     //足下はしごチェック
     checkFootLadder: function() {
+        var h = Math.floor(this.height/2)+10;
+        var c = phina.display.DisplayElement({width: 2, height: 2}).setPosition(this.x, this.y+h);
         var ret = null;
         this.parentScene.collisionLayer.children.forEach(function(e) {
-            if (e.hitTestElement(this._collision[2])) {
+            if (e.hitTestElement(c)) {
                 if (e.type == "ladder" || e.type == "stairs") ret = e;
             }
         }.bind(this));
         return ret;
-    },
-
-    //当たり判定結果反映処理
-    collisionProcess: function(ret) {
-        if (!ret) return;
-
-        var w = Math.floor(this.width/2)+6;
-        var h = Math.floor(this.height/2)+6;
-        this.onFloor = false;
-
-        //上側接触
-        if (ret[0] && !this.isCatchLadder) {
-            this.y = ret[0].y+ret[0].height*(1-ret[0].originY)+h;
-            this.vy = 0;
-            this.resetCollisionPosition();
-        }
-        //下側接触
-        if (ret[2] && !this.isCatchLadder) {
-            this.y = ret[2].y-ret[2].height*ret[2].originY-h;
-            this.vx += ret[2].vx;
-            this.isJump = false;
-            this.onFloor = true;
-            this.throughFloor = null;
-            if (this.rebound > 0) {
-                this.isJump = true;
-                this.vy = -this.vy * this.rebound;
-            } else {
-                this.vy = 0;
-            }
-            this.resetCollisionPosition();
-        }
-        //右側接触
-        if (ret[1] && !this.isCatchLadder) {
-            this.x = ret[1].x-ret[1].width*ret[1].originX-w;
-            this.vx = 0;
-            this.resetCollisionPosition();
-        }
-        //左側接触
-        if (ret[3] && !this.isCatchLadder) {
-           this.x = ret[3].x+ret[3].width*(1-ret[3].originX)+w;
-           this.vx = 0;
-           this.resetCollisionPosition();
-        }
     },
 });
