@@ -64,7 +64,7 @@ phina.define("phina.extension.SoundSet", {
         }
         var media = this.find(name);
         if (media) {
-            var vol = this.volumeBGM * media.volume;
+            var vol = this.volumeBGM;
             media.setVolume(vol);
             media.play(loop, callback);
             this.bgm = media;
