@@ -127,6 +127,8 @@ phina.define("qft.Character", {
             } else {
                 this.y += this.vy;
                 this.vy += this.gravity;
+                //落下速度上限
+                if (this.vy > 20) this.vy = 20;
             }
             if (Math.abs(this.vx) < 0.01) this.vx = 0;
             if (Math.abs(this.vy) < 0.01) this.vy = 0;
