@@ -153,7 +153,9 @@ phina.define("qft.Player", {
             }
         }
 
+        //マップ外落下
         if (this.isDead && this.isDrop) {
+            this.hp = 0;
             this.setAnimation("dead");
         }
 
