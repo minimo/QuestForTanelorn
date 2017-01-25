@@ -241,24 +241,28 @@ phina.define("qft.Player", {
         this.isCatchLadder = false;
         app.playSE("damage");
 
-        if (this.hp < 0) {
-            this.hp = 0;
-            this.setAnimation("dead");
-            this.isDead = true;
-            this.isCatchLadder = false;
-            this.vx = 0;
-            this.vy = -6;
-            this.tweener.clear()
-                .wait(120)
-                .call(function(){
-                    this.flare('dead');
-                }.bind(this));
+        if (this.hp <= 0) {
+            this.dead();
         } else {
             this.mutekiTime = 60;
             this.stopTime = 15;
             if (this.nowAnimation != "jump") this.setAnimation("damage");
         }
         return true;
+    },
+
+    dead: function() {
+        this.hp = 0;
+        this.setAnimation("dead");
+        this.isDead = true;
+        this.isCatchLadder = false;
+        this.vx = 0;
+        this.vy = -6;
+        this.tweener.clear()
+            .wait(120)
+            .call(function(){
+                this.flare('dead');
+            }.bind(this));
     },
 
     //アイテム取得

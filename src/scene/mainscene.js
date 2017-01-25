@@ -116,6 +116,12 @@ phina.define("qft.MainScene", {
 
         this.time++;
         this.timeLimit--;
+        if (this.timeLimit < 0) {
+            this.timeLimit = 0;
+        }
+        if (this.timeLimit == 0 && !this.player.isDead) {
+            this.player.dead();
+        }
     },
 
     //敵キャラクタ投入
