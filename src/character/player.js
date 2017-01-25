@@ -59,7 +59,7 @@ phina.define("qft.Player", {
         //当たり判定デバッグ用
         if (DEBUG_COLLISION) {
             this.attackCollision.addChildTo(this.parentScene.playerLayer);
-            this.attackCollision.alpha = 0.5;
+            this.attackCollision.alpha = 0.3;
             this.on('removed', function(e) {
                 this.attackCollision.remove();
             });

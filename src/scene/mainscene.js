@@ -213,13 +213,14 @@ phina.define("qft.MainScene", {
             var c = phina.display.RectangleShape({width: e.width, height: e.height})
                 .addChildTo(this.collisionLayer)
                 .setPosition(e.x+e.width/2, e.y+e.height/2)
-                .setVisible(false);
+                .setVisible(DEBUG_COLLISION);
             c.on('enterframe', function() {
                 this.x += this.vx;
                 this.y += this.vy;
             });
             c.vx = 0;
             c.vy = 0;
+            c.alpha = 0.3;
             if (e.name) c.name = e.name;
             if (e.type) c.type = e.type;
             c.$extend(e.properties);
