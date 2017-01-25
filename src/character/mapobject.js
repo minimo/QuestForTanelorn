@@ -11,8 +11,14 @@ qft.MapObject = {};
 phina.define("qft.MapObject.Door", {
     superClass: "qft.Character",
 
+    //重力加速度
+    gravity: 0.0,
+
     //アニメーション間隔
     advanceTime: 3,
+
+    //地形無視
+    ignoreCollision: true,
 
     init: function(parentScene) {
         this.superInit({width: 36, height: 64}, parentScene);
