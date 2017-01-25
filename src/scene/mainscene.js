@@ -188,11 +188,6 @@ phina.define("qft.MainScene", {
 
     //マップ情報の初期化
     setupStageMap: function(stageNumber) {
-        //マップ情報取得
-        var tmx = phina.asset.AssetManager.get('tmx', "stage2");
-        var a = tmx.getObjectGroup('collision');
-        var b = tmx.getObjectGroup('test');
-
         stageNumber = stageNumber || 1;
 
         //ステージ開始メッセージ投入
