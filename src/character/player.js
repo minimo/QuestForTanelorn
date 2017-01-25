@@ -74,9 +74,19 @@ phina.define("qft.Player", {
     },
 
     update: function(app) {
+        //死亡時は何も出来ない
+        if (this.isDead) {
+            //マップ外落下
+            if (this.isDrop) {
+                this.hp = 0;
+                this.setAnimation("drop");
+            }
+            return;
+        }
+
         //プレイヤー操作
         var ct = app.controller;
-        if (!this.isDead && this.stopTime == 0) {
+        if (this.stopTime == 0) {
             //左移動
             if (ct.left) {
                 if (!this.isJump && !this.attack && !this.isCatchLadder) this.setAnimation("walk");
@@ -179,12 +189,6 @@ phina.define("qft.Player", {
             }
         }
 
-        //マップ外落下
-        if (this.isDead && this.isDrop) {
-            this.hp = 0;
-            this.setAnimation("dead");
-        }
-
         //アニメーション変更を検知
         if (this.nowAnimation != this.beforeAnimation) {
             this.time = 0;
@@ -227,15 +231,33 @@ phina.define("qft.Player", {
     damage: function(target) {
         if (this.mutekiTime > 0) return false;
         if (target.power == 0) return false;
+        if (this.isDead) return false;
+
         var dir = 0;
         if (this.x < target.x) dir = 180;
         this.knockback(target.power, dir);
-        this.mutekiTime = 60;
-        this.stopTime = 15;
+
         this.hp -= target.power;
-        if (this.nowAnimation != "jump") this.setAnimation("damage");
         this.isCatchLadder = false;
         app.playSE("damage");
+
+        if (this.hp < 0) {
+            this.hp = 0;
+            this.setAnimation("dead");
+            this.isDead = true;
+            this.isCatchLadder = false;
+            this.vx = 0;
+            this.vy = -6;
+            this.tweener.clear()
+                .wait(120)
+                .call(function(){
+                    this.flare('dead');
+                }.bind(this));
+        } else {
+            this.mutekiTime = 60;
+            this.stopTime = 15;
+            if (this.nowAnimation != "jump") this.setAnimation("damage");
+        }
         return true;
     },
 
@@ -348,7 +370,8 @@ phina.define("qft.Player", {
         this.frame["down"] = [ 0,  1,  2,  1];
         this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
         this.frame["damage"] = [ 18, 19, 20];
-        this.frame["dead"] = [18, 19, 20];
+        this.frame["drop"] = [18, 19, 20];
+        this.frame["dead"] = [18, 19, 20, 33, 34, 35, "stop"];
         this.index = 0;
         return this;
     },

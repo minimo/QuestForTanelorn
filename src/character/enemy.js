@@ -42,7 +42,7 @@ phina.define("qft.Enemy", {
                 this.damage(pl);
             }
             //プレイヤーとの当たり判定
-            if (!this.isDead && this.hitTestElement(pl)) {
+            if (!this.isDead && !pl.isDead && this.hitTestElement(pl)) {
                 pl.damage(this);
             }
         });

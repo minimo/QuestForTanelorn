@@ -57,7 +57,7 @@ phina.define("qft.Character", {
     //前フレーム実行アクション
     beforeAnimation: "",
 
-    //アニメーション進行可能フラグ   
+    //アニメーション進行可能フラグ
     isAdvanceAnimation: true,
 
     //アニメーション間隔
