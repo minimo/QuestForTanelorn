@@ -65,6 +65,9 @@ phina.define("qft.Player", {
             });
         }
 
+        //はしご判定用
+        this.ladderCollision = phina.display.RectangleShape({width: 16, height: 20});
+
         this.setAnimation("walk");
         this.beforeAnimation = "";
 
@@ -161,7 +164,8 @@ phina.define("qft.Player", {
         }
         //はしごから外れたら梯子掴み状態キャンセル
         if (this.isCatchLadder) {
-            if (!this.onLadder && !ct.down || this.onLadder && !footLadder && !ct.up) this.isCatchLadder = false;
+            if (!this.onLadder && !ct.down || this.onLadder && !footLadder && !ct.up)
+                this.isCatchLadder = false;
         }
 
         //攻撃
@@ -388,13 +392,14 @@ phina.define("qft.Player", {
         this._collision[1].setPosition(this.x + w, this.y - 5);
         this._collision[2].setPosition(this.x, this.y + h);
         this._collision[3].setPosition(this.x - w, this.y - 5);
+        this.ladderCollision.setPosition(this.x, this.y);
         return this;
     },
 
     //足下はしごチェック
     checkFootLadder: function() {
         var h = Math.floor(this.height/2)+10;
-        var c = phina.display.DisplayElement({width: 2, height: 2}).setPosition(this.x, this.y+h);
+        var c = phina.display.DisplayElement({width: 16, height: 2}).setPosition(this.x, this.y+h);
         var ret = null;
         this.parentScene.collisionLayer.children.forEach(function(e) {
             if (e.hitTestElement(c)) {

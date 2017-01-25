@@ -212,7 +212,7 @@ phina.define("qft.Character", {
 
             //梯子判定
             if (e.type == "ladder" || e.type == "stairs") {
-                if (e.hitTestElement(that)) {
+                if (that.ladderCollision && e.hitTestElement(that.ladderCollision)) {
                     that.onLadder = true;
                     that.onStairs = (e.type == "stairs");
                 }
