@@ -28,7 +28,7 @@ phina.define("qft.Assets", {
                         sound: {
                             "attack":   "assets/sound/sen_ka_katana_sasinuku01.mp3",
                             "hit":      "assets/sound/sen_ka_katana_sasu01.mp3",
-                            "damage":   "assets/sound/se_maoudamashii_battle07.mp3",
+                            "damage":   "assets/sound/se_maoudamashii_battle12.mp3",
                             "bgm1":     "assets/sound/DS-ba01m.mp3",
                             "gameover": "assets/sound/gameover3.mp3",
                         },
