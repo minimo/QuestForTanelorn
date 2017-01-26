@@ -114,6 +114,7 @@ phina.define("qft.Player", {
             //頭上足元はしご検知
             var headLadder = this.checkHeadLadder();
             var footLadder = this.checkFootLadder();
+
             //はしご掴み状態で操作分岐
             if (this.isCatchLadder) {
                 if (ct.up) {

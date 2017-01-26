@@ -136,7 +136,6 @@ phina.define("qft.Character", {
             //当たり判定
             this.resetCollisionPosition();
             this.checkMapCollision();
-            this.collisionProcess();
 
             //スクリーン内判定
             if (this.hitTestElement(this.parentScene.screen)) {
@@ -200,7 +199,7 @@ phina.define("qft.Character", {
 
     //地形当たり判定
     checkMapCollision: function() {
-        if (this.ignoreCollision) return null;
+        if (this.ignoreCollision) return this;
 
         this._collision[0].hit = null;
         this._collision[1].hit = null;
@@ -213,17 +212,10 @@ phina.define("qft.Character", {
 
         //地形接触判定
         this.parentScene.collisionLayer.children.forEach(function(e) {
-            if (that.isDrop) return this;
-            if (e == that.throughFloor) return this;
+            if (that.isDrop) return;
+            if (e == that.throughFloor) return;
+            if (e.type == "ladder" || e.type == "stairs") return;
 
-            //梯子判定
-            if (e.type == "ladder" || e.type == "stairs") {
-                if (that.ladderCollision && e.hitTestElement(that.ladderCollision)) {
-                    that.onLadder = true;
-                    that.onStairs = (e.type == "stairs");
-                }
-                return this;
-            }
             //上側
             if (that.vy < 0  && e.hitTestElement(that._collision[0])) that._collision[0].hit = e;
             //下側
@@ -232,6 +224,21 @@ phina.define("qft.Character", {
             if (that.vx > 0  && e.hitTestElement(that._collision[1])) that._collision[1].hit = e;
             //左側
             if (that.vx < 0  && e.hitTestElement(that._collision[3])) that._collision[3].hit = e;
+        });
+
+        //当たり判定結果反映
+        this.collisionProcess();
+
+        //はしごのみ判定
+        this.parentScene.collisionLayer.children.forEach(function(e) {
+            //梯子判定
+            if (e.type == "ladder" || e.type == "stairs") {
+                if (that.ladderCollision && e.hitTestElement(that.ladderCollision)) {
+                    that.onLadder = true;
+                    that.onStairs = (e.type == "stairs");
+                }
+                return;
+            }
         });
         return this;
     },
