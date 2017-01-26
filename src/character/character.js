@@ -135,7 +135,8 @@ phina.define("qft.Character", {
 
             //当たり判定
             this.resetCollisionPosition();
-            this.collisionProcess(this.checkMapCollision());
+            this.checkMapCollision();
+            this.collisionProcess();
 
             //スクリーン内判定
             if (this.hitTestElement(this.parentScene.screen)) {
@@ -200,15 +201,20 @@ phina.define("qft.Character", {
     //地形当たり判定
     checkMapCollision: function() {
         if (this.ignoreCollision) return null;
-        var ret = [];
+
+        this._collision[0].hit = null;
+        this._collision[1].hit = null;
+        this._collision[2].hit = null;
+        this._collision[3].hit = null;
+
         var that = this;
         this.onLadder = false;
         this.onStairs = false;
 
         //地形接触判定
         this.parentScene.collisionLayer.children.forEach(function(e) {
-            if (that.isDrop) return;
-            if (e == that.throughFloor) return;
+            if (that.isDrop) return this;
+            if (e == that.throughFloor) return this;
 
             //梯子判定
             if (e.type == "ladder" || e.type == "stairs") {
@@ -216,38 +222,38 @@ phina.define("qft.Character", {
                     that.onLadder = true;
                     that.onStairs = (e.type == "stairs");
                 }
-                return;
+                return this;
             }
             //上側
-            if (that.vy < 0 && e.hitTestElement(that._collision[0])) ret[0] = e;
+            if (that.vy < 0  && e.hitTestElement(that._collision[0])) that._collision[0].hit = e;
             //下側
-            if (that.vy >= 0 && e.hitTestElement(that._collision[2])) ret[2] = e;
+            if (that.vy >= 0 && e.hitTestElement(that._collision[2])) that._collision[2].hit = e;
             //右側
-            if (that.vx > 0 && e.hitTestElement(that._collision[1])) ret[1] = e;
+            if (that.vx > 0  && e.hitTestElement(that._collision[1])) that._collision[1].hit = e;
             //左側
-            if (that.vx < 0 && e.hitTestElement(that._collision[3])) ret[3] = e;
+            if (that.vx < 0  && e.hitTestElement(that._collision[3])) that._collision[3].hit = e;
         });
-        return ret;
+        return this;
     },
 
     //当たり判定結果反映処理
-    collisionProcess: function(ret) {
-        if (!ret) return;
-
+    collisionProcess: function() {
         var w = Math.floor(this.width/2)+6;
         var h = Math.floor(this.height/2)+6;
         this.onFloor = false;
 
         //上側接触
-        if (ret[0] && !this.isCatchLadder) {
-            this.y = ret[0].y+ret[0].height*(1-ret[0].originY)+h;
+        if (this._collision[0].hit && !this.isCatchLadder) {
+            var ret = this._collision[0].hit;
+            this.y = ret.y+ret.height*(1-ret.originY)+h;
             this.vy = 0;
             this.resetCollisionPosition();
         }
         //下側接触
-        if (ret[2] && !this.isCatchLadder) {
-            this.y = ret[2].y-ret[2].height*ret[2].originY-h;
-            this.vx += ret[2].vx;
+        if (this._collision[2].hit && !this.isCatchLadder) {
+            var ret = this._collision[2].hit;
+            this.y = ret.y-ret.height*ret.originY-h;
+            this.vx += ret.vx;
             this.isJump = false;
             this.onFloor = true;
             this.throughFloor = null;
@@ -260,16 +266,18 @@ phina.define("qft.Character", {
             this.resetCollisionPosition();
         }
         //右側接触
-        if (ret[1] && !this.isCatchLadder) {
-            this.x = ret[1].x-ret[1].width*ret[1].originX-w;
+        if (this._collision[1].hit && !this.isCatchLadder) {
+            var ret = this._collision[1].hit;
+            this.x = ret.x-ret.width*ret.originX-w;
             this.vx = 0;
             this.resetCollisionPosition();
         }
         //左側接触
-        if (ret[3] && !this.isCatchLadder) {
-           this.x = ret[3].x+ret[3].width*(1-ret[3].originX)+w;
-           this.vx = 0;
-           this.resetCollisionPosition();
+        if (this._collision[3].hit && !this.isCatchLadder) {
+            var ret = this._collision[3].hit;
+            this.x = ret.x+ret.width*(1-ret.originX)+w;
+            this.vx = 0;
+            this.resetCollisionPosition();
         }
     },
 
