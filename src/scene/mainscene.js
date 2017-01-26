@@ -91,12 +91,15 @@ phina.define("qft.MainScene", {
             .setPosition(SC_W*0.5, SC_H*0.2)
             .addChildTo(this);
             lb1.alpha = 0;
-        lb1.tweener.clear().fadeIn(1000).wait(5000).fadeOut(1000).call(function(){lb1.remove()});
-        var lb2 = phina.display.Label({text: "ツタは上下で昇降可能。宝箱は攻撃で開きます。"}.$safe(labelParam))
-            .setPosition(SC_W*0.5, SC_H*0.2)
-            .addChildTo(this);
-            lb2.alpha = 0;
-        lb2.tweener.clear().wait(7000).fadeIn(1000).wait(5000).fadeOut(1000).call(function(){lb2.remove()});
+        lb1.tweener.clear()
+            .fadeIn(1000).wait(3000).fadeOut(1000)
+            .call(function(){
+                lb1.text = "ツタは上下で昇降可能。宝箱は攻撃で開きます。";
+            })
+            .fadeIn(1000).wait(3000).fadeOut(1000)
+            .call(function(){
+                lb1.remove();
+            });
 
         this.time = 0;
     },
