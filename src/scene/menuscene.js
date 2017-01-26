@@ -87,7 +87,7 @@ phina.define("qft.MenuScene", {
         }.bind(this));
         this.menuBase.tweener.to({rotation: 360}, 30, "easeOutSine");
 
-        this.deg_1 = Math.floor(360/ this.menuItems.length);
+        this.deg_1 = 360/ this.menuItems.length;
 
         this.limitFrame = 30;
 
