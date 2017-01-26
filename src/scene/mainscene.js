@@ -57,7 +57,7 @@ phina.define("qft.MainScene", {
 
         //メニューを開く
         this.on('openmenu', function(e) {
-            app.pushScene(qft.MenuScene());
+            app.pushScene(qft.MenuScene(this));
         });
 
         //ステージクリア
