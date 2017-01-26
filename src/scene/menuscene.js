@@ -8,8 +8,9 @@
 phina.define("qft.MenuScene", {
     superClass: "phina.display.DisplayScene",
 
-    init: function(currentScene) {
+    init: function(currentScene, select) {
         this.superInit();
+        select = select || 0;
 
         this.currentScene = currentScene;
 
@@ -70,22 +71,29 @@ phina.define("qft.MenuScene", {
             ic.rad = rad;
             ic.id = id;
             ic.distance = 0;
+            ic.isClose = false;
             ic.update = function() {
                 this.rotation = -that.menuBase.rotation;
                 this.x =  Math.sin(this.rad)*this.distance;
                 this.y = -Math.cos(this.rad)*this.distance;
+                if (this.isClose) return;
                 if (this.id == that.select) {
-                    ic.tweener.clear().to({distance: 72, scaleX: 3, scaleY: 3}, 100);
+                    this.tweener.clear().to({distance: 100, scaleX: 3, scaleY: 3}, 100);
                 } else {
-                    ic.tweener.clear().to({distance: 48, scaleX: 1, scaleY: 1}, 100);
+                    this.tweener.clear().to({distance: 72, scaleX: 1, scaleY: 1}, 100);
                 }
+            }
+            ic.close = function() {
+                this.tweener.clear().to({distance: 0, scaleX: 1, scaleY: 1}, 100);
+                this.isClose = true;
             }
             ic.tweener.clear().to({distance: 48}, 500);
             this.icon.push(ic);
             rad += rad_1;
             id++;
         }.bind(this));
-        this.menuBase.tweener.to({rotation: 360}, 30, "easeOutSine");
+        this.menuBase.rotation = -90;
+        this.menuBase.tweener.to({rotation: 0}, 15, "easeOutSine");
 
         this.deg_1 = 360/ this.menuItems.length;
 
@@ -97,8 +105,10 @@ phina.define("qft.MenuScene", {
 
     update: function() {
         var ct = app.controller;
-        if (this.time > 30 && !this.isExit) {
-            if (ct.start || ct.pause) {
+        if (this.time > 10 && !this.isExit) {
+            if (ct.start || ct.pause || ct.menu) {
+                this.isExit = true;
+                this.close();
                 this.tweener.clear()
                     .wait(100)
                     .call(function() {
@@ -128,6 +138,13 @@ phina.define("qft.MenuScene", {
         }
         this.limitFrame--;
         this.time++;
+    },
+
+    close: function() {
+        this.menuBase.tweener.clear().by({rotation: 180}, 15, "easeOutSine");
+        this.icon.forEach(function(e) {
+            e.close();
+        }.bind(this));
     },
 });
 

@@ -107,7 +107,7 @@ phina.define("qft.MainScene", {
     update: function(app) {
         var ct = app.controller;
         //メニューシーンへ移行
-        if (ct.pause) {
+        if (ct.pause || ct.menu) {
             this.flare('openmenu');
         }
 
