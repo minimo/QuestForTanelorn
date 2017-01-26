@@ -75,7 +75,7 @@ phina.define("qft.MenuScene", {
                 this.x =  Math.sin(this.rad)*this.distance;
                 this.y = -Math.cos(this.rad)*this.distance;
                 if (this.id == that.select) {
-                    ic.tweener.clear().to({distance: 64, scaleX: 2.5, scaleY: 2.5}, 100);
+                    ic.tweener.clear().to({distance: 72, scaleX: 3, scaleY: 3}, 100);
                 } else {
                     ic.tweener.clear().to({distance: 48, scaleX: 1, scaleY: 1}, 100);
                 }
