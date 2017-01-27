@@ -324,6 +324,7 @@ phina.define("qft.MainScene", {
     restart: function() {
         this.setupStageMap();
         this.player.reset().addChildTo(this.playerLayer);
+        this.menuSelect = 0;
     },
 
     //ステージクリア
