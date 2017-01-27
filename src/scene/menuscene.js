@@ -111,6 +111,7 @@ phina.define("qft.MenuScene", {
                     .addChildTo(this.menuBase)
                     .setFrameIndex(e);
             }
+            ic.tweener.setUpdateType('fps');
             ic.rad = rad;
             ic.id = id;
             ic.distance = 0;
@@ -121,13 +122,13 @@ phina.define("qft.MenuScene", {
                 this.y = -Math.cos(this.rad)*this.distance;
                 if (this.isClose) return;
                 if (this.id == that.currentScene.menuSelect) {
-                    this.tweener.clear().to({distance: 100, scaleX: 3, scaleY: 3}, 100);
+                    this.tweener.clear().to({distance: 88, scaleX: 3, scaleY: 3}, 3);
                 } else {
-                    this.tweener.clear().to({distance: 72, scaleX: 1, scaleY: 1}, 100);
+                    this.tweener.clear().to({distance: 72, scaleX: 1, scaleY: 1}, 3);
                 }
             }
             ic.close = function() {
-                this.tweener.clear().to({distance: 0, scaleX: 1, scaleY: 1}, 100);
+                this.tweener.clear().to({distance: 0, scaleX: 1, scaleY: 1}, 3);
                 this.isClose = true;
             }
             ic.tweener.clear().to({distance: 48}, 500);
