@@ -76,18 +76,26 @@ phina.define("qft.Enemy", {
 
         //視野角外の場合は見えない
         if (this.viewAngle != 360) {
-            var angle = this.getPlayerAngle() + this.direction;
-            if (angle > 360) angle -= 360;
-            if (angle < 0) angle += 360;
-            var va = this.viewAngle/2;
-            if (!(-va < angle && angle < va)) return false;
+            //プレイヤーとの角度（右が360度）
+            var angle = Math.floor(this.getPlayerAngle());
+
+            //視界範囲内の判定
+            if (this.direction == 0) {
+                var va = this.viewAngle / 2;
+                if (!(360-va < angle || angle < va)) return false;
+            } else {
+                var dir = this.direction;
+                var va = this.viewAngle / 2;
+                if (!(dir-va < angle && angle < dir+va)) return false;
+            }
         }
 
         var result = true;
         var that = this;
         var player = this.parentScene.player;
         this.parentScene.collisionLayer.children.forEach(function(e) {
-            //自分とプレイヤー間に地形当り判定がある場合見えない
+            if (e.type == "ladder" || this.type == "stairs") return;
+            //自分とプレイヤー間に遮蔽物（地形当り判定）がある場合見えない
             if (phina.geom.Collision.testRectLine(e, that, player)) result = false;
         });
         return result;
