@@ -14,6 +14,9 @@ phina.define("qft.MainScene", {
     //残り時間
     timeLimit: FPS*60*5,
 
+    //メニュー選択中アイテム番号
+    menuSelect: 0,
+
     init: function() {
         this.superInit();
 
