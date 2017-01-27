@@ -27,7 +27,7 @@ phina.define("qft.Player", {
     maxItem: 10,
 
     //所持アイテム
-    items: [0,1,2,3,4,5,6,7,8,9,10],
+    items: [0, 7, 8, 9, 10, 11],
 
     //前フレームの情報
     before: {
@@ -53,6 +53,7 @@ phina.define("qft.Player", {
             .setPosition(-3, 3);
         this.weapon.alpha = 0;
         this.weapon.tweener.setUpdateType('fps');
+        this.weapon.type = "sword";
 
         //攻撃判定用
         this.attackCollision = phina.display.RectangleShape({width: 14, height: 26});
@@ -281,6 +282,7 @@ phina.define("qft.Player", {
         //武器
         if (item.weapon) {
             this.setWeapon(item.kind);
+            this.items.push(item.kind);
             return;
         }
         //装備品
@@ -320,6 +322,13 @@ phina.define("qft.Player", {
             case 3:
                 this.power = 10;
                 this.attackCollision.width = 39;
+                this.attackCollision.height = 10;
+                this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
+                this.weapon.setPosition(0, 0);
+                break;
+            case 4:
+                this.power = 5;
+                this.attackCollision.width = 20;
                 this.attackCollision.height = 10;
                 this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
                 this.weapon.setPosition(0, 0);
@@ -462,7 +471,7 @@ phina.define("qft.Player", {
         this.setWeapon(0);
 
         //所持アイテム
-        this.items = [0];
+        this.items = [0, 7, 8, 9, 10, 11];
 
         return this;
     },
