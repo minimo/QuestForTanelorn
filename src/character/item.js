@@ -57,3 +57,94 @@ phina.define("qft.Item", {
         }
     },
 });
+
+phina.define("qft.itemInfo", {
+    _static: {
+        get: function(kind) {
+            switch (kind) {
+                case ITEM_SHORTSWORD:
+                    return {
+                        name: "SHORT SWORD",
+                        type: "sword",
+                        weapon: true,
+                        pow: 10,
+                        width: 14,
+                        height: 30
+                    };
+                case ITEM_LONGSWORD:
+                    return {
+                        name: "LONG SWORD",
+                        type: "sword",
+                        weapon: true,
+                        pow: 15,
+                        width: 24,
+                        height: 25
+                    };
+                case ITEM_AX:
+                    return {
+                        name: "AX",
+                        type: "ax",
+                        weapon: true,
+                        pow: 20,
+                        width: 14,
+                        height: 26
+                    };
+                case ITEM_SPEAR:
+                    return {
+                        name: "SPEAR",
+                        type: "spear",
+                        weapon: true,
+                        pow: 10,
+                        width: 39,
+                        height: 10
+                    };
+                    break;
+                case ITEM_BOW:
+                    return {
+                        name: "BOW",
+                        type: "bow",
+                        weapon: true,
+                        pow: 5,
+                        width: 20,
+                        height: 10
+                    };
+                    break;
+                case ITEM_ROD:
+                    return {
+                        name: "MAGIC ROD",
+                        type: "rod",
+                        weapon: true,
+                        pow: 5,
+                        width: 20,
+                        height: 10
+                    };
+                    break;
+                case ITEM_BOOK:
+                    break;
+                case ITEM_SHIELD:
+                    break;
+                case ITEM_ARMOR:
+                    break;
+                case ITEM_HAT:
+                    break;
+                case ITEM_BOOTS:
+                    break;
+                case ITEM_GROVE:
+                    break;
+                case ITEM_RING:
+                    break;
+                case ITEM_SCROLL:
+                    break;
+                case ITEM_LETTER:
+                    break;
+                case ITEM_CARD:
+                    break;
+                case ITEM_KEY:
+                    break;
+                case ITEM_COIN:
+                    break;
+            }
+        },
+    },
+});
+
