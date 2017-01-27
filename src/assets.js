@@ -16,7 +16,6 @@ phina.define("qft.Assets", {
                             "player2":    "assets/image/actor19.png",
                             "item":       "assets/image/item.png",
                             "itembox":    "assets/image/takarabako.png",
-//                            "background": "assets/image/pipo-bg001.jpg",
                             "background": "assets/image/back-s03b.png",
                             "particle":   "assets/image/particle.png",
                             "door":       "assets/image/door.png",
@@ -37,6 +36,14 @@ phina.define("qft.Assets", {
                         },
                         tmx: {
                             "stage1": "assets/map/stage1.tmx",
+                        },
+                    };
+                case "stage2":
+                    return {
+                        sound: {
+                            "bgm2": "assets/sound/DS-035m.mp3",
+                        },
+                        tmx: {
                             "stage2": "assets/map/stage2.tmx",
                         },
                     };
