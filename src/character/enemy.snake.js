@@ -1,12 +1,12 @@
 /*
- *  enemy.slime.js
- *  2016/12/31
+ *  enemy.snake.js
+ *  2017/01/27
  *  @auther minimo  
  *  This Program is MIT license.
  */
 
 //スライム
-phina.define("qft.Enemy.Slime", {
+phina.define("qft.Enemy.Snake", {
     superClass: "qft.Enemy",
 
     //ヒットポイント
@@ -39,6 +39,11 @@ phina.define("qft.Enemy.Slime", {
 
     update: function() {
         if (this.isDead) return;
+
+        //プレイヤーとの距離
+        var dis = this.getDistancePlayer();
+        var look = this.isLookPlayer();
+
         if (this.onFloor) {
             //崖っぷちで折り返す
             if (this.checkMapCollision2(this.x+5, this.y+20, 5, 5) == null) {
@@ -51,7 +56,7 @@ phina.define("qft.Enemy.Slime", {
                 this.direction = 180;
             }
             //プレイヤーが近くにいたらジャンプ攻撃
-            if (!this.isJump && this.getDistancePlayer() < 40) {
+            if (!this.isJump && dis < 40) {
                 this.isJump = true;
                 this.vy = -6;
                 var pl = this.parentScene.player;
@@ -64,12 +69,16 @@ phina.define("qft.Enemy.Slime", {
         }
         if (this.onFloor || this.isJump) {
             if (this.direction == 0) {
-                this.vx = 2;
+                this.vx = 1;
             } else {
-                this.vx = -2;
+                this.vx = -1;
             }
-            if (this.attack) this.vx *= 3;
-
+        }
+        if (look) this.vx *= 4;
+        if (this.direction == 0) {
+            this.sprite.scaleX = 1;
+        } else {
+            this.sprite.scaleX = -1;
         }
     },
 
@@ -78,7 +87,7 @@ phina.define("qft.Enemy.Slime", {
         this.frame = [];
         this.frame["stand"] = [0, 1, 2, 1];
         this.frame["jump"] = [1, "stop"];
-        this.frame["walk"] = [0, 1, 2, 1];
+        this.frame["walk"] = [63, 64, 65, 64];
         this.frame["up"] =   [0, 1, 2, 1];
         this.frame["down"] = [0, 1, 2, 1];
         this.frame["attack"] = [0, "stop"];
