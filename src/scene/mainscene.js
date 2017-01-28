@@ -276,10 +276,15 @@ phina.define("qft.MainScene", {
             if (e.type) c.type = e.type;
             c.$extend(e.properties);
 
-            //個別スクリプトの実行
+            //常時実行スクリプト
             if (c.script) {
                 var sc = "(function(app) {"+c.script+"})";
                 c.update = eval(sc);
+            }
+            //当たり判定時実行スクリプト
+            if (c.collision) {
+                var sc = "(function(e, dir) {"+c.collision+"})";
+                c.collisionScript = eval(sc);
             }
         }.bind(this));
 

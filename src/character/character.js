@@ -255,6 +255,9 @@ phina.define("qft.Character", {
             this.y = ret.y+ret.height*(1-ret.originY)+h;
             this.vy = 0;
             this.resetCollisionPosition();
+            if (ret.collisionScript) {
+                ret.collisionScript(this, 0);
+            }
         }
         //下側接触
         if (this._collision[2].hit && !this.isCatchLadder) {
@@ -271,6 +274,9 @@ phina.define("qft.Character", {
                 this.vy = 0;
             }
             this.resetCollisionPosition();
+            if (ret.collisionScript) {
+                ret.collisionScript(this, 2);
+            }
         }
         //右側接触
         if (this._collision[1].hit && !this.isCatchLadder) {
@@ -278,6 +284,9 @@ phina.define("qft.Character", {
             this.x = ret.x-ret.width*ret.originX-w;
             this.vx = 0;
             this.resetCollisionPosition();
+            if (ret.collisionScript) {
+                ret.collisionScript(this, 1);
+            }
         }
         //左側接触
         if (this._collision[3].hit && !this.isCatchLadder) {
@@ -285,6 +294,9 @@ phina.define("qft.Character", {
             this.x = ret.x+ret.width*(1-ret.originX)+w;
             this.vx = 0;
             this.resetCollisionPosition();
+            if (ret.collisionScript) {
+                ret.collisionScript(this, 3);
+            }
         }
     },
 
