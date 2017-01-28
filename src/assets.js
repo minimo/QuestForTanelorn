@@ -25,11 +25,13 @@ phina.define("qft.Assets", {
                             "monster08_a3":    "assets/image/chara08_a3.png",
                         },
                         sound: {
-                            "attack":   "assets/sound/sen_ka_katana_sasinuku01.mp3",
-                            "hit":      "assets/sound/sen_ka_katana_sasu01.mp3",
-                            "damage":   "assets/sound/se_maoudamashii_battle12.mp3",
-                            "bgm1":     "assets/sound/DS-ba01m.mp3",
-                            "gameover": "assets/sound/gameover3.mp3",
+                            "attack":     "assets/sound/sen_ka_katana_sasinuku01.mp3",
+                            "hit":        "assets/sound/sen_ka_katana_sasu01.mp3",
+                            "damage":     "assets/sound/se_maoudamashii_battle12.mp3",
+                            "opening":    "assets/sound/DS-104m.mp3",
+                            "bgm1":       "assets/sound/DS-ba01m.mp3",
+                            "stageclear": "assets/sound/DS-030m.mp3",
+                            "gameover":   "assets/sound/gameover3.mp3",
                         },
                         font: {
                             "UbuntuMono": "assets/font/UbuntuMono-Bold.ttf",
