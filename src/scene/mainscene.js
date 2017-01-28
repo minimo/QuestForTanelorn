@@ -114,6 +114,16 @@ phina.define("qft.MainScene", {
             this.flare('openmenu');
         }
 
+        //ステージ進行
+        var event = this.stageController.get(this.time);
+        if (event) {
+            if (typeof(event.value) === 'function') {
+                event.value.call(this, event.option);
+            } else {
+                this.enterEnemyUnit(event.value);
+            }
+        }
+
         this.mapLayer.x = SC_W*0.5-this.player.x;
         this.mapLayer.y = SC_H*0.5-this.player.y;
         if (this.mapLayer.y < -(this.map.height-SC_H)) this.mapLayer.y = -(this.map.height-SC_H);
@@ -225,8 +235,14 @@ phina.define("qft.MainScene", {
     setupStageMap: function(stageNumber) {
         stageNumber = stageNumber || 1;
 
-        //ステージ開始メッセージ投入
-        this.spawnMessage("STAGE "+stageNumber, 24);
+        this.time = 0;
+
+        //ステージコントローラー
+        switch (stageNumber) {
+            case 1:
+                this.stageController = qft.Stage1(this, this.player);
+                break;
+        };
 
         //登録済みマップの消去
         this.clearMap();
@@ -304,9 +320,6 @@ phina.define("qft.MainScene", {
                     break;
             }
         }.bind(this));
-
-        //ＢＧＭ再生
-        app.playBGM("bgm"+stageNumber);
     },
 
     //マップ情報の消去

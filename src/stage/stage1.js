@@ -9,15 +9,17 @@
 phina.define("qft.Stage1", {
     superClass: "qft.StageController",
 
-    tmx: null,
-
-    init: function(parent, player, tmx) {
-        this.superInit(parent, player, tmx);
+    init: function(parent, player) {
+        this.superInit(parent, player);
 
         //初期処理
         this.add(1, function() {
-            app.playBGM("stage1", true);
+            //ＢＧＭ再生
+            app.playBGM("bgm1");
+            //ステージ開始メッセージ投入
+            this.spawnMessage("STAGE 1", 24);
         });
+
         this.add(60, function() {
         });
     },
