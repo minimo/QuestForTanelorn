@@ -52,7 +52,7 @@ phina.define("qft.GameOverScene", {
             n++;
         }.bind(this));
 
-        app.playBGM("gameover");
+        app.playBGM("gameover", false);
 
         this.time = 0;
     },

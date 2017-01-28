@@ -350,5 +350,6 @@ phina.define("qft.MainScene", {
         //クリアメッセージ投入
         this.spawnMessage("STAGE "+this.stageNumber+" CLEAR!", 24);
         this.stageNumber++;
+        app.playBGM("stageclear", false);
     },
 });
