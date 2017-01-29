@@ -17,6 +17,9 @@ phina.define("qft.MainScene", {
     //メニュー選択中アイテム番号
     menuSelect: 0,
 
+    //メッセージスタック   
+    messageStack: [],
+
     init: function() {
         this.superInit();
 
@@ -78,7 +81,7 @@ phina.define("qft.MainScene", {
             this.restart();
         });
 
-        //初期メッセージ
+        //メッセージ表示
         var labelParam = {
             fill: "white",
             stroke: "black",
@@ -90,19 +93,21 @@ phina.define("qft.MainScene", {
             fontSize: 16,
             fontWeight: ''
         };
-        var lb1 = phina.display.Label({text: "操作方法\nカーソルキー左右で移動　上でジャンプ　Ｚキーで攻撃。"}.$safe(labelParam))
+        var that = this;
+        this.eventMessage = phina.display.Label({text: ""}.$safe(labelParam))
             .setPosition(SC_W*0.5, SC_H*0.2)
             .addChildTo(this);
-            lb1.alpha = 0;
-        lb1.tweener.clear()
-            .fadeIn(1000).wait(3000).fadeOut(1000)
-            .call(function(){
-                lb1.text = "ツタは上下で昇降可能。宝箱は攻撃で開きます。";
-            })
-            .fadeIn(1000).wait(3000).fadeOut(1000)
-            .call(function(){
-                lb1.remove();
-            });
+        this.eventMessage.alpha = 0;
+        this.eventMessage.tweener.clear().setUpdateType('fps');
+        this.eventMessage.update = function() {
+            if (that.messageStack.length > 0) {
+                var text = that.messageStack[0];
+                this.tweener.clear().call(function(){
+                    this.text = text;
+                }.bind(this)).fadeIn(30).wait(90).fadeOut(30);
+                that.messageStack.splice(0, 1);
+            }
+        }
 
         this.time = 0;
     },
@@ -189,6 +194,12 @@ phina.define("qft.MainScene", {
             x += between;
             n += 5;
         }.bind(this));
+    },
+
+    //イベントメッセージ投入
+    spawnEventMessage: function(text) {
+        if (!text) return;
+        this.messageStack.push(text);
     },
 
     //スクリーン初期化
@@ -322,6 +333,11 @@ phina.define("qft.MainScene", {
                     var x = e.x + e.width / 2;
                     var y = e.y + e.height / 2;
                     qft.MapObject.Door(this).addChildTo(this.objLayer).setPosition(x, y);
+                    break;
+                case "message":
+                    var x = e.x + e.width / 2;
+                    var y = e.y + e.height / 2;
+                    qft.MapObject.EventMessage(e, this).addChildTo(this.objLayer).setPosition(x, y);
                     break;
             }
         }.bind(this));

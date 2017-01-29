@@ -48,3 +48,28 @@ phina.define("qft.MapObject.Door", {
         this.index = 0;
     },
 });
+
+//イベントメッセージ   
+phina.define("qft.MapObject.EventMessage", {
+    superClass: "phina.display.DisplayElement",
+
+    once: false,
+    executed: false,
+
+    init: function(options, parentScene) {
+        this.superInit(options);
+        this.parentScene = parentScene;
+        this.text = options.properties.text;
+        this.once = options.properties.once || false;
+    },
+
+    update: function(e) {
+        //プレイヤーとの当たり判定
+        var pl = this.parentScene.player;
+        if (this.hitTestElement(pl)) {
+            this.parentScene.spawnEventMessage(this.text);
+            if (this.once) this.remove();
+            this.executed = true;
+        }
+    },
+});
