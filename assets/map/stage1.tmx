@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="400" height="70" tilewidth="16" tileheight="16" nextobjectid="152">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="400" height="70" tilewidth="16" tileheight="16" nextobjectid="154">
  <tileset firstgid="1" name="A1" tilewidth="16" tileheight="16" tilecount="768" columns="32">
   <image source="TileA1.png" width="512" height="384"/>
  </tileset>
@@ -473,7 +473,7 @@
   <object id="150" type="ladder" x="4792" y="816" width="16" height="208"/>
  </objectgroup>
  <objectgroup name="event">
-  <object id="18" name="start" type="player" x="16" y="944" width="32" height="32">
+  <object id="18" name="start" type="player" x="16" y="928" width="32" height="32">
    <properties>
     <property name="direction" type="int" value="0"/>
    </properties>
@@ -514,6 +514,18 @@
   <object id="151" type="message" x="4560" y="880" width="32" height="32">
    <properties>
     <property name="text" value="一部の床は下キーを押し続けると降りる事が出来ます"/>
+   </properties>
+  </object>
+  <object id="152" type="message" x="364" y="836" width="8" height="188">
+   <properties>
+    <property name="once" type="bool" value="true"/>
+    <property name="text" value="ツタは上下で昇降可能。宝箱は攻撃で開きます"/>
+   </properties>
+  </object>
+  <object id="153" type="message" x="12" y="968" width="32" height="32">
+   <properties>
+    <property name="text">操作方法
+カーソルキー左右で移動　上でジャンプ　Ｚキーで攻撃</property>
    </properties>
   </object>
  </objectgroup>
