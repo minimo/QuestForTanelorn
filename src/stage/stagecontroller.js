@@ -47,11 +47,11 @@ phina.define("qft.StageController", {
     //フォアグラウンドレイヤ
     foregroundLayer: null,
 
-    init: function(scene, player) {
+    init: function(parentScene) {
         this.superInit();
 
-        this.parentScene = scene;
-        this.player = player;
+        this.parentScene = parentScene;
+        this.player = parentScene.player;
     },
 
     //時間イベント追加
