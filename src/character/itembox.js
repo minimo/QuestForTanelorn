@@ -21,6 +21,9 @@ phina.define("qft.ItemBox", {
     //アニメーション間隔
     advanceTime: 3,
 
+    //反発係数
+    rebound: 0.3,
+
     init: function(options, parentScene) {
         this.superInit({width: 26, height: 26}, parentScene);
 
