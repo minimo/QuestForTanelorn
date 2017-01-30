@@ -313,11 +313,13 @@ phina.define("qft.MainScene", {
         //イベント取得
         var events = tmx.getObjectGroup("event").objects;
         events.forEach(function(e) {
+            var x = e.x + e.width / 2;
+            var y = e.y + e.height / 2;
             switch (e.type) {
                 case "player":
                     if (e.name == "start") {
-                        this.player.x = e.x + e.width / 2;
-                        this.player.y = e.y + e.height / 2;
+                        this.player.x = x;
+                        this.player.y = y;
                         if (e.properties.direction == 0) {
                             this.player.sprite.scaleX = -1;
                         } else {
@@ -326,28 +328,18 @@ phina.define("qft.MainScene", {
                     }
                     break;
                 case "enemy":
-                    var x = e.x + e.width / 2;
-                    var y = e.y + e.height / 2;
                     this.spawnEnemy(x, y, e.name, e.properties);
                     break;
                 case "item":
-                    var x = e.x + e.width / 2;
-                    var y = e.y + e.height / 2;
                     this.spawnItem(x, y, e.properties);
                     break;
                 case "itembox":
-                    var x = e.x + e.width / 2;
-                    var y = e.y + e.height / 2;
                     this.spawnItemBox(x, y, e.properties);
                     break;
                 case "door":
-                    var x = e.x + e.width / 2;
-                    var y = e.y + e.height / 2;
                     qft.MapObject.Door(this).addChildTo(this.objLayer).setPosition(x, y);
                     break;
                 case "message":
-                    var x = e.x + e.width / 2;
-                    var y = e.y + e.height / 2;
                     qft.MapObject.EventMessage(e, this).addChildTo(this.objLayer).setPosition(x, y);
                     break;
             }
