@@ -268,7 +268,7 @@ phina.define("qft.MainScene", {
         //ステージコントローラー
         switch (stageNumber) {
             case 1:
-                this.stageController = qft.Stage1(this);
+                this.stageController = qft.Stage1(this, tmx);
                 break;
         };
 

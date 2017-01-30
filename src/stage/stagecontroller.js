@@ -20,34 +20,7 @@ phina.define("qft.StageController", {
     //マップトリガイベント
     event: [],
 
-    //マップレイヤ
-    mapLayer: null,
-
-    //マップイメージレイヤ
-    mapImageLayer: null,
-
-    //スクリーン内判定用
-    screen: null,
-
-    //地形判定用レイヤー
-    collisionLayer: null,
-
-    //バックグラウンドレイヤ
-    backgroundLayer: null,
-
-    //オブジェクト管理レイヤ
-    objLayer: null,
-
-    //エフェクト管理レイヤ
-    effectLayer: null,
-
-    //プレイヤー表示レイヤ
-    playerLayer: null,
-
-    //フォアグラウンドレイヤ
-    foregroundLayer: null,
-
-    init: function(parentScene) {
+    init: function(parentScene, tmx) {
         this.superInit();
 
         this.parentScene = parentScene;

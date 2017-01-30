@@ -9,8 +9,8 @@
 phina.define("qft.Stage1", {
     superClass: "qft.StageController",
 
-    init: function(parentScene) {
-        this.superInit(parentScene);
+    init: function(parentScene, tmx) {
+        this.superInit(parentScene, tmx);
 
         //初期処理
         this.add(1, function() {
