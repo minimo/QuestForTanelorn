@@ -40,6 +40,9 @@ phina.define("qft.MainScene", {
         //オブジェクト管理レイヤ
         this.objLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
 
+        //キャラクタ管理レイヤ
+        this.enemyLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
+
         //エフェクト管理レイヤ
         this.effectLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
 
@@ -154,7 +157,7 @@ phina.define("qft.MainScene", {
 
     //敵キャラクタ投入
     spawnEnemy: function(x, y, name, options) {
-        return qft.Enemy[name](options, this).addChildTo(this.objLayer).setPosition(x, y);
+        return qft.Enemy[name](options, this).addChildTo(this.enemyLayer).setPosition(x, y);
     },
 
     //アイテム投入
