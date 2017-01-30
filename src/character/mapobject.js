@@ -66,8 +66,8 @@ phina.define("qft.MapObject.EventMessage", {
         this.superInit(options);
         this.parentScene = parentScene;
         this.id = options.id;
-        this.text = options.properties.text || "TEST";
         this.once = options.properties.once || false;
+        this.text = options.properties.text || "TEST";
     },
 
     update: function(e) {

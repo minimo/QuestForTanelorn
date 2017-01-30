@@ -210,7 +210,13 @@ phina.define("qft.MainScene", {
         for (var i = 0; i < this.messageStack.length; i++) {
             if (this.messageStack[i].id == id) return;
         }
-        this.messageStack.push({id: id, text: text});
+        if (text instanceof Array) {
+            text.forEach(function(str) {
+                this.messageStack.push({id: id, text: str});
+            }.bind(this));
+        } else {
+            this.messageStack.push({id: id, text: text});
+        }
     },
 
     //スクリーン初期化
