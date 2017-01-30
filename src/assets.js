@@ -25,6 +25,7 @@ phina.define("qft.Assets", {
                             "monster08_a3":    "assets/image/chara08_a3.png",
                         },
                         sound: {
+                            "click":      "assets/sound/se_maoudamashii_system44.mp3",
                             "attack":     "assets/sound/sen_ka_katana_sasinuku01.mp3",
                             "hit":        "assets/sound/sen_ka_katana_sasu01.mp3",
                             "damage":     "assets/sound/se_maoudamashii_battle12.mp3",

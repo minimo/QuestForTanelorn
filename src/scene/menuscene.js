@@ -67,6 +67,7 @@ phina.define("qft.MenuScene", {
             }
         }
         if (ct.right && this.limitFrame < 0) {
+            app.playSE("click");
             this.menuBase.tweener.clear()
                 .by({rotation: -this.deg_1}, 8)
                 .call(function(){
@@ -77,6 +78,7 @@ phina.define("qft.MenuScene", {
             if (this.currentScene.menuSelect == this.icon.length) this.currentScene.menuSelect = 0;
         }
         if (ct.left && this.limitFrame < 0) {
+            app.playSE("click");
             this.menuBase.tweener.clear()
                 .by({rotation: this.deg_1}, 8)
                 .call(function(){
