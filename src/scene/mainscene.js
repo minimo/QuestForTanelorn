@@ -103,16 +103,16 @@ phina.define("qft.MainScene", {
         this.eventMessage.update = function() {
             if (this.nextOk && that.messageStack.length > 0) {
                 this.nextOk = false;
-                var text = that.messageStack[0];
+                var msg = that.messageStack[0];
                 this.tweener.clear()
                     .call(function(){
-                        this.text = text;
+                        this.text = msg.text;
                     }.bind(this))
                     .fadeIn(15).wait(90).fadeOut(15)
                     .call(function(){
                         this.nextOk = true;
+                        that.messageStack.splice(0, 1);
                     }.bind(this))
-                that.messageStack.splice(0, 1);
             }
         }
 
@@ -204,9 +204,13 @@ phina.define("qft.MainScene", {
     },
 
     //イベントメッセージ投入
-    spawnEventMessage: function(text) {
-        if (!text) return;
-        this.messageStack.push(text);
+    spawnEventMessage: function(id, text) {
+        if (!id || !text) return;
+        //メッセージスタック内に同一ＩＤがある場合は投入しない
+        for (var i = 0; i < this.messageStack.length; i++) {
+            if (this.messageStack[i].id == id) return;
+        }
+        this.messageStack.push({id: id, text: text});
     },
 
     //スクリーン初期化

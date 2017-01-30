@@ -53,12 +53,19 @@ phina.define("qft.MapObject.Door", {
 phina.define("qft.MapObject.EventMessage", {
     superClass: "phina.display.DisplayElement",
 
+    //オブジェクトID
+    id: null,
+
+    //一回のみ表示フラグ
     once: false,
+
+    //表示済みフラグ
     alreadyRead: false,
 
     init: function(options, parentScene) {
         this.superInit(options);
         this.parentScene = parentScene;
+        this.id = options.id;
         this.text = options.properties.text || "TEST";
         this.once = options.properties.once || false;
     },
@@ -68,10 +75,14 @@ phina.define("qft.MapObject.EventMessage", {
         var pl = this.parentScene.player;
         var hit = this.hitTestElement(pl);
         if (hit && !this.alreadyRead) {
-            this.parentScene.spawnEventMessage(this.text);
+            this.parentScene.spawnEventMessage(this.id, this.text);
             this.alreadyRead = true;
+
+            //一回のみの場合はリムーブ
             if (this.once) this.remove();
         }
+
+        //判定を外れたら表示済みフラグを外す
         if (!hit && this.alreadyRead) this.alreadyRead = false;
     },
 });
