@@ -99,12 +99,19 @@ phina.define("qft.MainScene", {
             .addChildTo(this);
         this.eventMessage.alpha = 0;
         this.eventMessage.tweener.clear().setUpdateType('fps');
+        this.eventMessage.nextOk = true;
         this.eventMessage.update = function() {
-            if (that.messageStack.length > 0) {
+            if (this.nextOk && that.messageStack.length > 0) {
+                this.nextOk = false;
                 var text = that.messageStack[0];
-                this.tweener.clear().call(function(){
-                    this.text = text;
-                }.bind(this)).fadeIn(30).wait(90).fadeOut(30);
+                this.tweener.clear()
+                    .call(function(){
+                        this.text = text;
+                    }.bind(this))
+                    .fadeIn(15).wait(90).fadeOut(15)
+                    .call(function(){
+                        this.nextOk = true;
+                    }.bind(this))
                 that.messageStack.splice(0, 1);
             }
         }
@@ -251,7 +258,7 @@ phina.define("qft.MainScene", {
         //ステージコントローラー
         switch (stageNumber) {
             case 1:
-                this.stageController = qft.Stage1(this, this.player);
+                this.stageController = qft.Stage1(this);
                 break;
         };
 

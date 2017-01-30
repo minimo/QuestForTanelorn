@@ -54,22 +54,24 @@ phina.define("qft.MapObject.EventMessage", {
     superClass: "phina.display.DisplayElement",
 
     once: false,
-    executed: false,
+    alreadyRead: false,
 
     init: function(options, parentScene) {
         this.superInit(options);
         this.parentScene = parentScene;
-        this.text = options.properties.text;
+        this.text = options.properties.text || "TEST";
         this.once = options.properties.once || false;
     },
 
     update: function(e) {
         //プレイヤーとの当たり判定
         var pl = this.parentScene.player;
-        if (this.hitTestElement(pl)) {
+        var hit = this.hitTestElement(pl);
+        if (hit && !this.alreadyRead) {
             this.parentScene.spawnEventMessage(this.text);
+            this.alreadyRead = true;
             if (this.once) this.remove();
-            this.executed = true;
         }
+        if (!hit && this.alreadyRead) this.alreadyRead = false;
     },
 });
