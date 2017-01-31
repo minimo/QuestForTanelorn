@@ -20,6 +20,11 @@ phina.define("qft.Item", {
     equip: false,
     food: false,
     item: false,
+    key: false,
+
+    //アイテム情報
+    status: null,
+
 
     //反発係数
     rebound: 0.3,
@@ -35,7 +40,8 @@ phina.define("qft.Item", {
             .addChildTo(this)
             .setFrameIndex(0);
 
-        this.setItemKind(options.kind);
+        this.kind = options.kind;
+        this.$extend(qft.itemInfo.get(this.kind));
     },
 
     update: function() {
@@ -46,15 +52,6 @@ phina.define("qft.Item", {
             this.remove();
         }
         this.sprite.frameIndex = this.kind;
-    },
-
-    setItemKind: function(kind) {
-        this.kind = kind || 0;
-        if (kind < 6) {
-            this.weapon = true;
-        } else if (kind < 12) {
-            this.equip = true;
-        }
     },
 });
 
@@ -68,8 +65,10 @@ phina.define("qft.itemInfo", {
                         type: "sword",
                         weapon: true,
                         pow: 10,
-                        width: 14,
-                        height: 30
+                        collision: {
+                            width: 14,
+                            height: 30
+                        }
                     };
                 case ITEM_LONGSWORD:
                     return {
@@ -77,8 +76,10 @@ phina.define("qft.itemInfo", {
                         type: "sword",
                         weapon: true,
                         pow: 15,
-                        width: 24,
-                        height: 25
+                        collision: {
+                            width: 24,
+                            height: 25
+                        }
                     };
                 case ITEM_AX:
                     return {
@@ -86,8 +87,10 @@ phina.define("qft.itemInfo", {
                         type: "ax",
                         weapon: true,
                         pow: 20,
-                        width: 14,
-                        height: 26
+                        collision: {
+                            width: 14,
+                            height: 26
+                        }
                     };
                 case ITEM_SPEAR:
                     return {
@@ -95,54 +98,63 @@ phina.define("qft.itemInfo", {
                         type: "spear",
                         weapon: true,
                         pow: 10,
-                        width: 39,
-                        height: 10
+                        collision: {
+                            width: 39,
+                            height: 10
+                        }
                     };
-                    break;
                 case ITEM_BOW:
                     return {
                         name: "BOW",
                         type: "bow",
                         weapon: true,
                         pow: 5,
-                        width: 20,
-                        height: 10
+                        collision: {
+                            width: 20,
+                            height: 10
+                        }
                     };
-                    break;
                 case ITEM_ROD:
                     return {
                         name: "MAGIC ROD",
                         type: "rod",
                         weapon: true,
                         pow: 5,
-                        width: 20,
-                        height: 10
+                        collision: {
+                            width: 20,
+                            height: 10
+                        }
                     };
-                    break;
                 case ITEM_BOOK:
-                    break;
+                    return {};
                 case ITEM_SHIELD:
-                    break;
+                    return {};
                 case ITEM_ARMOR:
-                    break;
+                    return {};
                 case ITEM_HAT:
-                    break;
+                    return {};
                 case ITEM_BOOTS:
-                    break;
+                    return {};
                 case ITEM_GROVE:
-                    break;
+                    return {};
                 case ITEM_RING:
-                    break;
+                    return {};
                 case ITEM_SCROLL:
-                    break;
+                    return {};
                 case ITEM_LETTER:
-                    break;
+                    return {};
                 case ITEM_CARD:
-                    break;
+                    return {};
                 case ITEM_KEY:
-                    break;
+                    return {
+                        name: "KEY",
+                        type: "key",
+                        key: true,
+                    };
                 case ITEM_COIN:
-                    break;
+                    return {};
+                default:
+                    return {};
             }
         },
     },
