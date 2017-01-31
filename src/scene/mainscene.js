@@ -40,14 +40,14 @@ phina.define("qft.MainScene", {
         //オブジェクト管理レイヤ
         this.objLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
 
-        //キャラクタ管理レイヤ
+        //敵キャラクタ管理レイヤ
         this.enemyLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
-
-        //エフェクト管理レイヤ
-        this.effectLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
 
         //プレイヤー表示レイヤ
         this.playerLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
+
+        //エフェクト管理レイヤ
+        this.effectLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
 
         //フォアグラウンドレイヤ
         this.foregroundLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
