@@ -303,6 +303,7 @@ phina.define("qft.MainScene", {
             c.vx = 0;
             c.vy = 0;
             c.alpha = 0.3;
+            c.ignore = false;
             if (e.name) c.name = e.name;
             if (e.type) c.type = e.type;
             c.$extend(e.properties);

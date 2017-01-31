@@ -213,7 +213,7 @@ phina.define("qft.Character", {
         //地形接触判定
         this.parentScene.collisionLayer.children.forEach(function(e) {
             if (that.isDrop) return;
-            if (e == that.throughFloor) return;
+            if (e.ignore || e == that.throughFloor) return;
             if (e.type == "ladder" || e.type == "stairs") return;
 
             //上側
