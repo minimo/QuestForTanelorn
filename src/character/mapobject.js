@@ -20,6 +20,9 @@ phina.define("qft.MapObject.Door", {
     //地形無視
     ignoreCollision: true,
 
+    //ロックされているか
+    isLock: false,
+
     init: function(parentScene) {
         this.superInit({width: 36, height: 64}, parentScene);
 
@@ -30,10 +33,10 @@ phina.define("qft.MapObject.Door", {
 
     update: function(e) {
         if (this.getDistancePlayer() < 64) {
-            this.setAnimation("open");
+            this.open();
         } else {
             if (this.nowAnimation == "open") {
-                this.setAnimation("close");
+                this.close();
             }
         }
     },
@@ -47,6 +50,18 @@ phina.define("qft.MapObject.Door", {
         this.frame["close"] = [3, 0, 1, 2, "stop"];
         this.index = 0;
     },
+
+    open: function() {
+        if (this.isLock) return;
+        this.setAnimation("open");
+    },
+
+    close: function() {
+        if (this.isLock) return;
+        this.setAnimation("close");
+    },
+
+    
 });
 
 //イベントメッセージ   
