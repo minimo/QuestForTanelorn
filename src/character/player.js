@@ -298,7 +298,7 @@ phina.define("qft.Player", {
         }
         //鍵
         if (item.key) {
-            this.key.push[item];
+            this.keys.push[item];
         }
         return this;
     },
