@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="400" height="70" tilewidth="16" tileheight="16" nextobjectid="160">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="400" height="70" tilewidth="16" tileheight="16" nextobjectid="162">
  <tileset firstgid="1" name="A1" tilewidth="16" tileheight="16" tilecount="768" columns="32">
   <image source="TileA1.png" width="512" height="384"/>
  </tileset>
@@ -492,5 +492,7 @@
     <property name="text" value="試練の塔"/>
    </properties>
   </object>
+  <object id="160" name="Bird" type="enemy" x="572" y="916" width="32" height="32"/>
+  <object id="161" name="Bird" type="enemy" x="772" y="808" width="32" height="32"/>
  </objectgroup>
 </map>
