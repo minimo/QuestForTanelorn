@@ -11,8 +11,8 @@ phina.define("qft.MainScene", {
     //現在ステージ番号
     stageNumber: 1,
 
-    //残り時間
-    timeLimit: FPS*60*5,
+    //残り時間（フレーム単位）
+    timeLimit: 120,
 
     //メニュー選択中アイテム番号
     menuSelect: 0,
@@ -266,17 +266,24 @@ phina.define("qft.MainScene", {
     setupStageMap: function(stageNumber) {
         stageNumber = stageNumber || 1;
 
+        //経過時間初期化
         this.time = 0;
+
+        //登録済みマップの消去
+        this.clearMap();
 
         //ステージコントローラー
         switch (stageNumber) {
             case 1:
                 this.stageController = qft.Stage1(this, tmx);
                 break;
+            case 2:
+                this.stageController = qft.Stage2(this, tmx);
+                break;
         };
 
-        //登録済みマップの消去
-        this.clearMap();
+        //タイムリミット設定
+        this.timeLimit = this.stageController.timeLimit;
 
         //マップ情報取得
         var tmx = phina.asset.AssetManager.get('tmx', "stage"+stageNumber);

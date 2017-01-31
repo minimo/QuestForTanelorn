@@ -29,6 +29,9 @@ phina.define("qft.Player", {
     //所持アイテム
     items: [0, 7, 8, 9, 10, 11],
 
+    //所持クリア条件キー
+    keys: [],
+
     //前フレームの情報
     before: {
         //操作系
@@ -287,10 +290,15 @@ phina.define("qft.Player", {
         }
         //装備品
         if (item.equip) {
+            this.items.push(item.kind);
         }
         //食べ物
         if (item.food) {
             this.hp += item.power;
+        }
+        //鍵
+        if (item.key) {
+            this.key.push[item];
         }
         return this;
     },
@@ -472,6 +480,9 @@ phina.define("qft.Player", {
 
         //所持アイテム
         this.items = [0, 7, 8, 9, 10, 11];
+
+        //所持クリア条件キー
+        this.keys = [];
 
         return this;
     },

@@ -9,6 +9,9 @@
 phina.define("qft.Stage1", {
     superClass: "qft.StageController",
 
+    //タイムリミット
+    timeLimit: FPS*60*5,
+
     init: function(parentScene, tmx) {
         this.superInit(parentScene, tmx);
 
@@ -22,5 +25,11 @@ phina.define("qft.Stage1", {
 
         this.add(60, function() {
         });
+    },
+
+    //ステージクリア条件判定
+    judgeClearCondtion: function() {
+        var flag1 = this.player.hasKey();
+        return flag1;
     },
 });
