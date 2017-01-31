@@ -35,13 +35,14 @@ phina.define("qft.Item", {
     init: function(options, parentScene) {
         this.superInit({width: 10, height: 10}, parentScene);
 
-        //アイテムスプライト
-        this.sprite = phina.display.Sprite("item", 20, 20)
-            .addChildTo(this)
-            .setFrameIndex(0);
-
+        //アイテム種別
         this.kind = options.kind;
+
+        //アイテムステータス取得
         this.$extend(qft.itemInfo.get(this.kind));
+
+        //アイテムスプライト
+        this.sprite = phina.display.Sprite("item", 20, 20).addChildTo(this).setFrameIndex(this.kind);
     },
 
     update: function() {
@@ -51,7 +52,6 @@ phina.define("qft.Item", {
             pl.getItem(this);
             this.remove();
         }
-        this.sprite.frameIndex = this.kind;
     },
 });
 
