@@ -76,6 +76,15 @@ phina.define("qft.Enemy.Bird", {
             this.returnTime = Math.randint(100, 140);
         }
         this.returnTime--;
+
+        //向きの指定
+        if (this.vx != 0) {
+            if (this.vx > 0) {
+                this.scaleX = 1;
+            } else {
+                this.scaleX = -1;
+            }
+        }
     },
 
     setupAnimation: function() {

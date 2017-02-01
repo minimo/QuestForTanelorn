@@ -75,11 +75,6 @@ phina.define("qft.Enemy.Snake", {
             }
         }
         if (look) this.vx *= 4;
-        if (this.direction == 0) {
-            this.sprite.scaleX = 1;
-        } else {
-            this.sprite.scaleX = -1;
-        }
     },
 
     setupAnimation: function() {

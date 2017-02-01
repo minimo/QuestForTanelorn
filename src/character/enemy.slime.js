@@ -69,7 +69,6 @@ phina.define("qft.Enemy.Slime", {
                 this.vx = -2;
             }
             if (this.attack) this.vx *= 3;
-
         }
     },
 

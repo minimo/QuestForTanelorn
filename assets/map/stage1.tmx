@@ -493,6 +493,6 @@
    </properties>
   </object>
   <object id="160" name="Bird" type="enemy" x="572" y="916" width="32" height="32"/>
-  <object id="161" name="Bird" type="enemy" x="772" y="808" width="32" height="32"/>
+  <object id="161" name="Demon" type="enemy" x="772" y="808" width="32" height="32"/>
  </objectgroup>
 </map>

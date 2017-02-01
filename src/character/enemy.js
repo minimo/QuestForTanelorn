@@ -45,6 +45,15 @@ phina.define("qft.Enemy", {
             if (!this.isDead && !pl.isDead && this.hitTestElement(pl)) {
                 pl.damage(this);
             }
+
+            //向きの指定
+            if (this.vx != 0) {
+                if (this.vx > 0) {
+                    this.scaleX = 1;
+                } else {
+                    this.scaleX = -1;
+                }
+            }
         });
     },
 
