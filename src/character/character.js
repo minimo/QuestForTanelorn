@@ -95,6 +95,9 @@ phina.define("qft.Character", {
         this._collision[3] = phina.display.RectangleShape({width: 2, height: h});
         this.collisionResult = null;
 
+        //当たり判定情報再設定
+        this.setupCollision();
+
         //当たり判定デバッグ用
         if (DEBUG_COLLISION) {
             this.on('added', function(e) {
@@ -365,6 +368,11 @@ phina.define("qft.Character", {
             }
         });
         return ret;
+    },
+
+    //当たり判定用エレメントの再設定
+    setupCollision: function() {
+        return;
     },
 
     //当たり判定用エレメントの位置再セット
