@@ -49,10 +49,13 @@ phina.define("qft.Enemy.Demon", {
                 this.direction = 180;
             } else if (this.checkMapCollision2(this.x-5, this.y+20, 5, 5) == null) {
                 this.direction = 0;
-            } else if (this.checkMapCollision2(this.x-12, this.y, 5, 5)) {
-                this.direction = 0;
-            } else if (this.checkMapCollision2(this.x+12, this.y, 5, 5)) {
+            }
+
+            //壁に当たったら折り返す
+            if (this._collision[1].hit) {
                 this.direction = 180;
+            } else if (this._collision[3].hit) {
+                this.direction = 0;
             }
             //プレイヤーが近くにいたらジャンプ攻撃
             if (look && !this.isJump && dis < 40) {
@@ -86,5 +89,11 @@ phina.define("qft.Enemy.Demon", {
         this.frame["down"] = [69, 70, 71, 70];
         this.frame["attack"] = [69, "stop"];
         this.index = 0;
+    },
+
+    setupCollision: function() {
+        var h = Math.floor(this.height/2);
+        this._collision[1].height = h;
+        this._collision[3].height = h;
     },
 });
