@@ -307,6 +307,7 @@ phina.define("qft.MainScene", {
                 this.x += this.vx;
                 this.y += this.vy;
             });
+            c.id = e.id;
             c.vx = 0;
             c.vy = 0;
             c.alpha = 0.3;

@@ -433,7 +433,7 @@
    </properties>
   </object>
   <object id="19" name="Wisp" type="enemy" x="831" y="888" width="32" height="32"/>
-  <object id="20" name="Slime" type="enemy" x="288" y="992" width="32" height="32"/>
+  <object id="20" name="Slime" type="enemy" x="192" y="928" width="32" height="32"/>
   <object id="21" name="Slime" type="enemy" x="496" y="1024" width="32" height="32"/>
   <object id="30" name="Slime" type="enemy" x="1808" y="936" width="32" height="32"/>
   <object id="34" name="sword" type="itembox" x="431" y="911" width="32" height="32">
@@ -492,7 +492,7 @@
     <property name="text" value="試練の塔"/>
    </properties>
   </object>
-  <object id="160" name="Bird" type="enemy" x="572" y="916" width="32" height="32"/>
-  <object id="161" name="Demon" type="enemy" x="772" y="808" width="32" height="32"/>
+  <object id="160" name="Bird" type="enemy" x="628" y="816" width="32" height="32"/>
+  <object id="161" name="Demon" type="enemy" x="1020" y="816" width="32" height="32"/>
  </objectgroup>
 </map>
