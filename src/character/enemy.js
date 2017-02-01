@@ -138,6 +138,8 @@ phina.define("qft.Enemy", {
         this.lifeGauge.update = function() {
             this.visible = (that.hp != this.maxValue);
             this.value = that.hp;
+            this.rotation = -that.rotation;
+            this.scaleX = that.scaleX;
         };
     },
 });
