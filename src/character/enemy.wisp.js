@@ -35,9 +35,9 @@ phina.define("qft.Enemy.Wisp", {
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("monster08_a1", 24, 32).addChildTo(this).setFrameIndex(0);
-        this.advanceTime = 10;
 
         this.setAnimation("stand");
+        this.advanceTime = 10;
         this.setupLifeGauge();
 
         this.direction = 0;

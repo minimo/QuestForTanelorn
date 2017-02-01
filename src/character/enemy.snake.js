@@ -29,9 +29,9 @@ phina.define("qft.Enemy.Snake", {
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("monster08_a3", 24, 32).addChildTo(this).setFrameIndex(0);
-        this.advanceTime = 10;
 
         this.setAnimation("walk");
+        this.advanceTime = 10;
         this.setupLifeGauge();
 
         this.direction = 0;
@@ -56,7 +56,7 @@ phina.define("qft.Enemy.Snake", {
                 this.direction = 180;
             }
             //プレイヤーが近くにいたらジャンプ攻撃
-            if (!this.isJump && dis < 40) {
+            if (look && !this.isJump && dis < 40) {
                 this.isJump = true;
                 this.vy = -6;
                 var pl = this.parentScene.player;

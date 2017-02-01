@@ -35,7 +35,6 @@ phina.define("qft.Enemy.Bird", {
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("monster07_a1", 24, 32).addChildTo(this).setFrameIndex(0);
-        this.advanceTime = 10;
 
         this.setAnimation("walk");
         this.advanceTime = 6;

@@ -25,13 +25,14 @@ phina.define("qft.Enemy.Demon", {
     viewAngle: 160,
 
     init: function(options, parentScene) {
-        this.superInit({width: 20, height: 20}, parentScene);
+        this.superInit({width: 30, height: 30}, parentScene);
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("monster08_a3", 24, 32).addChildTo(this).setFrameIndex(0);
-        this.advanceTime = 10;
+        this.sprite.setScale(1.5);
 
         this.setAnimation("walk");
+        this.advanceTime = 6;
         this.setupLifeGauge();
 
         this.direction = 0;
@@ -54,7 +55,7 @@ phina.define("qft.Enemy.Demon", {
                 this.direction = 180;
             }
             //プレイヤーが近くにいたらジャンプ攻撃
-            if (!this.isJump && dis < 40) {
+            if (look && !this.isJump && dis < 40) {
                 this.isJump = true;
                 this.vy = -6;
                 var pl = this.parentScene.player;

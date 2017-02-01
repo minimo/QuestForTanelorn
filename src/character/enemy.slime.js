@@ -29,9 +29,9 @@ phina.define("qft.Enemy.Slime", {
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("monster08_a3", 24, 32).addChildTo(this).setFrameIndex(0);
-        this.advanceTime = 10;
 
         this.setAnimation("walk");
+        this.advanceTime = 10;
         this.setupLifeGauge();
 
         this.direction = 0;
@@ -39,6 +39,9 @@ phina.define("qft.Enemy.Slime", {
 
     update: function() {
         if (this.isDead) return;
+
+        var look = this.isLookPlayer();
+
         if (this.onFloor) {
             //崖っぷちで折り返す
             if (this.checkMapCollision2(this.x+5, this.y+20, 5, 5) == null) {
@@ -51,7 +54,7 @@ phina.define("qft.Enemy.Slime", {
                 this.direction = 180;
             }
             //プレイヤーが近くにいたらジャンプ攻撃
-            if (!this.isJump && this.getDistancePlayer() < 40) {
+            if (look && !this.isJump && this.getDistancePlayer() < 40) {
                 this.isJump = true;
                 this.vy = -6;
                 var pl = this.parentScene.player;
