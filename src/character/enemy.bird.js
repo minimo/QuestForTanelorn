@@ -34,7 +34,8 @@ phina.define("qft.Enemy.Bird", {
         this.superInit({width: 16, height: 18}, parentScene);
 
         //表示用スプライト
-        this.sprite = phina.display.Sprite("monster07_a1", 24, 32).addChildTo(this).setFrameIndex(0);
+        this.sprite = phina.display.Sprite("monster01", 24, 32).addChildTo(this);
+        this.sprite.setFrameTrimming(0, 0, 72, 128)
 
         this.setAnimation("walk");
         this.advanceTime = 6;
@@ -94,7 +95,7 @@ phina.define("qft.Enemy.Bird", {
     setupAnimation: function() {
         this.spcialAnimation = false;
         this.frame = [];
-        this.frame["walk"] = [63, 64, 65, 64];
+        this.frame["walk"] = [3, 4, 5, 4];
         this.index = 0;
     },
 });
@@ -116,7 +117,8 @@ phina.define("qft.Enemy.BirdBomb", {
         this.superInit({width: 5, height: 5}, parentScene);
 
         //表示用スプライト
-        this.sprite = phina.display.Sprite("monster07_a1", 24, 32).addChildTo(this).setFrameIndex(0);
+        this.sprite = phina.display.Sprite("monster01", 24, 32).addChildTo(this);
+        this.sprite.setFrameTrimming(0, 0, 72, 128)
 
         this.setAnimation("normal");
         this.advanceTime = 6;
@@ -129,7 +131,7 @@ phina.define("qft.Enemy.BirdBomb", {
     setupAnimation: function() {
         this.spcialAnimation = false;
         this.frame = [];
-        this.frame["normal"] = [69, 70, 71, 70];
+        this.frame["normal"] = [0];//, 70, 71, 70];
         this.index = 0;
     },
 });

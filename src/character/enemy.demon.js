@@ -19,17 +19,17 @@ phina.define("qft.Enemy.Demon", {
     power: 30,
 
     //視力
-    eyesight: 512,
+    eyesight: 128,
 
     //視野角
-    viewAngle: 160,
+    viewAngle: 90,
 
     init: function(options, parentScene) {
-        this.superInit({width: 30, height: 30}, parentScene);
+        this.superInit({width: 20, height: 20}, parentScene);
 
         //表示用スプライト
-        this.sprite = phina.display.Sprite("monster08_a3", 24, 32).addChildTo(this).setFrameIndex(0);
-        this.sprite.setScale(1.5);
+        this.sprite = phina.display.Sprite("monster01", 24, 32).addChildTo(this);
+        this.sprite.setFrameTrimming(0, 640, 72, 128)
 
         this.setAnimation("walk");
         this.advanceTime = 6;
@@ -58,7 +58,7 @@ phina.define("qft.Enemy.Demon", {
                 this.direction = 0;
             }
             //プレイヤーが近くにいたらジャンプ攻撃
-            if (look && !this.isJump && dis < 40) {
+            if (look && !this.isJump && dis < 64) {
                 this.isJump = true;
                 this.vy = -6;
                 var pl = this.parentScene.player;
@@ -82,12 +82,12 @@ phina.define("qft.Enemy.Demon", {
     setupAnimation: function() {
         this.spcialAnimation = false;
         this.frame = [];
-        this.frame["stand"] = [69, 70, 71, 70];
-        this.frame["jump"] = [69, "stop"];
-        this.frame["walk"] = [69, 70, 71, 70];
-        this.frame["up"] =   [69, 70, 71, 70];
-        this.frame["down"] = [69, 70, 71, 70];
-        this.frame["attack"] = [69, "stop"];
+        this.frame["stand"] = [3, 4, 5, 4];
+        this.frame["jump"] = [3, "stop"];
+        this.frame["walk"] = [3, 4, 5, 4];
+        this.frame["up"] =   [3, 4, 5, 4];
+        this.frame["down"] = [3, 4, 5, 4];
+        this.frame["attack"] = [3, "stop"];
         this.index = 0;
     },
 

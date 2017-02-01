@@ -20,10 +20,8 @@ phina.define("qft.Assets", {
                             "particle":   "assets/image/particle.png",
                             "door":       "assets/image/door.png",
 
-                            "monster07_a1":    "assets/image/chara07_a1.png",
-                            "monster08_a1":    "assets/image/chara08_a1.png",
-                            "monster08_a3":    "assets/image/chara08_a3.png",
-                            "bullet":          "assets/image/effect_bullet01.png",
+                            "monster01":  "assets/image/monster01.png",
+                            "bullet":     "assets/image/effect_bullet01.png",
                         },
                         sound: {
                             "click":      "assets/sound/se_maoudamashii_system44.mp3",

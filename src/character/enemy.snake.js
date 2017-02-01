@@ -28,7 +28,8 @@ phina.define("qft.Enemy.Snake", {
         this.superInit({width: 16, height: 18}, parentScene);
 
         //表示用スプライト
-        this.sprite = phina.display.Sprite("monster08_a3", 24, 32).addChildTo(this).setFrameIndex(0);
+        this.sprite = phina.display.Sprite("monster01", 24, 32).addChildTo(this);
+        this.sprite.setFrameTrimming(0, 384, 72, 128)
 
         this.setAnimation("walk");
         this.advanceTime = 10;
@@ -80,12 +81,12 @@ phina.define("qft.Enemy.Snake", {
     setupAnimation: function() {
         this.spcialAnimation = false;
         this.frame = [];
-        this.frame["stand"] = [0, 1, 2, 1];
-        this.frame["jump"] = [1, "stop"];
-        this.frame["walk"] = [63, 64, 65, 64];
-        this.frame["up"] =   [0, 1, 2, 1];
-        this.frame["down"] = [0, 1, 2, 1];
-        this.frame["attack"] = [0, "stop"];
+        this.frame["stand"] = [3, 4, 5, 4];
+        this.frame["jump"] = [3, "stop"];
+        this.frame["walk"] = [3, 4, 5, 4];
+        this.frame["up"] =   [3, 4, 5, 4];
+        this.frame["down"] = [3, 4, 5, 4];
+        this.frame["attack"] = [3, "stop"];
         this.index = 0;
     },
 });

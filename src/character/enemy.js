@@ -105,7 +105,9 @@ phina.define("qft.Enemy", {
         this.parentScene.collisionLayer.children.forEach(function(e) {
             if (e.type == "ladder" || this.type == "stairs") return;
             //自分とプレイヤー間に遮蔽物（地形当り判定）がある場合見えない
-            if (phina.geom.Collision.testRectLine(e, that, player)) result = false;
+            if (phina.geom.Collision.testRectLine(e, that, player)) {
+                result = false;
+            }
         });
         return result;
     },

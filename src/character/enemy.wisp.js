@@ -34,7 +34,8 @@ phina.define("qft.Enemy.Wisp", {
         this.superInit({width: 16, height: 16}, parentScene);
 
         //表示用スプライト
-        this.sprite = phina.display.Sprite("monster08_a1", 24, 32).addChildTo(this).setFrameIndex(0);
+        this.sprite = phina.display.Sprite("monster01", 24, 32).addChildTo(this);
+        this.sprite.setFrameTrimming(0, 512, 72, 128)
 
         this.setAnimation("stand");
         this.advanceTime = 10;
@@ -63,12 +64,12 @@ phina.define("qft.Enemy.Wisp", {
     setupAnimation: function() {
         this.spcialAnimation = false;
         this.frame = [];
-        this.frame["stand"] = [48, 49, 50, 49];
-        this.frame["jump"] = [49, "stop"];
-        this.frame["walk"] = [60, 61, 62];
-        this.frame["up"] =   [48, 49, 50];
-        this.frame["down"] = [48, 49, 50];
-        this.frame["attack"] = [48, 49, 50];
+        this.frame["stand"] = [3, 4, 5, 4];
+        this.frame["jump"] = [3, "stop"];
+        this.frame["walk"] = [3, 4, 5, 4];
+        this.frame["up"] =   [3, 4, 5, 4];
+        this.frame["down"] = [3, 4, 5, 4];
+        this.frame["attack"] = [3, "stop"];
         this.index = 0;
     },
 });
