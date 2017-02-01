@@ -29,7 +29,7 @@ phina.define("qft.Enemy.Demon", {
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("monster01", 24, 32).addChildTo(this);
-        this.sprite.setFrameTrimming(0, 640, 72, 128)
+        this.sprite.setFrameTrimming(0, 640, 72, 128);
 
         this.setAnimation("walk");
         this.advanceTime = 6;
