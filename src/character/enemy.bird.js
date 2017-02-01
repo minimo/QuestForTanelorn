@@ -76,6 +76,11 @@ phina.define("qft.Enemy.Bird", {
         }
         this.returnTime--;
 
+        //落し物
+        if (this.time % 30 == 0) {
+            this.parentScene.spawnEnemy(this.x, this.y, "BirdBomb", {});
+        }
+
         //向きの指定
         if (this.vx != 0) {
             if (this.vx > 0) {
@@ -90,6 +95,41 @@ phina.define("qft.Enemy.Bird", {
         this.spcialAnimation = false;
         this.frame = [];
         this.frame["walk"] = [63, 64, 65, 64];
+        this.index = 0;
+    },
+});
+
+//鳥の落し物
+phina.define("qft.Enemy.BirdBomb", {
+    superClass: "qft.Enemy",
+
+    //ヒットポイント
+    hp: 1,
+
+    //防御力
+    deffence: 10,
+
+    //攻撃力
+    power: 5,
+
+    init: function(options, parentScene) {
+        this.superInit({width: 5, height: 5}, parentScene);
+
+        //表示用スプライト
+        this.sprite = phina.display.Sprite("monster07_a1", 24, 32).addChildTo(this).setFrameIndex(0);
+
+        this.setAnimation("normal");
+        this.advanceTime = 6;
+    },
+
+    update: function() {
+        if (this.onFloor) this.remove();
+    },
+
+    setupAnimation: function() {
+        this.spcialAnimation = false;
+        this.frame = [];
+        this.frame["normal"] = [69, 70, 71, 70];
         this.index = 0;
     },
 });
