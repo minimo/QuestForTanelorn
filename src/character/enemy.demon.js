@@ -90,10 +90,4 @@ phina.define("qft.Enemy.Demon", {
         this.frame["attack"] = [3, "stop"];
         this.index = 0;
     },
-
-    setupCollision: function() {
-        var h = Math.floor(this.height/2);
-        this._collision[1].height = h;
-        this._collision[3].height = h;
-    },
 });
