@@ -36,6 +36,7 @@ phina.define("qft.Enemy.Demon", {
         this.setupLifeGauge();
 
         this.direction = 0;
+        this.stopTime = 0;
     },
 
     update: function() {
@@ -57,8 +58,16 @@ phina.define("qft.Enemy.Demon", {
             } else if (this._collision[3].hit) {
                 this.direction = 0;
             }
-            //プレイヤーが近くにいたらジャンプ攻撃
-            if (look && !this.isJump && dis < 64) {
+
+            //プレイヤーが近くにいたら攻撃
+            if (look && !this.isJump && dis > 64 && dis < this.eyesight && this.stopTime == 0) {
+                //火を吐く
+                var b = this.parentScene.spawnEnemy(this.x, this.y, "Bullet");
+                b.rotation = this.getPlayerAngle();
+                this.stopTime = 60;
+            }
+            if (look && !this.isJump && dis < 64 && this.stopTime == 0) {
+                //飛びかかる
                 this.isJump = true;
                 this.vy = -6;
                 var pl = this.parentScene.player;
@@ -76,7 +85,15 @@ phina.define("qft.Enemy.Demon", {
                 this.vx = -1;
             }
         }
-        if (look) this.vx *= 4;
+        if (look) this.vx *= 3;
+
+        this.stopTime--;
+        if (this.stopTime > 15) {
+            this.vx = 0;
+        }
+        if (this.stopTime < 0) {
+            this.stopTime = 0;
+        }
     },
 
     setupAnimation: function() {
