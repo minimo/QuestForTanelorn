@@ -19,6 +19,7 @@ phina.define("qft.Assets", {
                             "background": "assets/image/back-s03b.png",
                             "particle":   "assets/image/particle.png",
                             "door":       "assets/image/door.png",
+                            "checkicon":  "assets/image/check icon_00.png",
 
                             "monster01":  "assets/image/monster01.png",
                             "bullet":     "assets/image/effect_bullet01.png",
