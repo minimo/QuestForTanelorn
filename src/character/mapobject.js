@@ -64,6 +64,54 @@ phina.define("qft.MapObject.Door", {
     
 });
 
+//チェックアイコン
+phina.define("qft.MapObject.CheckIcon", {
+    superClass: "qft.Character",
+
+    //重力加速度
+    gravity: 0.0,
+
+    //アニメーション間隔
+    advanceTime: 3,
+
+    //地形無視
+    ignoreCollision: true,
+
+    init: function(parentScene) {
+        this.superInit({width: 36, height: 64}, parentScene);
+
+        //スプライト
+        this.sprite = phina.display.Sprite("checkicon", 32, 32).addChildTo(this);
+        this.setAnimation("up");
+        this.advanceTime = 10;
+    },
+
+    update: function(e) {
+    },
+
+    setupAnimation: function(options) {
+        this.spcialAnimation = false;
+        this.frame = [];
+        this.frame["in"] = [2, 1, 0];
+        this.frame["up"] = [5, 4, 3];
+        this.frame["down"] = [8, 7, 6];
+        this.frame["out"] = [11, 10, 9];
+        this.index = 0;
+    },
+
+    open: function() {
+        if (this.isLock) return;
+        this.setAnimation("open");
+    },
+
+    close: function() {
+        if (this.isLock) return;
+        this.setAnimation("close");
+    },
+
+    
+});
+
 //イベントメッセージ   
 phina.define("qft.MapObject.EventMessage", {
     superClass: "phina.display.DisplayElement",

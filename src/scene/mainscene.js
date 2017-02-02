@@ -357,6 +357,9 @@ phina.define("qft.MainScene", {
                 case "door":
                     qft.MapObject.Door(this).addChildTo(this.objLayer).setPosition(x, y);
                     break;
+                case "check":
+                    qft.MapObject.CheckIcon(this).addChildTo(this.objLayer).setPosition(x, y).setAnimation(e.name);
+                    break;
                 case "message":
                     qft.MapObject.EventMessage(e, this).addChildTo(this.objLayer).setPosition(x, y);
                     break;
