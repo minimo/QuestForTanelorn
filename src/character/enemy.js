@@ -31,6 +31,7 @@ phina.define("qft.Enemy", {
     direction: 0,
 
     init: function(options, parentScene) {
+        options = options || {};
         this.superInit(options, parentScene);
         this.$extend(options);
         this.setupAnimation();
@@ -112,12 +113,20 @@ phina.define("qft.Enemy", {
         return result;
     },
 
-    //自分とプレイヤーを結ぶ直線の角度
+    //自分とプレイヤーを結ぶ直線の角度（弧度法）
     getPlayerAngle: function() {
         var p1 = phina.geom.Vector2(this.x, this.y);
         var p2 = phina.geom.Vector2(this.parentScene.player.x, this.parentScene.player.y);
         var p = p2.sub(p1);
         return p.toDegree();
+    },
+
+    //自分とプレイヤーを結ぶ直線の角度（ラジアン）
+    getPlayerRadian: function() {
+        var p1 = phina.geom.Vector2(this.x, this.y);
+        var p2 = phina.geom.Vector2(this.parentScene.player.x, this.parentScene.player.y);
+        var p = p2.sub(p1);
+        return p.toAngle();
     },
 
     //体力ゲージ設置
