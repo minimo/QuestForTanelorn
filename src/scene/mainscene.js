@@ -20,9 +20,8 @@ phina.define("qft.MainScene", {
     //メッセージスタック
     messageStack: [],
 
-    init: function(stageNumber) {
+    init: function() {
         this.superInit();
-        this.stageNumber = stageNumber || 1;
 
         //バックグラウンド
         this.background = phina.display.Sprite("background").addChildTo(this).setPosition(SC_W*0.5, SC_H*0.5);
