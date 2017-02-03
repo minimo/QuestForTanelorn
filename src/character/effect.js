@@ -27,7 +27,7 @@ phina.define("qft.Effect", {
     //経過フレーム
     time: 0,
 
-    init: function(options, parentScene) {
+    init: function(parentScene, options) {
         this.superInit(options);
         this.parentScene = parentScene;
         this.boundingType = "rect";

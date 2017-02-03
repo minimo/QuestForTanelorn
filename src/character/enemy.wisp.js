@@ -30,8 +30,8 @@ phina.define("qft.Enemy.Wisp", {
     //地形無視
     ignoreCollision: true,
 
-    init: function(options, parentScene) {
-        this.superInit({width: 16, height: 16}, parentScene);
+    init: function(parentScene, options) {
+        this.superInit(parentScene, {width: 16, height: 16});
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("monster01", 24, 32).addChildTo(this);

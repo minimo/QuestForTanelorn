@@ -30,8 +30,8 @@ phina.define("qft.Enemy.Bird", {
     //横移動減衰率
     friction: 0,
 
-    init: function(options, parentScene) {
-        this.superInit({width: 16, height: 18}, parentScene);
+    init: function(parentScene, options) {
+        this.superInit(parentScene, {width: 16, height: 18});
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("monster01", 24, 32).addChildTo(this);
@@ -113,8 +113,8 @@ phina.define("qft.Enemy.BirdBomb", {
     //攻撃力
     power: 5,
 
-    init: function(options, parentScene) {
-        this.superInit({width: 5, height: 5}, parentScene);
+    init: function(parentScene, options) {
+        this.superInit(parentScene, {width: 5, height: 5});
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("bullet", 24, 32).addChildTo(this).setFrameIndex(72);

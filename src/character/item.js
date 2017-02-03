@@ -32,8 +32,8 @@ phina.define("qft.Item", {
     //アニメーション進行可能フラグ   
     isAdvanceAnimation: false,
 
-    init: function(options, parentScene) {
-        this.superInit({width: 10, height: 10}, parentScene);
+    init: function(parentScene, options) {
+        this.superInit(parentScene, {width: 10, height: 10});
 
         //アイテム種別
         this.kind = options.kind;

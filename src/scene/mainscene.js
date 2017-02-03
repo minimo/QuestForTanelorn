@@ -157,17 +157,17 @@ phina.define("qft.MainScene", {
 
     //敵キャラクタ投入
     spawnEnemy: function(x, y, name, options) {
-        return qft.Enemy[name](options, this).addChildTo(this.enemyLayer).setPosition(x, y);
+        return qft.Enemy[name](this, options).addChildTo(this.enemyLayer).setPosition(x, y);
     },
 
     //アイテム投入
     spawnItem: function(x, y, options) {
-        return qft.Item(options, this).addChildTo(this.objLayer).setPosition(x, y);
+        return qft.Item(this, options).addChildTo(this.objLayer).setPosition(x, y);
     },
 
     //アイテムボックス投入
     spawnItemBox: function(x, y, options) {
-        return qft.ItemBox(options, this).addChildTo(this.objLayer).setPosition(x, y);
+        return qft.ItemBox(this, options).addChildTo(this.objLayer).setPosition(x, y);
     },
 
     //メッセージ投入
@@ -355,13 +355,13 @@ phina.define("qft.MainScene", {
                     this.spawnItemBox(x, y, e.properties);
                     break;
                 case "door":
-                    qft.MapObject.Door(this).addChildTo(this.objLayer).setPosition(x, y);
+                    var door = qft.MapObject.Door(this, e).addChildTo(this.objLayer).setPosition(x, y);
                     break;
                 case "check":
-                    qft.MapObject.CheckIcon(this).addChildTo(this.objLayer).setPosition(x, y).setAnimation(e.name);
+                    qft.MapObject.CheckIcon(this, e).addChildTo(this.objLayer).setPosition(x, y).setAnimation(e.name);
                     break;
                 case "message":
-                    qft.MapObject.EventMessage(e, this).addChildTo(this.objLayer).setPosition(x, y);
+                    qft.MapObject.EventMessage(this, e).addChildTo(this.objLayer).setPosition(x, y);
                     break;
             }
         }.bind(this));

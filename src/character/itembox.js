@@ -24,8 +24,8 @@ phina.define("qft.ItemBox", {
     //反発係数
     rebound: 0.3,
 
-    init: function(options, parentScene) {
-        this.superInit({width: 26, height: 26}, parentScene);
+    init: function(parentScene, options) {
+        this.superInit(parentScene, {width: 26, height: 26});
 
         //アイテムボックススプライト
         this.sprite = phina.display.Sprite("itembox", 32, 32)

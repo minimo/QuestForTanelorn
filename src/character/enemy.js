@@ -30,9 +30,9 @@ phina.define("qft.Enemy", {
     //進行方向（0:右 180:左）
     direction: 0,
 
-    init: function(options, parentScene) {
+    init: function(parentScene, options) {
         options = options || {};
-        this.superInit(options, parentScene);
+        this.superInit(parentScene, options);
         this.$extend(options);
         this.setupAnimation();
 

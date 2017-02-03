@@ -35,8 +35,8 @@ phina.define("qft.Enemy.Bullet", {
     //地形無視
     ignoreCollision: true,
 
-    init: function(options, parentScene) {
-        this.superInit({width: 20, height: 20}, parentScene);
+    init: function(parentScene, options) {
+        this.superInit(parentScene, {width: 20, height: 20});
         options = options || {};
         this.$extend(options);
 

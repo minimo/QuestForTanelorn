@@ -42,7 +42,7 @@ phina.define("qft.Player", {
     },
 
     init: function(parentScene) {
-        this.superInit({width: 16, height: 20}, parentScene);
+        this.superInit(parentScene, {width: 16, height: 20});
         var that = this;
 
         //表示用スプライト
