@@ -17,7 +17,7 @@ phina.define("qft.MainScene", {
     //メニュー選択中アイテム番号
     menuSelect: 0,
 
-    //メッセージスタック   
+    //メッセージスタック
     messageStack: [],
 
     init: function() {
@@ -361,7 +361,10 @@ phina.define("qft.MainScene", {
                     qft.MapObject.CheckIcon(this, e).addChildTo(this.objLayer).setPosition(x, y).setAnimation(e.name);
                     break;
                 case "message":
-                    qft.MapObject.EventMessage(this, e).addChildTo(this.objLayer).setPosition(x, y);
+                    qft.MapObject.Message(this, e).addChildTo(this.objLayer).setPosition(x, y);
+                    break;
+                case "event":
+                    qft.MapObject.Event(this, e).addChildTo(this.objLayer).setPosition(x, y);
                     break;
             }
         }.bind(this));

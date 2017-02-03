@@ -29,6 +29,8 @@ phina.define("qft.MapObject.Door", {
         //スプライト
         this.sprite = phina.display.Sprite("door", 36, 64).addChildTo(this).setFrameIndex(3);
         this.setAnimation("closed");
+
+        this.isLock = options.properties.lock || false;        
     },
 
     update: function(e) {
@@ -112,8 +114,8 @@ phina.define("qft.MapObject.CheckIcon", {
     
 });
 
-//イベントメッセージ   
-phina.define("qft.MapObject.EventMessage", {
+//メッセージ表示
+phina.define("qft.MapObject.Message", {
     superClass: "phina.display.DisplayElement",
 
     //オブジェクトID
@@ -147,5 +149,43 @@ phina.define("qft.MapObject.EventMessage", {
 
         //判定を外れたら表示済みフラグを外す
         if (!hit && this.alreadyRead) this.alreadyRead = false;
+    },
+});
+
+//イベント  
+phina.define("qft.MapObject.Event", {
+    superClass: "phina.display.DisplayElement",
+
+    //オブジェクトID
+    id: null,
+
+    //一回のみ表示フラグ
+    once: false,
+
+    //実行済みフラグ
+    already: false,
+
+    init: function(parentScene, options) {
+        this.superInit(options);
+        this.parentScene = parentScene;
+        this.id = options.id;
+        this.once = options.properties.once || false;
+        this.properties = options.properties;
+    },
+
+    update: function(e) {
+        //プレイヤーとの当たり判定
+        var pl = this.parentScene.player;
+        var hit = this.hitTestElement(pl);
+        if (hit && !this.alreadyRead) {
+            this.parentScene.spawnEventMessage(this.id, this.text);
+            this.already = true;
+
+            //一回のみの場合はリムーブ
+            if (this.once) this.remove();
+        }
+
+        //判定を外れたら実行済みフラグを外す
+        if (!hit && this.already) this.alreadyRead = false;
     },
 });
