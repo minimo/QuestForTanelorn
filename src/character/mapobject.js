@@ -11,6 +11,8 @@ qft.MapObject = {};
 phina.define("qft.MapObject.Door", {
     superClass: "qft.Character",
 
+    id: null,
+
     //重力加速度
     gravity: 0.0,
 
@@ -19,6 +21,9 @@ phina.define("qft.MapObject.Door", {
 
     //地形無視
     ignoreCollision: true,
+
+    //実行済みフラグ
+    already: false,
 
     //ロックされているか
     isLock: false,
@@ -30,6 +35,7 @@ phina.define("qft.MapObject.Door", {
         this.sprite = phina.display.Sprite("door", 36, 64).addChildTo(this).setFrameIndex(3);
         this.setAnimation("closed");
 
+        this.id = options.id;        
         this.isLock = options.properties.lock || false;        
     },
 
@@ -41,6 +47,15 @@ phina.define("qft.MapObject.Door", {
                 this.close();
             }
         }
+
+        //プレイヤーとの当たり判定
+        var pl = this.parentScene.player;
+        var hit = this.hitTestElement(pl);
+        if (hit && !this.already) {
+            this.flare('enterdoor');
+        }
+        //判定を外れたら済みフラグを外す
+        if (!hit && this.already) this.already = false;
     },
 
     setupAnimation: function(options) {
@@ -62,8 +77,6 @@ phina.define("qft.MapObject.Door", {
         if (this.isLock) return;
         this.setAnimation("close");
     },
-
-    
 });
 
 //チェックアイコン
