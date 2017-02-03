@@ -496,7 +496,7 @@
     <property name="kind" type="int" value="2"/>
    </properties>
   </object>
-  <object id="41" name="door" type="door" x="6052" y="816" width="36" height="64"/>
+  <object id="41" name="door" type="door" x="6048" y="828" width="44" height="52"/>
   <object id="81" name="ax" type="itembox" x="2048" y="576" width="32" height="32">
    <properties>
     <property name="kind" type="int" value="3"/>
