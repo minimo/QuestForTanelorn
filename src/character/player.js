@@ -35,6 +35,9 @@ phina.define("qft.Player", {
     //討伐モンスター数
     kill: 0,
 
+    //操作可能フラグ
+    isControl: true,
+
     //前フレームの情報
     before: {
         //操作系
@@ -96,6 +99,7 @@ phina.define("qft.Player", {
 
         //プレイヤー操作
         var ct = app.controller;
+        if (!this.isControl) ct = {};
         if (this.stopTime == 0) {
             //左移動
             if (ct.left) {
@@ -489,6 +493,9 @@ phina.define("qft.Player", {
 
         //討伐モンスター数
         this.kill = 0;
+
+        //操作可能フラグ
+        this.isControl = true;
 
         return this;
     },
