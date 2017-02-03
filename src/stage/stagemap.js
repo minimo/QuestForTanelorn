@@ -7,7 +7,7 @@
 
 //ステージマップ制御
 phina.define("qft.StageMap", {
-    superClass: "phina.isplay.DisplayElement",
+    superClass: "phina.display.DisplayElement",
 
     parentScene: null,
     player: null,
