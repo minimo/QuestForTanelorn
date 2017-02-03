@@ -70,6 +70,7 @@ phina.define("qft.Enemy", {
         if (this.hp <= 0) {
             this.hp = 0;
             this.flare('dead');
+            this.parentScene.player.kill++;
         }
         app.playSE("hit");
         return true;

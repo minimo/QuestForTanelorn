@@ -32,6 +32,9 @@ phina.define("qft.Player", {
     //所持クリア条件キー
     keys: [],
 
+    //討伐モンスター数
+    kill: 0,
+
     //前フレームの情報
     before: {
         //操作系
@@ -483,6 +486,9 @@ phina.define("qft.Player", {
 
         //所持クリア条件キー
         this.keys = [];
+
+        //討伐モンスター数
+        this.kill = 0;
 
         return this;
     },
