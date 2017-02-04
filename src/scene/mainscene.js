@@ -377,6 +377,7 @@ phina.define("qft.MainScene", {
         this.backgroundLayer.removeChildren();
         this.foregroundLayer.removeChildren();
         this.collisionLayer.removeChildren();
+        this.enemyLayer.removeChildren();
         this.objLayer.removeChildren();
         this.mapImageLayer.removeChildren();
         this.effectLayer.removeChildren();
