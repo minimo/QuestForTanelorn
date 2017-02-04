@@ -25,7 +25,7 @@ phina.define("qft.ItemBox", {
     rebound: 0.3,
 
     init: function(parentScene, options) {
-        this.superInit(parentScene, {width: 26, height: 26});
+        this.superInit(parentScene, {width: 26, height: 26}.$safe(options));
 
         //アイテムボックススプライト
         this.sprite = phina.display.Sprite("itembox", 32, 32)
@@ -74,17 +74,17 @@ phina.define("qft.ItemBox", {
         this.spcialAnimation = false;
         this.frame = [];
         if (options.color == "gold") {
-            this.frame["close"] = [0];
-            this.frame["open"] = [0, 6, 12, 18, "stop"];
+            this.frame["close"] = [2];
+            this.frame["open"] = [2, 6, 8, "stop"];
         } else if (options.color == "red") {
             this.frame["close"] = [1];
-            this.frame["open"] = [1, 7, 13, 19, "stop"];
+            this.frame["open"] = [1, 4, 7, "stop"];
         } else if (options.color == "blue") {
-            this.frame["close"] = [2];
-            this.frame["open"] = [2, 8, 14, 20, "stop"];
-        } else {
             this.frame["close"] = [0];
             this.frame["open"] = [0, 3, 6, "stop"];
+        } else {
+            this.frame["close"] = [1];
+            this.frame["open"] = [1, 4, 7, "stop"];
         }
         this.index = 0;
     },

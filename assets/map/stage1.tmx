@@ -542,6 +542,7 @@
   <object id="161" name="Demon" type="enemy" x="1020" y="816" width="32" height="32"/>
   <object id="162" name="key" type="itembox" x="4624" y="780" width="32" height="32">
    <properties>
+    <property name="color" value="gold"/>
     <property name="kind" type="int" value="16"/>
    </properties>
   </object>
