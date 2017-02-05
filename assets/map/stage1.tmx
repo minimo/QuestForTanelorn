@@ -472,7 +472,7 @@
   <object id="172" x="5008" y="1024" width="128" height="96"/>
   <object id="173" x="5168" y="1072" width="64" height="48"/>
   <object id="175" type="ladder" x="5064" y="448" width="16" height="576"/>
-  <object id="176" x="5008" y="480" width="16" height="416"/>
+  <object id="176" x="5008" y="480" width="16" height="544"/>
   <object id="178" x="4272" y="464" width="192" height="48"/>
   <object id="179" type="ladder" x="4296" y="464" width="16" height="112"/>
  </objectgroup>
@@ -496,7 +496,7 @@
     <property name="kind" type="int" value="2"/>
    </properties>
   </object>
-  <object id="41" name="door" type="door" x="6054" y="816" width="36" height="64"/>
+  <object id="41" name="clear" type="door" x="6054" y="816" width="36" height="64"/>
   <object id="81" name="ax" type="itembox" x="2048" y="576" width="32" height="32">
    <properties>
     <property name="kind" type="int" value="3"/>
@@ -540,14 +540,14 @@
   </object>
   <object id="160" name="Bird" type="enemy" x="628" y="816" width="32" height="32"/>
   <object id="161" name="Demon" type="enemy" x="1020" y="816" width="32" height="32"/>
-  <object id="162" name="key" type="itembox" x="4624" y="780" width="32" height="32">
+  <object id="162" name="key" type="itembox" x="4624" y="784" width="32" height="32">
    <properties>
     <property name="color" value="gold"/>
     <property name="kind" type="int" value="16"/>
    </properties>
   </object>
   <object id="177" type="itembox" x="4816" y="528" width="32" height="32"/>
-  <object id="180" name="Snake" type="enemy" x="4680" y="608" width="32" height="32"/>
+  <object id="180" name="Snake" type="enemy" x="4688" y="608" width="32" height="32"/>
   <object id="181" name="Slime" type="enemy" x="4672" y="432" width="32" height="32"/>
  </objectgroup>
 </map>
