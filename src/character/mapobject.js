@@ -53,9 +53,8 @@ phina.define("qft.MapObject.Door", {
         var hit = this.hitTestElement(pl);
         if (hit && !this.already) {
             this.flare('enterdoor');
+            this.already = true;
         }
-        //判定を外れたら済みフラグを外す
-        if (!hit && this.already) this.already = false;
     },
 
     setupAnimation: function(options) {
@@ -94,6 +93,7 @@ phina.define("qft.MapObject.CheckIcon", {
 
     init: function(parentScene, options) {
         this.superInit(parentScene, {width: 36, height: 64});
+        this.$safe(options);
 
         //スプライト
         this.sprite = phina.display.Sprite("checkicon", 32, 32).addChildTo(this);

@@ -20,6 +20,9 @@ phina.define("qft.MainScene", {
     //メッセージスタック
     messageStack: [],
 
+    //ステージクリアオブジェクト
+    clearGate: null,
+
     init: function() {
         this.superInit();
 
@@ -136,6 +139,14 @@ phina.define("qft.MainScene", {
                 event.value.call(this, event.option);
             } else {
                 this.enterEnemyUnit(event.value);
+            }
+        }
+
+        //ステージクリア条件チェック
+        if (this.clearGate) {
+            var res = this.stageController.checkStageClearCondtion();
+            if (res) {
+                this.on('stageclear');
             }
         }
 
@@ -332,6 +343,7 @@ phina.define("qft.MainScene", {
         //イベント取得
         var events = tmx.getObjectGroup("event").objects;
         events.forEach(function(e) {
+            var that = this;
             var x = e.x + e.width / 2;
             var y = e.y + e.height / 2;
             switch (e.type) {
@@ -357,6 +369,12 @@ phina.define("qft.MainScene", {
                     break;
                 case "door":
                     var door = qft.MapObject.Door(this, e).addChildTo(this.objLayer).setPosition(x, y);
+                    if (e.name == "clear") {
+                        this.clearGate = door;
+                        door.on('enterdoor', function() {
+                            that.flare('stageclear');
+                        });
+                    }
                     break;
                 case "check":
                     qft.MapObject.CheckIcon(this, e).addChildTo(this.objLayer).setPosition(x, y).setAnimation(e.name);
