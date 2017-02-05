@@ -40,8 +40,9 @@ phina.define("qft.MapObject.Door", {
     },
 
     update: function(e) {
+        //近くに来たら自動的に開ける
         if (this.getDistancePlayer() < 64) {
-            this.open();
+            if (!this.isLock) this.open();
         } else {
             if (this.nowAnimation == "open") {
                 this.close();
@@ -51,7 +52,7 @@ phina.define("qft.MapObject.Door", {
         //プレイヤーとの当たり判定
         var pl = this.parentScene.player;
         var hit = this.hitTestElement(pl);
-        if (hit && !this.already) {
+        if (hit && !this.isLock && !this.already) {
             this.flare('enterdoor');
             this.already = true;
         }
@@ -68,12 +69,10 @@ phina.define("qft.MapObject.Door", {
     },
 
     open: function() {
-        if (this.isLock) return;
         this.setAnimation("open");
     },
 
     close: function() {
-        if (this.isLock) return;
         this.setAnimation("close");
     },
 });

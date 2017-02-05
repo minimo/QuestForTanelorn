@@ -371,6 +371,7 @@ phina.define("qft.MainScene", {
                     var door = qft.MapObject.Door(this, e).addChildTo(this.objLayer).setPosition(x, y);
                     if (e.name == "clear") {
                         this.clearGate = door;
+                        door.isLock = true;
                         door.on('enterdoor', function() {
                             that.flare('stageclear');
                         });
