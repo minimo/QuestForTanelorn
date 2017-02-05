@@ -30,7 +30,10 @@ phina.define("qft.Stage1", {
     //ステージクリア条件判定
     checkStageClearCondtion: function() {
         var keys = this.player.keys;
-        if (keys.length != 0) return true;
+        if (keys.length != 0) {
+            this.parentScene.clearGate.isLock = false;
+            return true;
+        }
         return false;
     },
 });
