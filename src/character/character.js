@@ -140,13 +140,6 @@ phina.define("qft.Character", {
             this.resetCollisionPosition();
             this.checkMapCollision();
 
-            //スクリーン内判定
-            if (this.hitTestElement(this.parentScene.screen)) {
-                this.onScreen = true;
-            } else {
-                this.onScreen = false;
-            }
-
             //画面外落ち
             if (!this.isDead && this.y > this.parentScene.map.height) this.dropDead();
 

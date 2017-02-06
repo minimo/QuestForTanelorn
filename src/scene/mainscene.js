@@ -32,7 +32,6 @@ phina.define("qft.MainScene", {
         //マップレイヤー
         this.mapLayer = phina.display.DisplayElement().addChildTo(this);
         this.mapImageLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
-        this.screen = phina.display.DisplayElement({width: SC_W + 64, height: SC_H + 64});
 
         //地形判定用レイヤー
         this.collisionLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
@@ -154,8 +153,6 @@ phina.define("qft.MainScene", {
         this.mapLayer.x = SC_W*0.5-this.player.x;
         this.mapLayer.y = SC_H*0.5-this.player.y;
         if (this.mapLayer.y < -(this.map.height-SC_H)) this.mapLayer.y = -(this.map.height-SC_H);
-        this.screen.x = this.mapLayer.x;
-        this.screen.y = this.mapLayer.y;
 
         this.time++;
         this.timeLimit--;
