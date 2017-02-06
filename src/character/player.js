@@ -411,6 +411,7 @@ phina.define("qft.Player", {
         this.frame["damage"] = [ 18, 19, 20];
         this.frame["drop"] = [18, 19, 20];
         this.frame["dead"] = [18, 19, 20, 33, 34, 35, "stop"];
+        this.frame["clear"] = [24, 25, 26];
         this.index = 0;
         return this;
     },
@@ -497,6 +498,42 @@ phina.define("qft.Player", {
         //操作可能フラグ
         this.isControl = true;
 
+        return this;
+    },
+});
+
+phina.define("qft.PlayerDummy", {
+    superClass: "phina.display.Sprite",
+
+    init: function() {
+        this.superInit("player1", 32, 32);
+        this.frame = [];
+        this.frame["stand"] = [13, 14];
+        this.frame["up"] =   [ 9, 10, 11, 10];
+        this.frame["down"] = [ 0,  1,  2,  1];
+        this.frame["clear"] = [24, "stop"];
+        this.index = 0;
+
+        this.nowAnimation = "stand";
+        this.animation = true;
+
+        this.time = 0;
+    },
+
+    update: function() {
+        if (this.animation && this.time % 6 == 0) {
+            this.index = (this.index+1) % this.frame[this.nowAnimation].length;
+            if (this.frame[this.nowAnimation][this.index] == "stop") this.index--;
+            this.frameIndex = this.frame[this.nowAnimation][this.index];
+        }
+        this.time++;
+    },
+
+    setAnimation: function(animName) {
+        if (!this.frame[animName]) return;
+        if (animName == this.nowAnimation) return;
+        this.nowAnimation = animName;
+        this.index = -1;
         return this;
     },
 });
