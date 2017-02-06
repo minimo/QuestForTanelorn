@@ -29,7 +29,9 @@ phina.define("qft.MapObject.Door", {
     isLock: false,
 
     init: function(parentScene, options) {
-        this.superInit(parentScene, {width: 36, height: 64});
+        var width = options.width || 36;
+        var height = options.height || 64;
+        this.superInit(parentScene, {width: width, height: height});
 
         //スプライト
         this.sprite = phina.display.Sprite("door", 36, 64).addChildTo(this).setFrameIndex(3);

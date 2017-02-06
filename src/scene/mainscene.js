@@ -116,6 +116,14 @@ phina.define("qft.MainScene", {
             }
         }
 
+        //ステージクリア条件チェック
+        if (this.mapLayer.clearGate) {
+            if (this.stageController.checkStageClearCondtion()) {
+                this.mapLayer.clearGate.isLock = false;
+            }
+        }
+
+
         //スクリーン表示位置をプレイヤー中心になる様に調整
         this.mapLayer.x = SC_W*0.5-this.player.x;
         this.mapLayer.y = SC_H*0.5-this.player.y;
@@ -366,6 +374,7 @@ phina.define("qft.MainScene", {
                 case "door":
                     var door = qft.MapObject.Door(this, e).addChildTo(mapLayer.objLayer).setPosition(x, y);
                     if (e.name == "clear") {
+                        mapLayer.clearGate = door;
                         door.isLock = true;
                         door.on('enterdoor', function() {
                             that.flare('stageclear');

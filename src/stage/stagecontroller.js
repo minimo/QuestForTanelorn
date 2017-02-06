@@ -87,7 +87,7 @@ phina.define("qft.StageController", {
         this.index = 0;
     },
 
-    judgeStageClearCondtion: function() {
+    checkStageClearCondtion: function() {
         return false;
     },
 });
