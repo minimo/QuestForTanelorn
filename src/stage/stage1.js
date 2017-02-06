@@ -33,4 +33,26 @@ phina.define("qft.Stage1", {
         if (keys.length != 0) return true;
         return false;
     },
+
+    stageClear: function() {
+        var pl = qft.PlayerDummy().addChildTo(this.parentScene.mapLayer.playerLayer).setVisible(false);
+        pl.setAnimation("clear");
+        pl.tweener.clear()
+            .by()
+        this.player.tweener.clear()
+            .wait(30)
+            .set({alpha: 0})
+            .call(function() {
+                pl.setPosition(this.player.x, this.player.y).setVisible(true);
+            }.bind(this))
+            .wait(60)
+            .call(function() {
+                pl.setAnimation("up");
+                pl.tweener.clear().moveBy(10, -32, 1000)
+                    .call(function() {
+                        pl.animation = false;
+                    })
+                    .fadeOut(500);
+            }.bind(this));
+    },
 });

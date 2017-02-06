@@ -47,8 +47,12 @@ phina.define("qft.MainScene", {
         });
 
         //ステージクリア
-        this.on('stageclear', function(e) {
-            this.stageClear();
+        this.on('stageclear', this.stageClear);
+
+        //次ステージへ移行
+        this.on('nextstage', function(e) {
+//            this.stageNumber++;
+            this.setupStage();
         });
 
         //ゲームオーバー
@@ -442,5 +446,7 @@ phina.define("qft.MainScene", {
         this.spawnMessage("STAGE "+this.stageNumber+" CLEAR!", 24);
         this.stageNumber++;
         app.playBGM("stageclear", false);
+        this.player.isControl = false;
+        this.stageController.stageClear();
     },
 });

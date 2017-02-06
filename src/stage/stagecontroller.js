@@ -90,4 +90,7 @@ phina.define("qft.StageController", {
     checkStageClearCondtion: function() {
         return false;
     },
+
+    stageClear: function() {
+    },
 });
