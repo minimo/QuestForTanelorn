@@ -61,7 +61,7 @@ phina.define("qft.MainScene", {
         this.setupScreen();
 
         //マップ初期化
-        this.setupStageMap(this.stageNumber);
+        this.setupStageMap();
 
         app.volumeBGM = 0.5;
         app.volumeSE = 0.2;
@@ -245,9 +245,9 @@ phina.define("qft.MainScene", {
             fontSize: 20,
             fontWeight: ''
         };
-        phina.display.Label({text: "LIFE"}.$safe(labelParam)).addChildTo(this).setPosition(0, 10);
 
         //体力ゲージ
+        phina.display.Label({text: "LIFE"}.$safe(labelParam)).addChildTo(this).setPosition(0, 10);
         var options = {
             width:  256,
             height: 5,
@@ -265,6 +265,7 @@ phina.define("qft.MainScene", {
             this.value = that.player.hp;
         };
 
+        //制限時間表示
         var tl = phina.display.Label({text: "TIME:", align: "right"}.$safe(labelParam)).addChildTo(this).setPosition(SC_W, 10);
         tl.update = function() {
             this.text = "TIME:"+Math.floor(that.timeLimit/30);
@@ -272,8 +273,7 @@ phina.define("qft.MainScene", {
     },
 
     //マップ情報の初期化
-    setupStageMap: function(stageNumber) {
-        stageNumber = stageNumber || 1;
+    setupStageMap: function() {
 
         //経過時間初期化
         this.time = 0;
@@ -282,7 +282,7 @@ phina.define("qft.MainScene", {
         this.clearMap();
 
         //ステージコントローラー
-        switch (stageNumber) {
+        switch (this.stageNumber) {
             case 1:
                 this.stageController = qft.Stage1(this, tmx);
                 break;
@@ -295,7 +295,7 @@ phina.define("qft.MainScene", {
         this.timeLimit = this.stageController.timeLimit;
 
         //マップ情報取得
-        var tmx = phina.asset.AssetManager.get('tmx', "stage"+stageNumber);
+        var tmx = phina.asset.AssetManager.get('tmx', "stage"+this.stageNumber);
 
         //マップ画像取得
         var foreground = tmx.getImage("foreground");
