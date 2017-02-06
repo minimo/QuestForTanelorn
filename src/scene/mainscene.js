@@ -20,9 +20,6 @@ phina.define("qft.MainScene", {
     //メッセージスタック
     messageStack: [],
 
-    //ステージクリアオブジェクト
-    clearGate: null,
-
     init: function() {
         this.superInit();
 
@@ -32,41 +29,14 @@ phina.define("qft.MainScene", {
         //管理用基準レイヤ
         this.baseLayer = phina.display.DisplayElement().addChildTo(this);
 
-        //マップレイヤ
-        this.mapLayer = phina.display.DisplayElement().addChildTo(this.baseLayer);
-
-        //マップ画像用レイヤ
-        this.mapImageLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
-
-        //地形判定用レイヤ
-        this.collisionLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
-
-        //バックグラウンドレイヤ
-        this.backgroundLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
-
-        //オブジェクト管理レイヤ
-        this.objLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
-
-        //敵キャラクタ管理レイヤ
-        this.enemyLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
-
-        //プレイヤー表示レイヤ
-        this.playerLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
-
-        //エフェクト管理レイヤ
-        this.effectLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
-
-        //フォアグラウンドレイヤ
-        this.foregroundLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
-
         //プレイヤーキャラクタ
-        this.player = qft.Player(this).addChildTo(this.playerLayer).setPosition(SC_W*0.5, SC_H*0.5);
+        this.player = qft.Player(this);
+
+        //ステージ情報初期化
+        this.setupStage();
 
         //スクリーン初期化
         this.setupScreen();
-
-        //マップ初期化
-        this.setupStageMap();
 
         app.volumeBGM = 0.5;
         app.volumeSE = 0.2;
@@ -143,14 +113,6 @@ phina.define("qft.MainScene", {
                 event.value.call(this, event.option);
             } else {
                 this.enterEnemyUnit(event.value);
-            }
-        }
-
-        //ステージクリア条件チェック
-        if (this.clearGate) {
-            var res = this.stageController.checkStageClearCondtion();
-            if (res) {
-                this.on('stageclear');
             }
         }
 
@@ -278,7 +240,7 @@ phina.define("qft.MainScene", {
     },
 
     //マップ情報の初期化
-    setupStageMap: function() {
+    setupStage: function() {
 
         //経過時間初期化
         this.time = 0;
@@ -286,35 +248,67 @@ phina.define("qft.MainScene", {
         //登録済みマップの消去
         this.clearMap();
 
-        //ステージコントローラー
+        //ステージ設定読み込み
         switch (this.stageNumber) {
             case 1:
-                this.stageController = qft.Stage1(this, tmx);
+                this.stageController = qft.Stage1(this);
+                var tmx = phina.asset.AssetManager.get('tmx', "stage1");
+                var mapLayer = this.createMap(tmx);
+                this.switchMap(mapLayer);
                 break;
             case 2:
-                this.stageController = qft.Stage2(this, tmx);
+                this.stageController = qft.Stage2(this);
+                var tmx = phina.asset.AssetManager.get('tmx', "stage2");
+                var mapLayer = this.createMap(tmx);
+                this.switchMap(mapLayer);
                 break;
         };
-
         //タイムリミット設定
         this.timeLimit = this.stageController.timeLimit;
+    },
 
-        //マップ情報取得
-        var tmx = phina.asset.AssetManager.get('tmx', "stage"+this.stageNumber);
+    //tmxからマップレイヤを作成する
+    createMap: function(tmx) {
+        //マップレイヤ
+        var mapLayer = phina.display.DisplayElement();
+
+        //マップ画像用レイヤ
+        mapLayer.mapImageLayer = phina.display.DisplayElement().addChildTo(mapLayer);
+
+        //地形判定用レイヤ
+        mapLayer.collisionLayer = phina.display.DisplayElement().addChildTo(mapLayer);
+
+        //バックグラウンドレイヤ
+        mapLayer.backgroundLayer = phina.display.DisplayElement().addChildTo(mapLayer);
+
+        //オブジェクト管理レイヤ
+        mapLayer.objLayer = phina.display.DisplayElement().addChildTo(mapLayer);
+
+        //敵キャラクタ管理レイヤ
+        mapLayer.enemyLayer = phina.display.DisplayElement().addChildTo(mapLayer);
+
+        //プレイヤー表示レイヤ
+        mapLayer.playerLayer = phina.display.DisplayElement().addChildTo(mapLayer);
+
+        //エフェクト管理レイヤ
+        mapLayer.effectLayer = phina.display.DisplayElement().addChildTo(mapLayer);
+
+        //フォアグラウンドレイヤ
+        mapLayer.foregroundLayer = phina.display.DisplayElement().addChildTo(mapLayer);
 
         //マップ画像取得
         var foreground = tmx.getImage("foreground");
         var mapImage = tmx.getImage("map");
         var background = tmx.getImage("background");
-        this.map = phina.display.Sprite(mapImage).addChildTo(this.mapImageLayer).setOrigin(0, 0);
-        phina.display.Sprite(background).addChildTo(this.backgroundLayer).setOrigin(0, 0);
-        phina.display.Sprite(foreground).addChildTo(this.foregroundLayer).setOrigin(0, 0);
+        this.map = phina.display.Sprite(mapImage).addChildTo(mapLayer.mapImageLayer).setOrigin(0, 0);
+        phina.display.Sprite(background).addChildTo(mapLayer.backgroundLayer).setOrigin(0, 0);
+        phina.display.Sprite(foreground).addChildTo(mapLayer.foregroundLayer).setOrigin(0, 0);
 
         //マップ当たり判定取得
         var objects = tmx.getObjectGroup("collision").objects;
         objects.forEach(function(e) {
             var c = phina.display.RectangleShape({width: e.width, height: e.height})
-                .addChildTo(this.collisionLayer)
+                .addChildTo(mapLayer.collisionLayer)
                 .setPosition(e.x+e.width/2, e.y+e.height/2)
                 .setVisible(DEBUG_COLLISION);
             c.on('enterframe', function() {
@@ -361,18 +355,17 @@ phina.define("qft.MainScene", {
                     }
                     break;
                 case "enemy":
-                    this.spawnEnemy(x, y, e.name, e.properties);
+                    qft.Enemy[e.name](this, e.properties).addChildTo(mapLayer.enemyLayer).setPosition(x, y);
                     break;
                 case "item":
-                    this.spawnItem(x, y, e.properties);
+                    qft.Item(this, e.properties).addChildTo(mapLayer.objLayer).setPosition(x, y);
                     break;
                 case "itembox":
-                    this.spawnItemBox(x, y, e.properties);
+                    qft.ItemBox(this, e.properties).addChildTo(mapLayer.objLayer).setPosition(x, y);
                     break;
                 case "door":
-                    var door = qft.MapObject.Door(this, e).addChildTo(this.objLayer).setPosition(x, y);
+                    var door = qft.MapObject.Door(this, e).addChildTo(mapLayer.objLayer).setPosition(x, y);
                     if (e.name == "clear") {
-                        this.clearGate = door;
                         door.isLock = true;
                         door.on('enterdoor', function() {
                             that.flare('stageclear');
@@ -380,34 +373,57 @@ phina.define("qft.MainScene", {
                     }
                     break;
                 case "check":
-                    qft.MapObject.CheckIcon(this, e).addChildTo(this.objLayer).setPosition(x, y).setAnimation(e.name);
+                    qft.MapObject.CheckIcon(this, e).addChildTo(mapLayer.objLayer).setPosition(x, y).setAnimation(e.name);
                     break;
                 case "message":
-                    qft.MapObject.Message(this, e).addChildTo(this.objLayer).setPosition(x, y);
+                    qft.MapObject.Message(this, e).addChildTo(mapLayer.objLayer).setPosition(x, y);
                     break;
                 case "event":
-                    qft.MapObject.Event(this, e).addChildTo(this.objLayer).setPosition(x, y);
+                    qft.MapObject.Event(this, e).addChildTo(mapLayer.objLayer).setPosition(x, y);
                     break;
             }
         }.bind(this));
+        return mapLayer;
     },
 
     //マップ情報の消去
     clearMap: function() {
         //当たり判定、オブジェクトの全消去
-        this.backgroundLayer.removeChildren();
-        this.foregroundLayer.removeChildren();
-        this.collisionLayer.removeChildren();
-        this.enemyLayer.removeChildren();
-        this.objLayer.removeChildren();
-        this.mapImageLayer.removeChildren();
-        this.effectLayer.removeChildren();
+        if (this.backgroundLayer) this.backgroundLayer.removeChildren();
+        if (this.foregroundLayer) this.foregroundLayer.removeChildren();
+        if (this.collisionLaye) this.collisionLayer.removeChildren();
+        if (this.enemyLayer) this.enemyLayer.removeChildren();
+        if (this.objLayer) this.objLayer.removeChildren();
+        if (this.mapImageLayer) this.mapImageLayer.removeChildren();
+        if (this.effectLayer) this.effectLayer.removeChildren();
+    },
+
+    //マップレイヤの切替
+    switchMap: function(layer, x, y) {
+        if (this.mapLayer) this.mapLayer.remove();
+        this.mapLayer = layer;
+        this.mapLayer.addChildTo(this.baseLayer);
+
+        this.backgroundLayer = layer.backgroundLayer;
+        this.foregroundLayer = layer.foregroundLayer;
+        this.collisionLayer = layer.collisionLayer;
+        this.enemyLayer = layer.enemyLayer;
+        this.playerLayer = layer.playerLayer;
+        this.objLayer = layer.objLayer;
+        this.mapImageLayer = layer.mapImageLayer;
+        this.effectLayer = layer.effectLayer;
+
+        this.player.remove();
+        this.player.addChildTo(layer.playerLayer);
+        if (x) {
+            this.player.setPosition(x, y);
+        }
     },
 
     //リスタート
     restart: function() {
-        this.setupStageMap();
-        this.player.reset().addChildTo(this.playerLayer);
+        this.player.reset();
+        this.setupStage();
         this.menuSelect = 0;
     },
 
