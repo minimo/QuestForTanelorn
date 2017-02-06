@@ -26,14 +26,19 @@ phina.define("qft.MainScene", {
     init: function() {
         this.superInit();
 
-        //バックグラウンド
-        this.background = phina.display.Sprite("background").addChildTo(this).setPosition(SC_W*0.5, SC_H*0.5);
+        //背景
+        this.backgroundImage = phina.display.Sprite("background").addChildTo(this).setPosition(SC_W*0.5, SC_H*0.5);
 
-        //マップレイヤー
-        this.mapLayer = phina.display.DisplayElement().addChildTo(this);
+        //管理用基準レイヤ
+        this.baseLayer = phina.display.DisplayElement().addChildTo(this);
+
+        //マップレイヤ
+        this.mapLayer = phina.display.DisplayElement().addChildTo(this.baseLayer);
+
+        //マップ画像用レイヤ
         this.mapImageLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
 
-        //地形判定用レイヤー
+        //地形判定用レイヤ
         this.collisionLayer = phina.display.DisplayElement().addChildTo(this.mapLayer);
 
         //バックグラウンドレイヤ
