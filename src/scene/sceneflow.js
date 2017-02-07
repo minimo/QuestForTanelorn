@@ -25,6 +25,10 @@ phina.define("qft.SceneFlow", {
                 label: "gameover",
                 className: "qft.GameOverScene",
                 next: "main",
+            },{
+                label: "ending",
+                className: "qft.EndingScene",
+                next: "main",
             }],
         });
     }
