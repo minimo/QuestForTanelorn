@@ -499,7 +499,7 @@ phina.define("qft.MainScene", {
         var labelParam = {
             fill: "white",
             stroke: "black",
-            strokeWidth: 1,
+            strokeWidth: 2,
 
             fontFamily: "UbuntuMono",
             baseline: "middle",
@@ -509,10 +509,15 @@ phina.define("qft.MainScene", {
 
         //クリアメッセージ投入
         this.spawnMessage("STAGE "+this.stageNumber+" CLEAR!", 24);
-        app.playBGM("stageclear", false);
         this.player.isControl = false;
         this.stageController.stageClear();
         this.isStageClear = true;
+
+        //クリアBGM
+        var bgmFinish = false;
+        app.playBGM("stageclear", false, function() {
+            bgmFinish = true;
+        });
 
         //次ステージのアセット読み込み
         if (this.stageNumber < this.stageNumberMax) {
@@ -524,13 +529,13 @@ phina.define("qft.MainScene", {
 
         //ロード進捗表示
         var that = this;
-        var param = {text: "", align: "center", fontSize: 16}.$safe(labelParam);
-        var progress = phina.display.Label(param).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.7);
+        var param = {text: "", align: "center", fontSize: 20}.$safe(labelParam);
+        var progress = phina.display.Label(param).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.6);
         progress.time = 0;
         progress.update = function() {
             //ロードが終わったらキー入力で次ステージへ
             if (ar.loadprogress) this.text = "Loading... "+Math.floor(ar.loadprogress * 100)+"%";
-            if (that.timeLimit == 0 && ar.loadComplete) {
+            if (bgmFinish && that.timeLimit == 0 && ar.loadComplete) {
                 this.text = "Push button to next stage.";
                 var ct = app.controller;
                 if (ct.ok || ct.cancel) {
