@@ -502,11 +502,12 @@ phina.define("qft.Player", {
     },
 });
 
+//プレイヤーダミースプライト
 phina.define("qft.PlayerDummy", {
     superClass: "phina.display.Sprite",
 
-    init: function() {
-        this.superInit("player1", 32, 32);
+    init: function(assetName) {
+        this.superInit(assetName, 32, 32);
         this.frame = [];
         this.frame["stand"] = [13, 14];
         this.frame["up"] =   [ 9, 10, 11, 10];
