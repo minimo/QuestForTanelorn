@@ -37,6 +37,18 @@ phina.define("qft.Enemy", {
         this.setupAnimation();
 
         this.on('enterframe', function() {
+            //向きの指定
+            if (this.vx != 0) {
+                if (this.vx > 0) {
+                    this.scaleX = 1;
+                } else {
+                    this.scaleX = -1;
+                }
+            }
+
+            //ステージクリアの場合は当たり判定無し
+            if (this.parentScene.isStageCler) return;
+
             var pl = this.parentScene.player;
             //プレイヤー攻撃との当たり判定
             if (pl.attack && this.hitTestElement(pl.attackCollision)) {
@@ -45,15 +57,6 @@ phina.define("qft.Enemy", {
             //プレイヤーとの当たり判定
             if (!this.isDead && !pl.isDead && this.hitTestElement(pl)) {
                 pl.damage(this);
-            }
-
-            //向きの指定
-            if (this.vx != 0) {
-                if (this.vx > 0) {
-                    this.scaleX = 1;
-                } else {
-                    this.scaleX = -1;
-                }
             }
         });
     },

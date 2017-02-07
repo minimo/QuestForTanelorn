@@ -20,6 +20,9 @@ phina.define("qft.MainScene", {
     //メッセージスタック
     messageStack: [],
 
+    //ステージクリア
+    isStageClear: false,
+
     //スコア
     totalScore: 0,
     stageScore: 0,
@@ -108,43 +111,50 @@ phina.define("qft.MainScene", {
     },
 
     update: function(app) {
-        var ct = app.controller;
-        //メニューシーンへ移行
-        if (ct.pause || ct.menu) {
-            this.flare('openmenu');
-        }
+        if (!this.isStageClear) {
+            var ct = app.controller;
+            //メニューシーンへ移行
+            if (ct.pause || ct.menu) {
+                this.flare('openmenu');
+            }
 
-        //ステージ進行
-        var event = this.stageController.get(this.time);
-        if (event) {
-            if (typeof(event.value) === 'function') {
-                event.value.call(this, event.option);
-            } else {
-                this.enterEnemyUnit(event.value);
+            //ステージ進行
+            var event = this.stageController.get(this.time);
+            if (event) {
+                if (typeof(event.value) === 'function') {
+                    event.value.call(this, event.option);
+                } else {
+                    this.enterEnemyUnit(event.value);
+                }
+            }
+            //ステージクリア条件チェック
+            if (this.mapLayer.clearGate) {
+                if (this.stageController.checkStageClearCondtion()) {
+                    this.mapLayer.clearGate.isLock = false;
+                }
+            }
+
+            this.timeLimit--;
+            if (this.timeLimit < 0) {
+                this.timeLimit = 0;
+            }
+            if (this.timeLimit == 0 && !this.player.isDead) {
+                this.player.dead();
+            }
+        } else {
+            //残りタイムをスコア加算
+            if (this.timeLimit > 60) {
+                this.timeLimit -= 60;
+                this.totalScore += 20;
+                if (this.timeLimit < 30) this.timeLimit = 0;
             }
         }
-
-        //ステージクリア条件チェック
-        if (this.mapLayer.clearGate) {
-            if (this.stageController.checkStageClearCondtion()) {
-                this.mapLayer.clearGate.isLock = false;
-            }
-        }
-
-
         //スクリーン表示位置をプレイヤー中心になる様に調整
         this.mapLayer.x = SC_W*0.5-this.player.x;
         this.mapLayer.y = SC_H*0.5-this.player.y;
         if (this.mapLayer.y < -(this.map.height-SC_H)) this.mapLayer.y = -(this.map.height-SC_H);
 
         this.time++;
-        this.timeLimit--;
-        if (this.timeLimit < 0) {
-            this.timeLimit = 0;
-        }
-        if (this.timeLimit == 0 && !this.player.isDead) {
-            this.player.dead();
-        }
     },
 
     //敵キャラクタ投入
@@ -274,6 +284,9 @@ phina.define("qft.MainScene", {
     //マップ情報の初期化
     setupStage: function() {
 
+        //ステージクリアフラグクリア
+        this.isStageClear = false;
+
         //経過時間初期化
         this.time = 0;
 
@@ -295,6 +308,7 @@ phina.define("qft.MainScene", {
                 this.switchMap(mapLayer);
                 break;
         };
+
         //タイムリミット設定
         this.timeLimit = this.stageController.timeLimit;
     },
@@ -468,5 +482,6 @@ phina.define("qft.MainScene", {
         app.playBGM("stageclear", false);
         this.player.isControl = false;
         this.stageController.stageClear();
+        this.isStageClear = true;
     },
 });

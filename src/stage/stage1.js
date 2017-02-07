@@ -34,6 +34,7 @@ phina.define("qft.Stage1", {
         return false;
     },
 
+    //ステージクリア処理
     stageClear: function() {
         var pl = qft.PlayerDummy("player1").addChildTo(this.parentScene.mapLayer.playerLayer).setVisible(false);
         pl.setAnimation("clear");
