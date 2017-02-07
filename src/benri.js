@@ -17,7 +17,7 @@ var distance = function(from, to) {
 
 //距離計算（ルート無し版）
 var distanceSq = function(from, to) {
-    var x = from.x-to.x;
+    var x = from.x - to.x;
     var y = from.y - to.y;
     return x*x+y*y;
 }
@@ -52,3 +52,15 @@ var AdvanceConfirm = function(str) {
 
     return result;
 };
+
+//数値をカンマ編集して文字列として出力
+Number.prototype.$method("comma",  function() {
+    var str = this+'';
+    var len = str.length;
+    var out = '';
+    for (var i = len-1; i > -1; i--) {
+        out = str[i]+out;
+        if (i != 0 && (len-i)%3 == 0) out = ','+out;
+    }
+    return out;
+});

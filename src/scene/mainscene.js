@@ -20,6 +20,10 @@ phina.define("qft.MainScene", {
     //メッセージスタック
     messageStack: [],
 
+    //スコア
+    totalScore: 0,
+    stageScore: 0,
+
     init: function() {
         this.superInit();
 
@@ -244,8 +248,24 @@ phina.define("qft.MainScene", {
             this.value = that.player.hp;
         };
 
+        //スコア表示
+        this.scoreLabel = phina.display.Label({text:"SCORE:", align: "right"}.$safe(labelParam)).addChildTo(this).setPosition(SC_W, 10);
+        this.scoreLabel.score = 0;
+        this.scoreLabel.s = 0;
+        this.scoreLabel.update = function(e) {
+            if (e.ticker.frame % 10 == 0) {
+                this.s = ~~((that.totalScore-this.score)/7);
+                if (this.s < 3) this.s = 3;
+                if (this.s > 7777) this.s = 7777;
+            }
+            this.score += this.s;
+            if (this.score > that.totalScore) this.score = that.totalScore;
+
+            this.text = "SCORE "+this.score.comma();
+        }
+
         //制限時間表示
-        var tl = phina.display.Label({text: "TIME:", align: "right"}.$safe(labelParam)).addChildTo(this).setPosition(SC_W, 10);
+        var tl = phina.display.Label({text: "TIME:", align: "right"}.$safe(labelParam)).addChildTo(this).setPosition(SC_W, 30);
         tl.update = function() {
             this.text = "TIME:"+Math.floor(that.timeLimit/30);
         }
