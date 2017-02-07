@@ -66,7 +66,7 @@ phina.define("qft.MainScene", {
                 this.setupStage();
             } else {
                 //エンディング
-                this.setupStage();
+               app.pushScene(qft.EndingScene(this));
             }
         });
 
@@ -515,11 +515,11 @@ phina.define("qft.MainScene", {
         this.isStageClear = true;
 
         //次ステージのアセット読み込み
-        var isAssetLoad = false;
         if (this.stageNumber < this.stageNumberMax) {
-            isAssetLoad = true;
             var assets = qft.Assets.get({assetType: "stage"+(this.stageNumber+1)});
             var ar = phina.extension.AssetLoaderEx().load(assets);
+        } else {
+            var ar = {loadComplete: true};
         }
 
         //ロード進捗表示
@@ -529,10 +529,8 @@ phina.define("qft.MainScene", {
         progress.time = 0;
         progress.update = function() {
             //ロードが終わったらキー入力で次ステージへ
-            if (isAssetLoad) {
-                this.text = "Loading... "+Math.floor(ar.loadprogress * 100)+"%";
-            }
-            if (!isAssetLoad || ar.loadComplete) {
+            if (ar.loadprogress) this.text = "Loading... "+Math.floor(ar.loadprogress * 100)+"%";
+            if (that.timeLimit == 0 && ar.loadComplete) {
                 this.text = "Push button to next stage.";
                 var ct = app.controller;
                 if (ct.ok || ct.cancel) {
