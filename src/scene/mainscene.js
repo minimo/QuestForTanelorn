@@ -11,6 +11,9 @@ phina.define("qft.MainScene", {
     //現在ステージ番号
     stageNumber: 1,
 
+    //最大ステージ番号
+    stageNumberMax: 1,
+
     //残り時間（フレーム単位）
     timeLimit: 120,
 
@@ -58,8 +61,13 @@ phina.define("qft.MainScene", {
 
         //次ステージへ移行
         this.on('nextstage', function(e) {
-//            this.stageNumber++;
-            this.setupStage();
+            if (this.stageNumber < this.stageNumberMax) {
+                this.stageNumber++;
+                this.setupStage();
+            } else {
+                //エンディング
+                this.setupStage();
+            }
         });
 
         //ゲームオーバー
@@ -111,8 +119,8 @@ phina.define("qft.MainScene", {
     },
 
     update: function(app) {
+        var ct = app.controller;
         if (!this.isStageClear) {
-            var ct = app.controller;
             //メニューシーンへ移行
             if (ct.pause || ct.menu) {
                 this.flare('openmenu');
@@ -143,10 +151,18 @@ phina.define("qft.MainScene", {
             }
         } else {
             //残りタイムをスコア加算
-            if (this.timeLimit > 60) {
+            if (this.timeLimit >= 60) {
                 this.timeLimit -= 60;
                 this.totalScore += 20;
-                if (this.timeLimit < 30) this.timeLimit = 0;
+                if (this.timeLimit < 60) this.timeLimit = 0;
+            }
+
+            //ショートカット
+            var ct = app.controller;
+            if (ct.ok) {
+                if (this.timeLimit >= 60) {
+                    this.totalScore += Math.floor(this.timeLimit / 60) * 20;
+                }
             }
         }
         //スクリーン表示位置をプレイヤー中心になる様に調整
@@ -311,6 +327,10 @@ phina.define("qft.MainScene", {
 
         //タイムリミット設定
         this.timeLimit = this.stageController.timeLimit;
+
+        //プレイヤー設定
+        this.player.isControl = true;
+        this.player.alpha = 1.0;
     },
 
     //tmxからマップレイヤを作成する
@@ -476,12 +496,52 @@ phina.define("qft.MainScene", {
 
     //ステージクリア
     stageClear: function() {
+        var labelParam = {
+            fill: "white",
+            stroke: "black",
+            strokeWidth: 1,
+
+            fontFamily: "UbuntuMono",
+            baseline: "middle",
+            fontSize: 20,
+            fontWeight: ''
+        };
+
         //クリアメッセージ投入
         this.spawnMessage("STAGE "+this.stageNumber+" CLEAR!", 24);
-        this.stageNumber++;
         app.playBGM("stageclear", false);
         this.player.isControl = false;
         this.stageController.stageClear();
         this.isStageClear = true;
+
+        //次ステージのアセット読み込み
+        var isAssetLoad = false;
+        if (this.stageNumber < this.stageNumberMax) {
+            isAssetLoad = true;
+            var assets = qft.Assets.get({assetType: "stage"+(this.stageNumber+1)});
+            var ar = phina.extension.AssetLoaderEx().load(assets);
+        }
+
+        //ロード進捗表示
+        var that = this;
+        var param = {text: "", align: "center", fontSize: 16}.$safe(labelParam);
+        var progress = phina.display.Label(param).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.7);
+        progress.time = 0;
+        progress.update = function() {
+            //ロードが終わったらキー入力で次ステージへ
+            if (isAssetLoad) {
+                this.text = "Loading... "+Math.floor(ar.loadprogress * 100)+"%";
+            }
+            if (!isAssetLoad || ar.loadComplete) {
+                this.text = "Push button to next stage.";
+                var ct = app.controller;
+                if (ct.ok || ct.cancel) {
+                    that.flare('nextstage');
+                    this.remove();
+                }
+            }
+            if (this.time % 30 == 0) this.visible = !this.visible;
+            this.time++;
+        }
     },
 });
