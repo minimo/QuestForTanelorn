@@ -513,6 +513,7 @@ phina.define("qft.PlayerDummy", {
         this.frame["up"] =   [ 9, 10, 11, 10];
         this.frame["down"] = [ 0,  1,  2,  1];
         this.frame["clear"] = [24, "stop"];
+        this.frame["dead"] = [18, 19, 20, 33, 34, 35, "stop"];
         this.index = 0;
 
         this.nowAnimation = "stand";
