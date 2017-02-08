@@ -92,11 +92,16 @@ phina.define("qft.OpeningScene", {
         this.loadLabel = phina.display.Label({text: "", align: "right"}.$safe(labelParam))
             .addChildTo(this)
             .setPosition(SC_W*0.99, SC_H*0.1);
+        this.loadLabel.time = 1;    
         this.loadLabel.update = function() {
             this.text = "Loading... "+Math.floor(that.loader.loadprogress * 100)+"%";
             if (that.loader.loadcomplete) {
                 this.text = "Push button to skip.";
+                this.visible = true;
+            } else {
+                if (this.time % 20 == 0) this.visible = !this.visible;
             }
+            this.time++;
         };
     },
 
