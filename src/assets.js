@@ -15,7 +15,7 @@ phina.define("qft.Assets", {
                             "openingmap": "assets/image/map.jpg",
                         },
                         sound: {
-                            "opening":    "assets/sound/DS-104m.mp3",
+                            "opening":    "assets/sound/DS-070m.mp3",
                         },
                     };
                 case "common":
