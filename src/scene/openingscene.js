@@ -15,11 +15,12 @@ phina.define("qft.OpeningScene", {
         this.text = [
             "世界の中心にそびえる塔",
             "その塔は、楽園「永遠の都」に通じているという。",
-            "いつしか多くの冒険者が",
+            "噂を聞いた多くの冒険者が",
             "楽園を求めて塔の扉を開き",
             "その謎に挑んでいった",
             "しかし…",
-            "彼らがどのような結末を辿ったのか",
+            "彼らが果たして楽園に辿り着いたのか",
+            "それとも世界の果てで力尽きたのか",
             "それを知る者はいない",
             "そして今…",
             "新たな冒険者がまた一人",
@@ -41,8 +42,9 @@ phina.define("qft.OpeningScene", {
         //イメージ表示用レイヤ
         this.imageLayer = phina.display.DisplayElement().addChildTo(this);
 
+        //１枚目
         this.sprite = phina.display.Sprite("openingmap", 1024, 768)
-            .addChildTo(this)
+            .addChildTo(this.imageLayer)
             .setPosition(SC_W * 0.5, -SC_H * 0.3)
             .setScale(0.8);
         this.sprite.alpha = 0;
