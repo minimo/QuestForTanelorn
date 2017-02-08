@@ -13,22 +13,23 @@ phina.define("qft.OpeningScene", {
         this.currentScene = currentScene;
 
         this.text = [
-            "かつて平和だった世界も今は昔。",
-            "モンスターが跳梁跋扈しており、世界の中心に立っている塔も、",
-            "以前は自由に登れたはずだが現在は入り口が閉ざされている。",
-            "モンスターとの終わりの見えない戦いの中で",
-            "人々の生活は次第に荒廃していた。",
-            "そんな人々の間でも、希望をもたらす伝説があった。",
-            "塔の頂上には素晴らしい楽園が存在するのだという。",
-            "いつしか多くの冒険者が、楽園を求めて塔の扉を開き、その謎に挑んでいった。",
-            "しかし、それらの冒険者たちがどのような結末をたどったのかを知る者はいない。",
-            "そして今、塔へ挑もうとする冒険者がまた新たに1人現れたのだった。",
+            "世界の中心にそびえる塔",
+            "その塔は、楽園「永遠の都」に通じているという。",
+            "いつしか多くの冒険者が",
+            "楽園を求めて塔の扉を開き",
+            "その謎に挑んでいった",
+            "しかし…",
+            "彼らがどのような結末を辿ったのか",
+            "それを知る者はいない",
+            "そして今…",
+            "冒険者がまた一人",
+            "まだ見ぬ楽園への道に挑もうとしていた",
         ];
 
         //バックグラウンド
         var param = {
-            width:SC_W,
-            height:SC_H,
+            width: SC_W,
+            height: SC_H,
             fill: "rgba(0,0,0,1)",
             stroke: "rgba(0,0,0,1)",
             backgroundColor: 'transparent',
@@ -37,6 +38,24 @@ phina.define("qft.OpeningScene", {
             .addChildTo(this)
             .setPosition(SC_W*0.5, SC_H*0.5)
 
+        //イメージ表示用レイヤ
+        this.imageLayer = phina.display.DisplayElement().addChildTo(this);
+
+        this.sprite = phina.display.Sprite("openingmap", 1024, 768)
+            .addChildTo(this)
+            .setPosition(SC_W * 0.5, -SC_H * 0.3)
+            .setScale(0.8);
+        this.sprite.alpha = 0;
+        this.sprite.tweener.clear()
+            .by({alpha: 1.0, y: 250}, 8000)
+            .by({alpha: -1.0, y: 250}, 8000);
+
+        //上下黒帯
+        param.height = SC_H * 0.15;
+        this.bg1 = phina.display.RectangleShape(param).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.07)
+        this.bg2 = phina.display.RectangleShape(param).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.93)
+      
+        //字幕
         var labelParam = {
             fill: "white",
             stroke: "black",
@@ -45,12 +64,25 @@ phina.define("qft.OpeningScene", {
             fontFamily: "Orbitron",
             align: "center",
             baseline: "middle",
-            fontSize: 24,
+            fontSize: 10,
             fontWeight: ''
         };
-        phina.display.Label({text: "This game is a test version."}.$safe(labelParam))
-            .addChildTo(this)
-            .setPosition(SC_W*0.5, SC_H*0.4);
+        var num = 0;
+        this.textLabel = phina.display.Label({text: ""}.$safe(labelParam)).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.9);
+        this.textLabel.alpha = 0;
+        this.textLabel.tweener.clear()
+            .call(function() {
+                this.textLabel.text = this.text[num];
+                num++;
+                if (num > this.text.length) {
+                    this.exit();
+                }
+            }.bind(this))
+            .fadeIn(500)
+            .wait(3000)
+            .fadeOut(500)
+            .wait(1000)
+            .setLoop(true);
     },
 
     update: function() {
