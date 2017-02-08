@@ -529,8 +529,8 @@ phina.define("qft.MainScene", {
 
         //ロード進捗表示
         var that = this;
-        var param = {text: "Loading... ", align: "center", fontSize: 20}.$safe(labelParam);
-        var progress = phina.display.Label(param).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.6);
+        var param = {text: "Loading... ", align: "right", fontSize: 20}.$safe(labelParam);
+        var progress = phina.display.Label(param).addChildTo(this).setPosition(SC_W, SC_H*0.95);
         progress.time = 0;
         progress.update = function() {
             //ロードが終わったらキー入力で次ステージへ

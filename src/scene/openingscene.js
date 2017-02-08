@@ -52,8 +52,8 @@ phina.define("qft.OpeningScene", {
             .setScale(0.8);
         this.sprite.alpha = 0;
         this.sprite.tweener.clear()
-            .by({alpha: 1.0, y: 250}, 8000)
-            .by({alpha: -1.0, y: 250}, 8000)
+            .by({alpha: 1.0, y: 250}, 7000)
+            .by({alpha: -1.0, y: 250}, 7000)
             .call(function(){this.sprite.remove()}.bind(this));
 
         //上下黒帯
@@ -70,8 +70,7 @@ phina.define("qft.OpeningScene", {
             fontFamily: "Orbitron",
             align: "center",
             baseline: "middle",
-            fontSize: 10,
-            fontWeight: ''
+            fontSize: 14,
         };
         var num = 0;
         this.textLabel = phina.display.Label({text: ""}.$safe(labelParam)).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.9);
@@ -94,7 +93,7 @@ phina.define("qft.OpeningScene", {
         var that = this;
         var assets = qft.Assets.get({assetType: "common"});
         this.loader = phina.extension.AssetLoaderEx().load(assets, function(){app.soundset.readAsset();});
-        this.loadLabel = phina.display.Label({text: "", align: "right"}.$safe(labelParam))
+        this.loadLabel = phina.display.Label({text: "", align: "right", fontSize: 12}.$safe(labelParam))
             .addChildTo(this)
             .setPosition(SC_W*0.99, SC_H*0.1);
         this.loadLabel.time = 1;    
