@@ -524,7 +524,7 @@ phina.define("qft.MainScene", {
             var assets = qft.Assets.get({assetType: "stage"+(this.stageNumber+1)});
             var ar = phina.extension.AssetLoaderEx().load(assets);
         } else {
-            var ar = {loadComplete: true};
+            var ar = {loadcomplete: true};
         }
 
         //ロード進捗表示
@@ -535,7 +535,7 @@ phina.define("qft.MainScene", {
         progress.update = function() {
             //ロードが終わったらキー入力で次ステージへ
             if (ar.loadprogress) this.text = "Loading... "+Math.floor(ar.loadprogress * 100)+"%";
-            if (bgmFinish && that.timeLimit == 0 && ar.loadComplete) {
+            if (bgmFinish && that.timeLimit == 0 && ar.loadcomplete) {
                 this.text = "Push button to next stage.";
                 var ct = app.controller;
                 if (ct.ok || ct.cancel) {
