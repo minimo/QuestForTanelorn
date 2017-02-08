@@ -38,23 +38,53 @@ phina.define("qft.OpeningScene", {
             stroke: "rgba(0,0,0,1)",
             backgroundColor: 'transparent',
         };
-        this.bg = phina.display.RectangleShape(param)
-            .addChildTo(this)
-            .setPosition(SC_W*0.5, SC_H*0.5)
+        this.bg = phina.display.RectangleShape(param).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.5)
 
         //イメージ表示用レイヤ
         this.imageLayer = phina.display.DisplayElement().addChildTo(this);
 
-        //１枚目
-        this.sprite = phina.display.Sprite("openingmap", 1024, 768)
+        //フォアグラウンド
+        this.fg = phina.display.RectangleShape(param).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.5)
+        this.fg.alpha = 0;
+
+        //世界地図
+        this.sprite1 = phina.display.Sprite("openingmap")
             .addChildTo(this.imageLayer)
             .setPosition(SC_W * 0.5, -SC_H * 0.3)
             .setScale(0.8);
-        this.sprite.alpha = 0;
-        this.sprite.tweener.clear()
+        this.sprite1.alpha = 0;
+        this.sprite1.tweener.clear()
             .by({alpha: 1.0, y: 250}, 7000)
             .by({alpha: -1.0, y: 250}, 7000)
-            .call(function(){this.sprite.remove()}.bind(this));
+            .call(function(){this.sprite1.remove()}.bind(this));
+
+        //塔外観
+        this.sprite2 = phina.display.Sprite("background")
+            .addChildTo(this.imageLayer)
+            .setPosition(SC_W * 0.5, SC_H * 0.5)
+        this.sprite2.alpha = 0;
+        this.sprite2.tweener.clear()
+            .wait(14000)
+            .call(function(){
+                this.sprite2.alpha = 1;
+                this.fg.alpha = 1;
+                this.fg.tweener.clear().fadeOut(7000).fadeIn(7000);
+            }.bind(this))
+            .wait(14000)
+            .call(function(){this.sprite2.remove()}.bind(this));
+
+        this.sprite3 = phina.display.Sprite("openingtower")
+            .addChildTo(this.imageLayer)
+            .setPosition(SC_W * 0.5, SC_H * 0.3)
+        this.sprite3.alpha = 0;
+        this.sprite3.tweener.clear()
+            .wait(14000)
+            .call(function(){
+                this.sprite3.alpha = 1;
+            }.bind(this))
+            .wait(7000)
+            .by({y: 300}, 7000)
+            .call(function(){this.sprite3.remove()}.bind(this));
 
         //上下黒帯
         param.height = SC_H * 0.15;
