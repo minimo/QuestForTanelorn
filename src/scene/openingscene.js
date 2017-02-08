@@ -93,7 +93,7 @@ phina.define("qft.OpeningScene", {
         //基本アセットをロード
         var that = this;
         var assets = qft.Assets.get({assetType: "common"});
-        this.loader = phina.extension.AssetLoaderEx().load(assets);
+        this.loader = phina.extension.AssetLoaderEx().load(assets, function(){app.soundset.readAsset();});
         this.loadLabel = phina.display.Label({text: "", align: "right"}.$safe(labelParam))
             .addChildTo(this)
             .setPosition(SC_W*0.99, SC_H*0.1);

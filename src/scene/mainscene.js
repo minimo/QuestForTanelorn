@@ -522,14 +522,14 @@ phina.define("qft.MainScene", {
         //次ステージのアセット読み込み
         if (this.stageNumber < this.stageNumberMax) {
             var assets = qft.Assets.get({assetType: "stage"+(this.stageNumber+1)});
-            var ar = phina.extension.AssetLoaderEx().load(assets);
+            var ar = phina.extension.AssetLoaderEx().load(assets, function(){app.soundset.readAsset();});
         } else {
             var ar = {loadcomplete: true};
         }
 
         //ロード進捗表示
         var that = this;
-        var param = {text: "", align: "center", fontSize: 20}.$safe(labelParam);
+        var param = {text: "Loading... ", align: "center", fontSize: 20}.$safe(labelParam);
         var progress = phina.display.Label(param).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.6);
         progress.time = 0;
         progress.update = function() {
