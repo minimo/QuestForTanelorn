@@ -14,6 +14,7 @@ phina.define('qft.SplashScene', {
 
         this.unlock = false;
         this.loadcomplete = false;
+        this.exitOk = false;
 
         //preload asset
         var assets = qft.Assets.get({assetType: "splash"});
@@ -38,29 +39,23 @@ phina.define('qft.SplashScene', {
             .setScale(0.3);
         this.sprite.alpha = 0;
 
-        this.sprite.tweener
-            .clear()
+        this.sprite.tweener.clear()
             .to({alpha:1}, 500, 'easeOutCubic')
+            .wait(500)
             .call(function() {
                 this.unlock = true;
-            }, this)
-            .wait(1000)
-            .to({alpha:0}, 500, 'easeOutCubic')
-            .wait(250)
-            .call(function() {
-                this.exit();
             }, this);
     },
 
     update: function() {
-        var ct = app.controller;
-        if (ct.ok || ct.cancel) {
-            if (this.unlock && this.loadcomplete) this.exit();
+        if (this.unlock && this.loadcomplete) {
+            this.unlock = false;
+            this.sprite.tweener.clear()
+                .to({alpha:0}, 500, 'easeOutCubic')
+                .call(function() {
+                    this.exit();
+                }, this);
         }
-    },
-
-    onpointstart: function() {
-        if (this.unlock && this.loadcomplete) this.exit();
     },
 
     _static: {
