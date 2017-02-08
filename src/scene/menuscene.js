@@ -1,6 +1,6 @@
 /*
- *  pausescene.js
- *  2016/08/17
+ *  menuscene.js
+ *  2016/12/28
  *  @auther minimo  
  *  This Program is MIT license.
  */

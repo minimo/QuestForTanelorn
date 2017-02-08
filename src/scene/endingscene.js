@@ -1,6 +1,6 @@
 /*
  *  endingcene.js
- *  2014/06/04
+ *  2017/02/07
  *  @auther minimo  
  *  This Program is MIT license.
  *
