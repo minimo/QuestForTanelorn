@@ -13,7 +13,7 @@ phina.define("qft.OpeningScene", {
         this.currentScene = currentScene;
 
         //ＢＧＭ再生
-        app.playBGM("opening");
+        app.playBGM("openingbgm");
 
         this.text = [
             "世界の中心にそびえる塔",

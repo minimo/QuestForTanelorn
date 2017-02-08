@@ -12,20 +12,21 @@ phina.define("qft.Assets", {
                 case "splash":
                     return {
                         image: {
-                            "openingmap": "assets/image/map.jpg",
+                            "openingmap":   "assets/image/opening_map.jpg",
+                            "openingtower": "assets/image/opening_tower.png",
+                            "player1":      "assets/image/actor4.png",
+                            "background":   "assets/image/back-s03b.png",
                         },
                         sound: {
-                            "opening":    "assets/sound/DS-070m.mp3",
+                            "openingbgm":   "assets/sound/DS-070m.mp3",
                         },
                     };
                 case "common":
                     return {
                         image: {
-                            "player1":    "assets/image/actor4.png",
                             "player2":    "assets/image/actor19.png",
                             "item":       "assets/image/item.png",
                             "itembox":    "assets/image/takarabako.png",
-                            "background": "assets/image/back-s03b.png",
                             "particle":   "assets/image/particle.png",
                             "door":       "assets/image/door.png",
                             "checkicon":  "assets/image/check icon_00.png",
