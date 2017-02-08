@@ -39,11 +39,11 @@ phina.define("qft.EndingScene", {
             fontSize: 26,
             fontWeight: ''
         };
-        phina.display.Label({text: "This game is a test version."}.$safe(labelParam))
+        phina.display.Label({text: "Thank you for playing."}.$safe(labelParam))
             .addChildTo(this)
             .setPosition(SC_W*0.5, SC_H*0.4);
 
-        phina.display.Label({text: "Thank you for playing."}.$safe(labelParam))
+        phina.display.Label({text: "This game is a test version."}.$safe(labelParam))
             .addChildTo(this)
             .setPosition(SC_W*0.5, SC_H*0.5);
 
