@@ -11,13 +11,15 @@ phina.define("qft.SceneFlow", {
 
     init: function() {
         this.superInit({
-            startLabel: "load",
+            startLabel: "splash",
             scenes: [{
-                label: "load",
-                className: "qft.LoadingScene",
-                arguments: {
-                    assets: qft.Assets.get({assetType: "common"})
-                },
+                label: "splash",
+                className: "qft.SplashScene",
+                next: "opening",
+            },{
+                label: "opening",
+                className: "qft.OpeningScene",
+                next: "main",
             },{
                 label: "main",
                 className: "qft.MainScene",

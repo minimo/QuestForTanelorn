@@ -48,7 +48,8 @@ phina.define("qft.OpeningScene", {
         this.sprite.alpha = 0;
         this.sprite.tweener.clear()
             .by({alpha: 1.0, y: 250}, 8000)
-            .by({alpha: -1.0, y: 250}, 8000);
+            .by({alpha: -1.0, y: 250}, 8000)
+            .call(function(){this.sprite.remove()}.bind(this));
 
         //上下黒帯
         param.height = SC_H * 0.15;
@@ -83,9 +84,27 @@ phina.define("qft.OpeningScene", {
             .fadeOut(500)
             .wait(1000)
             .setLoop(true);
+
+        //基本アセットをロード
+        var that = this;
+        var assets = qft.Assets.get({assetType: "common"});
+        this.loader = phina.extension.AssetLoaderEx().load(assets);
+        this.loadLabel = phina.display.Label({text: "", align: "right"}.$safe(labelParam))
+            .addChildTo(this)
+            .setPosition(SC_W*0.99, SC_H*0.1);
+        this.loadLabel.update = function() {
+            this.text = "Loading... "+Math.floor(that.loader.loadprogress * 100)+"%";
+            if (that.loader.loadcomplete) {
+                this.text = "Push button to skip.";
+            }
+        };
     },
 
     update: function() {
+        if (this.loader.loadcomplete) {
+            var ct = app.controller;
+            if (ct.ok || ct.cancel) this.exit();
+        }
     },
 });
 

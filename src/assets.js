@@ -9,10 +9,18 @@ phina.define("qft.Assets", {
     _static: {
         get: function(options) {
             switch (options.assetType) {
-                case "common":
+                case "splash":
                     return {
                         image: {
                             "openingmap": "assets/image/map.jpg",
+                        },
+                        sound: {
+                            "opening":    "assets/sound/DS-104m.mp3",
+                        },
+                    };
+                case "common":
+                    return {
+                        image: {
                             "player1":    "assets/image/actor4.png",
                             "player2":    "assets/image/actor19.png",
                             "item":       "assets/image/item.png",
@@ -30,7 +38,6 @@ phina.define("qft.Assets", {
                             "attack":     "assets/sound/sen_ka_katana_sasinuku01.mp3",
                             "hit":        "assets/sound/sen_ka_katana_sasu01.mp3",
                             "damage":     "assets/sound/se_maoudamashii_battle12.mp3",
-                            "opening":    "assets/sound/DS-104m.mp3",
                             "bgm1":       "assets/sound/DS-ba01m.mp3",
                             "stageclear": "assets/sound/DS-030m.mp3",
                             "gameover":   "assets/sound/gameover3.mp3",

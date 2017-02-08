@@ -16,7 +16,7 @@ phina.define('qft.SplashScene', {
         this.loadcomplete = false;
 
         //preload asset
-        var assets = qft.Assets.get("splash");
+        var assets = qft.Assets.get({assetType: "splash"});
         var loader = phina.asset.AssetLoader();
         loader.load(assets);
         loader.on('load', function(e) {
@@ -25,7 +25,7 @@ phina.define('qft.SplashScene', {
 
         //logo
         var texture = phina.asset.Texture();
-        texture.load(pbr.SplashScene.logo).then(function() {
+        texture.load(qft.SplashScene.logo).then(function() {
             this._init();
         }.bind(this));
         this.texture = texture;
@@ -64,6 +64,6 @@ phina.define('qft.SplashScene', {
     },
 
     _static: {
-        logo: "assets/images/logo.png",
+        logo: "assets/image/phinajs_logo.png",
     },
 });
