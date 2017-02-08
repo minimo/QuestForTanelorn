@@ -1,6 +1,6 @@
 /*
  *  openingscene.js
- *  2016/08/17
+ *  2017/02/08
  *  @auther minimo  
  *  This Program is MIT license.
  */
@@ -22,7 +22,7 @@ phina.define("qft.OpeningScene", {
             "彼らがどのような結末を辿ったのか",
             "それを知る者はいない",
             "そして今…",
-            "冒険者がまた一人",
+            "新たな冒険者がまた一人",
             "まだ見ぬ楽園への道に挑もうとしていた",
         ];
 
