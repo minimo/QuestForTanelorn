@@ -20,7 +20,8 @@ phina.define("phina.extension.AssetLoaderEx", {
     init: function() {
     },
 
-    load: function(assets) {
+    load: function(assets, callback) {
+        this._onLoadAssets = callback || function(){};
         var loader = phina.asset.AssetLoader();
         loader.load(assets);
         loader.on('load', function(e) {
@@ -31,8 +32,5 @@ phina.define("phina.extension.AssetLoaderEx", {
             this.loadprogress = e.progress;
         }.bind(this);
         return this;
-    },
-
-    _onLoadAssets: function() {
     },
 });
