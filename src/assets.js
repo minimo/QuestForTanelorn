@@ -34,6 +34,7 @@ phina.define("qft.Assets", {
                             "particle":   "assets/image/particle.png",
                             "door":       "assets/image/door.png",
                             "checkicon":  "assets/image/check icon_00.png",
+                            "titleback":  "assets/image/titleback.png", 
 
                             "monster01":  "assets/image/monster01.png",
                             "bullet":     "assets/image/effect_bullet01.png",
@@ -49,6 +50,7 @@ phina.define("qft.Assets", {
                         },
                         font: {
                             "UbuntuMono": "assets/font/UbuntuMono-Bold.ttf",
+                            "titlefont":  "assets/font/teutonic4.ttf",
                         },
                         tmx: {
                             "stage1": "assets/map/stage1.tmx",
