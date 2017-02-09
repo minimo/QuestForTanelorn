@@ -21,7 +21,7 @@ phina.define("qft.OpeningScene", {
         this.text = [
             "世界の中心にそびえる塔",
             "その塔の最上階には",
-            "楽園「永遠の都」に通じる道があるという",
+            "「永遠の都」と呼ばれる楽園があるという",
             "噂を聞いた多くの冒険者が",
             "楽園を求めて塔へと赴き",
             "その道に挑んでいった",
@@ -166,7 +166,8 @@ phina.define("qft.OpeningScene", {
             .call(function(){
                 sprite2.alpha = 1;
             }.bind(this))
-            .wait(7000)
+            .by({x: -100}, 4000, "easeInOutSine")
+            .wait(3000)
             .by({y: 300}, 7000, "easeInSine")
             .call(function(){
                 sprite2.remove();
