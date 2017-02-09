@@ -31,7 +31,7 @@ phina.define("qft.TitleScene", {
 
         var labelParam = {
             fill: "white",
-            stroke: "blue",
+            stroke: "black",
             strokeWidth: 10,
 
             fontFamily: "titlefont",
@@ -54,7 +54,7 @@ phina.define("qft.TitleScene", {
 
         var labelParam = {
             fill: "white",
-            stroke: "blue",
+            stroke: "black",
             strokeWidth: 5,
 
             fontFamily: "titlefont",
