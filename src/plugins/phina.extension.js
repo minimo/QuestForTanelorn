@@ -8,6 +8,11 @@
 
 phina.extension = phina.extension || {};
 
+//setAlphaを追加
+phina.display.DisplayElement.prototype.setAlpha = function(val) {
+    this.alpha = val;
+};
+
 //スプライト機能拡張
 phina.display.Sprite.prototype.setFrameTrimming = function(x, y, width, height) {
   this._frameTrimX = x || 0;

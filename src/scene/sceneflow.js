@@ -21,6 +21,9 @@ phina.define("qft.SceneFlow", {
                 className: "qft.OpeningScene",
                 next: "main",
             },{
+                label: "title",
+                className: "qft.TitleScene",
+            },{
                 label: "main",
                 className: "qft.MainScene",
             },{
