@@ -14,9 +14,13 @@ phina.define("qft.Assets", {
                         image: {
                             "openingmap":   "assets/image/opening_map.jpg",
                             "openingtower": "assets/image/opening_tower.png",
+                            "openingground":"assets/image/opening_ground.png",
                             "player1":      "assets/image/actor4.png",
                             "background":   "assets/image/back-s03b.png",
                         },
+                    };
+                case "splash2":
+                    return {
                         sound: {
                             "openingbgm":   "assets/sound/DS-070m.mp3",
                         },

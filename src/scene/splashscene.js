@@ -13,15 +13,31 @@ phina.define('qft.SplashScene', {
         this.superInit({width: SC_W, height: SC_H});
 
         this.unlock = false;
-        this.loadcomplete = false;
-        this.exitOk = false;
+        this.loadcomplete1 = false;
+        this.loadcomplete2 = false;
+        this.progress1 = 0;
+        this.progress2 = 0;
 
         //preload asset
         var assets = qft.Assets.get({assetType: "splash"});
-        var loader = phina.asset.AssetLoader();
-        loader.load(assets);
-        loader.on('load', function(e) {
-            this.loadcomplete = true;
+        this.loader = phina.asset.AssetLoader();
+        this.loader.load(assets);
+        this.loader.on('load', function(e) {
+            this.loadcomplete1 = true;
+        }.bind(this));
+        this.loader.on('progress', function(e) {
+            this.progress1 = Math.floor(e.progress*100);
+        }.bind(this));
+
+        //preload asset2
+        var assets = qft.Assets.get({assetType: "splash2"});
+        this.loader2 = phina.asset.AssetLoader();
+        this.loader2.load(assets);
+        this.loader2.on('load', function(e) {
+            this.loadcomplete2 = true;
+        }.bind(this));
+        this.loader2.on('progress', function(e) {
+            this.progress2 = Math.floor(e.progress*100);
         }.bind(this));
 
         //logo
@@ -45,16 +61,42 @@ phina.define('qft.SplashScene', {
             .call(function() {
                 this.unlock = true;
             }, this);
+
+        var that = this;
+        //進捗ゲージ
+        var options = {
+            width:  SC_W*0.1,
+            height: 3,
+            backgroundColor: 'transparent',
+            fill: 'red',
+            stroke: 'white',
+            strokeWidth: 1,
+            gaugeColor: 'lime',
+            cornerRadius: 3,
+            value: 0,
+            maxValue: 100,
+        };
+        this.progressGauge = phina.ui.Gauge(options).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.8);
+        this.progressGauge.beforeValue = 0;
+        this.progressGauge.update = function() {
+            if (that.progress1 == this.beforeValue) {
+                this.value++;
+            } else {
+                this.value = that.progress1;
+            }
+            this.beforeValue = this.value;
+        };
     },
 
     update: function() {
-        if (this.unlock && this.loadcomplete) {
+        if (this.unlock && this.loadcomplete1 && this.loadcomplete2) {
             this.unlock = false;
             this.sprite.tweener.clear()
                 .to({alpha:0}, 500, 'easeOutCubic')
                 .call(function() {
                     this.exit();
                 }, this);
+            this.progressGauge.tweener.clear().to({alpha:0}, 200, 'easeOutCubic')
         }
     },
 
