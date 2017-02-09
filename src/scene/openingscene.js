@@ -8,6 +8,9 @@
 phina.define("qft.OpeningScene", {
     superClass: "phina.display.DisplayScene",
 
+    //進行
+    seq: 0,
+
     init: function(currentScene) {
         this.superInit();
         this.currentScene = currentScene;
@@ -17,17 +20,18 @@ phina.define("qft.OpeningScene", {
 
         this.text = [
             "世界の中心にそびえる塔",
-            "その塔は、楽園「永遠の都」に通じているという。",
+            "その塔の最上階には",
+            "楽園「永遠の都」に通じる道があるという",
             "噂を聞いた多くの冒険者が",
-            "楽園を求めて塔の扉を開き",
-            "その謎に挑んでいった",
+            "楽園を求めて塔へと赴き",
+            "その道に挑んでいった",
             "しかし…",
             "彼らが果たして楽園に辿り着いたのか",
             "それとも世界の果てで力尽きたのか",
-            "それを知る者はいない",
-            "そして今…",
+            "その末路を知る者はいない",
+            "そして…",
             "新たな冒険者がまた一人",
-            "まだ見ぬ楽園への道に挑もうとしていた",
+            "いまだ見ぬ楽園への道に挑もうとしていた",
         ];
 
         //バックグラウンド
@@ -46,45 +50,6 @@ phina.define("qft.OpeningScene", {
         //フォアグラウンド
         this.fg = phina.display.RectangleShape(param).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.5)
         this.fg.alpha = 0;
-
-        //世界地図
-        this.sprite1 = phina.display.Sprite("openingmap")
-            .addChildTo(this.imageLayer)
-            .setPosition(SC_W * 0.5, -SC_H * 0.3)
-            .setScale(0.8);
-        this.sprite1.alpha = 0;
-        this.sprite1.tweener.clear()
-            .by({alpha: 1.0, y: 250}, 7000)
-            .by({alpha: -1.0, y: 250}, 7000)
-            .call(function(){this.sprite1.remove()}.bind(this));
-
-        //塔外観
-        this.sprite2 = phina.display.Sprite("background")
-            .addChildTo(this.imageLayer)
-            .setPosition(SC_W * 0.5, SC_H * 0.5)
-        this.sprite2.alpha = 0;
-        this.sprite2.tweener.clear()
-            .wait(14000)
-            .call(function(){
-                this.sprite2.alpha = 1;
-                this.fg.alpha = 1;
-                this.fg.tweener.clear().fadeOut(7000).fadeIn(7000);
-            }.bind(this))
-            .wait(14000)
-            .call(function(){this.sprite2.remove()}.bind(this));
-
-        this.sprite3 = phina.display.Sprite("openingtower")
-            .addChildTo(this.imageLayer)
-            .setPosition(SC_W * 0.5, SC_H * 0.3)
-        this.sprite3.alpha = 0;
-        this.sprite3.tweener.clear()
-            .wait(14000)
-            .call(function(){
-                this.sprite3.alpha = 1;
-            }.bind(this))
-            .wait(7000)
-            .by({y: 300}, 7000)
-            .call(function(){this.sprite3.remove()}.bind(this));
 
         //上下黒帯
         param.height = SC_H * 0.15;
@@ -109,8 +74,8 @@ phina.define("qft.OpeningScene", {
             .call(function() {
                 this.textLabel.text = this.text[num];
                 num++;
-                if (num > this.text.length) {
-                    this.exit();
+                if (num == this.text.length) {
+                    this.textLabel.tweener.setLoop(false);
                 }
             }.bind(this))
             .fadeIn(500)
@@ -144,6 +109,118 @@ phina.define("qft.OpeningScene", {
             var ct = app.controller;
             if (ct.ok || ct.cancel) this.exit();
         }
+
+        if (this.seq == 0) {
+            this.worldmap();
+            this.seq++;
+        }
+        if (this.seq == 2) {
+            this.towerimage();
+            this.seq++;
+        }
+        if (this.seq == 4) {
+            this.sequence3();
+            this.seq++;
+        }
+        if (this.seq == 6) {
+            this.playerimage();
+            this.seq++;
+        }
+        if (this.seq == 8) {
+            this.exit();
+        }
+    },
+
+    //世界地図
+    worldmap: function() {
+        var sprite1 = phina.display.Sprite("openingmap").addChildTo(this.imageLayer).setPosition(SC_W * 0.5, -SC_H * 0.3).setScale(0.8);
+        sprite1.alpha = 0;
+        sprite1.tweener.clear()
+            .by({alpha: 1.0, y: 250}, 7000)
+            .by({alpha: -1.0, y: 250}, 7000)
+            .call(function(){
+                sprite1.remove();
+                this.seq++;
+            }.bind(this));
+    },
+
+    //塔外観
+    towerimage: function() {
+        var sprite1 = phina.display.Sprite("background").addChildTo(this.imageLayer).setPosition(SC_W * 0.5, SC_H * 0.5);
+        sprite1.alpha = 0;
+        sprite1.tweener.clear()
+            .call(function(){
+                sprite1.alpha = 1;
+                this.fg.alpha = 1;
+                this.fg.tweener.clear().fadeOut(7000).fadeIn(7000);
+            }.bind(this))
+            .wait(14000)
+            .call(function(){
+                sprite1.remove();
+                this.seq++;
+            }.bind(this));
+
+        var sprite2 = phina.display.Sprite("openingtower").addChildTo(this.imageLayer).setPosition(SC_W * 0.5, SC_H * 0.3);
+        sprite2.alpha = 0;
+        sprite2.tweener.clear()
+            .call(function(){
+                sprite2.alpha = 1;
+            }.bind(this))
+            .wait(7000)
+            .by({y: 300}, 7000, "easeInSine")
+            .call(function(){
+                sprite2.remove();
+            }.bind(this));
+    },
+
+    //三番目表示（暫定）
+    sequence3: function() {
+        var sprite1 = phina.display.Sprite("background").addChildTo(this.imageLayer).setPosition(SC_W * 0.5, SC_H * 0.5);
+        sprite1.alpha = 0;
+        sprite1.tweener.clear()
+            .call(function(){
+                sprite1.alpha = 1;
+                this.fg.alpha = 1;
+                this.fg.tweener.clear().fadeOut(7000).wait(10000).fadeIn(7000);
+            }.bind(this))
+            .wait(24000)
+            .call(function(){
+                sprite1.remove();
+                this.seq++;
+            }.bind(this));
+    },
+
+    //プレイヤー表示
+    playerimage: function() {
+        var sprite1 = phina.display.Sprite("background").addChildTo(this.imageLayer).setPosition(SC_W * 0.5, SC_H * 0.35);
+        sprite1.alpha = 0;
+        sprite1.tweener.clear()
+            .call(function(){
+                sprite1.alpha = 1;
+                this.fg.alpha = 1;
+                this.fg.tweener.clear().fadeOut(7000).wait(3000).fadeIn(7000);
+            }.bind(this))
+            .wait(13000)
+            .by({y: 100}, 5000, "easeInSine")
+            .call(function(){
+                sprite1.remove();
+                this.seq++;
+            }.bind(this));
+
+        var sprite2 = phina.display.Sprite("openingground").addChildTo(this.imageLayer).setPosition(SC_W * 0.5, SC_H * 0.9);
+        sprite2.tweener.clear()
+            .by({y: -50}, 4000)
+            .wait(10000)
+            .by({y: 200}, 5000)
+
+        var pl = qft.PlayerDummy("player1").addChildTo(sprite2).setPosition(0, 38);
+        pl.setAnimation("up");
+        pl.tweener.clear()
+            .wait(3000)
+            .by({y: -76}, 5000, "easeInSine")
+            .call(function() {
+                pl.setAnimation("up_stop");
+            });
     },
 });
 
