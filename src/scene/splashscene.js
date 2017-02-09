@@ -96,7 +96,7 @@ phina.define('qft.SplashScene', {
                 .call(function() {
                     this.exit();
                 }, this);
-            this.progressGauge.tweener.clear().to({alpha:0}, 200, 'easeOutCubic')
+            this.progressGauge.tweener.clear().to({alpha:0}, 10, 'easeOutCubic')
         }
     },
 

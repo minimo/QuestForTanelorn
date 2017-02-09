@@ -25,21 +25,45 @@ phina.define("qft.TitleScene", {
             .setPosition(SC_W*0.5, SC_H*0.5)
         this.bg.tweener.setUpdateType('fps');
 
+        var sprite1 = phina.display.Sprite("titleback").addChildTo(this).setPosition(SC_W * 0.5, SC_H * 0.5);
+        sprite1.alpha = 0;
+        sprite1.tweener.clear().fadeIn(500);
+
         var labelParam = {
             fill: "white",
             stroke: "blue",
-            strokeWidth: 1,
+            strokeWidth: 10,
 
-            fontFamily: "Orbitron",
+            fontFamily: "titlefont",
             align: "center",
             baseline: "middle",
-            fontSize: 30,
+            fontSize: 60,
         };
         var num = 0;
-        this.textLabel = phina.display.Label({text: "The Quest for Tanelorn"}.$safe(labelParam))
-            .addChildTo(this).setPosition(SC_W*0.5, SC_H*0.3);
+        var x = SC_W * 0.6;
+        var y = SC_H * 0.5;
+        this.textLabel = phina.display.Label({text: "The", fontSize: 30}.$safe(labelParam))
+            .addChildTo(this).setPosition(x-230, y-85);
+        this.textLabel = phina.display.Label({text: "Quest"}.$safe(labelParam))
+            .addChildTo(this).setPosition(x-95, y-85);
+        this.textLabel = phina.display.Label({text: "for", fontSize: 40}.$safe(labelParam))
+            .addChildTo(this).setPosition(x-65, y-40);
+        this.textLabel = phina.display.Label({text: "Tanelorn"}.$safe(labelParam))
+            .addChildTo(this).setPosition(x, y);
+
+
+        var labelParam = {
+            fill: "white",
+            stroke: "blue",
+            strokeWidth: 5,
+
+            fontFamily: "titlefont",
+            align: "center",
+            baseline: "middle",
+            fontSize: 70,
+        };
         this.textLabel = phina.display.Label({text: "Push button to START", fontSize: 15}.$safe(labelParam))
-            .addChildTo(this).setPosition(SC_W*0.5, SC_H*0.7);
+            .addChildTo(this).setPosition(SC_W*0.5, SC_H*0.8);
 
         this.fg = phina.display.RectangleShape(param)
             .addChildTo(this)

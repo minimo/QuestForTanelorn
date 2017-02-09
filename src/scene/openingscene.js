@@ -199,9 +199,9 @@ phina.define("qft.OpeningScene", {
             .call(function(){
                 sprite1.alpha = 1;
                 this.fg.alpha = 1;
-                this.fg.tweener.clear().fadeOut(7000).wait(3000).fadeIn(7000);
+                this.fg.tweener.clear().fadeOut(7000).wait(4000).fadeIn(7000);
             }.bind(this))
-            .wait(13000)
+            .wait(15000)
             .by({y: 100}, 5000, "easeInSine")
             .call(function(){
                 sprite1.remove();
