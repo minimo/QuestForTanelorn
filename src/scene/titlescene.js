@@ -10,7 +10,7 @@ phina.define("qft.TitleScene", {
     superClass: "phina.display.DisplayScene",
     
     init: function() {
-        this.superInit();
+        this.superInit({width: SC_W, height: SC_H});
 
         //バックグラウンド
         var param = {
@@ -34,22 +34,22 @@ phina.define("qft.TitleScene", {
             stroke: "black",
             strokeWidth: 10,
 
-            fontFamily: "titlefont",
+            fontFamily: "titlefont1",
             align: "center",
             baseline: "middle",
             fontSize: 60,
         };
         var num = 0;
-        var x = SC_W * 0.6;
+        var x = SC_W * 0.5;
         var y = SC_H * 0.5;
         this.textLabel = phina.display.Label({text: "The", fontSize: 30}.$safe(labelParam))
-            .addChildTo(this).setPosition(x-230, y-85);
+            .addChildTo(this).setPosition(x-182, y-85);
         this.textLabel = phina.display.Label({text: "Quest"}.$safe(labelParam))
-            .addChildTo(this).setPosition(x-95, y-85);
+            .addChildTo(this).setPosition(x-47, y-85);
         this.textLabel = phina.display.Label({text: "for", fontSize: 40}.$safe(labelParam))
-            .addChildTo(this).setPosition(x-65, y-40);
+            .addChildTo(this).setPosition(x-17, y-40);
         this.textLabel = phina.display.Label({text: "Tanelorn"}.$safe(labelParam))
-            .addChildTo(this).setPosition(x, y);
+            .addChildTo(this).setPosition(x+48, y);
 
 
         var labelParam = {
@@ -57,7 +57,7 @@ phina.define("qft.TitleScene", {
             stroke: "black",
             strokeWidth: 5,
 
-            fontFamily: "titlefont",
+            fontFamily: "titlefont2",
             align: "center",
             baseline: "middle",
             fontSize: 70,

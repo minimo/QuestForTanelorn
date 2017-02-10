@@ -51,7 +51,8 @@ phina.define("qft.Assets", {
                         },
                         font: {
                             "UbuntuMono": "assets/font/UbuntuMono-Bold.ttf",
-                            "titlefont":  "assets/font/teutonic4.ttf",
+                            "titlefont1": "assets/font/teutonic4.ttf",
+                            "titlefont2": "assets/font/GothStencil_Premium.ttf",
                         },
                         tmx: {
                             "stage1": "assets/map/stage1.tmx",
