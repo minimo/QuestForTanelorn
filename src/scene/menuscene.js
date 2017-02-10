@@ -9,7 +9,7 @@ phina.define("qft.MenuScene", {
     superClass: "phina.display.DisplayScene",
 
     init: function(currentScene) {
-        this.superInit();
+        this.superInit({width: SC_W, height: SC_H});
         this.currentScene = currentScene;
 
         //バックグラウンド

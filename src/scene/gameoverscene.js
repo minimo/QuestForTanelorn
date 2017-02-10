@@ -10,7 +10,7 @@ phina.define("qft.GameOverScene", {
     superClass: "phina.display.DisplayScene",
     
     init: function(parentScene) {
-        this.superInit();
+        this.superInit({width: SC_W, height: SC_H});
         this.parentScene = parentScene;
 
         var labelParam = {

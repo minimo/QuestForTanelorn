@@ -31,7 +31,7 @@ phina.define("qft.MainScene", {
     stageScore: 0,
 
     init: function() {
-        this.superInit();
+        this.superInit({width: SC_W, height: SC_H});
 
         //背景
         this.backgroundImage = phina.display.Sprite("background").addChildTo(this).setPosition(SC_W*0.5, SC_H*0.5);
