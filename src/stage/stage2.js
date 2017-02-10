@@ -6,7 +6,7 @@
  */
 
 //ステージ１
-phina.define("qft.Stage1", {
+phina.define("qft.Stage2", {
     superClass: "qft.StageController",
 
     //タイムリミット
@@ -18,13 +18,13 @@ phina.define("qft.Stage1", {
         //初期処理
         this.add(1, function() {
             //ＢＧＭ再生
-            app.playBGM("bgm1");
+            app.playBGM("bgm2");
 
             //ステージ開始メッセージ投入
-            this.spawnMessage("STAGE 1", 24);
+            this.spawnMessage("STAGE 2", 24);
 
             //マップ表示設定
-            this.limitWidth = false;
+            this.limitWidth = true;
             this.limitHeight = true;
         });
 

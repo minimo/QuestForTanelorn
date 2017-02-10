@@ -12,7 +12,7 @@ phina.define("qft.MainScene", {
     stageNumber: 1,
 
     //最大ステージ番号
-    stageNumberMax: 1,
+    stageNumberMax: 2,
 
     //残り時間（フレーム単位）
     timeLimit: 120,
@@ -29,6 +29,10 @@ phina.define("qft.MainScene", {
     //スコア
     totalScore: 0,
     stageScore: 0,
+
+    //マップ外のスクリーン移動を許可するか
+    limitWidth: false,
+    limitHeight: true,
 
     init: function() {
         this.superInit({width: SC_W, height: SC_H});
@@ -186,7 +190,13 @@ phina.define("qft.MainScene", {
         //スクリーン表示位置をプレイヤー中心になる様に調整
         this.mapLayer.x = SC_W*0.5-this.player.x;
         this.mapLayer.y = SC_H*0.5-this.player.y;
-        if (this.mapLayer.y < -(this.map.height-SC_H)) this.mapLayer.y = -(this.map.height-SC_H);
+        if (this.limitHeight) {
+            if (this.mapLayer.y < -(this.map.height-SC_H)) this.mapLayer.y = -(this.map.height-SC_H);
+        }
+        if (this.limitWidth) {
+            if (this.mapLayer.x > 0) this.mapLayer.x = 0;
+            if (this.mapLayer.x < -(this.map.width-SC_W)) this.mapLayer.x = -(this.map.width-SC_W);
+        }
 
         this.time++;
     },
