@@ -184,7 +184,7 @@ phina.define("qft.OpeningScene", {
                 this.fg.alpha = 1;
                 this.fg.tweener.clear().fadeOut(7000).wait(10000).fadeIn(7000);
             }.bind(this))
-            .wait(24000)
+            .by({x: -300}, 24000, "easeInSine")
             .call(function(){
                 sprite1.remove();
                 this.seq++;
@@ -193,16 +193,16 @@ phina.define("qft.OpeningScene", {
 
     //プレイヤー表示
     playerimage: function() {
-        var sprite1 = phina.display.Sprite("background").addChildTo(this.imageLayer).setPosition(SC_W * 0.5, SC_H * 0.35);
+        var sprite1 = phina.display.Sprite("openingback").addChildTo(this.imageLayer).setPosition(SC_W * 0.5, SC_H * 0.35);
         sprite1.alpha = 0;
         sprite1.tweener.clear()
             .call(function(){
                 sprite1.alpha = 1;
                 this.fg.alpha = 1;
-                this.fg.tweener.clear().fadeOut(7000).wait(4000).fadeIn(7000);
+                this.fg.tweener.clear().fadeOut(7000).wait(5000).fadeIn(7000);
             }.bind(this))
             .wait(15000)
-            .by({y: 100}, 5000, "easeInSine")
+            .by({y: 150}, 5000, "easeInSine")
             .call(function(){
                 sprite1.remove();
                 this.seq++;
