@@ -549,16 +549,5 @@
   <object id="177" type="itembox" x="4816" y="528" width="32" height="32"/>
   <object id="180" name="Snake" type="enemy" x="4688" y="608" width="32" height="32"/>
   <object id="181" name="Slime" type="enemy" x="4672" y="432" width="32" height="32"/>
-  <object id="190" name="start" type="player" x="5632" y="852" width="32" height="32">
-   <properties>
-    <property name="direction" type="int" value="0"/>
-   </properties>
-  </object>
-  <object id="191" name="key" type="itembox" x="5712" y="780" width="32" height="32">
-   <properties>
-    <property name="color" value="gold"/>
-    <property name="kind" type="int" value="16"/>
-   </properties>
-  </object>
  </objectgroup>
 </map>
