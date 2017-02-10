@@ -33,6 +33,19 @@ phina.define("qft.MainScene", {
     init: function() {
         this.superInit({width: SC_W, height: SC_H});
 
+        //バックグラウンド
+        var param = {
+            width:SC_W,
+            height:SC_H,
+            fill: 'black',
+            stroke: false,
+            backgroundColor: 'transparent',
+        };
+        this.bg = phina.display.RectangleShape(param)
+            .addChildTo(this)
+            .setPosition(SC_W*0.5, SC_H*0.5);
+        this.bg.tweener.setUpdateType('fps');
+
         //背景
         this.backgroundImage = phina.display.Sprite("background").addChildTo(this).setPosition(SC_W*0.5, SC_H*0.5);
 
@@ -44,6 +57,11 @@ phina.define("qft.MainScene", {
 
         //ステージ情報初期化
         this.setupStage();
+
+        this.fg = phina.display.RectangleShape(param)
+            .addChildTo(this)
+            .setPosition(SC_W*0.5, SC_H*0.5);
+        this.fg.tweener.setUpdateType('fps').clear().fadeOut(30);
 
         //スクリーン初期化
         this.setupScreen();
