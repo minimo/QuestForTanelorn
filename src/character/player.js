@@ -149,8 +149,8 @@ phina.define("qft.Player", {
                         this.isJump = true;
                         this.vy = -11;
                     }
-                    //はしごを昇る
-                    if (this.onLadder) {
+                    //はしごを昇る（階段は接地時のみ）
+                    if (this.onLadder && !this.onStairs || this.onFloor && this.onStairs) {
                         this.setAnimation("up");
                         this.vx = 0;
                         this.vy = 0;
