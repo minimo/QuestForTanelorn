@@ -203,7 +203,7 @@ phina.define("qft.Player", {
             }else {
                 this.setAnimation("jump");
             }
-            if (ct.attack && !this.before.attack && this.stopTime == 0) {
+            if (ct.attack && !this.before.attack && this.stopTime == 0 && !(this.isCatchLadder && this.onStairs)) {
                 this.isCatchLadder = false;
                 this.setAnimation("attack");
                 this.weaponAttack();
