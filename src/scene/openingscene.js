@@ -202,7 +202,7 @@ phina.define("qft.OpeningScene", {
                 this.fg.tweener.clear().fadeOut(7000).wait(5000).fadeIn(7000);
             }.bind(this))
             .wait(15000)
-            .by({y: 150}, 5000, "easeInSine")
+            .by({y: 150}, 5000, "easeInOutSine")
             .call(function(){
                 sprite1.remove();
                 this.seq++;
@@ -210,15 +210,15 @@ phina.define("qft.OpeningScene", {
 
         var sprite2 = phina.display.Sprite("openingground").addChildTo(this.imageLayer).setPosition(SC_W * 0.5, SC_H * 0.9);
         sprite2.tweener.clear()
-            .by({y: -50}, 4000)
+            .by({y: -50}, 4000, "easeInOutSine")
             .wait(10000)
-            .by({y: 200}, 5000)
+            .by({y: 200}, 5000, "easeInOutSine")
 
         var pl = qft.PlayerDummy("player1").addChildTo(sprite2).setPosition(0, 38);
         pl.setAnimation("up");
         pl.tweener.clear()
             .wait(3000)
-            .by({y: -76}, 5000, "easeInSine")
+            .by({y: -76}, 5000, "easeInOutSine")
             .call(function() {
                 pl.setAnimation("up_stop");
             });
