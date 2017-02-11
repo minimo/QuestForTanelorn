@@ -13,7 +13,10 @@ phina.define("qft.ItemBox", {
     isItemBox: true,
 
     //耐久力
-    hp: 10,
+    hp: 1,
+
+    //開いたフラグ
+    opened: false,
 
     //アイテム種別
     kind: 0,
@@ -41,23 +44,39 @@ phina.define("qft.ItemBox", {
     update: function() {
         //プレイヤー攻撃との当たり判定
         var pl = this.parentScene.player;
-        if (this.hp > 0 && this.mutekiTime == 0 && pl.attack && this.hitTestElement(pl.attackCollision)) {
-            this.hp -= pl.power;
-            this.mutekiTime = 10;
-            if (this.hp <= 0) {
-                this.open(pl);
-            }
-            if (this.x < pl.x) {
-                this.sprite.tweener.clear().moveBy(-5, 0, 2).moveBy(5, 0, 2);
-            } else {
-                this.sprite.tweener.clear().moveBy(5, 0, 2).moveBy(-5, 0, 2);
-            }
+        if (pl.attack && this.hitTestElement(pl.attackCollision)) {
+            this.damage();
+        }
+        //プレイヤーショットとの当たり判定
+        if (!this.opened) {
+            this.parentScene.playerLayer.children.forEach(function(e) {
+                if (e instanceof qft.Shot && this.hitTestElement(e)) {
+                    e.remove();
+                    this.damage(pl);
+                }
+            }.bind(this));
         }
         this.visible = true;
     },
 
+    damage: function() {
+        if (this.opened) return;
+        var pl = this.parentScene.player;
+        this.hp -= pl.power;
+        this.mutekiTime = 10;
+        if (this.hp <= 0) {
+            this.open(pl);
+        }
+        if (this.x < pl.x) {
+            this.sprite.tweener.clear().moveBy(-5, 0, 2).moveBy(5, 0, 2);
+        } else {
+            this.sprite.tweener.clear().moveBy(5, 0, 2).moveBy(-5, 0, 2);
+        }
+    },
+
     open: function(target) {
         this.isAdvanceAnimation = true;
+        this.opened = true;
         this.setAnimation("open");
         if (this.empty) {
         } else {

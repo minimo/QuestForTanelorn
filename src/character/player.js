@@ -314,6 +314,7 @@ phina.define("qft.Player", {
     setWeapon: function(kind) {
         switch (kind) {
             case 0:
+                //ショートソード
                 this.power = 10;
                 this.attackCollision.width = 14;
                 this.attackCollision.height = 30;
@@ -321,6 +322,7 @@ phina.define("qft.Player", {
                 this.weapon.setPosition(-3, 3);
                 break;
             case 1:
+                //ロングソード
                 this.power = 15;
                 this.attackCollision.width = 24;
                 this.attackCollision.height = 35;
@@ -328,6 +330,7 @@ phina.define("qft.Player", {
                 this.weapon.setPosition(-3, 3);
                 break;
             case 2:
+                //斧
                 this.power = 20;
                 this.attackCollision.width = 14;
                 this.attackCollision.height = 26;
@@ -335,6 +338,7 @@ phina.define("qft.Player", {
                 this.weapon.setPosition(-3, 3);
                 break;
             case 3:
+                //槍
                 this.power = 10;
                 this.attackCollision.width = 39;
                 this.attackCollision.height = 10;
@@ -342,9 +346,18 @@ phina.define("qft.Player", {
                 this.weapon.setPosition(0, 0);
                 break;
             case 4:
+                //弓
                 this.power = 5;
-                this.attackCollision.width = 20;
-                this.attackCollision.height = 10;
+                this.attackCollision.width = 10;
+                this.attackCollision.height = 5;
+                this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
+                this.weapon.setPosition(0, 0);
+                break;
+            case 5:
+                //魔法の杖
+                this.power = 20;
+                this.attackCollision.width = 10;
+                this.attackCollision.height = 5;
                 this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
                 this.weapon.setPosition(0, 0);
                 break;
@@ -390,6 +403,34 @@ phina.define("qft.Player", {
                     .set({rotation: -45, alpha: 1.0})
                     .by({x: -10}, 2)
                     .by({x: 10}, 5)
+                    .fadeOut(1)
+                    .call(function() {
+                        that.attack = false;
+                    });
+                break;
+            case 4:
+                this.weapon.tweener.clear()
+                    .set({rotation: -45, alpha: 1.0})
+                    .by({x: 5}, 2)
+                    .by({x: -5}, 2)
+                    .fadeOut(1)
+                    .call(function() {
+                        that.attack = false;
+                    });
+                    var arrow = qft.Shot({width: 15, height: 5, index: 30})
+                        .addChildTo(this.parentScene.playerLayer)
+                        .setScale(this.scaleX, 1)
+                        .setPosition(this.x, this.y);
+                    arrow.tweener.setUpdateType('fps').clear()
+                        .by({x: 100*this.scaleX}, 5)
+                        .call(function() {
+                            this.remove();
+                        }.bind(arrow));
+                break;
+            case 5:
+                this.weapon.tweener.clear()
+                    .set({rotation: 400, alpha: 1.0})
+                    .to({rotation: 270}, 8)
                     .fadeOut(1)
                     .call(function() {
                         that.attack = false;
@@ -499,6 +540,15 @@ phina.define("qft.Player", {
         this.isControl = true;
 
         return this;
+    },
+});
+
+//プレイヤーショット
+phina.define("qft.Shot", {
+    superClass: "phina.display.DisplayElement",
+    init: function(options) {
+        this.superInit(options);
+        this.sprite = phina.display.Sprite("item", 20, 20).addChildTo(this).setFrameIndex(options.index);
     },
 });
 
