@@ -16,6 +16,8 @@ phina.define("qft.Assets", {
                             "openingtower": "assets/image/opening_tower.png",
                             "openingground":"assets/image/opening_ground.png",
                             "openingback":  "assets/image/opening_back.png",
+                            "openingback2": "assets/image/opening_bg_jan.jpg",
+                            "openinglight": "assets/image/opening_tree_light_yellow.png",
                             "player1":      "assets/image/actor4.png",
                             "background":   "assets/image/back-s03b.png",
                         },

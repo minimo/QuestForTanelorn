@@ -176,7 +176,7 @@ phina.define("qft.OpeningScene", {
 
     //三番目表示（暫定）
     sequence3: function() {
-        var sprite1 = phina.display.Sprite("background").addChildTo(this.imageLayer).setPosition(SC_W * 0.5, SC_H * 0.5);
+        var sprite1 = phina.display.Sprite("openingback2").addChildTo(this.imageLayer).setPosition(SC_W * 0.5, SC_H * 0.3);
         sprite1.alpha = 0;
         sprite1.tweener.clear()
             .call(function(){
@@ -184,11 +184,17 @@ phina.define("qft.OpeningScene", {
                 this.fg.alpha = 1;
                 this.fg.tweener.clear().fadeOut(7000).wait(10000).fadeIn(7000);
             }.bind(this))
-            .by({x: -300}, 24000, "easeInSine")
+            .by({y: 150}, 12000, "easeInOutSine")
+            .wait(12000)
             .call(function(){
                 sprite1.remove();
                 this.seq++;
             }.bind(this));
+
+        var sprite2 = phina.display.Sprite("openinglight").addChildTo(this.imageLayer).setPosition(SC_W * 0.5, SC_H * 0.5);
+        sprite2.blendMode = 'lighter';
+        sprite2.alpha = 0.3;
+
     },
 
     //プレイヤー表示
@@ -221,7 +227,12 @@ phina.define("qft.OpeningScene", {
             .by({y: -76}, 5000, "easeInOutSine")
             .call(function() {
                 pl.setAnimation("up_stop");
-            });
+            })
+            .wait(6000)
+            .call(function() {
+                pl.setAnimation("down");
+            })
+            .by({y: 76}, 5000, "easeInOutSine");
     },
 });
 
