@@ -50,7 +50,7 @@ phina.define("qft.ItemBox", {
         //プレイヤーショットとの当たり判定
         if (!this.opened) {
             this.parentScene.playerLayer.children.forEach(function(e) {
-                if (e instanceof qft.Shot && this.hitTestElement(e)) {
+                if (e instanceof qft.Shot && e.isCollision && this.hitTestElement(e)) {
                     e.remove();
                     this.damage(e);
                 }

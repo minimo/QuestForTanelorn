@@ -417,7 +417,7 @@ phina.define("qft.Player", {
                     .call(function() {
                         that.attack = false;
                     });
-                    var arrow = qft.Shot({width: 15, height: 5, index: 30, power: this.power})
+                    var arrow = qft.Shot(this.parentScene, {width: 15, height: 5, index: 30, power: this.power})
                         .addChildTo(this.parentScene.playerLayer)
                         .setScale(this.scaleX, 1)
                         .setPosition(this.x, this.y);
@@ -435,7 +435,7 @@ phina.define("qft.Player", {
                     .call(function() {
                         that.attack = false;
                     });
-                    var arrow = qft.Shot({width: 15, height: 10, index: 30, power: 20})
+                    var arrow = qft.Shot(this.parentScene, {width: 15, height: 10, index: 30, power: 20})
                         .addChildTo(this.parentScene.playerLayer)
                         .setScale(this.scaleX, 1)
                         .setPosition(this.x, this.y);
@@ -559,10 +559,33 @@ phina.define("qft.Shot", {
     //攻撃力
     power: 1,
 
-    init: function(options) {
+    //あたり判定発生フラグ
+    isCollision: true,
+
+    init: function(parentScene, options) {
         this.superInit(options);
+        this.parentScene = parentScene;
+
         this.sprite = phina.display.Sprite("item", 20, 20).addChildTo(this).setFrameIndex(options.index);
         this.power = options.power || 0;
+    },
+
+    update: function() {
+        if (!this.isCollision) return;
+
+        //地形接触判定
+        var that = this;
+        this.parentScene.collisionLayer.children.forEach(function(e) {
+            if (e.type == "ladder" || e.type == "stairs") return;
+            if (this.hitTestElement(e)) {
+                this.isCollision = false;
+                this.tweener.clear()
+                    .wait(30)
+                    .call(function() {
+                        that.remove();
+                    });
+            }
+        }.bind(this));
     },
 });
 
