@@ -45,36 +45,35 @@ phina.define("qft.ItemBox", {
         //プレイヤー攻撃との当たり判定
         var pl = this.parentScene.player;
         if (pl.attack && this.hitTestElement(pl.attackCollision)) {
-            this.damage();
+            this.damage(pl);
         }
         //プレイヤーショットとの当たり判定
         if (!this.opened) {
             this.parentScene.playerLayer.children.forEach(function(e) {
                 if (e instanceof qft.Shot && this.hitTestElement(e)) {
                     e.remove();
-                    this.damage(pl);
+                    this.damage(e);
                 }
             }.bind(this));
         }
         this.visible = true;
     },
 
-    damage: function() {
+    damage: function(target) {
         if (this.opened) return;
-        var pl = this.parentScene.player;
-        this.hp -= pl.power;
+        this.hp -= target.power;
         this.mutekiTime = 10;
         if (this.hp <= 0) {
-            this.open(pl);
+            this.open();
         }
-        if (this.x < pl.x) {
+        if (this.x < target.x) {
             this.sprite.tweener.clear().moveBy(-5, 0, 2).moveBy(5, 0, 2);
         } else {
             this.sprite.tweener.clear().moveBy(5, 0, 2).moveBy(-5, 0, 2);
         }
     },
 
-    open: function(target) {
+    open: function() {
         this.isAdvanceAnimation = true;
         this.opened = true;
         this.setAnimation("open");

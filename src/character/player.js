@@ -355,7 +355,7 @@ phina.define("qft.Player", {
                 break;
             case 5:
                 //魔法の杖
-                this.power = 20;
+                this.power = 10;
                 this.attackCollision.width = 10;
                 this.attackCollision.height = 5;
                 this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
@@ -417,7 +417,7 @@ phina.define("qft.Player", {
                     .call(function() {
                         that.attack = false;
                     });
-                    var arrow = qft.Shot({width: 15, height: 5, index: 30})
+                    var arrow = qft.Shot({width: 15, height: 5, index: 30, power: this.power})
                         .addChildTo(this.parentScene.playerLayer)
                         .setScale(this.scaleX, 1)
                         .setPosition(this.x, this.y);
@@ -429,12 +429,21 @@ phina.define("qft.Player", {
                 break;
             case 5:
                 this.weapon.tweener.clear()
-                    .set({rotation: 400, alpha: 1.0})
-                    .to({rotation: 270}, 8)
+                    .set({rotation: 200, alpha: 1.0})
+                    .to({rotation: 360}, 8)
                     .fadeOut(1)
                     .call(function() {
                         that.attack = false;
                     });
+                    var arrow = qft.Shot({width: 15, height: 10, index: 30, power: 20})
+                        .addChildTo(this.parentScene.playerLayer)
+                        .setScale(this.scaleX, 1)
+                        .setPosition(this.x, this.y);
+                    arrow.tweener.setUpdateType('fps').clear()
+                        .by({x: 200*this.scaleX}, 30, "easeInQuart")
+                        .call(function() {
+                            this.remove();
+                        }.bind(arrow));
                 break;
         }
         return this;
@@ -546,9 +555,14 @@ phina.define("qft.Player", {
 //プレイヤーショット
 phina.define("qft.Shot", {
     superClass: "phina.display.DisplayElement",
+
+    //攻撃力
+    power: 1,
+
     init: function(options) {
         this.superInit(options);
         this.sprite = phina.display.Sprite("item", 20, 20).addChildTo(this).setFrameIndex(options.index);
+        this.power = options.power || 0;
     },
 });
 

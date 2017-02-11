@@ -58,7 +58,7 @@ phina.define("qft.Enemy", {
             this.parentScene.playerLayer.children.forEach(function(e) {
                 if (e instanceof qft.Shot && this.hitTestElement(e)) {
                     e.remove();
-                    this.damage(pl);
+                    this.damage(e);
                 }
             }.bind(this));
             //プレイヤーとの当たり判定
