@@ -61,6 +61,9 @@ phina.define("qft.TitleScene", {
                 this.exit();
             }
         }
+        if (this.time > 30 * 120) {
+            app.replaceScene(qft.OpeningScene());
+        }
         this.time++;
     },
 
