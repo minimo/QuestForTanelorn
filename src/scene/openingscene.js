@@ -194,7 +194,9 @@ phina.define("qft.OpeningScene", {
         var sprite2 = phina.display.Sprite("openinglight").addChildTo(this.imageLayer).setPosition(SC_W * 0.5, SC_H * 0.5);
         sprite2.blendMode = 'lighter';
         sprite2.alpha = 0.3;
-
+        sprite2.tweener.clear()
+            .wait(12000)
+            .by({x: -50}, 12000, "easeInOutSine");
     },
 
     //プレイヤー表示
