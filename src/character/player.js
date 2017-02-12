@@ -565,13 +565,14 @@ phina.define("qft.Shot", {
     init: function(parentScene, options) {
         this.superInit(options);
         this.parentScene = parentScene;
+        this.type = options.type || "arrow";
 
         this.sprite = phina.display.Sprite("item", 20, 20).addChildTo(this).setFrameIndex(options.index);
         this.power = options.power || 0;
     },
 
     update: function() {
-        if (!this.isCollision) return;
+        if (!this.isCollision || this.type == "explode") return;
 
         //地形接触判定
         var that = this;
@@ -579,13 +580,35 @@ phina.define("qft.Shot", {
             if (e.type == "ladder" || e.type == "stairs") return;
             if (this.hitTestElement(e)) {
                 this.isCollision = false;
-                this.tweener.clear()
-                    .wait(30)
-                    .call(function() {
-                        that.remove();
-                    });
+                switch (this.type) {
+                    case "arrow":
+                        this.stick(e);
+                        break;
+                    case "magic":
+                        this.explode(e);
+                        break;
+                }
             }
         }.bind(this));
+    },
+
+    //刺さる
+    stick: function(e) {
+        if (this.scaleX == 1) {
+            this.x = e.left;
+        } else {
+            this.x = e.right;
+        }
+        this.tweener.clear()
+            .wait(30)
+            .call(function() {
+                this.remove();
+            }.bind(this));
+    },
+
+    //爆発
+    explode: function(e) {
+        this.remove();
     },
 });
 
