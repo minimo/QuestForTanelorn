@@ -411,8 +411,8 @@ phina.define("qft.Player", {
             case 4:
                 this.weapon.tweener.clear()
                     .set({rotation: -45, alpha: 1.0})
-                    .by({x: 5}, 2)
-                    .by({x: -5}, 2)
+                    .by({x: 7}, 3)
+                    .by({x: -7}, 3)
                     .fadeOut(1)
                     .call(function() {
                         that.attack = false;
@@ -422,7 +422,7 @@ phina.define("qft.Player", {
                         .setScale(this.scaleX, 1)
                         .setPosition(this.x, this.y);
                     arrow.tweener.setUpdateType('fps').clear()
-                        .by({x: 100*this.scaleX}, 5)
+                        .by({x: 150*this.scaleX}, 7)
                         .call(function() {
                             this.remove();
                         }.bind(arrow));
@@ -594,6 +594,7 @@ phina.define("qft.Shot", {
 
     //刺さる
     stick: function(e) {
+        app.playSE("arrowstick");
         if (this.scaleX == 1) {
             this.x = e.left;
         } else {
