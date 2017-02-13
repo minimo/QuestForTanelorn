@@ -71,7 +71,11 @@ phina.define("qft.Enemy", {
     damage: function(target) {
         if (this.mutekiTime > 0) return false;
         var dir = 0;
-        if (this.x < target.x) dir = 180;
+        if (target instanceof qft.PlayerAttack) {
+            if (target.scaleX == 1) dir = 0; else dir = 180;
+        } else {
+            if (this.x < target.x) dir = 180;
+        }
 
         var pow = target.power;
         this.knockback(pow, dir);
