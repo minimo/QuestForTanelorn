@@ -42,13 +42,13 @@ phina.define("qft.ItemBox", {
     },
 
     update: function() {
-        //プレイヤー攻撃（固定）との当たり判定
-        var pl = this.parentScene.player;
-        if (pl.attack && this.hitTestElement(pl.attackCollision)) {
-            this.damage(pl);
-        }
-        //プレイヤー攻撃判定との当たり判定
         if (!this.opened) {
+            //プレイヤー攻撃（固定）との当たり判定
+            var pl = this.parentScene.player;
+            if (pl.attack && this.hitTestElement(pl.attackCollision)) {
+                this.damage(pl);
+            }
+            //プレイヤー攻撃判定との当たり判定
             this.parentScene.playerLayer.children.forEach(function(e) {
                 if (e instanceof qft.PlayerAttack && e.isCollision && this.hitTestElement(e)) {
                     e.remove();
@@ -56,7 +56,7 @@ phina.define("qft.ItemBox", {
                 }
             }.bind(this));
         }
-        this.visible = true;
+        this.visible = true;    //点滅キャンセル
     },
 
     damage: function(target) {
