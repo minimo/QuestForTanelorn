@@ -417,7 +417,7 @@ phina.define("qft.Player", {
                     .call(function() {
                         that.attack = false;
                     });
-                    var arrow = qft.PlayerAttack(this.parentScene, {width: 15, height: 5, index: 30, power: this.power})
+                    var arrow = qft.PlayerAttack(this.parentScene, {width: 15, height: 5, power: this.power, type: "arrow"})
                         .addChildTo(this.parentScene.playerLayer)
                         .setScale(this.scaleX, 1)
                         .setPosition(this.x, this.y);
@@ -435,12 +435,12 @@ phina.define("qft.Player", {
                     .call(function() {
                         that.attack = false;
                     });
-                    var arrow = qft.PlayerAttack(this.parentScene, {width: 15, height: 10, index: 30, power: 20})
+                    var arrow = qft.PlayerAttack(this.parentScene, {width: 15, height: 10, index: 30, power: 20, type: "fireball"})
                         .addChildTo(this.parentScene.playerLayer)
                         .setScale(this.scaleX, 1)
                         .setPosition(this.x, this.y);
                     arrow.tweener.setUpdateType('fps').clear()
-                        .by({x: 200*this.scaleX}, 30, "easeInQuart")
+                        .by({x: 100*this.scaleX}, 30, "easeInQuart")
                         .call(function() {
                             this.remove();
                         }.bind(arrow));
@@ -565,10 +565,20 @@ phina.define("qft.PlayerAttack", {
     init: function(parentScene, options) {
         this.superInit(options);
         this.parentScene = parentScene;
-        this.type = options.type || "arrow";
 
-        this.sprite = phina.display.Sprite("item", 20, 20).addChildTo(this).setFrameIndex(options.index);
+        this.type = options.type || "arrow";
         this.power = options.power || 0;
+
+        //表示スプライト
+        switch (this.type) {
+            case "arrow":
+                this.sprite = phina.display.Sprite("item", 20, 20).addChildTo(this).setFrameIndex(30);
+                break;
+            case "fireball":
+                this.sprite = phina.display.Sprite("bullet", 24, 32).addChildTo(this).setFrameIndex(9);
+                this.power = options.power || 0;
+                break;
+        }
     },
 
     update: function() {
@@ -584,7 +594,7 @@ phina.define("qft.PlayerAttack", {
                     case "arrow":
                         this.stick(e);
                         break;
-                    case "magic":
+                    case "fireball":
                         this.explode(e);
                         break;
                 }
