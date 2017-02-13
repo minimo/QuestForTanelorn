@@ -191,6 +191,7 @@ phina.define("qft.MainScene", {
         this.mapLayer.x = SC_W*0.5-this.player.x;
         this.mapLayer.y = SC_H*0.5-this.player.y;
         if (this.limitHeight) {
+            if (this.mapLayer.y > 0) this.mapLayer.y = 0;
             if (this.mapLayer.y < -(this.map.height-SC_H)) this.mapLayer.y = -(this.map.height-SC_H);
         }
         if (this.limitWidth) {
