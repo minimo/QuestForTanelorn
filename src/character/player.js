@@ -417,7 +417,7 @@ phina.define("qft.Player", {
                     .call(function() {
                         that.attack = false;
                     });
-                    var arrow = qft.Shot(this.parentScene, {width: 15, height: 5, index: 30, power: this.power})
+                    var arrow = qft.PlayerAttack(this.parentScene, {width: 15, height: 5, index: 30, power: this.power})
                         .addChildTo(this.parentScene.playerLayer)
                         .setScale(this.scaleX, 1)
                         .setPosition(this.x, this.y);
@@ -435,7 +435,7 @@ phina.define("qft.Player", {
                     .call(function() {
                         that.attack = false;
                     });
-                    var arrow = qft.Shot(this.parentScene, {width: 15, height: 10, index: 30, power: 20})
+                    var arrow = qft.PlayerAttack(this.parentScene, {width: 15, height: 10, index: 30, power: 20})
                         .addChildTo(this.parentScene.playerLayer)
                         .setScale(this.scaleX, 1)
                         .setPosition(this.x, this.y);
@@ -552,8 +552,8 @@ phina.define("qft.Player", {
     },
 });
 
-//プレイヤーショット
-phina.define("qft.Shot", {
+//プレイヤー攻撃判定
+phina.define("qft.PlayerAttack", {
     superClass: "phina.display.DisplayElement",
 
     //攻撃力

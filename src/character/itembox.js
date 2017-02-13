@@ -42,15 +42,15 @@ phina.define("qft.ItemBox", {
     },
 
     update: function() {
-        //プレイヤー攻撃との当たり判定
+        //プレイヤー攻撃（固定）との当たり判定
         var pl = this.parentScene.player;
         if (pl.attack && this.hitTestElement(pl.attackCollision)) {
             this.damage(pl);
         }
-        //プレイヤーショットとの当たり判定
+        //プレイヤー攻撃判定との当たり判定
         if (!this.opened) {
             this.parentScene.playerLayer.children.forEach(function(e) {
-                if (e instanceof qft.Shot && e.isCollision && this.hitTestElement(e)) {
+                if (e instanceof qft.PlayerAttack && e.isCollision && this.hitTestElement(e)) {
                     e.remove();
                     this.damage(e);
                 }
