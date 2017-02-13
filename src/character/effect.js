@@ -8,16 +8,6 @@
 phina.define("qft.Effect", {
     superClass: "phina.display.DisplayElement",
 
-    //加速度
-    vx: 0,
-    vy: 0,
-
-    //重力加速度
-    gravity: 0.0,
-
-    //横移動減衰率
-    friction: 1.0,
-
     //アニメーション進行可能フラグ   
     isAdvanceAnimation: true,
 
@@ -28,21 +18,12 @@ phina.define("qft.Effect", {
     time: 0,
 
     init: function(parentScene, options) {
-        this.superInit(options);
-        this.parentScene = parentScene;
-        this.boundingType = "rect";
-        this.tweener.setUpdateType('fps');
-
+        this.superInit();
         this.setupAnimation(options);
 
-        this.on('enterframe', function() {
-            this.x += this.vx;
-            this.y += this.vy;
-            this.vx *= this.friction;
-            this.vy += this.gravity;
-            if (Math.abs(this.vx) < 0.01) this.vx = 0;
-            if (Math.abs(this.vy) < 0.01) this.vy = 0;
+        this.sprite = phina.display.Sprite("effect");
 
+        this.on('enterframe', function() {
             //アニメーション
             if (this.isAdvanceAnimation && this.time % this.advanceTime == 0) {
                 this.index = (this.index+1) % this.frame[this.nowAnimation].length;
