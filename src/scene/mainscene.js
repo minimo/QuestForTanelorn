@@ -141,11 +141,15 @@ phina.define("qft.MainScene", {
     },
 
     update: function(app) {
+        if (this.time == 15) this.player.isControl = true;
+
         var ct = app.controller;
         if (!this.isStageClear) {
             //メニューシーンへ移行
-            if (ct.pause || ct.menu) {
-                this.flare('openmenu');
+            if (this.time > 15) {
+                if (ct.pause || ct.menu) {
+                    this.flare('openmenu');
+                }
             }
 
             //ステージ進行
@@ -329,12 +333,6 @@ phina.define("qft.MainScene", {
     //マップ情報の初期化
     setupStage: function() {
 
-        //ステージクリアフラグクリア
-        this.isStageClear = false;
-
-        //経過時間初期化
-        this.time = 0;
-
         //登録済みマップの消去
         this.clearMap();
 
@@ -353,6 +351,12 @@ phina.define("qft.MainScene", {
                 this.switchMap(mapLayer);
                 break;
         };
+
+        //ステージクリアフラグクリア
+        this.isStageClear = false;
+
+        //経過時間初期化
+        this.time = 0;
 
         //タイムリミット設定
         this.timeLimit = this.stageController.timeLimit;
