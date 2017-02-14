@@ -51,12 +51,15 @@ phina.define("qft.Player", {
         this.superInit(parentScene, {width: 16, height: 20});
         var that = this;
 
+        //スプライト背後
+        this.back = phina.display.DisplayElement().addChildTo(this).setScale(-1, 1);
+
         //表示用スプライト
         this.sprite = phina.display.Sprite("player1", 32, 32).addChildTo(this).setFrameIndex(0);
 
         //武器用スプライト
         this.weapon = phina.display.Sprite("item", 20, 20)
-            .addChildTo(this.sprite)
+            .addChildTo(this.back)
             .setFrameIndex(0)
             .setOrigin(1, 1)
             .setPosition(-3, 3);
