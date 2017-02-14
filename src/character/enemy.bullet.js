@@ -44,7 +44,8 @@ phina.define("qft.Enemy.Bullet", {
         this.sprite = phina.display.Sprite("bullet", 24, 32).addChildTo(this).setFrameIndex(9);
         this.advanceTime = 3;
 
-        this.setAnimation("pattern1");
+        this.pattern = options.pattern || "pattern1";
+        this.setAnimation(this.pattern);
     },
 
     update: function() {
@@ -59,6 +60,7 @@ phina.define("qft.Enemy.Bullet", {
         this.spcialAnimation = false;
         this.frame = [];
         this.frame["pattern1"] = [9, 10, 11, 10];
+        this.frame["pattern2"] = [15, 16, 17, 16];
         this.index = 0;
     },
 });

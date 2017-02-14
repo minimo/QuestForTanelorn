@@ -574,6 +574,7 @@ phina.define("qft.PlayerAttack", {
         switch (this.type) {
             case "arrow":
                 this.sprite = phina.display.Sprite("item", 20, 20).addChildTo(this).setFrameIndex(30);
+                this.setAnimation("arrow");
                 break;
             case "fireball":
                 this.sprite = phina.display.Sprite("bullet", 24, 32).addChildTo(this).setFrameIndex(9);
@@ -621,6 +622,9 @@ phina.define("qft.PlayerAttack", {
     //爆発
     explode: function(e) {
         this.remove();
+    },
+
+    setAnimation: function(name) {
     },
 });
 
