@@ -27,6 +27,12 @@ phina.define("qft.Player", {
     numJump: 0,
     numJumpMax: 0,
 
+    //装備中アイテム
+    equip: {
+        weapon: 0,
+        ring: null,
+    },
+
     //アイテム所持最大数
     maxItem: 10,
 
