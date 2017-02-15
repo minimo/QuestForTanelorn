@@ -24,6 +24,9 @@ phina.define("qft.Enemy.Demon", {
     //視野角
     viewAngle: 90,
 
+    //得点
+    point: 500,
+
     init: function(parentScene, options) {
         this.superInit(parentScene, {width: 20, height: 20});
 

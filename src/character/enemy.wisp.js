@@ -30,6 +30,9 @@ phina.define("qft.Enemy.Wisp", {
     //地形無視
     ignoreCollision: true,
 
+    //得点
+    point: 50,
+
     init: function(parentScene, options) {
         this.superInit(parentScene, {width: 16, height: 16});
 

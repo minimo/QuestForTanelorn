@@ -30,6 +30,9 @@ phina.define("qft.Enemy.Bird", {
     //横移動減衰率
     friction: 0,
 
+    //得点
+    point: 200,
+
     init: function(parentScene, options) {
         this.superInit(parentScene, {width: 16, height: 18});
 

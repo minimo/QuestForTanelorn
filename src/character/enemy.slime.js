@@ -24,6 +24,9 @@ phina.define("qft.Enemy.Slime", {
     //視野角
     viewAngle: 90,
 
+    //得点
+    point: 100,
+
     init: function(parentScene, options) {
         this.superInit(parentScene, {width: 16, height: 18});
 

@@ -30,6 +30,9 @@ phina.define("qft.Enemy", {
     //進行方向（0:右 180:左）
     direction: 0,
 
+    //ポイント
+    point: 0,
+
     init: function(parentScene, options) {
         options = options || {};
         this.superInit(parentScene, options);
@@ -85,6 +88,7 @@ phina.define("qft.Enemy", {
             this.hp = 0;
             this.flare('dead');
             this.parentScene.player.kill++;
+            this.parentScene.totalScore += this.point;
         }
         app.playSE("hit");
         return true;
