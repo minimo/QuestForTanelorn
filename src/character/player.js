@@ -23,6 +23,10 @@ phina.define("qft.Player", {
     //下押し連続フレーム数
     downFrame: 0,
 
+    //多段ジャンプ可能回数
+    numJump: 0,
+    numJumpMax: 0,
+
     //アイテム所持最大数
     maxItem: 10,
 
@@ -146,11 +150,17 @@ phina.define("qft.Player", {
             } else {
                 //上キー押下
                 if (ct.up) {
+                    //ジャンプ二段目以降
+                    if (this.isJump && this.numJump < this.numJumpMax && this.vy > -5) {
+                        this.vy = -11;
+                        this.numJump++;
+                    }
                     //ジャンプ
                     if (!this.isJump && this.onFloor && !this.onLadder) {
                         this.setAnimation("jump");
                         this.isJump = true;
                         this.vy = -11;
+                        this.numJump++;
                     }
                     //はしごを昇る（階段は接地時のみ）
                     if (this.onLadder && !this.onStairs || this.onFloor && this.onStairs) {
@@ -187,6 +197,11 @@ phina.define("qft.Player", {
             if (!this.onLadder && !ct.down || this.onLadder && !footLadder && !ct.up) {
                 this.isCatchLadder = false;
             }
+        }
+
+        //床上にいる場合はジャンプ回数キャンセル
+        if (this.onFloor) {
+            this.numJump = 0;
         }
 
         //攻撃
@@ -551,6 +566,9 @@ phina.define("qft.Player", {
 
         //操作可能フラグ
         this.isControl = true;
+
+        //多段ジャンプ最大回数
+        this.numJumpMax = 0;
 
         return this;
     },
