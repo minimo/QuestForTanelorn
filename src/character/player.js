@@ -25,7 +25,7 @@ phina.define("qft.Player", {
 
     //多段ジャンプ可能回数
     numJump: 0,
-    numJumpMax: 0,
+    numJumpMax: 1,
 
     //装備中アイテム
     equip: {
@@ -166,7 +166,7 @@ phina.define("qft.Player", {
                         this.setAnimation("jump");
                         this.isJump = true;
                         this.vy = -11;
-                        this.numJump++;
+                        this.numJump = 1;
                     }
                     //はしごを昇る（階段は接地時のみ）
                     if (this.onLadder && !this.onStairs || this.onFloor && this.onStairs) {
@@ -203,11 +203,6 @@ phina.define("qft.Player", {
             if (!this.onLadder && !ct.down || this.onLadder && !footLadder && !ct.up) {
                 this.isCatchLadder = false;
             }
-        }
-
-        //床上にいる場合はジャンプ回数キャンセル
-        if (this.onFloor) {
-            this.numJump = 0;
         }
 
         //攻撃
