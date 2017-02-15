@@ -126,25 +126,70 @@ phina.define("qft.itemInfo", {
                         }
                     };
                 case ITEM_BOOK:
-                    return {};
+                    return {
+                        name: "BOOK",
+                        type: "book",
+                        weapon: true,
+                        pow: 10,
+                        collision: {
+                            width: 20,
+                            height: 20
+                        }
+                    };
                 case ITEM_SHIELD:
-                    return {};
+                    return {
+                        name: "SHIELD",
+                        type: "equip",
+                        equip: true,
+                    };
                 case ITEM_ARMOR:
-                    return {};
+                    return {
+                        name: "ARMOR",
+                        type: "equip",
+                        equip: true,
+                    };
                 case ITEM_HAT:
-                    return {};
+                    return {
+                        name: "HAT",
+                        type: "equip",
+                        equip: true,
+                    };
                 case ITEM_BOOTS:
-                    return {};
+                    return {
+                        name: "BOOTS",
+                        type: "equip",
+                        equip: true,
+                    };
                 case ITEM_GROVE:
-                    return {};
+                    return {
+                        name: "GROVE",
+                        type: "equip",
+                        equip: true,
+                    };
                 case ITEM_RING:
-                    return {};
+                    return {
+                        name: "RING",
+                        type: "equip",
+                        equip: true,
+                    };
                 case ITEM_SCROLL:
-                    return {};
+                    return {
+                        name: "SCROLL",
+                        type: "item",
+                        item: true,
+                    };
                 case ITEM_LETTER:
-                    return {};
+                    return {
+                        name: "LETTER",
+                        type: "item",
+                        item: true,
+                    };
                 case ITEM_CARD:
-                    return {};
+                    return {
+                        name: "CARD",
+                        type: "item",
+                        item: true,
+                    };
                 case ITEM_KEY:
                     return {
                         name: "KEY",
@@ -152,7 +197,19 @@ phina.define("qft.itemInfo", {
                         key: true,
                     };
                 case ITEM_COIN:
-                    return {};
+                    return {
+                        name: "COIN",
+                        type: "item",
+                        item: true,
+                        point: 2000,
+                    };
+                case ITEM_BAG:
+                    return {
+                        name: "BAG",
+                        type: "item",
+                        item: true,
+                        point: 5000,
+                    };
                 default:
                     return {};
             }
