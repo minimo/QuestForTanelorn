@@ -80,10 +80,10 @@ phina.define("qft.Enemy", {
             if (this.x < target.x) dir = 180;
         }
 
-        var pow = target.power;
-        this.knockback(pow, dir);
+        var power = target.power;
+        this.knockback(power, dir);
         this.mutekiTime = 10;
-        this.hp -= pow;
+        this.hp -= power;
         if (this.hp <= 0) {
             this.hp = 0;
             this.flare('dead');

@@ -182,8 +182,8 @@ phina.define("qft.Character", {
     },
 
     //ノックバックモーション
-    knockback: function(pow, direction) {
-        if (pow == 0) return;
+    knockback: function(power, direction) {
+        if (power == 0) return;
         var sx = Math.cos(direction.toRadian());
         var sy = Math.sin(direction.toRadian());
         var back = 32;

@@ -64,7 +64,7 @@ phina.define("qft.itemInfo", {
                         name: "SHORT SWORD",
                         type: "sword",
                         weapon: true,
-                        pow: 10,
+                        power: 10,
                         collision: {
                             width: 14,
                             height: 30
@@ -75,7 +75,7 @@ phina.define("qft.itemInfo", {
                         name: "LONG SWORD",
                         type: "sword",
                         weapon: true,
-                        pow: 15,
+                        power: 15,
                         collision: {
                             width: 24,
                             height: 25
@@ -86,7 +86,7 @@ phina.define("qft.itemInfo", {
                         name: "AX",
                         type: "ax",
                         weapon: true,
-                        pow: 20,
+                        power: 20,
                         collision: {
                             width: 14,
                             height: 26
@@ -97,7 +97,7 @@ phina.define("qft.itemInfo", {
                         name: "SPEAR",
                         type: "spear",
                         weapon: true,
-                        pow: 10,
+                        power: 10,
                         collision: {
                             width: 39,
                             height: 10
@@ -108,7 +108,7 @@ phina.define("qft.itemInfo", {
                         name: "BOW",
                         type: "bow",
                         weapon: true,
-                        pow: 5,
+                        power: 5,
                         collision: {
                             width: 20,
                             height: 10
@@ -119,7 +119,7 @@ phina.define("qft.itemInfo", {
                         name: "MAGIC ROD",
                         type: "rod",
                         weapon: true,
-                        pow: 5,
+                        power: 5,
                         collision: {
                             width: 20,
                             height: 10
@@ -130,7 +130,7 @@ phina.define("qft.itemInfo", {
                         name: "BOOK",
                         type: "book",
                         weapon: true,
-                        pow: 10,
+                        power: 10,
                         collision: {
                             width: 20,
                             height: 20
