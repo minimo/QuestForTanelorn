@@ -591,22 +591,31 @@ phina.define("qft.PlayerAttack", {
 
         this.type = options.type || "arrow";
         this.power = options.power || 0;
+        this.time = 0;
+        this.index = 0;
 
         //表示スプライト
         switch (this.type) {
             case "arrow":
                 this.sprite = phina.display.Sprite("item", 20, 20).addChildTo(this).setFrameIndex(30);
                 this.setAnimation("arrow");
+                this.frame = [30];
                 break;
             case "fireball":
                 this.sprite = phina.display.Sprite("bullet", 24, 32).addChildTo(this).setFrameIndex(9);
                 this.power = options.power || 0;
+                this.frame = [9,10,11,10];
                 break;
         }
     },
 
-    update: function() {
+    update: function(app) {
         if (!this.isCollision || this.type == "explode") return;
+
+        if (this.time % 3 == 0) {
+            this.sprite.setFrameIndex(this.frame[this.index]);
+            this.index = (this.index + 1) % this.frame.length;
+        }
 
         //地形接触判定
         var that = this;
@@ -624,6 +633,8 @@ phina.define("qft.PlayerAttack", {
                 }
             }
         }.bind(this));
+
+        this.time++;
     },
 
     //刺さる
