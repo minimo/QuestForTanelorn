@@ -77,7 +77,7 @@ phina.define("qft.Enemy", {
         if (target instanceof qft.PlayerAttack) {
             if (target.scaleX == 1) dir = 0; else dir = 180;
         } else {
-            if (this.x < target.x) dir = 180;
+            if (this.x > target.x) dir = 0; else dir = 180;
         }
 
         var power = target.power;
@@ -91,6 +91,7 @@ phina.define("qft.Enemy", {
             this.parentScene.totalScore += this.point;
         }
         app.playSE("hit");
+        if (dir == 0) this.direction = 180; else this.direction = 0;
         return true;
     },
 
