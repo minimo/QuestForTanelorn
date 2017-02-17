@@ -78,6 +78,19 @@ phina.define("qft.MainScene", {
             app.pushScene(qft.MenuScene(this));
         });
 
+        //キー取得
+        this.on('getkey', function(e) {
+            var x = this.mapLayer.x + this.player.x;
+            var y = this.mapLayer.y + this.player.y;
+            var key = phina.display.DisplayElement()
+                .setPosition(x, y)
+                .addChildTo(this.baseLayer);
+            key.tweener.clear().moveTo(15+(this.player.keys.length-1)*24, 35, 500);
+            var sp = phina.display.Sprite("item", 24, 24)
+                .setFrameIndex(ITEM_KEY)
+                .addChildTo(key);
+        });
+
         //ステージクリア
         this.on('stageclear', this.stageClear);
 
@@ -332,6 +345,8 @@ phina.define("qft.MainScene", {
 
     //マップ情報の初期化
     setupStage: function() {
+
+        this.baseLayer.removeChildren();
 
         //登録済みマップの消去
         this.clearMap();
