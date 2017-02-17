@@ -69,22 +69,22 @@ phina.define("qft.MenuScene", {
         if (ct.right && this.limitFrame < 0) {
             app.playSE("click");
             this.menuBase.tweener.clear()
-                .by({rotation: -this.deg_1}, 8)
+                .by({rotation: -this.deg_1}, 4)
                 .call(function(){
                     if (this.rotation < 0) this.rotation += 360;
                 }.bind(this.menuBase));
-            this.limitFrame = 10;
+            this.limitFrame = 5;
             this.currentScene.menuSelect++;
             if (this.currentScene.menuSelect == this.icon.length) this.currentScene.menuSelect = 0;
         }
         if (ct.left && this.limitFrame < 0) {
             app.playSE("click");
             this.menuBase.tweener.clear()
-                .by({rotation: this.deg_1}, 8)
+                .by({rotation: this.deg_1}, 4)
                 .call(function(){
                     if (this.rotation > 360) this.rotation -= 360;
                 }.bind(this.menuBase));
-            this.limitFrame = 10;
+            this.limitFrame = 5;
             this.currentScene.menuSelect--;
             if (this.currentScene.menuSelect < 0) this.currentScene.menuSelect = this.icon.length-1;
         }
@@ -109,7 +109,7 @@ phina.define("qft.MenuScene", {
                 ic = phina.display.Label({text: e}.$safe(labelParam)).addChildTo(this.menuBase);
                 ic.setScale(0.5);
             } else {
-                ic = phina.display.Sprite("item", 20, 20)
+                ic = phina.display.Sprite("item", 24, 24)
                     .addChildTo(this.menuBase)
                     .setFrameIndex(e);
             }
