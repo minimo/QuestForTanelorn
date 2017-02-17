@@ -68,11 +68,11 @@ phina.define("qft.Player", {
         this.sprite = phina.display.Sprite("player1", 32, 32).addChildTo(this).setFrameIndex(0);
 
         //武器用スプライト
-        this.weapon = phina.display.Sprite("item", 20, 20)
+        this.weapon = phina.display.Sprite("item", 24, 24)
             .addChildTo(this.back)
             .setFrameIndex(0)
             .setOrigin(1, 1)
-            .setPosition(-3, 3);
+            .setPosition(-1, 1);
         this.weapon.alpha = 0;
         this.weapon.tweener.setUpdateType('fps');
         this.weapon.type = "sword";
@@ -326,6 +326,7 @@ phina.define("qft.Player", {
         if (item.key) {
             this.keys.push(item);
             app.playSE("getkeyitem");
+            this.parentScene.flare('getkey', {key: item});
         }
         return this;
     },
@@ -597,7 +598,7 @@ phina.define("qft.PlayerAttack", {
         //表示スプライト
         switch (this.type) {
             case "arrow":
-                this.sprite = phina.display.Sprite("item", 20, 20).addChildTo(this).setFrameIndex(30);
+                this.sprite = phina.display.Sprite("item", 24, 24).addChildTo(this).setFrameIndex(30);
                 this.setAnimation("arrow");
                 this.frame = [30];
                 break;

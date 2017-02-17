@@ -42,7 +42,7 @@ phina.define("qft.Item", {
         this.$extend(qft.itemInfo.get(this.kind));
 
         //アイテムスプライト
-        this.sprite = phina.display.Sprite("item", 20, 20).addChildTo(this).setFrameIndex(this.kind);
+        this.sprite = phina.display.Sprite("item", 24, 24).addChildTo(this).setFrameIndex(this.kind);
     },
 
     update: function() {
