@@ -40,3 +40,26 @@ phina.define("qft.Effect", {
     setAnimation: function(options) {
     },
 });
+
+phina.define("qft.EffectData", {
+    _static: {
+        get: function(name) {
+            switch (name) {
+                case "explode_small":
+                    return {
+                        trimming: {x: 256, y: 256, width: 128, height: 32}
+                    };
+                case "explode":
+                    return {
+                        trimming: {x: 256, y: 256, width: 128, height: 32}
+                    };
+                case "explode_ground":
+                    return {
+                        trimming: {x: 256, y: 192, width: 256, height: 48}
+                    };
+                default:
+                    return {};
+            }
+        }
+    }
+});
