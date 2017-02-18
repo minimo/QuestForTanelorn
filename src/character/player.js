@@ -72,7 +72,7 @@ phina.define("qft.Player", {
             .addChildTo(this.back)
             .setFrameIndex(0)
             .setOrigin(1, 1)
-            .setPosition(-1, 1);
+            .setPosition(3, 3);
         this.weapon.alpha = 0;
         this.weapon.tweener.setUpdateType('fps');
         this.weapon.type = "sword";
