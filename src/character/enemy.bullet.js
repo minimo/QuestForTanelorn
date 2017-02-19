@@ -66,4 +66,10 @@ phina.define("qft.Enemy.Bullet", {
         this.frame["pattern2"] = [15, 16, 17, 16];
         this.index = 0;
     },
+
+    hit: function() {
+        this.parentScene.spawnEffect(this.x, this.y);
+        this.remove();
+        app.playSE("bomb");
+    },
 });

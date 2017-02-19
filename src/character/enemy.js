@@ -67,6 +67,7 @@ phina.define("qft.Enemy", {
             }.bind(this));
             //プレイヤーとの当たり判定
             if (!this.isDead && !pl.isDead && this.hitTestElement(pl)) {
+                this.hit();
                 pl.damage(this);
             }
         });
@@ -173,5 +174,8 @@ phina.define("qft.Enemy", {
             this.rotation = -that.rotation;
             this.scaleX = that.scaleX;
         };
+    },
+
+    hit: function() {
     },
 });
