@@ -638,6 +638,16 @@ phina.define("qft.PlayerAttack", {
         this.time++;
     },
 
+    hit: function(target) {
+        switch (this.type) {
+            case "arrow":
+                break;
+            case "fireball":
+                this.explode(target);
+                break;
+        }
+    },
+
     //刺さる
     stick: function(e) {
         app.playSE("arrowstick");
@@ -655,6 +665,8 @@ phina.define("qft.PlayerAttack", {
 
     //爆発
     explode: function(e) {
+        this.parentScene.spawnEffect(this.x, this.y);
+        app.playSE("bomb");
         this.remove();
     },
 
