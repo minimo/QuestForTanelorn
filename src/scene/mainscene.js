@@ -234,6 +234,11 @@ phina.define("qft.MainScene", {
         return qft.ItemBox(this, options).addChildTo(this.objLayer).setPosition(x, y);
     },
 
+    //エフェクト投入
+    spawnEffect: function(x, y, options) {
+        return qft.Effect(this, options).addChildTo(this.objLayer).setPosition(x, y);
+    },
+
     //メッセージ投入
     spawnMessage: function(text, between, waitFrame) {
         between = between || 32;
