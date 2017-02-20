@@ -30,7 +30,7 @@ phina.define("qft.Player", {
     //装備中アイテム
     equip: {
         weapon: 0,
-        ring: null,
+        defense: null,
     },
 
     //アイテム所持最大数
