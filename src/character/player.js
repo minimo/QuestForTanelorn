@@ -37,7 +37,7 @@ phina.define("qft.Player", {
     maxItem: 10,
 
     //所持アイテム
-    items: [0, 7, 8, 9, 10, 11],
+    items: [7, 8, 9, 10, 11],
 
     //所持クリア条件キー
     keys: [],
@@ -310,8 +310,10 @@ phina.define("qft.Player", {
     getItem: function(item) {
         //武器
         if (item.weapon) {
+            //現在装備品をアイテムリスト送り
+            this.items.push(this.equip.weapon);
+            //武器変更
             this.setWeapon(item.kind);
-            this.items.push(item.kind);
             return;
         }
         //装備品
@@ -333,6 +335,7 @@ phina.define("qft.Player", {
 
     //武器変更
     setWeapon: function(kind) {
+        this.equip.weapon = kind;
         switch (kind) {
             case 0:
                 //ショートソード
@@ -686,6 +689,7 @@ phina.define("qft.PlayerDummy", {
         this.frame["up_stop"] =   [10, "stop"];
         this.frame["down"] = [ 0,  1,  2,  1];
         this.frame["clear"] = [24, "stop"];
+        this.frame["damage"] = [ 18, 19, 20];
         this.frame["dead"] = [18, 19, 20, 33, 34, 35, "stop"];
         this.index = 0;
 
