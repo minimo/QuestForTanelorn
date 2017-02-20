@@ -25,7 +25,6 @@ phina.define("qft.Item", {
     //アイテム情報
     status: null,
 
-
     //反発係数
     rebound: 0.3,
 
@@ -61,7 +60,7 @@ phina.define("qft.itemInfo", {
             switch (kind) {
                 case ITEM_SHORTSWORD:
                     return {
-                        name: "SHORT SWORD",
+                        name: "SWORD",
                         type: "sword",
                         weapon: true,
                         power: 10,
