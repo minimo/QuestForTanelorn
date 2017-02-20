@@ -13,6 +13,17 @@ phina.define("qft.GameOverScene", {
         this.superInit({width: SC_W, height: SC_H});
         this.parentScene = parentScene;
 
+        //バックグラウンド
+        var param = {
+            width: SC_W,
+            height: SC_H,
+            fill: "rgba(0,0,0,1)",
+            stroke: "rgba(0,0,0,1)",
+            backgroundColor: 'transparent',
+        };
+        this.bg = phina.display.RectangleShape(param).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.5)
+        this.bg.alpha = 0;
+
         var labelParam = {
             fill: "white",
             stroke: "blue",
@@ -54,17 +65,73 @@ phina.define("qft.GameOverScene", {
 
         app.playBGM("gameover", false);
 
+        this.select = 0; //0:YES 1:NO
+
         this.time = 0;
     },
 
     update: function(app) {
         var ct = app.controller;
+        if (this.time == 90) {
+            this.dispContinue();
+        }
         if (this.time > 120) {
+            if (ct.left) {
+                this.select = 0;
+                this.yes.tweener.clear().to({scaleX: 1, scaleY: 1}, 500, "easeOutBounce");
+                this.no.tweener.clear().to({scaleX: 0.7, scaleY: 0.7}, 500, "easeOutBounce");
+            }
+            if (ct.right) {
+                this.select = 1;
+                this.yes.tweener.clear().to({scaleX: 0.7, scaleY: 0.7}, 500, "easeOutBounce");
+                this.no.tweener.clear().to({scaleX: 1, scaleY: 1}, 500, "easeOutBounce");
+            }
             if (ct.ok || ct.cancel) {
-                this.parentScene.flare('continue');
-                this.exit();
+                if (this.select == 0) {
+                    this.parentScene.flare('continue');
+                    this.exit();
+                } else {
+                    app.playBGM("openingbgm");
+                    app.replaceScene(qft.TitleScene());
+                    this.exit();
+                }
             }
         }
         this.time++;
+    },
+
+    dispContinue: function() {
+        var labelParam = {
+            fill: "white",
+            stroke: "black",
+            strokeWidth: 2,
+
+            fontFamily: "Orbitron",
+            align: "center",
+            baseline: "middle",
+            fontSize: 36,
+            fontWeight: ''
+        };
+        this.text1 = phina.display.Label({text: "CONTINUE?"}.$safe(labelParam))
+            .setPosition(SC_W*0.5, SC_H*0.4+10)
+            .addChildTo(this);
+        this.text1.alpha = 0;
+        this.text1.tweener.clear().to({y: SC_H*0.4, alpha: 1}, 500, "easeInSine");
+
+        this.yes = phina.display.Label({text: "YES", fontSize: 30}.$safe(labelParam))
+            .setScale(1)
+            .setPosition(SC_W*0.4, SC_H*0.6+10)
+            .addChildTo(this);
+        this.yes.alpha = 0;
+        this.yes.tweener.clear().to({y: SC_H*0.6, alpha: 1}, 500, "easeInSine");
+
+        this.no = phina.display.Label({text: "NO", fontSize: 30}.$safe(labelParam))
+            .setScale(0.7)
+            .setPosition(SC_W*0.6, SC_H*0.6+10)
+            .addChildTo(this);
+        this.no.alpha = 0;
+        this.no.tweener.clear().to({y: SC_H*0.6, alpha: 1}, 500, "easeInSine");
+
+        this.bg.tweener.clear().to({alpha:0.3}, 500, "easeInSine");
     },
 });
