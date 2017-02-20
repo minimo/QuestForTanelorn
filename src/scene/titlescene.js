@@ -58,7 +58,8 @@ phina.define("qft.TitleScene", {
         if (this.time > 15) {
             var ct = app.controller;
             if (ct.ok || ct.cancel) {
-                this.exit();
+//                this.exit();
+                app.replaceScene(qft.MainScene());
             }
         }
         if (this.time > 30 * 120) {

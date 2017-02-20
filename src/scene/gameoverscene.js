@@ -76,15 +76,16 @@ phina.define("qft.GameOverScene", {
             this.dispContinue();
         }
         if (this.time > 120) {
-            if (ct.left) {
+            if (ct.left && this.select == 1) {
                 this.select = 0;
                 this.yes.tweener.clear().to({scaleX: 1, scaleY: 1}, 500, "easeOutBounce");
                 this.no.tweener.clear().to({scaleX: 0.7, scaleY: 0.7}, 500, "easeOutBounce");
-            }
-            if (ct.right) {
+                app.playSE("select");
+            } else if (ct.right && this.select == 0) {
                 this.select = 1;
                 this.yes.tweener.clear().to({scaleX: 0.7, scaleY: 0.7}, 500, "easeOutBounce");
                 this.no.tweener.clear().to({scaleX: 1, scaleY: 1}, 500, "easeOutBounce");
+                app.playSE("select");
             }
             if (ct.ok || ct.cancel) {
                 if (this.select == 0) {

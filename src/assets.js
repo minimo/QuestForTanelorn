@@ -54,6 +54,7 @@ phina.define("qft.Assets", {
                             "gameover":   "assets/sound/gameover3.mp3",
                             "getkeyitem": "assets/sound/se_maoudamashii_onepoint23.mp3",
                             "bomb":       "assets/sound/sen_ge_taihou03.mp3",
+                            "select":     "assets/sound/se_maoudamashii_system45.mp3",
                         },
                         font: {
                             "UbuntuMono": "assets/font/UbuntuMono-Bold.ttf",
