@@ -32,13 +32,13 @@ phina.define("qft.MenuScene", {
             fontFamily: "Orbitron",
             align: "center",
             baseline: "middle",
-            fontSize: 24,
+            fontSize: 16,
             fontWeight: ''
         };
 
         this.player = this.currentScene.player;
-        var x = this.player.x + this.currentScene.mapLayer.x;
-        var y = this.player.y + this.currentScene.mapLayer.y;
+        var x = SC_W*0.3; //this.player.x + this.currentScene.mapLayer.x;
+        var y = SC_H*0.5; //this.player.y + this.currentScene.mapLayer.y;
 
         //ベースエレメント
         this.menuBase = phina.display.DisplayElement().addChildTo(this).setPosition(x, y);
@@ -46,6 +46,21 @@ phina.define("qft.MenuScene", {
 
         //メニューアイテム初期化
         this.setItems();
+
+        //現在装備表示
+        var eq = this.player.equip;
+        this.weapon = phina.display.Sprite("item", 24, 24)
+            .setPosition(SC_W*0.7, SC_H*0.3)
+            .setScale(1.5)
+            .setFrameIndex(eq.weapon)
+            .addChildTo(this);
+        this.weaponLabel = phina.display.Label({text: ""}.$safe(labelParam))
+            .setPosition(SC_W*0.7, SC_H*0.37)
+            .addChildTo(this);
+        this.weaponLabel.update = function() {
+            var item = qft.ItemInfo.get(eq.weapon);
+            this.text = item.name;
+        };
 
         this.limitFrame = 30;
 
@@ -65,34 +80,46 @@ phina.define("qft.MenuScene", {
                         app.popScene();
                     });
             }
-        }
-        if (ct.right && this.limitFrame < 0) {
-            app.playSE("click");
-            this.menuBase.tweener.clear()
-                .by({rotation: -this.deg_1}, 4)
-                .call(function(){
-                    if (this.rotation < 0) this.rotation += 360;
-                }.bind(this.menuBase));
-            this.limitFrame = 5;
-            this.currentScene.menuSelect++;
-            if (this.currentScene.menuSelect == this.icon.length) this.currentScene.menuSelect = 0;
-        }
-        if (ct.left && this.limitFrame < 0) {
-            app.playSE("click");
-            this.menuBase.tweener.clear()
-                .by({rotation: this.deg_1}, 4)
-                .call(function(){
-                    if (this.rotation > 360) this.rotation -= 360;
-                }.bind(this.menuBase));
-            this.limitFrame = 5;
-            this.currentScene.menuSelect--;
-            if (this.currentScene.menuSelect < 0) this.currentScene.menuSelect = this.icon.length-1;
+            if (ct.right && this.limitFrame < 0) {
+                app.playSE("click");
+                this.menuBase.tweener.clear()
+                    .by({rotation: -this.deg_1}, 4)
+                    .call(function(){
+                        if (this.rotation < 0) this.rotation += 360;
+                    }.bind(this.menuBase));
+                this.limitFrame = 5;
+                this.currentScene.menuSelect++;
+                if (this.currentScene.menuSelect == this.icon.length) this.currentScene.menuSelect = 0;
+            }
+            if (ct.left && this.limitFrame < 0) {
+                app.playSE("click");
+                this.menuBase.tweener.clear()
+                    .by({rotation: this.deg_1}, 4)
+                    .call(function(){
+                        if (this.rotation > 360) this.rotation -= 360;
+                    }.bind(this.menuBase));
+                this.limitFrame = 5;
+                this.currentScene.menuSelect--;
+                if (this.currentScene.menuSelect < 0) this.currentScene.menuSelect = this.icon.length-1;
+            }
         }
         this.limitFrame--;
         this.time++;
     },
 
     setItems: function() {
+        var labelParam = {
+            fill: "white",
+            stroke: "black",
+            strokeWidth: 1,
+
+            fontFamily: "Orbitron",
+            align: "center",
+            baseline: "middle",
+            fontSize: 24,
+            fontWeight: ''
+        };
+
         var that = this;
         this.menuBase.removeChildren();
 

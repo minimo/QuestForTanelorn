@@ -38,7 +38,7 @@ phina.define("qft.Item", {
         this.kind = options.kind;
 
         //アイテムステータス取得
-        this.$extend(qft.itemInfo.get(this.kind));
+        this.$extend(qft.ItemInfo.get(this.kind));
 
         //アイテムスプライト
         this.sprite = phina.display.Sprite("item", 24, 24).addChildTo(this).setFrameIndex(this.kind);
@@ -54,13 +54,13 @@ phina.define("qft.Item", {
     },
 });
 
-phina.define("qft.itemInfo", {
+phina.define("qft.ItemInfo", {
     _static: {
         get: function(kind) {
             switch (kind) {
                 case ITEM_SHORTSWORD:
                     return {
-                        name: "SWORD",
+                        name: "SHORT SWORD",
                         type: "sword",
                         weapon: true,
                         power: 10,
