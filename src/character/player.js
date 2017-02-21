@@ -561,7 +561,7 @@ phina.define("qft.Player", {
         this.setWeapon(0);
 
         //所持アイテム
-        this.items = [0, 7, 8, 9, 10, 11];
+        this.items = [7, 8, 9, 10, 11];
 
         //所持クリア条件キー
         this.keys = [];
