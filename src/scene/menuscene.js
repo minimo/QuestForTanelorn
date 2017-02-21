@@ -30,7 +30,7 @@ phina.define("qft.MenuScene", {
             strokeWidth: 1,
 
             fontFamily: "Orbitron",
-            align: "center",
+            align: "left",
             baseline: "middle",
             fontSize: 16,
             fontWeight: ''
@@ -50,12 +50,12 @@ phina.define("qft.MenuScene", {
         //現在装備表示
         var eq = this.player.equip;
         this.weapon = phina.display.Sprite("item", 24, 24)
-            .setPosition(SC_W*0.7, SC_H*0.3)
+            .setPosition(SC_W*0.55, SC_H*0.3)
             .setScale(1.5)
             .setFrameIndex(eq.weapon)
             .addChildTo(this);
         this.weaponLabel = phina.display.Label({text: ""}.$safe(labelParam))
-            .setPosition(SC_W*0.7, SC_H*0.37)
+            .setPosition(SC_W*0.55+32, SC_H*0.3)
             .addChildTo(this);
         this.weaponLabel.update = function() {
             var item = qft.ItemInfo.get(eq.weapon);
