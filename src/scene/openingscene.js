@@ -108,6 +108,7 @@ phina.define("qft.OpeningScene", {
         if (this.loader.loadcomplete) {
             var ct = app.controller;
             if (ct.ok || ct.cancel) this.exit();
+            if (app.mouse.getPointing()) this.exit();
         }
 
         if (this.seq == 0) {
