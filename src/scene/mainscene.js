@@ -569,6 +569,9 @@ phina.define("qft.MainScene", {
         this.stageController.stageClear();
         this.isStageClear = true;
 
+        //プレイヤー所持キークリア
+        this.player.keys = [];
+
         //クリアBGM
         var bgmFinish = false;
         app.playBGM("stageclear", false, function() {
