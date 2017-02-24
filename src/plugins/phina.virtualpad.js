@@ -30,48 +30,82 @@ phina.define("phina.extension.VirtualPad", {
         height: 480,
 
         //パッド座標
-        x: 300,
-        y: 200,
+        x: 0,
+        y: 0,
 
         //判定半径
         fingerRadius: 20,
     },
 
     init: function(options) {
-        options = ({} || options).$safe(this.defaultOptions);
         this.superInit();
+        options = (options || {}).$safe(this.defaultOptions);
+        this.options = options;
 
         var param = {
             width: options.width,
             height: options.height,
             fill: "rgba(0,0,0,0.3)",
             stroke: "rgba(0,0,0,0.3)",
+            strokeWigth: 0,
             backgroundColor: 'transparent',
         };
         this.mask = phina.display.RectangleShape(param)
             .addChildTo(this)
+            .setOrigin(0, 0)
             .setPosition(options.x, options.y);
 
         //十字キー中心点
         var hw = this.width/2;
         var hh = this.height/2;
-        var cp = phina.geom.Vector2(options.x - options.width/4, options.y + options.height/2);
+        var cp = phina.geom.Vector2(0, 0);
 
         var button = {
             width: 20,
-            height: 30,
+            height: 20,
             fill: "rgba(0,0,0,0.2)",
             stroke: "rgba(0,0,0,0.2)",
             backgroundColor: 'transparent',
         };
-        this.up   = phina.display.RectangleShape(button).setPosition(cp.x, cp.y - 30).addChildTo(this);
-        this.down = phina.display.RectangleShape(button).setPosition(cp.x, cp.y + 30).addChildTo(this);
+        this.up    = phina.display.RectangleShape({height: 30}.$safe(button)).setPosition(cp.x, cp.y - 30).addChildTo(this);
+        this.down  = phina.display.RectangleShape({height: 30}.$safe(button)).setPosition(cp.x, cp.y + 30).addChildTo(this);
+        this.left  = phina.display.RectangleShape({width: 30}.$safe(button)).setPosition(cp.x - 30, cp.y).addChildTo(this);
+        this.right = phina.display.RectangleShape({width: 30}.$safe(button)).setPosition(cp.x + 30, cp.y).addChildTo(this);
+
+        var fingerParam = {
+            backgroundColor: 'transparent',
+            fill: "rgba(0,0,0,0.2)",
+            stroke: "rgba(0,0,0,0.2)",
+            strokeWidth: 1,
+            radius: options.fingerRadius,
+        };
+        this.finger = [];
+        for (var i = 0; i < 5; i++) {
+            this.finger[i] = phina.display.CircleShape(fingerParam).addChildTo(this);
+            this.finger[i].visible = false;
+        }
+
     },
 
-    infomationUpdate: function() {
+    update: function() {
+    },
+
+    updateInfo: function() {
         var p = app.mouse;
         if (p.getPointing()) {
             var ps = app.pointers;
+            for (var i = 0; i < 5; i++) {
+                if (i < ps.length) {
+                    this.finger[i].visible = true;
+                    this.finger[i].setPosition(ps[i].x, ps[i].y);
+                } else {
+                    this.finger[i].visible = false;
+                }
+            }
+        } else {
+            for (var i = 0; i < 5; i++) {
+                this.finger[i].visible = false;
+            }
         }
     },
 });

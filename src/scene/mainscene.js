@@ -70,6 +70,9 @@ phina.define("qft.MainScene", {
         //スクリーン初期化
         this.setupScreen();
 
+        //バーチャルパッドの可視化
+//        app.virtualPad.addChildTo(this);
+
         app.volumeBGM = 0.5;
         app.volumeSE = 0.2;
 
