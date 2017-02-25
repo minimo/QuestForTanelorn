@@ -33,8 +33,15 @@ phina.define("qft.Enemy.Bird", {
     //得点
     point: 200,
 
+    defaultOptions: {
+        speed: 2,
+        direction: 0,
+        returnTime: 120,
+    },
+
     init: function(parentScene, options) {
         this.superInit(parentScene, {width: 16, height: 18});
+        this.options = (options || {}).$safe(this.defaultOptions);
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("monster01", 24, 32).addChildTo(this);
@@ -44,21 +51,14 @@ phina.define("qft.Enemy.Bird", {
         this.advanceTime = 6;
         this.setupLifeGauge();
 
-        this.direction = 0;
-        this.speed = 2;
+        this.direction = this.options.direction;
+        this.speed = this.options.speed;
 
-        this.returnTime = 120;
+        this.returnTime = this.options.returnTime;
     },
 
     update: function() {
         if (this.isDead) return;
-
-        if (this.isLookPlayer()) {
-            this.speed = 4;
-            this.returnTime = 60;
-        } else {
-            this.speed = 2;
-        }
 
         //方向決定
         if (this.direction == 0) this.vx = this.speed;
@@ -67,18 +67,26 @@ phina.define("qft.Enemy.Bird", {
         //壁に当たったら折り返し
         if (this.checkMapCollision2(this.x-12, this.y, 5, 5)) {
             this.direction = 0;
-            this.returnTime = 120;
+            this.returnTime = this.options.returnTime;
         } else if (this.checkMapCollision2(this.x+12, this.y, 5, 5)) {
             this.direction = 180;
-            this.returnTime = 120;
+            this.returnTime = this.options.returnTime;
+        }
+
+        //プレイヤーをみつけたら加速
+        if (this.isLookPlayer()) {
+            this.speed = 4;
+            this.returnTime -= 2;
+        } else {
+            this.speed = 2;
+            this.returnTime--;
         }
 
         //一定時間過ぎたら折り返し
         if (this.returnTime < 0) {
             (this.direction == 0)? this.direction = 180: this.direction = 0;
-            this.returnTime = Math.randint(100, 140);
+            this.returnTime = this.options.returnTime;
         }
-        this.returnTime--;
 
         //落し物
         if (this.time % 30 == 0) {
