@@ -502,20 +502,13 @@ phina.define("qft.MainScene", {
                             door.on('enterdoor', function() {
                             });
                             break;
-                        //デフォルトはマップ内移動
-                        default:
+                        //マップ内移動
+                        case "warp":
                             door.on('enterdoor', function() {
-                                that.player.isControl = false;
-                                that.player.tweener.clear()
-                                    .fadeOut(15)
+                                that.warp(properties.warpX, properties.warpY);
+                                this.tweener.clear()
+                                    .wait(30)
                                     .call(function(){
-                                        that.player.ignoreCollision = false;
-                                    })
-                                    .moveTo(properties.warpX, properties.warpY, 60, "easeInOutSine")
-                                    .fadeIn(15)
-                                    .call(function(){
-                                        that.player.ignoreCollision = false;
-                                        that.player.isControl = true;
                                         this.already = false;
                                     }.bind(this));
                             });
@@ -534,6 +527,25 @@ phina.define("qft.MainScene", {
             }
         }.bind(this));
         return mapLayer;
+    },
+
+    warp: function(x, y) {
+        this.player.isControl = false;
+        this.player.gravity = 0;
+        this.player.tweener.clear()
+            .fadeOut(15)
+            .call(function(){
+                this.ignoreCollision = true;
+            }.bind(this.player))
+            .moveTo(x, y, 60, "easeInOutSine")
+            .call(function(){
+                this.ignoreCollision = false;
+                this.gravity = 0.9;
+            }.bind(this.player))
+            .fadeIn(15)
+            .call(function(){
+                this.isControl = true;
+            }.bind(this.player));
     },
 
     //マップ情報の消去
