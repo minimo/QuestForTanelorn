@@ -88,6 +88,12 @@ phina.define("qft.Player", {
             });
         }
 
+        //装備
+        this.equip = {
+            weapon: 0,
+            defense: null,
+        };
+
         //はしご判定用
         this.ladderCollision = phina.display.RectangleShape({width: 16, height: 20});
 
