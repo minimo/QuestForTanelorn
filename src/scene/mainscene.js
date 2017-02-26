@@ -487,12 +487,39 @@ phina.define("qft.MainScene", {
                     break;
                 case "door":
                     var door = qft.MapObject.Door(this, e).addChildTo(mapLayer.objLayer).setPosition(x, y);
-                    if (e.name == "clear") {
-                        mapLayer.clearGate = door;
-                        door.isLock = true;
-                        door.on('enterdoor', function() {
-                            that.flare('stageclear');
-                        });
+                    var properties = e.properties;
+                    switch (e.name) {
+                        //クリア
+                        case "clear":
+                            mapLayer.clearGate = door;
+                            door.isLock = true;
+                            door.on('enterdoor', function() {
+                                that.flare('stageclear');
+                            });
+                            break;
+                        //マップ切り替え
+                        case "mapswith":
+                            door.on('enterdoor', function() {
+                            });
+                            break;
+                        //デフォルトはマップ内移動
+                        default:
+                            door.on('enterdoor', function() {
+                                that.player.isControl = false;
+                                that.player.tweener.clear()
+                                    .fadeOut(15)
+                                    .call(function(){
+                                        that.player.ignoreCollision = false;
+                                    })
+                                    .moveTo(properties.warpX, properties.warpY, 60, "easeInOutSine")
+                                    .fadeIn(15)
+                                    .call(function(){
+                                        that.player.ignoreCollision = false;
+                                        that.player.isControl = true;
+                                        this.already = false;
+                                    }.bind(this));
+                            });
+                            break;
                     }
                     break;
                 case "check":

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="200" tilewidth="16" tileheight="16" nextobjectid="104">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="200" tilewidth="16" tileheight="16" nextobjectid="105">
  <tileset firstgid="1" name="A1" tilewidth="16" tileheight="16" tilecount="768" columns="32">
   <image source="TileA1.png" width="512" height="384"/>
  </tileset>
@@ -765,7 +765,14 @@
   <object id="82" name="Demon" type="enemy" x="512" y="2040" width="32" height="32"/>
   <object id="95" type="door" x="759" y="928" width="32" height="64">
    <properties>
-    <property name="lock" type="bool" value="true"/>
+    <property name="lock" type="bool" value="false"/>
+    <property name="warpX" type="float" value="408"/>
+    <property name="warpY" type="float" value="544"/>
+   </properties>
+  </object>
+  <object id="104" type="door" x="408" y="544" width="32" height="64">
+   <properties>
+    <property name="lock" type="bool" value="false"/>
    </properties>
   </object>
  </objectgroup>

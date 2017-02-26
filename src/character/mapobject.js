@@ -37,8 +37,8 @@ phina.define("qft.MapObject.Door", {
         this.sprite = phina.display.Sprite("door", 36, 64).addChildTo(this).setFrameIndex(3);
         this.setAnimation("closed");
 
-        this.id = options.id;        
-        this.isLock = options.properties.lock || false;        
+        this.id = options.id;
+        this.isLock = options.properties.lock || false;
     },
 
     update: function(e) {
@@ -124,8 +124,6 @@ phina.define("qft.MapObject.CheckIcon", {
         if (this.isLock) return;
         this.setAnimation("close");
     },
-
-    
 });
 
 //メッセージ表示
