@@ -76,7 +76,7 @@ phina.define("qft.Enemy.FireBird", {
         //プレイヤーをみつけたら攻撃
         if (this.isLookPlayer()) {
             if (this.time % 30 == 0) {
-                var b = this.parentScene.spawnEnemy(this.x, this.y, "FireBirdBullet");
+                var b = this.parentScene.spawnEnemy(this.x, this.y, "Bullet", {pattern: "pattern2"});
                 b.rotation = this.getPlayerAngle();
             }
             this.speed = 0;
@@ -108,61 +108,5 @@ phina.define("qft.Enemy.FireBird", {
     },
 
     attack: function() {
-    },
-});
-
-//鳥の落し物
-phina.define("qft.Enemy.FireBirdBullet", {
-    superClass: "qft.Enemy",
-
-    //ヒットポイント
-    hp: 1,
-
-    //寿命
-    lifespan: 75,
-
-    //速度
-    velocity: 2,
-
-    //加速度
-    accel: 1.02,
-
-    //重力加速度
-    gravity: 0,
-
-    //横移動減衰率
-    friction: 1.0,
-
-    //防御力
-    deffence: 10,
-
-    //攻撃力
-    power: 10,
-
-    //地形無視
-    ignoreCollision: true,
-
-    //得点
-    point: 0,
-
-    init: function(parentScene, options) {
-        this.superInit(parentScene, {width: 5, height: 5});
-
-        //表示用スプライト
-        this.sprite = phina.display.Sprite("bullet", 24, 32).addChildTo(this).setFrameIndex(15);
-
-        this.setAnimation("normal");
-        this.advanceTime = 6;
-    },
-
-    update: function() {
-        if (this.onFloor) this.remove();
-    },
-
-    setupAnimation: function() {
-        this.spcialAnimation = false;
-        this.frame = [];
-        this.frame["normal"] = [15, 16, 17, 16];
-        this.index = 0;
     },
 });
