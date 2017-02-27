@@ -518,6 +518,7 @@ phina.define("qft.MainScene", {
                 this.ignoreCollision = false;
                 this.gravity = 0.9;
             }.bind(this.player))
+            .wait(45)
             .fadeIn(15)
             .call(function(){
                 this.isControl = true;

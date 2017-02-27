@@ -199,7 +199,7 @@ phina.define("qft.Player", {
                     }
 
                     //扉に入る（接地時のみ）
-                    if (this.onFloor && this.onDoor && !this.already) {
+                    if (this.onFloor && this.onDoor && !this.onDoor.isLock && !this.onDoor.already) {
                         this.vx = 0;
                         this.vy = 0;
                         this.onDoor.flare('enterdoor');

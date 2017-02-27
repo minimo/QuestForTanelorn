@@ -59,16 +59,16 @@ phina.define("qft.MapObject.Door", {
             //マップ内移動
             case "warp":
                 this.on('enterdoor', function() {
+                    this.enterPlayer();
                     this.parentScene.warp(properties.warpX, properties.warpY);
                     this.tweener.clear()
-                        .wait(60)
+                        .wait(120)
                         .call(function(){
                             this.already = false;
+                            this.leavePlayer(properties.warpX, properties.warpY);
                         }.bind(this));
                 });
-                break;
-            default:
-                this.isLock = true;
+                break;                
         }
     },
 
@@ -110,6 +110,46 @@ phina.define("qft.MapObject.Door", {
 
     close: function() {
         this.setAnimation("close");
+    },
+
+    //プレイヤーが扉に入る
+    enterPlayer: function() {
+        var player = this.parentScene.player;
+        player.alpha = 0;
+        var pl = qft.PlayerDummy("player1")
+            .setPosition(player.x, player.y)
+            .addChildTo(this.parentScene.mapLayer.playerLayer);
+        pl.setAnimation("up");
+        pl.tweener.clear().setUpdateType('fps')
+            .moveTo(this.x, this.y+this.height/2-16, 15)
+            .call(function() {
+                pl.animation = false;
+            })
+            .fadeOut(15)
+            .call(function() {
+                pl.remove();
+            });
+    },
+
+    //プレイヤーが扉から出る
+    leavePlayer: function(x, y) {
+        x = x || this.x;
+        y = y || this.y + this.height / 2;
+        var player = this.parentScene.player;
+//        player.alpha = 0;
+        var pl = qft.PlayerDummy("player1")
+            .setPosition(player.x, player.y)
+            .addChildTo(this.parentScene.mapLayer.playerLayer);
+        pl.alpha = 0;
+        pl.setAnimation("down");
+        pl.tweener.clear().setUpdateType('fps')
+            .fadeIn(15)
+            .moveTo(x, y-16, 30)
+            .fadeIn(10)
+            .call(function() {
+                player.alpha = 1;
+                pl.remove();
+            });
     },
 });
 
