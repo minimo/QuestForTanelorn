@@ -48,6 +48,9 @@ phina.define("qft.Character", {
     //操作停止時間
     stopTime: 0,
 
+    //無敵フラグ
+    muteki: false,
+
     //無敵時間
     mutekiTime: 0,
 
