@@ -39,6 +39,36 @@ phina.define("qft.MapObject.Door", {
 
         this.id = options.id;
         this.isLock = options.properties.lock || false;
+
+        //ドア機能
+        var properties = options.properties;
+        switch (options.name) {
+            //クリア
+            case "clear":
+                this.isLock = true;
+                this.on('enterdoor', function() {
+                    this.parentScene.flare('stageclear');
+                });
+                break;
+            //マップ切り替え
+            case "mapswith":
+                this.on('enterdoor', function() {
+                });
+                break;
+            //マップ内移動
+            case "warp":
+                this.on('enterdoor', function() {
+                    this.parentScene.warp(properties.warpX, properties.warpY);
+                    this.tweener.clear()
+                        .wait(30)
+                        .call(function(){
+                            this.already = false;
+                        }.bind(this));
+                });
+                break;
+            default:
+                this.isLock = true;
+        }
     },
 
     update: function(e) {

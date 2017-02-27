@@ -487,33 +487,7 @@ phina.define("qft.MainScene", {
                     break;
                 case "door":
                     var door = qft.MapObject.Door(this, e).addChildTo(mapLayer.objLayer).setPosition(x, y);
-                    var properties = e.properties;
-                    switch (e.name) {
-                        //クリア
-                        case "clear":
-                            mapLayer.clearGate = door;
-                            door.isLock = true;
-                            door.on('enterdoor', function() {
-                                that.flare('stageclear');
-                            });
-                            break;
-                        //マップ切り替え
-                        case "mapswith":
-                            door.on('enterdoor', function() {
-                            });
-                            break;
-                        //マップ内移動
-                        case "warp":
-                            door.on('enterdoor', function() {
-                                that.warp(properties.warpX, properties.warpY);
-                                this.tweener.clear()
-                                    .wait(30)
-                                    .call(function(){
-                                        this.already = false;
-                                    }.bind(this));
-                            });
-                            break;
-                    }
+                    if (e.name == "clear") mapLayer.clearGate = door;
                     break;
                 case "check":
                     qft.MapObject.CheckIcon(this, e).addChildTo(mapLayer.objLayer).setPosition(x, y).setAnimation(e.name);
