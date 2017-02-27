@@ -48,6 +48,9 @@ phina.define("qft.Player", {
     //操作可能フラグ
     isControl: true,
 
+    //ドア上フラグ
+    onDoor: false,
+
     //前フレームの情報
     before: {
         //操作系
@@ -106,6 +109,18 @@ phina.define("qft.Player", {
     },
 
     update: function(app) {
+        //オブジェクトレイヤー接触判定
+        this.onDoor = null;
+        this.parentScene.objLayer.children.forEach(function(e) {
+            //扉判定
+            if (e instanceof qft.MapObject.Door) {
+                if (e.hitTestElement(this)) {
+                    this.onDoor = e;
+                    return;
+                }
+            }
+        }.bind(this));
+
         //死亡時は何も出来ない
         if (this.isDead) {
             //マップ外落下
@@ -181,6 +196,14 @@ phina.define("qft.Player", {
                         this.vy = 0;
                         this.isCatchLadder = true;
                         this.throughFloor = null;
+                    }
+
+                    //扉に入る（接地時のみ）
+                    if (this.onFloor && this.onDoor && !this.already) {
+                        this.vx = 0;
+                        this.vy = 0;
+                        this.onDoor.flare('enterdoor');
+                        this.onDoor.already = false;
                     }
                 }
                 //下キー押下

@@ -39,6 +39,7 @@ phina.define("qft.MapObject.Door", {
 
         this.id = options.id;
         this.isLock = options.properties.lock || false;
+        this.name = options.name;
 
         //ドア機能
         var properties = options.properties;
@@ -51,7 +52,7 @@ phina.define("qft.MapObject.Door", {
                 });
                 break;
             //マップ切り替え
-            case "mapswith":
+            case "mapswitch":
                 this.on('enterdoor', function() {
                 });
                 break;
@@ -60,7 +61,7 @@ phina.define("qft.MapObject.Door", {
                 this.on('enterdoor', function() {
                     this.parentScene.warp(properties.warpX, properties.warpY);
                     this.tweener.clear()
-                        .wait(30)
+                        .wait(60)
                         .call(function(){
                             this.already = false;
                         }.bind(this));
@@ -85,8 +86,11 @@ phina.define("qft.MapObject.Door", {
         var pl = this.parentScene.player;
         var hit = this.hitTestElement(pl);
         if (hit && !this.isLock && !this.already) {
-            this.flare('enterdoor');
-            this.already = true;
+            if (this.name == "clear") {
+                //ステージクリアの扉は無条件で入る
+                this.flare('enterdoor');
+                this.already = true;
+            }
         }
     },
 

@@ -506,7 +506,9 @@ phina.define("qft.MainScene", {
     warp: function(x, y) {
         this.player.isControl = false;
         this.player.gravity = 0;
+        this.player.vx = 0;
         this.player.tweener.clear()
+            .wait(30)
             .fadeOut(15)
             .call(function(){
                 this.ignoreCollision = true;
