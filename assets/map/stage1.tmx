@@ -573,16 +573,5 @@
   <object id="216" name="Bird" type="enemy" x="2384" y="532" width="32" height="32"/>
   <object id="217" name="Bird" type="enemy" x="2536" y="676" width="32" height="32"/>
   <object id="218" name="Bird" type="enemy" x="4312" y="784" width="32" height="32"/>
-  <object id="220" name="key" type="itembox" x="5776" y="804" width="32" height="32">
-   <properties>
-    <property name="color" value="gold"/>
-    <property name="kind" type="int" value="16"/>
-   </properties>
-  </object>
-  <object id="221" name="start" type="player" x="5652" y="860" width="32" height="32">
-   <properties>
-    <property name="direction" type="int" value="0"/>
-   </properties>
-  </object>
  </objectgroup>
 </map>

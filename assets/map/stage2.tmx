@@ -775,20 +775,15 @@
   <object id="95" name="warp" type="door" x="759" y="928" width="32" height="64">
    <properties>
     <property name="lock" type="bool" value="false"/>
-     <property name="nextID" type="int" value="104"/>
-     <property name="offset" type="int" value="32"/>
+    <property name="nextID" type="int" value="104"/>
+    <property name="offset" type="int" value="32"/>
    </properties>
   </object>
   <object id="104" name="warp" type="door" x="407" y="544" width="32" height="64">
    <properties>
     <property name="lock" type="bool" value="false"/>
-     <property name="nextID" type="int" value="95"/>
-     <property name="offset" type="int" value="32"/>
-   </properties>
-  </object>
-  <object id="105" name="start" type="player" x="564" y="912" width="32" height="32">
-   <properties>
-    <property name="direction" type="int" value="0"/>
+    <property name="nextID" type="int" value="95"/>
+    <property name="offset" type="int" value="32"/>
    </properties>
   </object>
   <object id="115" name="spear" type="itembox" x="408" y="488" width="32" height="32">
