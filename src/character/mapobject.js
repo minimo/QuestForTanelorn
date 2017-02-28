@@ -58,14 +58,19 @@ phina.define("qft.MapObject.Door", {
                 break;
             //マップ内移動
             case "warp":
+                this.nextID = properties.nextID;
+                this.offset = properties.offset || 0;
                 this.on('enterdoor', function() {
+                    //行き先の検索
+                    var next = this.findDoor(this.nextID);
+                    if (!next) return;
                     this.enterPlayer();
-                    this.parentScene.warp(properties.warpX, properties.warpY);
+                    this.parentScene.warp(next.x, next.y+this.offset);
                     this.tweener.clear()
                         .wait(120)
                         .call(function(){
                             this.already = false;
-                            this.leavePlayer(properties.warpX, properties.warpY);
+                            next.leavePlayer();
                         }.bind(this));
                 });
                 break;                
@@ -116,6 +121,7 @@ phina.define("qft.MapObject.Door", {
     enterPlayer: function() {
         var player = this.parentScene.player;
         player.alpha = 0;
+        player.isControl = false;
         var pl = qft.PlayerDummy("player1")
             .setPosition(player.x, player.y)
             .addChildTo(this.parentScene.mapLayer.playerLayer);
@@ -132,24 +138,35 @@ phina.define("qft.MapObject.Door", {
     },
 
     //プレイヤーが扉から出る
-    leavePlayer: function(x, y) {
-        x = x || this.x;
-        y = y || this.y + this.height / 2;
+    leavePlayer: function() {
         var player = this.parentScene.player;
-//        player.alpha = 0;
+        player.alpha = 0;
+        player.isControl = false;
         var pl = qft.PlayerDummy("player1")
-            .setPosition(player.x, player.y)
+            .setPosition(this.x, this.y+16)
             .addChildTo(this.parentScene.mapLayer.playerLayer);
         pl.alpha = 0;
         pl.setAnimation("down");
         pl.tweener.clear().setUpdateType('fps')
             .fadeIn(15)
-            .moveTo(x, y-16, 30)
+            .moveTo(player.x, player.y, 30)
             .fadeIn(10)
             .call(function() {
                 player.alpha = 1;
+                player.isControl = true;
                 pl.remove();
             });
+    },
+
+    //他の扉を検索
+    findDoor: function(id) {
+        var result = null;
+        this.parentScene.objLayer.children.forEach(function(e) {
+            if (e instanceof qft.MapObject.Door) {
+                if (e.id == id) result = e;
+            }
+        }.bind(this));
+        return result;
     },
 });
 

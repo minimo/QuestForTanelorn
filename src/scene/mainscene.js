@@ -520,6 +520,7 @@ phina.define("qft.MainScene", {
             }.bind(this.player))
             .wait(45)
             .fadeIn(15)
+            .wait(30)
             .call(function(){
                 this.isControl = true;
             }.bind(this.player));
