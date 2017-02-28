@@ -503,7 +503,8 @@ phina.define("qft.MainScene", {
         return mapLayer;
     },
 
-    warp: function(x, y) {
+    warp: function(x, y, frame) {
+        frame = frame || 60;
         this.player.isControl = false;
         this.player.gravity = 0;
         this.player.vx = 0;
@@ -513,7 +514,7 @@ phina.define("qft.MainScene", {
             .call(function(){
                 this.ignoreCollision = true;
             }.bind(this.player))
-            .moveTo(x, y, 60, "easeInOutSine")
+            .moveTo(x, y, frame, "easeInOutSine")
             .call(function(){
                 this.ignoreCollision = false;
                 this.gravity = 0.9;
