@@ -449,7 +449,8 @@ phina.define("qft.MainScene", {
             //常時実行スクリプト
             if (c.script) {
                 var sc = "(function(app) {"+c.script+"})";
-                c.update = eval(sc);
+                var f = eval(sc);
+                c.on('enterframe', f);
             }
             //当たり判定時実行スクリプト
             if (c.collision) {
@@ -488,6 +489,11 @@ phina.define("qft.MainScene", {
                 case "door":
                     var door = qft.MapObject.Door(this, e).addChildTo(mapLayer.objLayer).setPosition(x, y);
                     if (e.name == "clear") mapLayer.clearGate = door;
+                    if (e.properties.script) {
+                        var sc = "(function(app) {"+e.properties.script+"})";
+                        var f = eval(sc);
+                        door.on('enterframe', f);
+                    }
                     break;
                 case "check":
                     qft.MapObject.CheckIcon(this, e).addChildTo(mapLayer.objLayer).setPosition(x, y).setAnimation(e.name);
