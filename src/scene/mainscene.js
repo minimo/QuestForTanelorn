@@ -480,10 +480,10 @@ phina.define("qft.MainScene", {
                     qft.Enemy[e.name](this, e.properties).addChildTo(mapLayer.enemyLayer).setPosition(x, y);
                     break;
                 case "item":
-                    qft.Item(this, e.properties).addChildTo(mapLayer.objLayer).setPosition(x, y);
+                    qft.Item(this, e).addChildTo(mapLayer.objLayer).setPosition(x, y);
                     break;
                 case "itembox":
-                    qft.ItemBox(this, e.properties).addChildTo(mapLayer.objLayer).setPosition(x, y);
+                    qft.ItemBox(this, e).addChildTo(mapLayer.objLayer).setPosition(x, y);
                     break;
                 case "door":
                     var door = qft.MapObject.Door(this, e).addChildTo(mapLayer.objLayer).setPosition(x, y);

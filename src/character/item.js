@@ -35,7 +35,29 @@ phina.define("qft.Item", {
         this.superInit(parentScene, {width: 10, height: 10});
 
         //アイテム種別
-        this.kind = options.kind;
+        switch (options.name) {
+            case "shortsword":
+                this.kind = ITEM_SHORTSWORD;
+                break;
+            case "longsword":
+                this.kind = ITEM_LONGSWORD;
+                break;
+            case "ax":
+                this.kind = ITEM_AX;
+                break;
+            case "spear":
+                this.kind = ITEM_SPEAR;
+                break;
+            case "bow":
+                this.kind = ITEM_BOW;
+                break;
+            case "rod":
+                this.kind = ITEM_ROD;
+                break;
+            case "key":
+                this.kind = ITEM_KEY;
+                break;
+        }
 
         //アイテムステータス取得
         this.$extend(qft.ItemInfo.get(this.kind));

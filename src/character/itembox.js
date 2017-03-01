@@ -28,7 +28,7 @@ phina.define("qft.ItemBox", {
     rebound: 0.3,
 
     init: function(parentScene, options) {
-        this.superInit(parentScene, {width: 26, height: 26}.$safe(options));
+        this.superInit(parentScene, {width: 26, height: 26}.$safe(options.properties));
 
         //アイテムボックススプライト
         this.sprite = phina.display.Sprite("itembox", 32, 32)
@@ -38,7 +38,10 @@ phina.define("qft.ItemBox", {
         this.sprite.tweener.setUpdateType('fps');
 
         this.setAnimation("close");
-        this.kind = options.kind || 0;
+
+        //内容物
+        this.name = options.name;
+        this.level = options.properties.level || 0;
     },
 
     update: function() {
@@ -82,7 +85,7 @@ phina.define("qft.ItemBox", {
             this.tweener.clear()
                 .wait(10)
                 .call(function() {
-                    var i = this.parentScene.spawnItem(this.x, this.y, {kind: this.kind});
+                    var i = this.parentScene.spawnItem(this.x, this.y, {name: this.name});
                     i.vy = -5;
                 }.bind(this))
         }
