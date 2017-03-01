@@ -7,7 +7,9 @@
 
 phina.define("qft.Assets", {
     _static: {
+        loadedAssets: [],
         get: function(options) {
+            qft.Assets.loadedAssets.push(options.assetType);
             switch (options.assetType) {
                 case "splash":
                     return {

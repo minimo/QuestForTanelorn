@@ -34,8 +34,9 @@ phina.define("qft.MainScene", {
     limitWidth: false,
     limitHeight: true,
 
-    init: function() {
+    init: function(startStage) {
         this.superInit({width: SC_W, height: SC_H});
+        this.stageNumber = startStage || 1;
 
         //バックグラウンド
         var param = {
