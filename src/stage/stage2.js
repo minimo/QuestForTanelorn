@@ -35,8 +35,8 @@ phina.define("qft.Stage2", {
     //ステージクリア条件判定
     checkStageClearCondtion: function() {
         var keys = this.player.keys;
-        if (keys.length != 0) return true;
-        return false;
+        if (keys.length < 2) return false;
+        return true;
     },
 
     //ステージクリア処理
@@ -54,7 +54,7 @@ phina.define("qft.Stage2", {
             .wait(60)
             .call(function() {
                 pl.setAnimation("up");
-                pl.tweener.clear().moveBy(10, -32, 1000)
+                pl.tweener.clear().moveBy(-10, -32, 1000)
                     .call(function() {
                         pl.animation = false;
                     })
