@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="200" tilewidth="16" tileheight="16" nextobjectid="145">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="200" tilewidth="16" tileheight="16" nextobjectid="156">
  <tileset firstgid="1" name="A1" tilewidth="16" tileheight="16" tilecount="768" columns="32">
   <image source="TileA1.png" width="512" height="384"/>
  </tileset>
@@ -244,9 +244,9 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4547,4548,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1807,5960,5962,5963,1807,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4579,4580,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1773,5992,5994,5995,1773,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4611,4612,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4547,4548,0,0,5769,5770,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1807,5960,5962,5963,1807,0,0,0,0,0,0,0,0,0,0,5769,5770,0,0,4579,4580,0,0,5801,5802,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1773,5992,5994,5995,1773,0,0,0,0,0,0,0,0,0,0,5801,5802,0,0,4611,4612,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,4105,4106,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1774,6024,6026,6027,1774,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4643,4644,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,4169,4105,4106,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4643,4644,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,4201,4202,4138,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4643,4644,0,0,0,0,0,0,0,0,0,0,0,
@@ -770,7 +770,7 @@
   <object id="70" name="Wisp" type="enemy" x="323" y="2548" width="32" height="32"/>
   <object id="71" name="Wisp" type="enemy" x="39" y="2508" width="32" height="32"/>
   <object id="73" name="Wisp" type="enemy" x="87" y="2240" width="32" height="32"/>
-  <object id="74" name="Wisp" type="enemy" x="243" y="2308" width="32" height="32"/>
+  <object id="74" name="Wisp" type="enemy" x="236" y="2352" width="32" height="32"/>
   <object id="75" name="Slime" type="enemy" x="304" y="2028" width="32" height="32"/>
   <object id="76" name="Slime" type="enemy" x="424" y="2016" width="32" height="32"/>
   <object id="77" name="Slime" type="enemy" x="372" y="1660" width="32" height="32"/>
@@ -814,6 +814,22 @@
   <object id="140" name="Snake" type="enemy" x="124" y="952" width="32" height="32"/>
   <object id="141" name="Snake" type="enemy" x="632" y="932" width="32" height="32"/>
   <object id="142" name="Demon" type="enemy" x="508" y="956" width="32" height="32"/>
-  <object id="144" name="Demon" type="enemy" x="56" y="252" width="32" height="32"/>
+  <object id="144" name="Demon" type="enemy" x="116" y="248" width="32" height="32"/>
+  <object id="145" name="food" type="itembox" x="176" y="3012" width="32" height="32">
+   <properties>
+    <property name="level" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="146" name="Bird" type="enemy" x="588" y="1552" width="32" height="32"/>
+  <object id="147" name="food" type="itembox" x="48" y="252" width="32" height="32">
+   <properties>
+    <property name="level" type="int" value="3"/>
+   </properties>
+  </object>
+  <object id="148" name="Wisp" type="enemy" x="256" y="532" width="32" height="32"/>
+  <object id="149" name="Wisp" type="enemy" x="672" y="176" width="32" height="32"/>
+  <object id="150" name="Wisp" type="enemy" x="704" y="128" width="32" height="32"/>
+  <object id="151" name="Wisp" type="enemy" x="800" y="128" width="32" height="32"/>
+  <object id="152" name="Wisp" type="enemy" x="832" y="176" width="32" height="32"/>
  </objectgroup>
 </map>
