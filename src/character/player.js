@@ -353,6 +353,8 @@ phina.define("qft.Player", {
         //食べ物
         if (item.food) {
             this.hp += item.power;
+            app.playSE("recovery");
+            if (this.hp > 100) this.hp = 100;
         }
         //鍵
         if (item.key) {
