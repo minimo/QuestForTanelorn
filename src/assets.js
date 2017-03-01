@@ -49,7 +49,6 @@ phina.define("qft.Assets", {
                             "hit":        "assets/sound/sen_ka_katana_sasu01.mp3",
                             "damage":     "assets/sound/se_maoudamashii_battle12.mp3",
                             "arrowstick": "assets/sound/sen_ka_ya03.mp3",
-                            "bgm1":       "assets/sound/DS-ba01m.mp3",
                             "stageclear": "assets/sound/DS-030m.mp3",
                             "gameover":   "assets/sound/gameover3.mp3",
                             "getkeyitem": "assets/sound/se_maoudamashii_onepoint23.mp3",
@@ -57,6 +56,7 @@ phina.define("qft.Assets", {
                             "select":     "assets/sound/se_maoudamashii_system45.mp3",
                             "getitem":    "assets/sound/ata_a49.mp3", 
                             "recovery":   "assets/sound/se_maoudamashii_magical01.mp3",
+                            "bgm1":       "assets/sound/DS-ba01m.mp3",
                         },
                         font: {
                             "UbuntuMono": "assets/font/UbuntuMono-Bold.ttf",
@@ -74,6 +74,15 @@ phina.define("qft.Assets", {
                         },
                         tmx: {
                             "stage2": "assets/map/stage2.tmx",
+                        },
+                    };
+                case "stage3":
+                    return {
+                        sound: {
+                            "bgm3": "assets/sound/DS-076m.mp3",
+                        },
+                        tmx: {
+                            "stage3": "assets/map/stage3.tmx",
                         },
                     };
                 default:
