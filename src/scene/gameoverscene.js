@@ -94,7 +94,6 @@ phina.define("qft.GameOverScene", {
                 } else {
                     app.playBGM("openingbgm");
                     app.replaceScene(qft.TitleScene());
-                    this.exit();
                 }
             }
         }

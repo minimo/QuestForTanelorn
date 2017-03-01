@@ -47,7 +47,7 @@ phina.define("qft.EndingScene", {
             .addChildTo(this)
             .setPosition(SC_W*0.5, SC_H*0.5);
 
-        phina.display.Label({text: "Push button to restart.", fontSize: 20}.$safe(labelParam))
+        phina.display.Label({text: "Push button to title.", fontSize: 20}.$safe(labelParam))
             .addChildTo(this)
             .setPosition(SC_W*0.5, SC_H*0.8);
 
@@ -60,8 +60,8 @@ phina.define("qft.EndingScene", {
         var ct = app.controller;
         if (this.time > 120) {
             if (ct.ok || ct.cancel) {
-                this.parentScene.flare('continue');
-                this.exit();
+                app.playBGM("openingbgm");
+                app.replaceScene(qft.TitleScene());
             }
         }
         this.time++;
