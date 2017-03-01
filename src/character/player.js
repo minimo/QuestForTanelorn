@@ -344,11 +344,13 @@ phina.define("qft.Player", {
             this.items.push(this.equip.weapon);
             //武器変更
             this.setWeapon(item.kind);
+            app.playSE("getitem");
             return;
         }
         //装備品
         if (item.equip) {
             this.items.push(item.kind);
+            app.playSE("getitem");
         }
         //食べ物
         if (item.food) {
