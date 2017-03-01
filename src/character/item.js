@@ -35,6 +35,8 @@ phina.define("qft.Item", {
         this.superInit(parentScene, {width: 10, height: 10});
 
         //アイテム種別
+        this.level = 0;
+        if (options.properties) this.level = options.properties.level || 0;
         switch (options.name) {
             case "shortsword":
                 this.kind = ITEM_SHORTSWORD;
@@ -56,6 +58,9 @@ phina.define("qft.Item", {
                 break;
             case "key":
                 this.kind = ITEM_KEY;
+                break;
+            case "food":
+                this.kind = ITEM_MEAT + this.level;
                 break;
         }
 
@@ -230,6 +235,50 @@ phina.define("qft.ItemInfo", {
                         type: "item",
                         item: true,
                         point: 5000,
+                    };
+                case ITEM_ORB:
+                    return {
+                        name: "ORB",
+                        type: "item",
+                        item: true,
+                        point: 5000,
+                    };
+                case ITEM_STONE:
+                    return {
+                        name: "STONE",
+                        type: "item",
+                        item: true,
+                        point: 5000,
+                    };
+                case ITEM_JEWEL:
+                case ITEM_JEWELBOX:
+                case ITEM_MEAT:
+                    return {
+                        name: "MEAT",
+                        type: "food",
+                        food: true,
+                        power: 30,
+                    };
+                case ITEM_APPLE:
+                    return {
+                        name: "MEAT",
+                        type: "food",
+                        food: true,
+                        power: 20,
+                    };
+                case ITEM_HARB:
+                    return {
+                        name: "MEAT",
+                        type: "food",
+                        food: true,
+                        power: 50,
+                    };
+                case ITEM_POTION:
+                    return {
+                        name: "MEAT",
+                        type: "food",
+                        food: true,
+                        power: 100,
                     };
                 default:
                     return {};

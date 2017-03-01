@@ -85,7 +85,13 @@ phina.define("qft.ItemBox", {
             this.tweener.clear()
                 .wait(10)
                 .call(function() {
-                    var i = this.parentScene.spawnItem(this.x, this.y, {name: this.name});
+                    var options = {
+                        name: this.name,
+                        properties: {
+                            level: this.level
+                        }
+                    };
+                    var i = this.parentScene.spawnItem(this.x, this.y, options);
                     i.vy = -5;
                 }.bind(this))
         }
