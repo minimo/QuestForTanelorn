@@ -808,7 +808,7 @@
    </properties>
   </object>
   <object id="127" name="down" type="check" x="752" y="668" width="32" height="32"/>
-  <object id="128" name="up" type="check" x="760" y="916" width="32" height="32"/>
+  <object id="128" name="in" type="check" x="760" y="916" width="32" height="32"/>
   <object id="138" name="Slime" type="enemy" x="600" y="636" width="32" height="32"/>
   <object id="139" name="Snake" type="enemy" x="412" y="956" width="32" height="32"/>
   <object id="140" name="Snake" type="enemy" x="124" y="952" width="32" height="32"/>
