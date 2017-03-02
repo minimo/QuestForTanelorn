@@ -205,16 +205,6 @@ phina.define("qft.MapObject.CheckIcon", {
         this.frame["out"] = [11, 10, 9];
         this.index = 0;
     },
-
-    open: function() {
-        if (this.isLock) return;
-        this.setAnimation("open");
-    },
-
-    close: function() {
-        if (this.isLock) return;
-        this.setAnimation("close");
-    },
 });
 
 //メッセージ表示
