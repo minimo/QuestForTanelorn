@@ -51,14 +51,21 @@ phina.define("qft.TitleScene", {
         this.fg.tweener.setUpdateType('fps');
         this.fg.tweener.clear().fadeOut(15);
 
+        this.on('resume', function() {
+            this.time = 0;
+        });
+
         this.time = 0;
     },
     
     update: function(app) {
         if (this.time > 15) {
             var ct = app.controller;
-            if (ct.ok || ct.cancel || app.mouse.getPointing()) {
+            if (ct.ok || app.mouse.getPointing()) {
                 app.replaceScene(qft.MainScene());
+            }
+            if (ct.cancel) {
+                app.pushScene(qft.ConfigScene(this));
             }
         }
         if (this.time > 30 * 120) {
