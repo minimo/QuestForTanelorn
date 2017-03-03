@@ -33,6 +33,8 @@ phina.define("qft.ConfigScene", {
         this.scroll.alpha = 0;
         this.scroll.tweener.clear().fadeIn(500);
 
+        this.menuBase = phina.display.DisplayElement().addChildTo(this.scroll);
+
         var labelParam = {
             fill: "white",
             stroke: "black",
@@ -43,15 +45,15 @@ phina.define("qft.ConfigScene", {
             baseline: "middle",
             fontSize: 70,
         };
-        this.textLabel = phina.display.Label({text: "Menu", fontSize: 30}.$safe(labelParam))
-            .addChildTo(this.scroll)
+        this.textLabel = phina.display.Label({text: "Menu", fontSize: 20}.$safe(labelParam))
+            .addChildTo(this.menuBase)
             .setPosition(0, -SC_H*0.3);
 
         this.menu = ["Configuration","Practice","Exit"];
         this.menuText = [];
         for (var i = 0; i < this.menu.length; i++) {
             this.menuText[i] = phina.display.Label({text: this.menu[i], fontSize: 40}.$safe(labelParam))
-                .addChildTo(this.scroll)
+                .addChildTo(this.menuBase)
                 .setPosition(0, -SC_H*0.15+SC_H*0.15*i)
                 .setScale(0.7);
         }
@@ -61,6 +63,10 @@ phina.define("qft.ConfigScene", {
         this.menuText[0].setScale(1);
 
         this.time = 0;
+
+        this.on('resume', function() {
+            this.menuBase.tweener.clear().fadeIn(500);
+        });
     },
 
     update: function() {
@@ -80,26 +86,141 @@ phina.define("qft.ConfigScene", {
                 this.time = 10;
                 app.playSE("select");
             }
-            if (ct.ok || app.mouse.getPointing()) {
-                this.bg.tweener.clear().fadeOut(500);
-                this.scroll.tweener.clear()
-                    .fadeOut(500)
-                    .call(function() {
-                        this.exit();
-                    }.bind(this));
+
+            //決定
+            if (ct.ok) {
+                if (this.select == 1) {
+                    this.menuBase.tweener.clear()
+                        .fadeOut(500)
+                        .call(function() {
+                            app.pushScene(qft.ConfigScene_Practice());
+                        });
+                }
+                if (this.select == 2) this.exitMenu();
                 this.time = 0;
             }
+
+            //キャンセル        
             if (ct.cancel) {
-                this.bg.tweener.clear().fadeOut(500);
-                this.scroll.tweener.clear()
-                    .fadeOut(500)
-                    .call(function() {
-                        this.exit();
-                    }.bind(this));
+                this.exitMenu();
                 this.time = 0;
             }
         }
         this.time++;
+    },
+
+    exitMenu: function() {
+        this.bg.tweener.clear().fadeOut(500);
+        this.scroll.tweener.clear()
+            .fadeOut(500)
+            .call(function() {
+                this.exit();
+            }.bind(this));
+    }
+});
+
+phina.define("qft.ConfigScene_Practice", {
+    superClass: "phina.display.DisplayScene",
+
+    init: function(currentScene) {
+        this.superInit({width: SC_W, height: SC_H});
+        this.currentScene = currentScene;
+
+        this.menuBase = phina.display.DisplayElement().addChildTo(this);
+        this.menuBase.alpha = 0;
+        this.menuBase.tweener.clear().fadeIn(500);
+
+        var labelParam = {
+            fill: "white",
+            stroke: "black",
+            strokeWidth: 5,
+
+            fontFamily: "titlefont1",
+            align: "center",
+            baseline: "middle",
+            fontSize: 70,
+        };
+        this.textLabel1 = phina.display.Label({text: "Practice", fontSize: 20}.$safe(labelParam))
+            .addChildTo(this.menuBase)
+            .setPosition(SC_W*0.5, SC_H*0.2);
+        this.textLabel2 = phina.display.Label({text: "Stage select", fontSize: 20}.$safe(labelParam))
+            .addChildTo(this.menuBase)
+            .setPosition(SC_W*0.5, SC_H*0.3);
+
+        this.menu = ["1", "2", "3", "4", "5", "6", "7"];
+        this.menuText = [];
+        for (var i = 0; i < this.menu.length; i++) {
+            this.menuText[i] = phina.display.Label({text: this.menu[i], fontSize: 40}.$safe(labelParam))
+                .addChildTo(this.menuBase)
+                .setPosition(SC_W*0.5+(SC_W*0.1*i)-(SC_W*0.1*(this.menu.length-1)/2), SC_H*0.5)
+                .setScale(0.7);
+        }
+
+        this.exitText = phina.display.Label({text: "Exit", fontSize: 40}.$safe(labelParam))
+            .addChildTo(this.menuBase)
+            .setPosition(SC_W*0.5, SC_H*0.7)
+            .setScale(0.7);
+
+        this.select = 0;
+        this.selectMax = this.menu.length;
+        this.menuText[0].setScale(1);
+
+        this.vselect = 0;
+
+        this.time = 0;
+    },
+
+    update: function() {
+        if (this.time > 30) {
+            var ct = app.controller;
+            if (ct.right && this.select < this.selectMax-1 && this.vselect == 0) {
+                this.menuText[this.select].tweener.clear().to({scaleX: 0.7, scaleY: 0.7}, 500, "easeOutBounce");
+                this.select++;
+                this.menuText[this.select].tweener.clear().to({scaleX: 1.0, scaleY: 1.0}, 500, "easeOutBounce");
+                app.playSE("select");
+                this.time = 25;
+            }
+            if (ct.left && this.select > 0  && this.vselect == 0) {
+                this.menuText[this.select].tweener.clear().to({scaleX: 0.7, scaleY: 0.7}, 500, "easeOutBounce");
+                this.select--;
+                this.menuText[this.select].tweener.clear().to({scaleX: 1.0, scaleY: 1.0}, 500, "easeOutBounce");
+                app.playSE("select");
+                this.time = 25;
+            }
+            if (ct.down && this.vselect == 0) {
+                this.vselect++;
+                this.menuText[this.select].tweener.clear().to({scaleX: 0.7, scaleY: 0.7}, 500, "easeOutBounce");
+                this.exitText.tweener.clear().to({scaleX: 1.0, scaleY: 1.0}, 500, "easeOutBounce");
+                app.playSE("select");
+                this.time = 25;
+            }
+            if (ct.up && this.vselect == 1) {
+                this.vselect--;
+                this.menuText[this.select].tweener.clear().to({scaleX: 1.0, scaleY: 1.0}, 500, "easeOutBounce");
+                this.exitText.tweener.clear().to({scaleX: 0.7, scaleY: 0.7}, 500, "easeOutBounce");
+                app.playSE("select");
+                this.time = 25;
+            }
+
+            if (ct.ok || app.mouse.getPointing()) {
+                if (this.vselect == 1) {
+                    this.exitMenu();
+                }
+                this.time = 0;
+            }
+            if (ct.cancel) {
+                this.exitMenu();
+                this.time = 0;
+            }
+        }
+        this.time++;
+    },
+    exitMenu: function() {
+        this.menuBase.tweener.clear()
+            .fadeOut(500)
+            .call(function() {
+                this.exit();
+            }.bind(this));
     },
 });
 
