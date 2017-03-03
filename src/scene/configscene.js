@@ -90,18 +90,23 @@ phina.define("qft.ConfigScene", {
             //決定
             if (ct.ok) {
                 if (this.select == 1) {
+                    app.playSE("ok");
                     this.menuBase.tweener.clear()
                         .fadeOut(500)
                         .call(function() {
                             app.pushScene(qft.ConfigScene_Practice());
                         });
                 }
-                if (this.select == 2) this.exitMenu();
+                if (this.select == 2) {
+                    app.playSE("cancel");
+                    this.exitMenu();
+                }
                 this.time = 0;
             }
 
             //キャンセル        
             if (ct.cancel) {
+                app.playSE("cancel");
                 this.exitMenu();
                 this.time = 0;
             }
@@ -203,18 +208,29 @@ phina.define("qft.ConfigScene_Practice", {
             }
 
             if (ct.ok || app.mouse.getPointing()) {
+                if (this.vselect == 0) {
+                    if (this.select == 0) {
+                        app.pushScene(qft.MainScene({startStage: 1, practice: true}));
+                    } else {
+                        app.pushScene(qft.PracticeMode(this.select+1));
+                    }
+                    app.stopBGM();
+                }
                 if (this.vselect == 1) {
+                    app.playSE("cancel");
                     this.exitMenu();
                 }
                 this.time = 0;
             }
             if (ct.cancel) {
+                app.playSE("cancel");
                 this.exitMenu();
                 this.time = 0;
             }
         }
         this.time++;
     },
+
     exitMenu: function() {
         this.menuBase.tweener.clear()
             .fadeOut(500)

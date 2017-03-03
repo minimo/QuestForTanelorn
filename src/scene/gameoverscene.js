@@ -92,8 +92,8 @@ phina.define("qft.GameOverScene", {
                     this.parentScene.flare('continue');
                     this.exit();
                 } else {
-                    app.playBGM("openingbgm");
-                    app.replaceScene(qft.TitleScene());
+                    this.parentScene.flare('exitgame');
+                    this.exit();
                 }
             }
         }

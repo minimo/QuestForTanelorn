@@ -34,9 +34,14 @@ phina.define("qft.MainScene", {
     limitWidth: false,
     limitHeight: true,
 
-    init: function(startStage) {
+    init: function(options) {
         this.superInit({width: SC_W, height: SC_H});
-        this.stageNumber = startStage || 1;
+        options = (options || {}).$safe({
+            startStage: 1,
+            practice: false,
+        })
+        this.stageNumber = options.startStage || 1;
+        this.practice = options.practice;
 
         //バックグラウンド
         var param = {
@@ -117,6 +122,16 @@ phina.define("qft.MainScene", {
         //コンティニュー
         this.on('continue', function(e) {
             this.restart();
+        });
+
+        //ゲーム終了
+        this.on('exitgame', function(e) {
+            app.playBGM("openingbgm");
+            if (this.practice) {
+                this.exit();
+            } else {
+                app.replaceScene(qft.TitleScene());
+            }
         });
 
         //メッセージ表示

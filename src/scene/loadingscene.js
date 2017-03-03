@@ -10,8 +10,8 @@ phina.define("qft.LoadingScene", {
     superClass: "phina.display.DisplayScene",
 
     init: function(options) {
-        options = (options||{}).$safe({
-            asset: options.assets,
+        options = (options || {}).$safe({
+            assets: null,
             width: SC_W,
             height: SC_H,
             lie: false,
@@ -34,8 +34,14 @@ phina.define("qft.LoadingScene", {
 
         //ロードする物が無い場合スキップ
         this.forceExit = false;
-        var asset = options.asset;
-        if (!asset.$has("sound") && !asset.$has("image") && !asset.$has("font") && !asset.$has("spritesheet") && !asset.$has("script")) {
+        var assets = options.assets;
+        if (!assets.$has("sound") &&
+            !assets.$has("image") &&
+            !assets.$has("font") &&
+            !assets.$has("spritesheet") &&
+            !assets.$has("script") &&
+            !assets.$has("tmx")) {
+
             this.forceExit = true;
             return;
         }
@@ -98,7 +104,7 @@ phina.define("qft.LoadingScene", {
             }
         }.bind(this);
 
-        loader.load(options.asset);
+        loader.load(options.assets);
     },
     update: function() {
         if (this.forceExit) this.exit();

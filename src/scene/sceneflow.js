@@ -19,7 +19,7 @@ phina.define("qft.SceneFlow", {
             },{
                 label: "opening",
                 className: "qft.OpeningScene",
-                next: "main",
+                next: "title",
             },{
                 label: "title",
                 className: "qft.TitleScene",
@@ -34,6 +34,32 @@ phina.define("qft.SceneFlow", {
                 label: "ending",
                 className: "qft.EndingScene",
                 next: "main",
+            }],
+        });
+    }
+});
+
+phina.define("qft.PracticeMode", {
+    superClass: "phina.game.ManagerScene",
+
+    init: function(stageNumber) {
+        var stage = "stage"+stageNumber;
+        this.superInit({
+            startLabel: stage,
+            scenes: [{
+                label: stage,
+                className: "qft.LoadingScene",
+                arguments: {
+                    assets: qft.Assets.get({assetType: stage}),
+                },
+                nextLabel: stage+"main",
+            },{
+                label: stage+"main",
+                className: "qft.MainScene",
+                arguments: {
+                    startStage: stageNumber,
+                    practice: true,
+                },
             }],
         });
     }
