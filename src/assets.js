@@ -7,9 +7,12 @@
 
 phina.define("qft.Assets", {
     _static: {
-        loadedAssets: [],
+        loaded: [],
+        isLoaded: function(assetType) {
+            return qft.Assets.loaded[assetType]? true: false;
+        },
         get: function(options) {
-            qft.Assets.loadedAssets.push(options.assetType);
+            qft.Assets.loaded.push(options.assetType);
             switch (options.assetType) {
                 case "splash":
                     return {
@@ -48,6 +51,8 @@ phina.define("qft.Assets", {
                         },
                         sound: {
                             "click":      "assets/sound/se_maoudamashii_system44.mp3",
+                            "ok":         "assets/sound/se_maoudamashii_system36.mp3",
+                            "cancel":     "assets/sound/se_maoudamashii_system43.mp3",
                             "attack":     "assets/sound/sen_ka_katana_sasinuku01.mp3",
                             "hit":        "assets/sound/sen_ka_katana_sasu01.mp3",
                             "damage":     "assets/sound/se_maoudamashii_battle12.mp3",
@@ -57,7 +62,7 @@ phina.define("qft.Assets", {
                             "getkeyitem": "assets/sound/se_maoudamashii_onepoint23.mp3",
                             "bomb":       "assets/sound/sen_ge_taihou03.mp3",
                             "select":     "assets/sound/se_maoudamashii_system45.mp3",
-                            "getitem":    "assets/sound/ata_a49.mp3", 
+                            "getitem":    "assets/sound/ata_a49.mp3",
                             "recovery":   "assets/sound/se_maoudamashii_magical01.mp3",
                             "bgm1":       "assets/sound/DS-ba01m.mp3",
                         },
