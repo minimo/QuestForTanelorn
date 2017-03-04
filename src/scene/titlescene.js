@@ -62,14 +62,14 @@ phina.define("qft.TitleScene", {
         if (this.time > 15) {
             var ct = app.controller;
             if (ct.ok || app.mouse.getPointing()) {
-                app.replaceScene(qft.MainScene());
+                this.exit("main");
             }
             if (ct.cancel) {
                 app.pushScene(qft.ConfigScene(this));
             }
         }
         if (this.time > 30 * 120) {
-            app.replaceScene(qft.OpeningScene());
+            this.exit("opening");
         }
         this.time++;
     },
