@@ -8,7 +8,7 @@
 
 phina.define("qft.TitleScene", {
     superClass: "phina.display.DisplayScene",
-    
+
     init: function() {
         this.superInit({width: SC_W, height: SC_H});
 
@@ -57,7 +57,7 @@ phina.define("qft.TitleScene", {
 
         this.time = 0;
     },
-    
+
     update: function(app) {
         if (this.time > 10) {
             var ct = app.controller;

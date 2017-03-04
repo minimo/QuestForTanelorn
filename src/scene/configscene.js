@@ -8,9 +8,8 @@
 phina.define("qft.ConfigScene", {
     superClass: "phina.display.DisplayScene",
 
-    init: function(currentScene) {
+    init: function() {
         this.superInit({width: SC_W, height: SC_H});
-        this.currentScene = currentScene;
 
         //バックグラウンド
         var param = {
@@ -127,9 +126,8 @@ phina.define("qft.ConfigScene", {
 phina.define("qft.ConfigScene_Practice", {
     superClass: "phina.display.DisplayScene",
 
-    init: function(currentScene) {
+    init: function() {
         this.superInit({width: SC_W, height: SC_H});
-        this.currentScene = currentScene;
 
         this.menuBase = phina.display.DisplayElement().addChildTo(this);
         this.menuBase.alpha = 0;
@@ -209,11 +207,7 @@ phina.define("qft.ConfigScene_Practice", {
 
             if (ct.ok || app.mouse.getPointing()) {
                 if (this.vselect == 0) {
-                    if (this.select == 0) {
-                        app.pushScene(qft.MainScene({startStage: 1, practice: true}));
-                    } else {
-                        app.pushScene(qft.PracticeMode(this.select+1));
-                    }
+                    this.exit("stage"+(this.select+1)+"practice");
                     app.stopBGM();
                 }
                 if (this.vselect == 1) {
