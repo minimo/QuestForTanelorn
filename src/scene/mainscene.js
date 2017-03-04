@@ -657,7 +657,7 @@ phina.define("qft.MainScene", {
     exitGame: function() {
         app.playBGM("openingbgm");
         if (this.practice) {
-            this.exit();
+            app.popScene();
         } else {
             this.exit("title");
         }

@@ -47,16 +47,16 @@ phina.define("qft.PracticeMode", {
     init: function(stageNumber) {
         var stage = "stage"+stageNumber;
         this.superInit({
-            startLabel: stage,
+            startLabel: "loading",
             scenes: [{
-                label: stage,
+                label: "loading",
                 className: "qft.LoadingScene",
                 arguments: {
-                    assets: qft.Assets.get({assetType: stage}),
+                    assets: qft.Assets.get({assetType: "stage"+stageNumber}),
                 },
-                nextLabel: stage+"main",
+                nextLabel: "practicemain",
             },{
-                label: stage+"main",
+                label: "practicemain",
                 className: "qft.MainScene",
                 arguments: {
                     startStage: stageNumber,
