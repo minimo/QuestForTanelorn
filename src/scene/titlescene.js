@@ -59,7 +59,7 @@ phina.define("qft.TitleScene", {
     },
     
     update: function(app) {
-        if (this.time > 15) {
+        if (this.time > 10) {
             var ct = app.controller;
             if (ct.ok || app.mouse.getPointing()) {
                 this.exit("main");

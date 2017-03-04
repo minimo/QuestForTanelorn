@@ -75,7 +75,7 @@ phina.define("qft.GameOverScene", {
         if (this.time == 90) {
             this.dispContinue();
         }
-        if (this.time > 120) {
+        if (this.time > 105) {
             if (ct.left && this.select == 1) {
                 this.select = 0;
                 this.yes.tweener.clear().to({scaleX: 1, scaleY: 1}, 500, "easeOutBounce");

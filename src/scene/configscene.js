@@ -176,35 +176,35 @@ phina.define("qft.ConfigScene_Practice", {
     },
 
     update: function() {
-        if (this.time > 30) {
+        if (this.time > 15) {
             var ct = app.controller;
             if (ct.right && this.select < this.selectMax-1 && this.vselect == 0) {
                 this.menuText[this.select].tweener.clear().to({scaleX: 0.7, scaleY: 0.7}, 500, "easeOutBounce");
                 this.select++;
                 this.menuText[this.select].tweener.clear().to({scaleX: 1.0, scaleY: 1.0}, 500, "easeOutBounce");
                 app.playSE("select");
-                this.time = 25;
+                this.time = 10;
             }
             if (ct.left && this.select > 0  && this.vselect == 0) {
                 this.menuText[this.select].tweener.clear().to({scaleX: 0.7, scaleY: 0.7}, 500, "easeOutBounce");
                 this.select--;
                 this.menuText[this.select].tweener.clear().to({scaleX: 1.0, scaleY: 1.0}, 500, "easeOutBounce");
                 app.playSE("select");
-                this.time = 25;
+                this.time = 10;
             }
             if (ct.down && this.vselect == 0) {
                 this.vselect++;
                 this.menuText[this.select].tweener.clear().to({scaleX: 0.7, scaleY: 0.7}, 500, "easeOutBounce");
                 this.exitText.tweener.clear().to({scaleX: 1.0, scaleY: 1.0}, 500, "easeOutBounce");
                 app.playSE("select");
-                this.time = 25;
+                this.time = 10;
             }
             if (ct.up && this.vselect == 1) {
                 this.vselect--;
                 this.menuText[this.select].tweener.clear().to({scaleX: 1.0, scaleY: 1.0}, 500, "easeOutBounce");
                 this.exitText.tweener.clear().to({scaleX: 0.7, scaleY: 0.7}, 500, "easeOutBounce");
                 app.playSE("select");
-                this.time = 25;
+                this.time = 10;
             }
 
             if (ct.ok || app.mouse.getPointing()) {
