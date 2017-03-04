@@ -125,13 +125,9 @@ phina.define("qft.MainScene", {
         });
 
         //ゲーム終了
+        this._exitGame = false;
         this.on('exitgame', function(e) {
-            app.playBGM("openingbgm");
-            if (this.practice) {
-                this.exit();
-            } else {
-                app.replaceScene(qft.TitleScene());
-            }
+            this._exitGame = true;
         });
 
         //メッセージ表示
@@ -174,6 +170,11 @@ phina.define("qft.MainScene", {
 
     update: function(app) {
         if (this.time == 15) this.player.isControl = true;
+
+        //ゲーム終了
+        if (this._exitGame) {
+            this.exitGame();
+        }
 
         var ct = app.controller;
         if (!this.isStageClear) {
@@ -652,4 +653,13 @@ phina.define("qft.MainScene", {
             this.time++;
         }
     },
+
+    exitGame: function() {
+        app.playBGM("openingbgm");
+        if (this.practice) {
+            this.exit();
+        } else {
+            this.exit("title");
+        }
+    }
 });
