@@ -12,7 +12,7 @@ phina.define("qft.Assets", {
             return qft.Assets.loaded[assetType]? true: false;
         },
         get: function(options) {
-            qft.Assets.loaded.push(options.assetType);
+            qft.Assets.loaded[options.assetType] = true;
             switch (options.assetType) {
                 case "splash":
                     return {

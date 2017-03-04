@@ -85,6 +85,12 @@ phina.define("qft.OpeningScene", {
             .setLoop(true);
 
         //基本アセットをロード
+        this.alreadyLoad = false;
+        if (qft.Assets.isLoaded("common")) {
+            //読込済みなのでスキップ
+            this.alreadyLoad = true;
+            return;
+        }
         var that = this;
         var assets = qft.Assets.get({assetType: "common"});
         this.loader = phina.extension.AssetLoaderEx().load(assets, function(){app.soundset.readAsset();});
@@ -105,7 +111,7 @@ phina.define("qft.OpeningScene", {
     },
 
     update: function() {
-        if (this.loader.loadcomplete) {
+        if (this.alreadyLoad || this.loader && this.loader.loadcomplete) {
             var ct = app.controller;
             if (ct.ok || ct.cancel) this.exit();
             if (app.mouse.getPointing()) this.exit();
