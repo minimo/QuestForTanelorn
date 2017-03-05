@@ -61,7 +61,8 @@ phina.define("qft.EndingScene", {
         if (this.time > 120) {
             if (ct.ok || ct.cancel) {
                 app.playBGM("openingbgm");
-                app.replaceScene(qft.TitleScene());
+                this.parentScene.flare('exitgame');
+                this.exit();
             }
         }
         this.time++;
