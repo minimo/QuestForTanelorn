@@ -89,7 +89,7 @@ phina.define("qft.Enemy.Bird", {
         }
 
         //落し物
-        if (this.time % 30 == 0) {
+        if (this.time % 90 == 0) {
             this.parentScene.spawnEnemy(this.x, this.y, "BirdBomb", {});
         }
 
