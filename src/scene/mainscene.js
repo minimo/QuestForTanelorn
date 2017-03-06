@@ -645,7 +645,11 @@ phina.define("qft.MainScene", {
                 this.text = "Push button to next stage.";
                 var ct = app.controller;
                 if (ct.ok || ct.cancel) {
-                    that.flare('nextstage');
+                    if (that.practice) {
+                        that._exitGame = true;
+                    } else {
+                        that.flare('nextstage');
+                    }
                     this.remove();
                 }
             }
