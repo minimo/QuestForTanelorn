@@ -208,7 +208,11 @@ phina.define("qft.ConfigScene_Practice", {
             if (ct.ok || app.mouse.getPointing()) {
                 if (this.vselect == 0) {
                     var stage = this.select+1;
-                    app.pushScene(qft.MainScene({startStage: stage, practice: true}));
+                    if (stage == 1) {
+                        app.pushScene(qft.MainScene({startStage: stage, practice: true}));
+                    } else {
+                        app.pushScene(qft.PracticePlatform({assetType: "stage"+stage ,startStage: stage}));
+                    }
                     app.stopBGM();
                 }
                 if (this.vselect == 1) {

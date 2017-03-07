@@ -12,7 +12,7 @@ phina.define("qft.MainScene", {
     stageNumber: 1,
 
     //最大ステージ番号
-    stageNumberMax: 2,
+    stageNumberMax: 3,
 
     //残り時間（フレーム単位）
     timeLimit: 120,
@@ -368,7 +368,7 @@ phina.define("qft.MainScene", {
         }
 
         //プレイヤー現在装備表示
-        this.weaponBase = phina.display.DisplayElement().addChildTo(this).setPosition(10, 36);
+        this.weaponBase = phina.display.DisplayElement().addChildTo(this).setPosition(16, 36);
         var param = {
             width: 26,
             height: 26,
