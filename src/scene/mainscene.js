@@ -366,6 +366,23 @@ phina.define("qft.MainScene", {
         tl.update = function() {
             this.text = "TIME:"+Math.floor(that.timeLimit/30);
         }
+
+        //プレイヤー現在装備表示
+        this.weaponBase = phina.display.DisplayElement().addChildTo(this).setPosition(10, 36);
+        var param = {
+            width: 26,
+            height: 26,
+            fill: "rgba(0,0,0,0.0)",
+            stroke: "yellow",
+            strokeWidth: 2,
+            backgroundColor: 'transparent',
+        };
+        phina.display.RectangleShape(param).addChildTo(this.weaponBase).setPosition(0, 0);
+        this.weapon = phina.display.Sprite("item", 24, 24).addChildTo(this.weaponBase).setPosition(0, 0);
+        var that = this;
+        this.weapon.update = function() {
+            this.setFrameIndex(that.player.equip.weapon);
+        }
     },
 
     //マップ情報の初期化
