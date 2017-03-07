@@ -94,7 +94,7 @@ phina.define("qft.MainScene", {
             var key = phina.display.DisplayElement()
                 .setPosition(x, y)
                 .addChildTo(this.baseLayer);
-            key.tweener.clear().moveTo(15+(this.player.keys.length-1)*24, 35, 500);
+            key.tweener.clear().moveTo(15+(this.player.keys.length-1)*24, 72, 500);
             var sp = phina.display.Sprite("item", 24, 24)
                 .setFrameIndex(ITEM_KEY)
                 .addChildTo(key);
@@ -381,7 +381,8 @@ phina.define("qft.MainScene", {
         this.weapon = phina.display.Sprite("item", 24, 24).addChildTo(this.weaponBase).setPosition(0, 0);
         var that = this;
         this.weapon.update = function() {
-            this.setFrameIndex(that.player.equip.weapon);
+            var index = that.player.equip.weapon;
+            this.setFrameIndex(index);
         }
     },
 

@@ -33,6 +33,9 @@ phina.define("qft.Player", {
         defense: null,
     },
 
+    //所持武器リスト
+    weapons: null,
+
     //アイテム所持最大数
     maxItem: 10,
 
@@ -96,6 +99,12 @@ phina.define("qft.Player", {
             weapon: 0,
             defense: null,
         };
+        //装備中武器
+        this.equipWeapon = 0;
+
+        //所持武器リスト
+        this.weapons = [];
+        this.weapons[ITEM_SHORTSWORD] = 1;
 
         //はしご判定用
         this.ladderCollision = phina.display.RectangleShape({width: 16, height: 20});
@@ -257,6 +266,10 @@ phina.define("qft.Player", {
                 this.weaponAttack();
                 app.playSE("attack");
             }
+
+            //武器の変更
+            if (ct.change) {
+            }
         }
 
         //アニメーション変更を検知
@@ -340,8 +353,10 @@ phina.define("qft.Player", {
     getItem: function(item) {
         //武器
         if (item.weapon) {
-            //現在装備品をアイテムリスト送り
-            this.items.push(this.equip.weapon);
+            //持って無い場合はリストに追加
+            if (this.weapons[item.kind]) {
+                this.weapons.push(item.kind);
+            }
             //武器変更
             this.setWeapon(item.kind);
             app.playSE("getitem");
