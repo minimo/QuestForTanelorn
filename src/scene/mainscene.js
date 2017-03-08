@@ -414,6 +414,12 @@ phina.define("qft.MainScene", {
                 var mapLayer = this.createMap(tmx);
                 this.switchMap(mapLayer);
                 break;
+            case 4:
+                this.stageController = qft.Stage4(this);
+                var tmx = phina.asset.AssetManager.get('tmx', "stage4");
+                var mapLayer = this.createMap(tmx);
+                this.switchMap(mapLayer);
+                break;
         };
 
         //ステージクリアフラグクリア

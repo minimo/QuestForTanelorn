@@ -87,10 +87,19 @@ phina.define("qft.Assets", {
                 case "stage3":
                     return {
                         sound: {
-                            "bgm3": "assets/sound/DS-076m.mp3",
+                            "bgm3": "assets/sound/DS-041m.mp3",
                         },
                         tmx: {
                             "stage3": "assets/map/stage3.tmx",
+                        },
+                    };
+                case "stage4":
+                    return {
+                        sound: {
+                            "bgm4": "assets/sound/DS-076m.mp3",
+                        },
+                        tmx: {
+                            "stage4": "assets/map/stage4.tmx",
                         },
                     };
                 default:
