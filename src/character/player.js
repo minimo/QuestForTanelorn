@@ -40,10 +40,10 @@ phina.define("qft.Player", {
     maxItem: 10,
 
     //所持アイテム
-    items: [7, 8, 9, 10, 11],
+    items: null,
 
     //所持クリア条件キー
-    keys: [],
+    keys: null,
 
     //討伐モンスター数
     kill: 0,
@@ -94,17 +94,8 @@ phina.define("qft.Player", {
             });
         }
 
-        //装備
-        this.equip = {
-            weapon: 0,
-            defense: null,
-        };
-        //装備中武器
-        this.equipWeapon = 0;
-
-        //所持武器リスト
-        this.weapons = [];
-        this.weapons[ITEM_SHORTSWORD] = 1;
+        //プレイヤー情報の初期化
+        this.reset();
 
         //はしご判定用
         this.ladderCollision = phina.display.RectangleShape({width: 16, height: 20});
@@ -354,8 +345,8 @@ phina.define("qft.Player", {
         //武器
         if (item.weapon) {
             //持って無い場合はリストに追加
-            if (this.weapons[item.kind]) {
-                this.weapons.push(item.kind);
+            if (!this.weapons[item.kind]) {
+                this.weapons[item.kind] = 1;
             }
             //武器変更
             this.setWeapon(item.kind);
@@ -606,11 +597,21 @@ phina.define("qft.Player", {
         this.beforeAnimation = "";
         this.advanceTime = 6;
 
+        //装備
+        this.equip = {
+            weapon: 0,
+            defense: null,
+        };
+
+        //所持武器リスト
+        this.weapons = [];
+        this.weapons[ITEM_SHORTSWORD] = 1;
+
         //所持武器
         this.setWeapon(0);
 
         //所持アイテム
-        this.items = [7, 8, 9, 10, 11];
+        this.items = [];
 
         //所持クリア条件キー
         this.keys = [];
