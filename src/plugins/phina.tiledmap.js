@@ -194,7 +194,7 @@ phina.define("phina.asset.TiledMap", {
         };
         for (var i = 0; i < loadImage.length; i++) {
             //イメージのパスをマップと同じにする
-            assets.image[imageSource[i].image] = this.path+imageSource[i].image;
+            assets.image[loadImage[i].image] = this.path+loadImage[i].image;
         }
         if (loadImage.length) {
             var loader = phina.asset.AssetLoader();
@@ -292,6 +292,9 @@ phina.define("phina.asset.TiledMap", {
         //タイルセットからマップチップを取得
         var chip = this.tilesets.chips[index];
         var image = phina.asset.AssetManager.get('image', chip.image);
+        if (!image) {
+            console.log(chip.image);
+        }
         canvas.context.drawImage(
             image.domElement,
             chip.x + chip.margin, chip.y + chip.margin,
