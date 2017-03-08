@@ -427,6 +427,7 @@ phina.define("qft.MainScene", {
 
         //プレイヤー設定
         this.player.isControl = true;
+        this.player.muteki = false;
         this.player.alpha = 1.0;
     },
 
@@ -636,6 +637,7 @@ phina.define("qft.MainScene", {
 
         //プレイヤー所持キークリア
         this.player.keys = [];
+        this.player.muteki = true;
 
         //クリアBGM
         var bgmFinish = false;
