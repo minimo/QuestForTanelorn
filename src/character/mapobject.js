@@ -40,6 +40,7 @@ phina.define("qft.MapObject.Door", {
         this.id = options.id;
         this.isLock = options.properties.lock || false;
         this.name = options.name;
+        this.enterOffset = options.properties.enteroffset || 0;
 
         //ドア機能
         var properties = options.properties;
@@ -65,7 +66,7 @@ phina.define("qft.MapObject.Door", {
                     var next = this.findDoor(this.nextID);
                     if (!next) return;
                     this.enterPlayer();
-                    this.parentScene.warp(next.x, next.y+this.offset);
+                    this.parentScene.warp(next.x, next.y+next.offset);
                     this.tweener.clear()
                         .wait(120)
                         .call(function(){
@@ -119,6 +120,7 @@ phina.define("qft.MapObject.Door", {
 
     //プレイヤーが扉に入る
     enterPlayer: function() {
+        var enterOffset = this.enterOffset;
         var player = this.parentScene.player;
         player.alpha = 0;
         player.isControl = false;
@@ -127,7 +129,7 @@ phina.define("qft.MapObject.Door", {
             .addChildTo(this.parentScene.mapLayer.playerLayer);
         pl.setAnimation("up");
         pl.tweener.clear().setUpdateType('fps')
-            .moveTo(this.x, this.y+this.height/2-16, 15)
+            .moveTo(this.x, this.y+this.height/2-16+enterOffset, 15)
             .call(function() {
                 pl.animation = false;
             })

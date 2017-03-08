@@ -563,8 +563,7 @@ phina.define("qft.MainScene", {
         this.player.gravity = 0;
         this.player.vx = 0;
         this.player.tweener.clear()
-            .wait(30)
-            .fadeOut(15)
+            .wait(45)
             .call(function(){
                 this.ignoreCollision = true;
             }.bind(this.player))
@@ -573,9 +572,7 @@ phina.define("qft.MainScene", {
                 this.ignoreCollision = false;
                 this.gravity = 0.9;
             }.bind(this.player))
-            .wait(45)
-            .fadeIn(15)
-            .wait(30)
+            .wait(90)
             .call(function(){
                 this.isControl = true;
             }.bind(this.player));
