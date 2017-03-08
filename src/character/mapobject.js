@@ -247,6 +247,38 @@ phina.define("qft.MapObject.Message", {
     },
 });
 
+//ワープゲート
+phina.define("qft.MapObject.Gate", {
+    superClass: "qft.Character",
+
+    id: null,
+
+    //重力加速度
+    gravity: 0.0,
+
+    //アニメーション間隔
+    advanceTime: 3,
+
+    //地形無視
+    ignoreCollision: true,
+
+    //実行済みフラグ
+    already: false,
+
+    //ロックされているか
+    isLock: false,
+
+    init: function(parentScene, options) {
+        this.superInit(parentScene, {width: 36, height: 64});
+        this.$safe(options);
+
+        //スプライト
+        this.sprite = phina.display.Sprite("gate", 32, 32).addChildTo(this);
+        this.setAnimation("up");
+        this.advanceTime = 10;
+    },
+});
+
 //イベント  
 phina.define("qft.MapObject.Event", {
     superClass: "phina.display.DisplayElement",
