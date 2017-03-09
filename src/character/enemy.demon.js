@@ -65,7 +65,7 @@ phina.define("qft.Enemy.Demon", {
             //プレイヤーが近くにいたら攻撃
             if (look && !this.isJump && dis > 64 && dis < this.eyesight && this.stopTime == 0) {
                 //火を吐く
-                var b = this.parentScene.spawnEnemy(this.x, this.y, "Bullet");
+                var b = this.parentScene.spawnEnemy(this.x, this.y, "Bullet", {explode: true});
                 b.rotation = this.getPlayerAngle();
                 this.stopTime = 60;
             }

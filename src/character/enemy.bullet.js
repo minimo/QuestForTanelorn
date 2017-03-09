@@ -38,6 +38,9 @@ phina.define("qft.Enemy.Bullet", {
     //得点
     point: 0,
 
+    //爆発フラグ
+    explode: false,
+
     init: function(parentScene, options) {
         this.superInit(parentScene, {width: 20, height: 20});
         options = options || {};
@@ -51,8 +54,10 @@ phina.define("qft.Enemy.Bullet", {
         this.setAnimation(this.pattern);
 
         this.on('dead', function() {
-            this.parentScene.spawnEffect(this.x, this.y);
-            app.playSE("bomb");
+            if (this.explode) {
+                this.parentScene.spawnEffect(this.x, this.y);
+                app.playSE("bomb");
+            }
         });
     },
 
@@ -61,6 +66,7 @@ phina.define("qft.Enemy.Bullet", {
         this.vx = Math.cos(rad) * this.velocity;
         this.vy = Math.sin(rad) * this.velocity;
         this.velocity *= this.accel;
+        if (this.vx > 1) this.sprite.scaleX = 1; else this.sprite.scaleX = -1;
         if (this.time > this.lifespan) this.remove();
     },
 
@@ -73,8 +79,7 @@ phina.define("qft.Enemy.Bullet", {
     },
 
     hit: function() {
-        this.parentScene.spawnEffect(this.x, this.y);
         this.remove();
-        app.playSE("bomb");
+        this.flare('dead');
     },
 });

@@ -55,6 +55,11 @@ phina.define("qft.Enemy.FireBird", {
         this.speed = this.options.speed;
 
         this.returnTime = this.options.returnTime;
+
+        this.on('dead', function() {
+            this.parentScene.spawnEffect(this.x, this.y);
+            app.playSE("bomb");
+        });
     },
 
     update: function() {
@@ -74,13 +79,14 @@ phina.define("qft.Enemy.FireBird", {
         }
 
         //プレイヤーをみつけたら攻撃
-        if (this.isLookPlayer()) {
+        if (this.isLookPlayer() && this.getDistancePlayer() < 128) {
             if (this.time % 30 == 0) {
-                var b = this.parentScene.spawnEnemy(this.x, this.y, "Bullet", {pattern: "pattern2"});
+                var b = this.parentScene.spawnEnemy(this.x, this.y+6, "Bullet", {pattern: "pattern2", explode: true, velocity: 3});
                 b.rotation = this.getPlayerAngle();
             }
             this.speed = 0;
         } else {
+            this.speed = this.options.speed;
             this.returnTime -= 1;
         }
 
