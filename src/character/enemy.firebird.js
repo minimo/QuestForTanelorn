@@ -53,7 +53,7 @@ phina.define("qft.Enemy.FireBird", {
 
         this.direction = this.options.direction;
         this.speed = this.options.speed;
-
+        this.vertical = this.options.vertical;
         this.returnTime = this.options.returnTime;
 
         this.on('dead', function() {
@@ -65,22 +65,36 @@ phina.define("qft.Enemy.FireBird", {
     update: function() {
         if (this.isDead) return;
 
-        //方向決定
-        if (this.direction == 0) this.vx = this.speed;
-        if (this.direction == 180) this.vx = -this.speed;
+        var px, py;
+        if (this.vertical) {
+            //方向決定
+            if (this.direction == 0) this.vy = this.speed;
+            if (this.direction == 180) this.vy = -this.speed;
+            px = 0;
+            py = 12;
+            if (this.getDistancePlayer() < 256) {
+                if (this.x < this.parentScene.player.x) this.sprite.scaleX = 1; else this.sprite.scaleX = -1;
+            }
+        } else {
+            //方向決定
+            if (this.direction == 0) this.vx = this.speed;
+            if (this.direction == 180) this.vx = -this.speed;
+            px = 12;
+            py = 0;
+        }
 
         //壁に当たったら折り返し
-        if (this.checkMapCollision2(this.x-12, this.y, 5, 5)) {
+        if (this.checkMapCollision2(this.x-px, this.y-py, 5, 5)) {
             this.direction = 0;
             this.returnTime = this.options.returnTime;
-        } else if (this.checkMapCollision2(this.x+12, this.y, 5, 5)) {
+        } else if (this.checkMapCollision2(this.x+px, this.y+py, 5, 5)) {
             this.direction = 180;
             this.returnTime = this.options.returnTime;
         }
 
         //プレイヤーをみつけたら攻撃
         if (this.isLookPlayer() && this.getDistancePlayer() < 128) {
-            if (this.time % 30 == 0) {
+            if (this.time % 15 == 0) {
                 var b = this.parentScene.spawnEnemy(this.x, this.y+6, "Bullet", {pattern: "pattern2", explode: true, velocity: 3});
                 b.rotation = this.getPlayerAngle();
             }
