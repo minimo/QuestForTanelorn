@@ -576,7 +576,7 @@ phina.define("qft.MainScene", {
             .wait(90)
             .call(function(){
                 this.isControl = true;
-                this.muteki = true;
+                this.muteki = false;
             }.bind(this.player));
     },
 
