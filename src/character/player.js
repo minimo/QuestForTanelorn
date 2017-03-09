@@ -30,9 +30,6 @@ phina.define("qft.Player", {
     //装備中アイテム
     equip: null,
 
-    //所持武器リスト
-    weapons: null,
-
     //アイテム所持最大数
     maxItem: 10,
 
@@ -98,9 +95,11 @@ phina.define("qft.Player", {
         //はしご判定用
         this.ladderCollision = phina.display.RectangleShape({width: 16, height: 20});
 
+        //初期アニメーション設定
         this.setAnimation("walk");
         this.beforeAnimation = "";
 
+        //死亡時コールバック
         this.on('dead', function(e) {
             this.parentScene.flare('gameover');
         });
@@ -303,6 +302,7 @@ phina.define("qft.Player", {
         }
     },
 
+    //ダメージ処理
     damage: function(target) {
         if (this.mutekiTime > 0) return false;
         if (target.power == 0) return false;
@@ -327,6 +327,7 @@ phina.define("qft.Player", {
         return true;
     },
 
+    //死亡時処理
     dead: function() {
         this.hp = 0;
         this.setAnimation("dead");
@@ -345,16 +346,21 @@ phina.define("qft.Player", {
     getItem: function(item) {
         //武器
         if (item.weapon) {
-            //持って無い場合はリストに追加
-            var bring = this.equip.weapon.find(function(e, i, a) {
+            //既に持っている武器かチェック
+            var index = this.equip.weapon.findIndex(function(e, i, a) {
                 return e == item.kind;
             });
-            if (bring === null) {
+            if (index) {
+                //拾った武器を使用武器にする
+                for (var i = 0; i < index; i++) {
+                    this.switchWeapon();
+                }
+            } else {
+                //持って無い場合はリストに追加
                 this.equip.weapon.unshift(item.kind);
+                //武器変更
+                this.setWeapon(item.kind);
             }
-
-            //武器変更
-            this.setWeapon(item.kind);
             app.playSE("getitem");
             return;
         }
