@@ -71,6 +71,10 @@ phina.define("qft.Enemy", {
                 pl.damage(this);
             }
         });
+
+        this.on('dead', function() {
+            this.remove();
+        });
     },
 
     damage: function(target) {
@@ -97,10 +101,6 @@ phina.define("qft.Enemy", {
         app.playSE("hit");
         if (dir == 0) this.direction = 180; else this.direction = 0;
         return true;
-    },
-
-    ondead: function() {
-        this.remove();
     },
 
     //プレイヤーが見える位置にいるのか判定

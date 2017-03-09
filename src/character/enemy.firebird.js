@@ -1,6 +1,6 @@
 /*
- *  enemy.slime.js
- *  2016/12/31
+ *  enemy.firebird.js
+ *  2016/03/09
  *  @auther minimo  
  *  This Program is MIT license.
  */
