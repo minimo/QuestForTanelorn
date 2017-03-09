@@ -562,6 +562,7 @@ phina.define("qft.MainScene", {
         this.player.isControl = false;
         this.player.gravity = 0;
         this.player.vx = 0;
+        this.player.muteki = true;
         this.player.tweener.clear()
             .wait(45)
             .call(function(){
@@ -575,6 +576,7 @@ phina.define("qft.MainScene", {
             .wait(90)
             .call(function(){
                 this.isControl = true;
+                this.muteki = true;
             }.bind(this.player));
     },
 
