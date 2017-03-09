@@ -51,10 +51,11 @@ phina.define("qft.Enemy.FireBird", {
         this.advanceTime = 6;
         this.setupLifeGauge();
 
-        this.direction = this.options.direction;
-        this.speed = this.options.speed;
-        this.vertical = this.options.vertical;
-        this.returnTime = this.options.returnTime;
+        this.direction = this.options.direction || 0;
+        this.speed = this.options.speed || 2;
+        this.vertical = this.options.vertical || false;
+        this.returnTime = this.options.returnTime || 120;
+        this.bombInterval = this.options.bombInterval || 60;
 
         this.on('dead', function() {
             this.parentScene.spawnEffect(this.x, this.y);
@@ -102,6 +103,10 @@ phina.define("qft.Enemy.FireBird", {
         } else {
             this.speed = this.options.speed;
             this.returnTime -= 1;
+            //落し物
+            if (this.time % 90 == this.bombInterval) {
+                this.parentScene.spawnEnemy(this.x, this.y, "FireBirdBomb", {});
+            }
         }
 
         //一定時間過ぎたら折り返し
@@ -128,5 +133,52 @@ phina.define("qft.Enemy.FireBird", {
     },
 
     attack: function() {
+    },
+});
+
+//鳥の落し物
+phina.define("qft.Enemy.FireBirdBomb", {
+    superClass: "qft.Enemy",
+
+    //ヒットポイント
+    hp: 1,
+
+    //防御力
+    deffence: 10,
+
+    //攻撃力
+    power: 5,
+
+    init: function(parentScene, options) {
+        this.superInit(parentScene, {width: 5, height: 5});
+
+        //表示用スプライト
+        this.sprite = phina.display.Sprite("bullet", 24, 32).addChildTo(this).setFrameIndex(72);
+
+        this.setAnimation("normal");
+        this.advanceTime = 6;
+    },
+
+    update: function() {
+        if (this.onFloor) {
+            this.parentScene.spawnEffect(this.x, this.y);
+//            app.playSE("bomb");
+            this.remove();
+        }
+    },
+
+    setupAnimation: function() {
+        this.spcialAnimation = false;
+        this.frame = [];
+        this.frame["normal"] = [72, 73, 74, 73];
+        this.index = 0;
+    },
+
+    dropDead: function() {
+        this.isDead = true;
+        this.isDrop = true;
+        this.vx = 0;
+        this.vy = -10;
+        return this;
     },
 });

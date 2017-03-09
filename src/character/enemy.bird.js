@@ -51,10 +51,11 @@ phina.define("qft.Enemy.Bird", {
         this.advanceTime = 6;
         this.setupLifeGauge();
 
-        this.direction = this.options.direction;
-        this.speed = this.options.speed;
-        this.vertical = this.options.vertical;
-        this.returnTime = this.options.returnTime;
+        this.direction = this.options.direction || 0;
+        this.speed = this.options.speed || 2;
+        this.vertical = this.options.vertical || false;
+        this.returnTime = this.options.returnTime || 120;
+        this.bombInterval = this.options.bombInterval || 90;
     },
 
     update: function() {
@@ -103,7 +104,7 @@ phina.define("qft.Enemy.Bird", {
         }
 
         //落し物
-        if (this.time % 90 == 0) {
+        if (this.time % 90 == this.bombInterval) {
             this.parentScene.spawnEnemy(this.x, this.y, "BirdBomb", {});
         }
 
