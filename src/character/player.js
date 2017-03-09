@@ -28,10 +28,7 @@ phina.define("qft.Player", {
     numJumpMax: 1,
 
     //装備中アイテム
-    equip: {
-        weapon: 0,
-        defense: null,
-    },
+    equip: null,
 
     //所持武器リスト
     weapons: null,
@@ -259,7 +256,8 @@ phina.define("qft.Player", {
             }
 
             //武器の変更
-            if (ct.change) {
+            if (ct.change && !this.before.change) {
+                this.switchWeapon();
             }
         }
 
@@ -345,9 +343,13 @@ phina.define("qft.Player", {
         //武器
         if (item.weapon) {
             //持って無い場合はリストに追加
-            if (!this.weapons[item.kind]) {
-                this.weapons[item.kind] = 1;
+            var bring = this.equip.weapon.find(function(e, i, a) {
+                return e == item.kind;
+            });
+            if (bring === null) {
+                this.equip.weapon.unshift(item.kind);
             }
+
             //武器変更
             this.setWeapon(item.kind);
             app.playSE("getitem");
@@ -373,9 +375,19 @@ phina.define("qft.Player", {
         return this;
     },
 
+    //使用武器の変更
+    switchWeapon: function() {
+        //手持ちの武器が一個の場合は何もしない
+        if (this.equip.weapon.length < 2) return;
+
+        //配列の先頭から削除して、最後尾に追加
+        var now = this.equip.weapon.shift();
+        this.equip.weapon.push(now);
+        this.setWeapon(this.equip.weapon[0]);
+    },
+
     //武器変更
     setWeapon: function(kind) {
-        this.equip.weapon = kind;
         switch (kind) {
             case 0:
                 //ショートソード
@@ -599,15 +611,10 @@ phina.define("qft.Player", {
 
         //装備
         this.equip = {
-            weapon: 0,
-            defense: null,
+            weapon: [0],
         };
 
-        //所持武器リスト
-        this.weapons = [];
-        this.weapons[ITEM_SHORTSWORD] = 1;
-
-        //所持武器
+        //武器セット
         this.setWeapon(0);
 
         //所持アイテム

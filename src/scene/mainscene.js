@@ -381,7 +381,7 @@ phina.define("qft.MainScene", {
         this.weapon = phina.display.Sprite("item", 24, 24).addChildTo(this.weaponBase).setPosition(0, 0);
         var that = this;
         this.weapon.update = function() {
-            var index = that.player.equip.weapon;
+            var index = that.player.equip.weapon[0];
             this.setFrameIndex(index);
         }
     },
