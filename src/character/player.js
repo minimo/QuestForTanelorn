@@ -292,6 +292,7 @@ phina.define("qft.Player", {
         this.before.down = ct.down;
         this.before.attack = ct.attack;
         this.before.jump = ct.up || ct.jump;
+        this.before.change = ct.change;
 
         //ダウンキー連続押下フレームカウント
         if (this.onFloor && !this.isCatchLadder && ct.down && !ct.right && !ct.left && !ct.up && !ct.attack) {
