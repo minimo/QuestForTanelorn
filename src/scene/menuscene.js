@@ -52,13 +52,13 @@ phina.define("qft.MenuScene", {
         this.weapon = phina.display.Sprite("item", 24, 24)
             .setPosition(SC_W*0.55, SC_H*0.3)
             .setScale(1.5)
-            .setFrameIndex(eq.weapon)
+            .setFrameIndex(eq.weapon[0])
             .addChildTo(this);
         this.weaponLabel = phina.display.Label({text: ""}.$safe(labelParam))
             .setPosition(SC_W*0.55+32, SC_H*0.3)
             .addChildTo(this);
         this.weaponLabel.update = function() {
-            var item = qft.ItemInfo.get(eq.weapon);
+            var item = qft.ItemInfo.get(eq.weapon[0]);
             this.text = item.name;
         };
 
