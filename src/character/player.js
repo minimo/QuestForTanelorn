@@ -58,6 +58,7 @@ phina.define("qft.Player", {
         down: false,
         attack: false,
         jump: false,
+        change: false,
     },
 
     init: function(parentScene) {
