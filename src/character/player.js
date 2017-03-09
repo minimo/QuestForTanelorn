@@ -257,7 +257,6 @@ phina.define("qft.Player", {
 
             //武器の変更
             if (ct.change && !this.before.change) {
-                app.playSE("select");
                 this.switchWeapon();
             }
         }
@@ -393,6 +392,7 @@ phina.define("qft.Player", {
         var now = this.equip.weapon.shift();
         this.equip.weapon.push(now);
         this.setWeapon(this.equip.weapon[0]);
+        app.playSE("select");
     },
 
     //武器変更
