@@ -82,4 +82,12 @@ phina.define("qft.Enemy.Bullet", {
         this.remove();
         this.flare('dead');
     },
+
+    dropDead: function() {
+        this.isDead = true;
+        this.isDrop = true;
+        this.vx = 0;
+        this.vy = -10;
+        return this;
+    },
 });

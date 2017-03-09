@@ -144,4 +144,12 @@ phina.define("qft.Enemy.BirdBomb", {
         this.frame["normal"] = [72, 73, 74, 73];
         this.index = 0;
     },
+
+    dropDead: function() {
+        this.isDead = true;
+        this.isDrop = true;
+        this.vx = 0;
+        this.vy = -10;
+        return this;
+    },
 });
