@@ -12,10 +12,14 @@ phina.define("qft.Stage1", {
     //タイムリミット
     timeLimit: FPS*60*5,
 
-    init: function(parentScene, tmx) {
-        this.superInit(parentScene, tmx);
+    init: function(parentScene) {
+        this.superInit(parentScene);
 
-        //初期処理
+        //マップ情報読み込み
+        var tmx = phina.asset.AssetManager.get('tmx', "stage1");
+        this.mapLayer[0] = this.createMap(tmx);
+
+       //初期処理
         this.add(1, function() {
             //ＢＧＭ再生
             app.playBGM("bgm1");

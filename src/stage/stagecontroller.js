@@ -10,8 +10,8 @@ phina.define("qft.StageController", {
     superClass: "phina.app.Object2D",
 
     parentScene: null,
+    mapLayer: null,
     player: null,
-    tmx: null,
     time: 0,
 
     //タイムリミット
@@ -24,12 +24,12 @@ phina.define("qft.StageController", {
     //マップトリガイベント
     event: [],
 
-    init: function(parentScene, tmx) {
+    init: function(parentScene) {
         this.superInit();
 
         this.parentScene = parentScene;
+        this.mapLayer = [];
         this.player = parentScene.player;
-        this.tmx = tmx || null;
     },
 
     //時間イベント追加
@@ -92,5 +92,125 @@ phina.define("qft.StageController", {
     },
 
     stageClear: function() {
+    },
+
+    //tmxからマップレイヤを作成する
+    createMap: function(tmx) {
+        //マップレイヤ
+        var mapLayer = phina.display.DisplayElement();
+
+        //マップ画像用レイヤ
+        mapLayer.mapImageLayer = phina.display.DisplayElement().addChildTo(mapLayer);
+
+        //地形判定用レイヤ
+        mapLayer.collisionLayer = phina.display.DisplayElement().addChildTo(mapLayer);
+
+        //バックグラウンドレイヤ
+        mapLayer.backgroundLayer = phina.display.DisplayElement().addChildTo(mapLayer);
+
+        //オブジェクト管理レイヤ
+        mapLayer.objLayer = phina.display.DisplayElement().addChildTo(mapLayer);
+
+        //敵キャラクタ管理レイヤ
+        mapLayer.enemyLayer = phina.display.DisplayElement().addChildTo(mapLayer);
+
+        //プレイヤー表示レイヤ
+        mapLayer.playerLayer = phina.display.DisplayElement().addChildTo(mapLayer);
+
+        //エフェクト管理レイヤ
+        mapLayer.effectLayer = phina.display.DisplayElement().addChildTo(mapLayer);
+
+        //フォアグラウンドレイヤ
+        mapLayer.foregroundLayer = phina.display.DisplayElement().addChildTo(mapLayer);
+
+        //マップ画像取得
+        var foreground = tmx.getImage("foreground");
+        var mapImage = tmx.getImage("map");
+        var background = tmx.getImage("background");
+        this.map = phina.display.Sprite(mapImage).addChildTo(mapLayer.mapImageLayer).setOrigin(0, 0);
+        phina.display.Sprite(background).addChildTo(mapLayer.backgroundLayer).setOrigin(0, 0);
+        phina.display.Sprite(foreground).addChildTo(mapLayer.foregroundLayer).setOrigin(0, 0);
+
+        //マップ当たり判定取得
+        var objects = tmx.getObjectGroup("collision").objects;
+        objects.forEach(function(e) {
+            var c = phina.display.RectangleShape({width: e.width, height: e.height})
+                .addChildTo(mapLayer.collisionLayer)
+                .setPosition(e.x+e.width/2, e.y+e.height/2)
+                .setVisible(DEBUG_COLLISION);
+            c.on('enterframe', function() {
+                this.x += this.vx;
+                this.y += this.vy;
+            });
+            c.id = e.id;
+            c.vx = 0;
+            c.vy = 0;
+            c.alpha = 0.3;
+            c.ignore = false;
+            if (e.name) c.name = e.name;
+            if (e.type) c.type = e.type;
+            c.$extend(e.properties);
+
+            //常時実行スクリプト
+            if (c.script) {
+                var sc = "(function(app) {"+c.script+"})";
+                var f = eval(sc);
+                c.on('enterframe', f);
+            }
+            //当たり判定時実行スクリプト
+            if (c.collision) {
+                var sc = "(function(e, dir) {"+c.collision+"})";
+                c.collisionScript = eval(sc);
+            }
+        }.bind(this));
+
+        //イベント取得
+        var events = tmx.getObjectGroup("event").objects;
+        events.forEach(function(e) {
+            var that = this;
+            var x = e.x + e.width / 2;
+            var y = e.y + e.height / 2;
+            switch (e.type) {
+                case "player":
+                    if (e.name == "start") {
+                        this.player.x = x;
+                        this.player.y = y;
+                        if (e.properties.direction == 0) {
+                            this.player.sprite.scaleX = -1;
+                        } else {
+                            this.player.sprite.scaleX = 1;
+                        }
+                    }
+                    break;
+                case "enemy":
+                    qft.Enemy[e.name](this.parentScene, e.properties).addChildTo(mapLayer.enemyLayer).setPosition(x, y);
+                    break;
+                case "item":
+                    qft.Item(this.parentScene, e).addChildTo(mapLayer.objLayer).setPosition(x, y);
+                    break;
+                case "itembox":
+                    qft.ItemBox(this.parentScene, e).addChildTo(mapLayer.objLayer).setPosition(x, y);
+                    break;
+                case "door":
+                    var door = qft.MapObject.Door(this.parentScene, e).addChildTo(mapLayer.objLayer).setPosition(x, y);
+                    if (e.name == "clear") mapLayer.clearGate = door;
+                    if (e.properties.script) {
+                        var sc = "(function(app) {"+e.properties.script+"})";
+                        var f = eval(sc);
+                        door.on('enterframe', f);
+                    }
+                    break;
+                case "check":
+                    qft.MapObject.CheckIcon(this.parentScene, e).addChildTo(mapLayer.objLayer).setPosition(x, y).setAnimation(e.name);
+                    break;
+                case "message":
+                    qft.MapObject.Message(this.parentScene, e).addChildTo(mapLayer.objLayer).setPosition(x, y);
+                    break;
+                case "event":
+                    qft.MapObject.Event(this.parentScene, e).addChildTo(mapLayer.objLayer).setPosition(x, y);
+                    break;
+            }
+        }.bind(this));
+        return mapLayer;
     },
 });
