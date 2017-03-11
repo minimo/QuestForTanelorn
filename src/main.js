@@ -53,5 +53,5 @@ window.onload = function() {
     app = qft.Application();
     app.replaceScene(qft.SceneFlow());
     app.run();
-    app.enableStats();
+//    app.enableStats();
 };
