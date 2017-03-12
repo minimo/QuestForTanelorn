@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="150" tilewidth="16" tileheight="16" nextobjectid="89">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="150" tilewidth="16" tileheight="16" nextobjectid="90">
  <tileset firstgid="1" name="A1" tilewidth="16" tileheight="16" tilecount="768" columns="32">
   <image source="TileA1.png" width="512" height="384"/>
  </tileset>
@@ -576,7 +576,7 @@
     <property name="level" type="int" value="3"/>
    </properties>
   </object>
-  <object id="36" name="warp" type="door" x="2967" y="1904" width="32" height="95">
+  <object id="36" name="warp" type="door" x="2967" y="1904" width="32" height="96">
    <properties>
     <property name="enterOffset" type="int" value="-16"/>
     <property name="lock" type="bool" value="false"/>
@@ -632,10 +632,6 @@
     <property name="toLayerNumber" type="int" value="1"/>
    </properties>
   </object>
-  <object id="88" name="start" type="player" x="252" y="1504" width="32" height="32">
-   <properties>
-    <property name="direction" type="int" value="0"/>
-   </properties>
-  </object>
+  <object id="89" name="Slime" type="enemy" x="308" y="420" width="32" height="32"/>
  </objectgroup>
 </map>

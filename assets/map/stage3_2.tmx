@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="100" tilewidth="16" tileheight="16" nextobjectid="15">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="100" tilewidth="16" tileheight="16" nextobjectid="25">
  <tileset firstgid="1" name="A1" tilewidth="16" tileheight="16" tilecount="768" columns="32">
   <image source="TileA1.png" width="512" height="384"/>
  </tileset>
@@ -347,7 +347,7 @@
   <object id="7" x="456" y="1152" width="8" height="92"/>
   <object id="8" x="352" y="1184" width="32" height="16">
    <properties>
-    <property name="collision" value="e.vy -= 20;"/>
+    <property name="collision" value="e.vy -= 25;"/>
    </properties>
   </object>
   <object id="9" x="8" y="864" width="248" height="64"/>
@@ -358,6 +358,7 @@
    </properties>
   </object>
   <object id="13" x="160" y="192" width="192" height="64"/>
+  <object id="16" type="stairs" x="92" y="1264" width="8" height="240"/>
  </objectgroup>
  <objectgroup name="event">
   <object id="12" name="key" type="itembox" x="240" y="158" width="32" height="32">
@@ -370,9 +371,16 @@
     <property name="enterOffset" type="int" value="-16"/>
     <property name="lock" type="bool" value="false"/>
     <property name="nextID" type="int" value="87"/>
-    <property name="offset" type="int" value="32"/>
+    <property name="offset" type="int" value="48"/>
     <property name="toLayerNumber" type="int" value="0"/>
    </properties>
   </object>
+  <object id="15" name="Slime" type="enemy" x="380" y="1440" width="32" height="32"/>
+  <object id="18" name="Wisp" type="enemy" x="216" y="808" width="32" height="32"/>
+  <object id="19" name="Wisp" type="enemy" x="152" y="1120" width="32" height="32"/>
+  <object id="20" name="Wisp" type="enemy" x="188" y="1204" width="32" height="32"/>
+  <object id="21" name="Wisp" type="enemy" x="248" y="1088" width="32" height="32"/>
+  <object id="22" name="Wisp" type="enemy" x="316" y="948" width="32" height="32"/>
+  <object id="24" name="Wisp" type="enemy" x="160" y="640" width="32" height="32"/>
  </objectgroup>
 </map>
