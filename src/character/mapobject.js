@@ -88,6 +88,7 @@ phina.define("qft.MapObject.Door", {
                             this.already = false;
                             next.leavePlayer();
                         }.bind(this));
+                    this.parentScene.fg.tweener.clear().wait(30).fadeIn(30).fadeOut(30);
                 });
                 break;
         }
