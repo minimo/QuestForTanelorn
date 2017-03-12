@@ -94,6 +94,16 @@ phina.define("qft.StageController", {
     stageClear: function() {
     },
 
+    //IDからオブジェクト検索
+    findObject: function(id, layerNumber) {
+        layerNumber = layerNumber || 0;
+        var result = null;
+        this.mapLayer[layerNumber].objLayer.children.forEach(function(e) {
+            if (e.id == id) result = e;
+        }.bind(this));
+        return result;
+    },
+
     //tmxからマップレイヤを作成する
     createMap: function(tmx) {
         //マップレイヤ
@@ -127,7 +137,7 @@ phina.define("qft.StageController", {
         var foreground = tmx.getImage("foreground");
         var mapImage = tmx.getImage("map");
         var background = tmx.getImage("background");
-        this.map = phina.display.Sprite(mapImage).addChildTo(mapLayer.mapImageLayer).setOrigin(0, 0);
+        mapLayer.map = phina.display.Sprite(mapImage).addChildTo(mapLayer.mapImageLayer).setOrigin(0, 0);
         phina.display.Sprite(background).addChildTo(mapLayer.backgroundLayer).setOrigin(0, 0);
         phina.display.Sprite(foreground).addChildTo(mapLayer.foregroundLayer).setOrigin(0, 0);
 

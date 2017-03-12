@@ -40,7 +40,7 @@ phina.define("qft.MapObject.Door", {
         this.id = options.id;
         this.isLock = options.properties.lock || false;
         this.name = options.name;
-        this.enterOffset = options.properties.enteroffset || 0;
+        this.enterOffset = options.properties.enterOffset || 0;
 
         //ドア機能
         var properties = options.properties;
@@ -50,11 +50,6 @@ phina.define("qft.MapObject.Door", {
                 this.isLock = true;
                 this.on('enterdoor', function() {
                     this.parentScene.flare('stageclear');
-                });
-                break;
-            //マップ切り替え
-            case "mapswitch":
-                this.on('enterdoor', function() {
                 });
                 break;
             //マップ内移動
@@ -74,7 +69,27 @@ phina.define("qft.MapObject.Door", {
                             next.leavePlayer();
                         }.bind(this));
                 });
-                break;                
+                break;
+            //マップ切り替え
+            case "mapswitch":
+                this.nextID = properties.nextID;
+                this.offset = properties.offset || 0;
+                this.toLayerNumber = properties.toLayerNumber;
+                this.on('enterdoor', function() {
+                    var layer = this.parentScene.stageController.mapLayer[this.toLayerNumber];
+                    var next = this.parentScene.stageController.findObject(this.nextID, this.toLayerNumber);
+                    if (!next) return;
+                    this.enterPlayer();
+                    this.tweener.clear()
+                        .wait(60)
+                        .call(function(){
+                            this.parentScene.switchMap(layer);
+                            this.parentScene.player.setPosition(next.x, next.y + next.offset);
+                            this.already = false;
+                            next.leavePlayer();
+                        }.bind(this));
+                });
+                break;
         }
     },
 

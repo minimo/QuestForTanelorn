@@ -225,7 +225,7 @@ phina.define("qft.MainScene", {
             }
         }
         //スクリーン表示位置をプレイヤー中心になる様に調整
-        var map = this.stageController.map;
+        var map = this.mapLayer.map;
         this.mapLayer.x = SC_W*0.5-this.player.x;
         this.mapLayer.y = SC_H*0.5-this.player.y;
         if (this.limitHeight) {
@@ -470,6 +470,7 @@ phina.define("qft.MainScene", {
         if (this.mapLayer) this.mapLayer.remove();
         this.mapLayer = layer;
         this.mapLayer.addChildTo(this.baseLayer);
+        this.map = layer.map;
 
         this.backgroundLayer = layer.backgroundLayer;
         this.foregroundLayer = layer.foregroundLayer;
