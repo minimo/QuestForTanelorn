@@ -136,7 +136,12 @@ phina.define("qft.Enemy.WispHard", {
         }
 
         //攻撃
-        if (this.time % 120 == 0 && this.getDistancePlayer() < 32) {
+        if (this.time % 120 == 0 && this.getDistancePlayer() < 128) {
+            for (var i = 0; i < 4; i++) {
+                var b = this.parentScene.spawnEnemy(this.x, this.y, "WispBomb", {pattern: "pattern1"});
+                b.vy = -10;
+                b.vx = (i*2) * this.scaleX;
+            }
         }
     },
 
@@ -158,6 +163,9 @@ phina.define("qft.Enemy.WispBomb", {
 
     //ヒットポイント
     hp: 1,
+
+    //横移動減衰率
+    friction: 0.99,
 
     //防御力
     deffence: 10,
@@ -185,18 +193,18 @@ phina.define("qft.Enemy.WispBomb", {
     },
 
     update: function() {
+        if (this.onFloor) {
+            this.remove();
+            var b = this.parentScene.spawnEnemy(this.x, this.y, "Flame", {pattern: "pattern1"});
+        }
     },
 
     setupAnimation: function() {
         this.spcialAnimation = false;
         this.frame = [];
         this.frame["pattern1"] = [31, 30, 29, 28, 27, 26, "stop"];
+        this.frame["pattern2"] = [31, 30, 29, 28, 27, 26, "stop"];
         this.index = 0;
-    },
-
-    hit: function() {
-        this.remove();
-        this.flare('dead');
     },
 
     dropDead: function() {

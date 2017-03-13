@@ -13,7 +13,10 @@ phina.define("qft.Enemy.Flame", {
     hp: 10,
 
     //攻撃力
-    power: 30,
+    power: 10,
+
+    //無敵フラグ
+    muteki: true,
 
     init: function(parentScene, options) {
         this.superInit(parentScene, {width: 16, height: 20});
@@ -29,8 +32,14 @@ phina.define("qft.Enemy.Flame", {
     },
 
     update: function() {
-        if (this.time > 90) {
+        if (this.time > 120) {
             this.remove();
+        } else if (this.time > 90) {
+            if (this.time % 2 == 0) this.visible = !this.visible;
+        } else if (this.time > 60) {
+            if (this.time % 5 == 0) this.visible = !this.visible;
+        } else if (this.time > 30) {
+            if (this.time % 10 == 0) this.visible = !this.visible;
         }
     },
 
