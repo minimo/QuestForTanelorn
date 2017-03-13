@@ -49,6 +49,7 @@ phina.define("qft.Assets", {
                             "bullet":     "assets/image/effect_bullet01.png",
                             "effect":     "assets/image/effect.png",
                             "gate":       "assets/image/gate.png",
+                            "flame":      "assets/image/object_fire02a.png",
                         },
                         sound: {
                             "click":      "assets/sound/se_maoudamashii_system44.mp3",
