@@ -210,6 +210,14 @@ phina.define("qft.StageController", {
                         door.on('enterframe', f);
                     }
                     break;
+                case "block":
+                    var block = qft.MapObject.Block(this.parentScene, e).addChildTo(mapLayer.objLayer).setPosition(x, y);
+                    if (e.properties.script) {
+                        var sc = "(function(app) {"+e.properties.script+"})";
+                        var f = eval(sc);
+                        block.on('enterframe', f);
+                    }
+                    break;
                 case "check":
                     qft.MapObject.CheckIcon(this.parentScene, e).addChildTo(mapLayer.objLayer).setPosition(x, y).setAnimation(e.name);
                     break;

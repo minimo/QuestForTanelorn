@@ -63,7 +63,7 @@ phina.define("qft.MapObject.Block", {
     damage: function(target) {
         if (this.isDead) return;
         this.hp -= target.power;
-        this.mutekiTime = 30;
+        this.mutekiTime = 15;
         if (this.hp <= 0) {
             this.isDead = true;
             this.flare('dead');
