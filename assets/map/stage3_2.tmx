@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="100" tilewidth="16" tileheight="16" nextobjectid="25">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="100" tilewidth="16" tileheight="16" nextobjectid="28">
  <tileset firstgid="1" name="A1" tilewidth="16" tileheight="16" tilecount="768" columns="32">
   <image source="TileA1.png" width="512" height="384"/>
  </tileset>
@@ -376,11 +376,12 @@
    </properties>
   </object>
   <object id="15" name="Slime" type="enemy" x="380" y="1440" width="32" height="32"/>
-  <object id="18" name="Wisp" type="enemy" x="216" y="808" width="32" height="32"/>
-  <object id="19" name="Wisp" type="enemy" x="152" y="1120" width="32" height="32"/>
+  <object id="18" name="Wisp" type="enemy" x="200" y="820" width="32" height="32"/>
   <object id="20" name="Wisp" type="enemy" x="188" y="1204" width="32" height="32"/>
-  <object id="21" name="Wisp" type="enemy" x="248" y="1088" width="32" height="32"/>
-  <object id="22" name="Wisp" type="enemy" x="316" y="948" width="32" height="32"/>
+  <object id="22" name="Wisp" type="enemy" x="256" y="972" width="32" height="32"/>
   <object id="24" name="Wisp" type="enemy" x="160" y="640" width="32" height="32"/>
+  <object id="25" name="WispHard" type="enemy" x="68" y="1116" width="32" height="32"/>
+  <object id="26" name="WispHard" type="enemy" x="404" y="1100" width="32" height="32"/>
+  <object id="27" name="WispHard" type="enemy" x="36" y="808" width="32" height="32"/>
  </objectgroup>
 </map>

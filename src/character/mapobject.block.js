@@ -14,7 +14,7 @@ phina.define("qft.MapObject.Block", {
     id: null,
 
     //耐久力
-    hp: 5,
+    hp: 30,
 
     //識別フラグ
     isBlock: true,
@@ -23,18 +23,23 @@ phina.define("qft.MapObject.Block", {
     gravity: 0.0,
 
     //アニメーション間隔
-    advanceTime: 3,
+    advanceTime: 1,
+
+    isAdvanceAnimation: false,
 
     //地形無視
     ignoreCollision: true,
 
     init: function(parentScene, options) {
-        var width = options.width || 36;
-        var height = options.height || 64;
-        this.superInit(parentScene, {width: width, height: height});
+        this.options = (options || {}).$safe({
+            width: 32,
+            height: 32,
+            index: 0,
+        })
+        this.superInit(parentScene, {width: this.options.width, height: this.options.height});
 
         //スプライト
-        this.sprite = phina.display.Sprite("block", 32, 32).addChildTo(this).setFrameIndex(3);
+        this.sprite = phina.display.Sprite("block", 32, 32).addChildTo(this).setFrameIndex(options.index);
         this.id = options.id;
 
         this.on('dead', function() {
@@ -57,21 +62,22 @@ phina.define("qft.MapObject.Block", {
                 }
             }.bind(this));
         }
-        this.visible = true;    //点滅キャンセル
+//        this.visible = true;    //点滅キャンセル
     },
 
     damage: function(target) {
         if (this.isDead) return;
+        if (this.mutekiTime > 0) return;
         this.hp -= target.power;
-        this.mutekiTime = 15;
+        this.mutekiTime = 5;
         if (this.hp <= 0) {
             this.isDead = true;
             this.flare('dead');
         }
         if (this.x < target.x) {
-            this.sprite.tweener.clear().moveBy(-2, 0, 2).moveBy(2, 0, 2);
+            this.sprite.tweener.clear().moveBy(-2, 0, 1).moveBy(2, 0, 1);
         } else {
-            this.sprite.tweener.clear().moveBy(2, 0, 2).moveBy(-2, 0, 2);
+            this.sprite.tweener.clear().moveBy(2, 0, 1).moveBy(-2, 0, 1);
         }
     },
 

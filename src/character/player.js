@@ -217,7 +217,7 @@ phina.define("qft.Player", {
                     if (this.downFrame > 6 && !this.jump && !footLadder) {
                         if (this.onFloor && !this.throughFloor) {
                             var floor = this.checkMapCollision2(this.x, this.y+16, 5, 5);
-                            if (floor[0].enableThrough) this.throughFloor = floor[0];
+                            if (floor && floor[0].enableThrough) this.throughFloor = floor[0];
                         }
                     }
                 }
