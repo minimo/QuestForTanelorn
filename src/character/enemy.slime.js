@@ -30,9 +30,13 @@ phina.define("qft.Enemy.Slime", {
     init: function(parentScene, options) {
         this.superInit(parentScene, {width: 16, height: 18});
 
+        this.level = options.level || 0;
+
         //表示用スプライト
         this.sprite = phina.display.Sprite("monster01", 24, 32).addChildTo(this);
-        this.sprite.setFrameTrimming(0, 256, 72, 128);
+        this.sprite.setFrameTrimming(this.level * 72, 256, 72, 128);
+        this.hp += this.level * 10;
+        this.power += this.level * 5;
 
         this.setAnimation("walk");
         this.advanceTime = 10;

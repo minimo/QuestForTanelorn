@@ -12,6 +12,9 @@ phina.define("qft.Enemy", {
     //識別フラグ
     isEnemy: true,
 
+    //レベル
+    level: 0,
+
     //ヒットポイント
     hp: 10,
 
