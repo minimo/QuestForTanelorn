@@ -39,11 +39,39 @@ phina.define("qft.MapObject.Block", {
         this.superInit(parentScene, {width: this.options.width, height: this.options.height});
 
         //スプライト
-        this.sprite = phina.display.Sprite("block", 32, 32).addChildTo(this).setFrameIndex(options.index);
+        this.index = options.index;
+        this.sprite = phina.display.Sprite("block", 32, 32).addChildTo(this).setFrameIndex(this.index);
+
         this.id = options.id;
 
         this.on('dead', function() {
-            this.remove();
+            this.sprite.remove();
+            var s = [];
+            s[0] = phina.display.Sprite("block", 16, 16).addChildTo(this).setPosition(-8, -8).setFrameIndex(this.index * 2 + 0);
+            s[1] = phina.display.Sprite("block", 16, 16).addChildTo(this).setPosition( 8, -8).setFrameIndex(this.index * 2 + 1);
+            s[2] = phina.display.Sprite("block", 16, 16).addChildTo(this).setPosition(-8,  8).setFrameIndex(this.index * 2 + 16 + 0);
+            s[3] = phina.display.Sprite("block", 16, 16).addChildTo(this).setPosition( 8,  8).setFrameIndex(this.index * 2 + 16 + 1);
+            //スプライトがバラバラに壊れるよ
+            (4).times(function(i) {
+                s[i].update = function() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    this.vx *= 0.9;
+                    this.vy += 0.9;
+                    this.rotation += this.rot;
+                }
+                s[i].vx = 0;
+                s[i].vy = -5;
+            }.bind(this));
+            s[0].vx = -6; s[0].rot = -3;
+            s[1].vx =  6; s[1].rot =  3;
+            s[2].vx = -3; s[2].rot = -3;
+            s[3].vx =  3; s[3].rot =  3;
+            this.tweener.clear()
+                .wait(10)
+                .call(function() {
+                    this.remove();
+                }.bind(this));
         });
     },
 
@@ -62,7 +90,7 @@ phina.define("qft.MapObject.Block", {
                 }
             }.bind(this));
         }
-//        this.visible = true;    //点滅キャンセル
+        this.visible = true;    //点滅キャンセル
     },
 
     damage: function(target) {

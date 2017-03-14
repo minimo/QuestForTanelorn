@@ -322,11 +322,14 @@ phina.define("qft.Character", {
     //キャラクタ同士当たり判定（ブロックのみ）
     checkCharacterCollision: function() {
         if (this.ignoreCollision) return;
+        if (this.isDrop) return;
+
         var ret = [];
         var that = this;
         this.parentScene.objLayer.children.forEach(function(e) {
-            if (that.isDrop) return;
             if (!e.isBlock) return;
+            if (e.isDead) return;
+
             //上側
             if (that.vy < 0 && e.hitTestElement(that._collision[0])) {
                 that.y = e.y+e.height*(1-e.originY)+16;
