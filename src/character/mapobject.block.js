@@ -38,14 +38,25 @@ phina.define("qft.MapObject.Block", {
         })
         this.superInit(parentScene, {width: this.options.width, height: this.options.height});
 
+        this.id = options.id;
+
         //スプライト
         this.index = options.index;
         this.sprite = phina.display.Sprite("block", 32, 32).addChildTo(this).setFrameIndex(this.index);
 
-        this.id = options.id;
+        var param = {
+            width: 32,
+            height: 32,
+            fill: "rgba(0, 0, 0, 0.0)",
+            stroke: "black",
+            strokeWidth: 1,
+            backgroundColor: 'transparent',
+        };
+        this.waku = phina.display.RectangleShape(param).addChildTo(this).setPosition(0, 0);
 
         this.on('dead', function() {
             this.sprite.remove();
+            this.waku.remove();
             var s = [];
             s[0] = phina.display.Sprite("block", 16, 16).addChildTo(this).setPosition(-8, -8).setFrameIndex(this.index * 2 + 0);
             s[1] = phina.display.Sprite("block", 16, 16).addChildTo(this).setPosition( 8, -8).setFrameIndex(this.index * 2 + 1);
@@ -98,7 +109,7 @@ phina.define("qft.MapObject.Block", {
         if (this.isDead) return;
         if (this.mutekiTime > 0) return;
         this.hp -= target.power;
-        this.mutekiTime = 5;
+        this.mutekiTime = 10;
         if (this.hp <= 0) {
             this.isDead = true;
             this.flare('dead');
