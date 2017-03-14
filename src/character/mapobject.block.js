@@ -120,14 +120,4 @@ phina.define("qft.MapObject.Block", {
             this.sprite.tweener.clear().moveBy(2, 0, 1).moveBy(-2, 0, 1);
         }
     },
-
-    setupAnimation: function(options) {
-        this.spcialAnimation = false;
-        this.frame = [];
-        this.frame["opend"] = [3, "stop"];
-        this.frame["closed"] = [2, "stop"];
-        this.frame["open"] = [2, 1, 0, 3, "stop"];
-        this.frame["close"] = [3, 0, 1, 2, "stop"];
-        this.index = 0;
-    },
 });
