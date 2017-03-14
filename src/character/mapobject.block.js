@@ -52,7 +52,8 @@ phina.define("qft.MapObject.Block", {
             strokeWidth: 1,
             backgroundColor: 'transparent',
         };
-        this.waku = phina.display.RectangleShape(param).addChildTo(this).setPosition(0, 0);
+        this.waku = phina.display.RectangleShape(param).setPosition(0, 0);
+        if (options.enableFrame) this.waku.addChildTo(this);
 
         this.on('dead', function() {
             this.sprite.remove();
@@ -113,11 +114,15 @@ phina.define("qft.MapObject.Block", {
         if (this.hp <= 0) {
             this.isDead = true;
             this.flare('dead');
+            return;
         }
-        if (this.x < target.x) {
-            this.sprite.tweener.clear().moveBy(-2, 0, 1).moveBy(2, 0, 1);
-        } else {
-            this.sprite.tweener.clear().moveBy(2, 0, 1).moveBy(-2, 0, 1);
-        }
+        var dir = 2;
+        if (this.x < target.x) dir = -2;
+        this.sprite.tweener.clear()
+            .moveBy(dir, 0, 1)
+            .moveBy(-dir, 0, 1)
+            .call(function(){
+                app.playSE("hit_blunt");
+            });
     },
 });
