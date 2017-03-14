@@ -59,6 +59,7 @@ phina.define("qft.MapObject.Block", {
                     this.vx *= 0.9;
                     this.vy += 0.9;
                     this.rotation += this.rot;
+                    this.alpha -= 0.05;
                 }
                 s[i].vx = 0;
                 s[i].vy = -5;
