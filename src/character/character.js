@@ -166,6 +166,15 @@ phina.define("qft.Character", {
             //操作停止時間
             if (this.stopTime > 0) this.stopTime--;
 
+            //画面内判定
+            var ps = this.parentScene;
+            if (ps.screenX < this.x && this.x < ps.screenX + SC_W && 
+                ps.screenY < this.y && this.y < ps.screenY + SC_H) {
+                this.onScreen = true;
+            } else {
+                this.onScreen = false;
+            }
+
             this.time++;
             this.beforeAnimation = this.nowAnimation;
         });

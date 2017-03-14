@@ -237,6 +237,10 @@ phina.define("qft.MainScene", {
             if (this.mapLayer.x < -(map.width-SC_W)) this.mapLayer.x = -(map.width-SC_W);
         }
 
+        //スクリーン座標
+        this.screenX = -this.mapLayer.x;
+        this.screenY = -this.mapLayer.y;
+
         this.time++;
     },
 
