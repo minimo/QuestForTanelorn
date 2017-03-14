@@ -118,6 +118,7 @@ phina.define("qft.Enemy.WispHard", {
 
         this.direction = 0;
         this.move = false;
+        this.attackCount = 0;
     },
 
     update: function() {
@@ -128,20 +129,26 @@ phina.define("qft.Enemy.WispHard", {
             var p2 = phina.geom.Vector2(player.x, player.y);
             var p = p2.sub(p1);
             p.normalize();
-            this.vx = p.x;
-            this.vy = p.y;
+            this.vx = p.x / 2;
+            this.vy = p.y / 2;
         } else {
             this.vx = 0;
             this.vy = 0;
         }
 
         //攻撃
-        if (this.time % 120 == 0 && this.getDistancePlayer() < 128) {
-            for (var i = 0; i < 4; i++) {
-                var b = this.parentScene.spawnEnemy(this.x, this.y, "WispBomb", {pattern: "pattern1"});
-                b.vy = -10;
-                b.vx = (i*2) * this.scaleX;
+        if (this.getDistancePlayer() < 128) {
+            this.attackCount--;
+            if (this.attackCount == 0) {
+                for (var i = 0; i < 4; i++) {
+                    var b = this.parentScene.spawnEnemy(this.x, this.y, "WispBomb", {pattern: "pattern1"});
+                    b.vy = -10;
+                    b.vx = (i*2) * this.scaleX;
+                }
+                this.attackCount = 90;
             }
+        } else {
+            this.attackCount = 30;
         }
     },
 
