@@ -217,6 +217,10 @@ phina.define("qft.StageController", {
                         var f = eval(sc);
                         block.on('enterframe', f);
                     }
+                    block.collision = phina.display.RectangleShape({width: 32, height: 32})
+                        .addChildTo(mapLayer.collisionLayer)
+                        .setPosition(x, y)
+                        .setVisible(DEBUG_COLLISION);
                     break;
                 case "check":
                     qft.MapObject.CheckIcon(this.parentScene, e).addChildTo(mapLayer.objLayer).setPosition(x, y).setAnimation(e.name);

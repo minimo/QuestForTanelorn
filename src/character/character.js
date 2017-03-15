@@ -143,7 +143,7 @@ phina.define("qft.Character", {
             //当たり判定
             this.resetCollisionPosition();
             this.checkMapCollision();
-            this.checkCharacterCollision();
+//            this.checkCharacterCollision();
 
             //画面外落ち
             if (!this.isDead && this.y > this.parent.parent.map.height) this.dropDead();

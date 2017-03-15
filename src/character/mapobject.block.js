@@ -58,6 +58,7 @@ phina.define("qft.MapObject.Block", {
         this.on('dead', function() {
             this.sprite.remove();
             this.waku.remove();
+            if (this.collision) this.collision.remove();
             var s = [];
             s[0] = phina.display.Sprite("block", 16, 16).addChildTo(this).setPosition(-8, -8).setFrameIndex(this.index * 2 + 0);
             s[1] = phina.display.Sprite("block", 16, 16).addChildTo(this).setPosition( 8, -8).setFrameIndex(this.index * 2 + 1);
@@ -89,6 +90,10 @@ phina.define("qft.MapObject.Block", {
     },
 
     update: function(e) {
+        if (this.collision) {
+            this.collision.x = this.x;
+            this.collision.y = this.y;
+        }
         if (!this.isDead) {
             //プレイヤー攻撃（固定）との当たり判定
             var pl = this.parentScene.player;
