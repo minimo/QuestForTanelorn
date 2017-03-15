@@ -41,6 +41,7 @@ phina.define("qft.MapObject.Door", {
         this.isLock = options.properties.lock || false;
         this.name = options.name;
         this.enterOffset = options.properties.enterOffset || 0;
+        this.sprite.visible = options.properties.visible == undefined? true: options.properties.visible;
 
         //ドア機能
         var properties = options.properties;
