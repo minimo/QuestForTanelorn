@@ -16,7 +16,7 @@ phina.define("qft.Stage3", {
         this.superInit(parentScene, tmx);
 
         //マップ情報読み込み
-        var tmx = phina.asset.AssetManager.get('tmx', "stage3");
+        var tmx = phina.asset.AssetManager.get('tmx', "stage3_1");
         this.mapLayer[0] = this.createMap(tmx);
         var tmx = phina.asset.AssetManager.get('tmx', "stage3_2");
         this.mapLayer[1] = this.createMap(tmx);

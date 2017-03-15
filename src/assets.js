@@ -94,7 +94,7 @@ phina.define("qft.Assets", {
                             "bgm3": "assets/sound/DS-041m.mp3",
                         },
                         tmx: {
-                            "stage3": "assets/map/stage3.tmx",
+                            "stage3_1": "assets/map/stage3_1.tmx",
                             "stage3_2": "assets/map/stage3_2.tmx",
                         },
                     };
@@ -104,7 +104,8 @@ phina.define("qft.Assets", {
                             "bgm4": "assets/sound/DS-076m.mp3",
                         },
                         tmx: {
-                            "stage4": "assets/map/stage4.tmx",
+                            "stage4_1": "assets/map/stage4_1.tmx",
+                            "stage4_2": "assets/map/stage4_2.tmx",
                         },
                     };
                 default:
