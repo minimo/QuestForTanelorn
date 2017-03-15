@@ -221,6 +221,9 @@ phina.define("qft.StageController", {
                         .addChildTo(mapLayer.collisionLayer)
                         .setPosition(x, y)
                         .setVisible(DEBUG_COLLISION);
+                    block.collision.vx = 0;
+                    block.collision.vy = 0;
+                    block.collision.ignore = false;
                     break;
                 case "check":
                     qft.MapObject.CheckIcon(this.parentScene, e).addChildTo(mapLayer.objLayer).setPosition(x, y).setAnimation(e.name);
