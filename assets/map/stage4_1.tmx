@@ -234,7 +234,7 @@
   <object id="13" x="800" y="592" width="128" height="368"/>
   <object id="20" x="928" y="560" width="256" height="224"/>
   <object id="25" x="928" y="880" width="368" height="80"/>
-  <object id="46" x="628" y="288" width="4" height="240"/>
+  <object id="46" type="ladder" x="628" y="288" width="4" height="240"/>
   <object id="47" x="560" y="288" width="144" height="32"/>
   <object id="48" x="96" y="240" width="272" height="16"/>
   <object id="49" x="0" y="0" width="96" height="256"/>
@@ -333,11 +333,12 @@
     <property name="color" value="red"/>
    </properties>
   </object>
-  <object id="51" name="mapswitch" type="door" x="992" y="784" width="32" height="64">
+  <object id="51" name="mapswitch" type="door" x="992" y="768" width="32" height="96">
    <properties>
+    <property name="enterOffset" type="int" value="-16"/>
     <property name="lock" type="bool" value="false"/>
-    <property name="nextID" type="int" value="14"/>
-    <property name="offset" type="int" value="32"/>
+    <property name="nextID" type="int" value="5"/>
+    <property name="offset" type="int" value="48"/>
     <property name="toLayerNumber" type="int" value="1"/>
     <property name="visible" type="bool" value="false"/>
    </properties>
