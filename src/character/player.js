@@ -180,7 +180,8 @@ phina.define("qft.Player", {
                         this.numJump++;
                     }
                     //ジャンプ
-                    if (!this.isJump && this.onFloor && !this.onLadder) {
+                    var chk = this.checkMapCollision2(this.x, this.y-16, 5, 3);
+                    if (!this.isJump && this.onFloor && !this.onLadder && !chk) {
                         this.setAnimation("jump");
                         this.isJump = true;
                         this.vy = -11;
