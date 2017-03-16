@@ -394,6 +394,8 @@ phina.define("qft.Player", {
         this.equip.weapon.push(now);
         this.setWeapon(this.equip.weapon[0]);
         app.playSE("select");
+
+        this.parentScene.playerWeapon.tweener.clear().by({rotation: 120}, 300);
     },
 
     //武器変更
@@ -781,5 +783,47 @@ phina.define("qft.PlayerDummy", {
         this.nowAnimation = animName;
         this.index = -1;
         return this;
+    },
+});
+
+//プレイヤー現在使用武器表示
+phina.define("qft.PlayerWeapon", {
+    superClass: "phina.display.DisplayElement",
+
+    init: function(player) {
+        this.superInit();
+        this.player = player;
+
+        this.base = phina.display.DisplayElement().addChildTo(this);
+
+        //武器リスト（３つ）
+        var that = this;
+        this.weapons = [];
+        var rad = 0;
+        var rad_1 = (Math.PI*2) / 3;
+        (3).times(function(i) {
+            var x =  Math.sin(rad)*20;
+            var y = -Math.cos(rad)*20;
+            rad += rad_1;
+            this.weapons[i] = phina.display.Sprite("item", 24, 24)
+                .addChildTo(this)
+                .setPosition(x, y)
+                .setFrameIndex(i);
+            this.weapons[i].update = function() {
+                this.rotation = -that.rotation;
+            }
+            var param = {
+                width: 26,
+                height: 26,
+                fill: "rgba(0,0,0,0.0)",
+                stroke: "yellow",
+                strokeWidth: 2,
+                backgroundColor: 'transparent',
+            };
+            phina.display.RectangleShape(param).addChildTo(this.weapons[i]);
+        }.bind(this));
+    },
+
+    update: function() {
     },
 });

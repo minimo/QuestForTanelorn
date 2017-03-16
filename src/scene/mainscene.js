@@ -389,6 +389,7 @@ phina.define("qft.MainScene", {
             var index = that.player.equip.weapon[0];
             this.setFrameIndex(index);
         }
+        this.playerWeapon = qft.PlayerWeapon(this.player).addChildTo(this).setPosition(SC_W-40, SC_H-40);
     },
 
     //マップ情報の初期化
