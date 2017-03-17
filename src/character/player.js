@@ -409,7 +409,7 @@ phina.define("qft.Player", {
             });
             if (index) {
                 //所持武器を拾ったらその武器のランクが上がる
-                this.equip.weapons.rank[index]++;
+                this.equip.rank[index]++;
             } else {
                 //持って無い場合
                 if (this.equip.weapons.length < 3) {
@@ -417,15 +417,16 @@ phina.define("qft.Player", {
                     this.equip.weapons.push(item.kind);
                 } else {
                     //現在使用武器の手前の武器を捨てる
-                    var dropIndex = (this.equip.using+2) % 3;
+                    var dropIndex = this.equip.using == 0? 2: this.equip.using - 1;
                     var options = {
                         properties: {
                             kind: this.equip.weapons[dropIndex],
                             rank: this.equip.rank[dropIndex],
                         },
                     };
-                    var item = this.parentScene.spawnItem(this.x, this.y, options);
-                    item.vy = -5;
+                    var drop = this.parentScene.spawnItem(this.x, this.y, options);
+                    drop.vy = -5;
+                    drop.throwAway = true;
                     this.equip.weapons[dropIndex] = item.kind;
                 }
             }

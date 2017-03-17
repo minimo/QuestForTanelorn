@@ -18,6 +18,9 @@ phina.define("qft.Item", {
     //ランク
     rank: 0,
 
+    //捨てアイテム
+    throwAway: false,
+
     //大まかな種別フラグ
     weapon: false,
     equip: false,
@@ -35,7 +38,7 @@ phina.define("qft.Item", {
     isAdvanceAnimation: false,
 
     init: function(parentScene, options) {
-        this.superInit(parentScene, {width: 10, height: 10});
+        this.superInit(parentScene, {width: 16, height: 16});
 
         //アイテムランク
         this.level = 0;
@@ -85,9 +88,13 @@ phina.define("qft.Item", {
     update: function() {
         //プレイヤーとの当たり判定
         var pl = this.parentScene.player;
-        if (this.time > 10 && this.hitTestElement(pl)) {
-            pl.getItem(this);
-            this.remove();
+        if (this.hitTestElement(pl)) {
+            if (this.time > 10 && !this.throwAway) {
+                pl.getItem(this);
+                this.remove();
+            }
+        } else {
+            if (this.throwAway) this.throwAway = false;
         }
     },
 });
