@@ -15,6 +15,9 @@ phina.define("qft.Item", {
     //アイテム種別
     kind: 0,
 
+    //ランク
+    rank: 0,
+
     //大まかな種別フラグ
     weapon: false,
     equip: false,
@@ -34,9 +37,13 @@ phina.define("qft.Item", {
     init: function(parentScene, options) {
         this.superInit(parentScene, {width: 10, height: 10});
 
-        //アイテム種別
+        //アイテムランク
         this.level = 0;
         if (options.properties) this.level = options.properties.level || 0;
+        this.rank = 0;
+        if (options.properties) this.rank = options.properties.rank || 0;
+
+        //アイテム種別
         switch (options.name) {
             case "shortsword":
                 this.kind = ITEM_SHORTSWORD;
@@ -61,6 +68,10 @@ phina.define("qft.Item", {
                 break;
             case "food":
                 this.kind = ITEM_MEAT + this.level;
+                break;
+            default:
+                this.kind = 0;
+                if (options.properties) this.kind = options.properties.kind || 0;
                 break;
         }
 

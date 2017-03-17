@@ -27,7 +27,7 @@ phina.define("qft.Player", {
     numJump: 0,
     numJumpMax: 1,
 
-    //装備中アイテム
+    //所持装備アイテム
     equip: null,
 
     //アイテム所持最大数
@@ -104,7 +104,6 @@ phina.define("qft.Player", {
             this.parentScene.flare('gameover');
         });
     },
-
     update: function(app) {
         //オブジェクトレイヤー接触判定
         this.onDoor = null;
@@ -257,7 +256,7 @@ phina.define("qft.Player", {
             }
 
             //武器の変更
-            if (ct.change && !this.before.change) {
+            if (ct.change && !this.before.change && this.equip.switchOk) {
                 this.switchWeapon();
             }
         }
@@ -300,6 +299,64 @@ phina.define("qft.Player", {
         } else {
             this.downFrame = 0;
         }
+    },
+
+    //プレイヤー情報リセット
+    reset: function() {
+        //移動情報
+        this.vx = 0;
+        this.vy = 0;
+
+        //ステータス
+        this.hp = 100;
+
+        //各種フラグ
+        this.isJump = false;
+        this.isDead = false;
+        this.isCatchLadder = false;
+        this.isDrop = false;
+        this.onFloor = false;
+        this.isAdvanceAnimation = true;
+        this.ignoreCollision = false;
+
+        //経過時間系
+        this.mutekiTime = 0;
+        this.stopTime = 0;
+        this.downFrame = 0;
+        this.time = 0;
+
+        //アニメーション
+        this.setAnimation("walk");
+        this.beforeAnimation = "";
+        this.advanceTime = 6;
+
+        //所持装備
+        this.equip = {
+            using: 0,         //現在使用中（weaponsのindex）
+            weapons: [0],     //所持リスト（最大３）
+            rank: [0, 0 , 0], //武器ランク
+            switchOk: true,   //変更可能フラグ
+        };
+
+        //武器セット
+        this.setWeapon(0);
+
+        //所持アイテム
+        this.items = [];
+
+        //所持クリア条件キー
+        this.keys = [];
+
+        //討伐モンスター数
+        this.kill = 0;
+
+        //操作可能フラグ
+        this.isControl = true;
+
+        //多段ジャンプ最大回数
+        this.numJumpMax = 0;
+
+        return this;
     },
 
     //ダメージ処理
@@ -347,19 +404,30 @@ phina.define("qft.Player", {
         //武器
         if (item.weapon) {
             //既に持っている武器かチェック
-            var index = this.equip.weapon.findIndex(function(e, i, a) {
+            var index = this.equip.weapons.findIndex(function(e, i, a) {
                 return e == item.kind;
             });
             if (index) {
-                //拾った武器を使用武器にする
-                for (var i = 0; i < index; i++) {
-                    this.switchWeapon();
-                }
+                //所持武器を拾ったらその武器のランクが上がる
+                this.equip.weapons.rank[index]++;
             } else {
-                //持って無い場合はリストに追加
-                this.equip.weapon.unshift(item.kind);
-                //武器変更
-                this.setWeapon(item.kind);
+                //持って無い場合
+                if (this.equip.weapons.length < 3) {
+                    //リストに追加
+                    this.equip.weapons.push(item.kind);
+                } else {
+                    //現在使用武器の手前の武器を捨てる
+                    var dropIndex = (this.equip.using+2) % 3;
+                    var options = {
+                        properties: {
+                            kind: this.equip.weapons[dropIndex],
+                            rank: this.equip.rank[dropIndex],
+                        },
+                    };
+                    var item = this.parentScene.spawnItem(this.x, this.y, options);
+                    item.vy = -5;
+                    this.equip.weapons[dropIndex] = item.kind;
+                }
             }
             app.playSE("getitem");
             return;
@@ -387,15 +455,23 @@ phina.define("qft.Player", {
     //使用武器の変更
     switchWeapon: function() {
         //手持ちの武器が一個の場合は何もしない
-        if (this.equip.weapon.length < 2) return;
+        if (this.equip.weapons.length < 2) return;
 
-        //配列の先頭から削除して、最後尾に追加
-        var now = this.equip.weapon.shift();
-        this.equip.weapon.push(now);
-        this.setWeapon(this.equip.weapon[0]);
+        this.equip.switchOk = false;
+
+        var rot = 120;
+        if (this.equip.weapons.length == 2 && this.equip.using == 1) rot = 240;
+        this.parentScene.playerWeapon.tweener.clear()
+            .by({rotation: rot}, 300)
+            .call(function() {
+                this.equip.switchOk = true;
+            }.bind(this));
+
+        //現在使用武器設定
+        this.equip.using = (this.equip.using + 1) % this.equip.weapons.length;
+        this.setWeapon(this.equip.weapons[this.equip.using]);
+
         app.playSE("select");
-
-        this.parentScene.playerWeapon.tweener.clear().by({rotation: 120}, 300);
     },
 
     //武器変更
@@ -591,61 +667,6 @@ phina.define("qft.Player", {
         }.bind(this));
         return ret;
     },
-
-    //プレイヤー情報リセット
-    reset: function() {
-        //移動情報
-        this.vx = 0;
-        this.vy = 0;
-
-        //ステータス
-        this.hp = 100;
-
-        //各種フラグ
-        this.isJump = false;
-        this.isDead = false;
-        this.isCatchLadder = false;
-        this.isDrop = false;
-        this.onFloor = false;
-        this.isAdvanceAnimation = true;
-        this.ignoreCollision = false;
-
-        //経過時間系
-        this.mutekiTime = 0;
-        this.stopTime = 0;
-        this.downFrame = 0;
-        this.time = 0;
-
-        //アニメーション
-        this.setAnimation("walk");
-        this.beforeAnimation = "";
-        this.advanceTime = 6;
-
-        //装備
-        this.equip = {
-            weapon: [0],
-        };
-
-        //武器セット
-        this.setWeapon(0);
-
-        //所持アイテム
-        this.items = [];
-
-        //所持クリア条件キー
-        this.keys = [];
-
-        //討伐モンスター数
-        this.kill = 0;
-
-        //操作可能フラグ
-        this.isControl = true;
-
-        //多段ジャンプ最大回数
-        this.numJumpMax = 0;
-
-        return this;
-    },
 });
 
 //プレイヤー攻撃判定
@@ -794,36 +815,38 @@ phina.define("qft.PlayerWeapon", {
         this.superInit();
         this.player = player;
 
+        var that = this;
         this.base = phina.display.DisplayElement().addChildTo(this);
+        this.base.update = function() {
+            this.rotation = -that.rotation;
+        }
+        var param = {
+            width: 26,
+            height: 26,
+            fill: "rgba(0,0,0,0.0)",
+            stroke: "yellow",
+            strokeWidth: 2,
+            backgroundColor: 'transparent',
+        };
+        phina.display.RectangleShape(param).addChildTo(this.base).setPosition(0, -18);
 
         //武器リスト（３つ）
-        var that = this;
         this.weapons = [];
         var rad = 0;
         var rad_1 = (Math.PI*2) / 3;
         (3).times(function(i) {
-            var x =  Math.sin(rad)*20;
-            var y = -Math.cos(rad)*20;
-            rad += rad_1;
+            var x =  Math.sin(rad)*18;
+            var y = -Math.cos(rad)*18;
+            rad -= rad_1;
             this.weapons[i] = phina.display.Sprite("item", 24, 24)
                 .addChildTo(this)
-                .setPosition(x, y)
-                .setFrameIndex(i);
+                .setPosition(x, y);
+            this.weapons[i].index = i;
             this.weapons[i].update = function() {
                 this.rotation = -that.rotation;
+                var index = that.player.equip.weapons[this.index];
+                this.setFrameIndex(index);
             }
-            var param = {
-                width: 26,
-                height: 26,
-                fill: "rgba(0,0,0,0.0)",
-                stroke: "yellow",
-                strokeWidth: 2,
-                backgroundColor: 'transparent',
-            };
-            phina.display.RectangleShape(param).addChildTo(this.weapons[i]);
         }.bind(this));
-    },
-
-    update: function() {
     },
 });

@@ -94,7 +94,7 @@ phina.define("qft.MainScene", {
             var key = phina.display.DisplayElement()
                 .setPosition(x, y)
                 .addChildTo(this.baseLayer);
-            key.tweener.clear().moveTo(15+(this.player.keys.length-1)*24, 72, 500);
+            key.tweener.clear().moveTo(15+(this.player.keys.length-1)*24, 36, 500);
             var sp = phina.display.Sprite("item", 24, 24)
                 .setFrameIndex(ITEM_KEY)
                 .addChildTo(key);
@@ -372,24 +372,8 @@ phina.define("qft.MainScene", {
             this.text = "TIME:"+Math.floor(that.timeLimit/30);
         }
 
-        //プレイヤー現在装備表示
-        this.weaponBase = phina.display.DisplayElement().addChildTo(this).setPosition(16, 36);
-        var param = {
-            width: 26,
-            height: 26,
-            fill: "rgba(0,0,0,0.0)",
-            stroke: "yellow",
-            strokeWidth: 2,
-            backgroundColor: 'transparent',
-        };
-        phina.display.RectangleShape(param).addChildTo(this.weaponBase).setPosition(0, 0);
-        this.weapon = phina.display.Sprite("item", 24, 24).addChildTo(this.weaponBase).setPosition(0, 0);
-        var that = this;
-        this.weapon.update = function() {
-            var index = that.player.equip.weapon[0];
-            this.setFrameIndex(index);
-        }
-        this.playerWeapon = qft.PlayerWeapon(this.player).addChildTo(this).setPosition(SC_W-40, SC_H-40);
+        //プレイヤー装備武器表示
+        this.playerWeapon = qft.PlayerWeapon(this.player).addChildTo(this).setPosition(SC_W-30, SC_H-30);
     },
 
     //マップ情報の初期化
