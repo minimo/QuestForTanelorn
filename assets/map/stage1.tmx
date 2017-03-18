@@ -563,7 +563,7 @@
   <object id="180" name="Snake" type="enemy" x="4688" y="608" width="32" height="32"/>
   <object id="181" name="Slime" type="enemy" x="4672" y="432" width="32" height="32"/>
   <object id="193" name="up" type="check" x="1360" y="945" width="32" height="32"/>
-  <object id="196" name="rod" type="itembox" x="368" y="0" width="32" height="32"/>
+  <object id="196" name="rod" type="itembox" x="368" y="752" width="32" height="32"/>
   <object id="201" name="Slime" type="enemy" x="4752" y="588" width="32" height="32"/>
   <object id="202" name="Slime" type="enemy" x="3180" y="596" width="32" height="32"/>
   <object id="203" name="Slime" type="enemy" x="3064" y="552" width="32" height="32"/>
