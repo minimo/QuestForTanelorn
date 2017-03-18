@@ -334,7 +334,7 @@ phina.define("qft.Player", {
         this.equip = {
             using: 0,         //現在使用中（weaponsのindex）
             weapons: [0],     //所持リスト（最大３）
-            rank: [0, 0 , 0], //武器ランク
+            level: [0],       //武器レベル
             switchOk: true,   //変更可能フラグ
         };
 
@@ -408,26 +408,28 @@ phina.define("qft.Player", {
                 return e == item.kind;
             });
             if (index) {
-                //所持武器を拾ったらその武器のランクが上がる
-                this.equip.rank[index]++;
+                //所持武器を拾ったらその武器のレベルが上がる
+                this.equip.level[index]++;
             } else {
                 //持って無い場合
                 if (this.equip.weapons.length < 3) {
                     //リストに追加
                     this.equip.weapons.push(item.kind);
+                    this.equip.level.push(item.level);
                 } else {
                     //現在使用武器の手前の武器を捨てる
                     var dropIndex = this.equip.using == 0? 2: this.equip.using - 1;
                     var options = {
                         properties: {
                             kind: this.equip.weapons[dropIndex],
-                            rank: this.equip.rank[dropIndex],
+                            level: this.equip.level[dropIndex],
                         },
                     };
                     var drop = this.parentScene.spawnItem(this.x, this.y, options);
                     drop.vy = -5;
                     drop.throwAway = true;
                     this.equip.weapons[dropIndex] = item.kind;
+                    this.equip.level[dropIndex] = item.level;
                 }
             }
             app.playSE("getitem");

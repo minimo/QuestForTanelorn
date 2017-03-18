@@ -15,9 +15,6 @@ phina.define("qft.Item", {
     //アイテム種別
     kind: 0,
 
-    //ランク
-    rank: 0,
-
     //捨てアイテム
     throwAway: false,
 
@@ -40,11 +37,9 @@ phina.define("qft.Item", {
     init: function(parentScene, options) {
         this.superInit(parentScene, {width: 16, height: 16});
 
-        //アイテムランク
+        //アイテムレベル
         this.level = 0;
         if (options.properties) this.level = options.properties.level || 0;
-        this.rank = 0;
-        if (options.properties) this.rank = options.properties.rank || 0;
 
         //アイテム種別
         switch (options.name) {
