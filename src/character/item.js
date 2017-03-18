@@ -15,6 +15,9 @@ phina.define("qft.Item", {
     //アイテム種別
     kind: 0,
 
+    //アイテムレベル
+    level: 0,
+
     //捨てアイテム
     throwAway: false,
 
@@ -38,8 +41,7 @@ phina.define("qft.Item", {
         this.superInit(parentScene, {width: 16, height: 16});
 
         //アイテムレベル
-        this.level = 0;
-        if (options.properties) this.level = options.properties.level || 0;
+        this.level = options.properties? options.properties.level: 0;
 
         //アイテム種別
         switch (options.name) {
