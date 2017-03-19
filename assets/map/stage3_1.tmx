@@ -800,5 +800,13 @@
     <property name="vertical" type="bool" value="true"/>
    </properties>
   </object>
+  <object id="130" name="warp" type="gate" x="3040" y="2188" width="32" height="64">
+   <properties>
+    <property name="enterOffset" type="int" value="-16"/>
+    <property name="lock" type="bool" value="true"/>
+    <property name="nextID" type="int" value="64"/>
+    <property name="offset" type="int" value="32"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

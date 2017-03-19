@@ -234,6 +234,9 @@ phina.define("qft.StageController", {
                 case "event":
                     qft.MapObject.Event(this.parentScene, e).addChildTo(mapLayer.objLayer).setPosition(x, y);
                     break;
+                case "gate":
+                    qft.MapObject.Gate(this.parentScene, e).addChildTo(mapLayer.objLayer).setPosition(x, y);
+                    break;
             }
         }.bind(this));
         return mapLayer;

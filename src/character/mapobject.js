@@ -100,17 +100,24 @@ phina.define("qft.MapObject.Gate", {
     //実行済みフラグ
     already: false,
 
-    //ロックされているか
-    isLock: false,
-
     init: function(parentScene, options) {
         this.superInit(parentScene, {width: 36, height: 64});
         this.$safe(options);
 
         //スプライト
-        this.sprite = phina.display.Sprite("gate", 32, 32).addChildTo(this);
-        this.setAnimation("up");
-        this.advanceTime = 10;
+        this.sprite = phina.display.Sprite("gate", 16, 32)
+            .addChildTo(this)
+            .setScale(2)
+            .setFrameIndex(0);
+        this.advanceTime = 6;
+
+        this.time = 0;
+    },
+
+    update: function() {
+        if (this.time % this.advenceTime == 0) {
+            this.sprite.frameIndex++;
+        }
     },
 });
 
