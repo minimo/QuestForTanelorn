@@ -778,6 +778,7 @@ phina.define("qft.PlayerDummy", {
         this.superInit(assetName, 32, 32);
         this.frame = [];
         this.frame["stand"] = [13, 14];
+        this.frame["walk"] = [ 3,  4,  5,  4];
         this.frame["up"] =   [ 9, 10, 11, 10];
         this.frame["up_stop"] =   [10, "stop"];
         this.frame["down"] = [ 0,  1,  2,  1];
