@@ -1,5 +1,5 @@
 /*
- *  enemy.slime.js
+ *  enemy.flame.js
  *  2016/12/31
  *  @auther minimo  
  *  This Program is MIT license.

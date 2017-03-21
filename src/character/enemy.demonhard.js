@@ -1,5 +1,5 @@
 /*
- *  enemy.demon.js
+ *  enemy.demonhard.js
  *  2017/01/13
  *  @auther minimo  
  *  This Program is MIT license.
