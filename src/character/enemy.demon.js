@@ -91,7 +91,7 @@ phina.define("qft.Enemy.Demon", {
         if (look) this.vx *= 3;
 
         this.stopTime--;
-        if (this.stopTime > 15) {
+        if (this.stopTime > 0) {
             this.vx = 0;
         }
         if (this.stopTime < 0) {
