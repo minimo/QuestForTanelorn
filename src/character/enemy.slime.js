@@ -74,10 +74,9 @@ phina.define("qft.Enemy.Slime", {
             }
         }
         if (this.onFloor || this.isJump) {
-            if (this.direction == 0) {
-                this.vx = 2;
-            } else {
-                this.vx = -2;
+            this.vx =  2 + Math.floor(this.level*0.5);
+            if (this.direction == 180) {
+                this.vx *= -1;
             }
             if (this.attack) this.vx *= 3;
         }
@@ -86,7 +85,7 @@ phina.define("qft.Enemy.Slime", {
     setupAnimation: function() {
         this.spcialAnimation = false;
         this.frame = [];
-        this.frame["stand"] = [3, 4, 5, 4];
+        this.frame["stand"] = [0, 1, 2, 1];
         this.frame["jump"] = [3, "stop"];
         this.frame["walk"] = [3, 4, 5, 4];
         this.frame["up"] =   [3, 4, 5, 4];
