@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="200" tilewidth="16" tileheight="16" nextobjectid="159">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="200" tilewidth="16" tileheight="16" nextobjectid="239">
  <tileset firstgid="1" name="A1" tilewidth="16" tileheight="16" tilecount="768" columns="32">
   <image source="TileA1.png" width="512" height="384"/>
  </tileset>
@@ -834,5 +834,310 @@
   <object id="150" name="Wisp" type="enemy" x="704" y="128" width="32" height="32"/>
   <object id="151" name="Wisp" type="enemy" x="800" y="128" width="32" height="32"/>
   <object id="152" name="Wisp" type="enemy" x="832" y="176" width="32" height="32"/>
+  <object id="159" name="lamp" type="accessory" x="156" y="2968" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="161" name="lamp" type="accessory" x="80" y="2968" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="163" name="lamp" type="accessory" x="308" y="2792" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="168" name="lamp" type="accessory" x="628" y="2752" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="169" name="lamp" type="accessory" x="624" y="2596" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="170" name="lamp" type="accessory" x="724" y="2756" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="171" name="lamp" type="accessory" x="720" y="2596" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="172" name="lamp" type="accessory" x="676" y="2376" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="173" name="lamp" type="accessory" x="764" y="2376" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="174" name="lamp" type="accessory" x="588" y="2376" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="175" name="lamp" type="accessory" x="340" y="2216" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="176" name="lamp" type="accessory" x="400" y="2376" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="177" name="lamp" type="accessory" x="280" y="2376" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="178" name="lamp" type="accessory" x="164" y="2376" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="179" name="lamp" type="accessory" x="100" y="2216" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="180" name="lamp" type="accessory" x="100" y="2140" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="181" name="lamp" type="accessory" x="52" y="1964" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="183" name="lamp" type="accessory" x="332" y="1936" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="184" name="lamp" type="accessory" x="504" y="1936" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="185" name="lamp" type="accessory" x="624" y="1936" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="192" name="lamp" type="accessory" x="624" y="1816" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="193" name="lamp" type="accessory" x="504" y="1816" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="194" name="lamp" type="accessory" x="732" y="1552" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="195" name="lamp" type="accessory" x="564" y="1584" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="196" name="lamp" type="accessory" x="244" y="1644" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="197" name="lamp" type="accessory" x="368" y="1600" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="198" name="lamp" type="accessory" x="164" y="1808" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="200" name="lamp" type="accessory" x="848" y="1360" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="201" name="lamp" type="accessory" x="780" y="1360" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="202" name="lamp" type="accessory" x="652" y="1276" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="204" name="lamp" type="accessory" x="728" y="932" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="205" name="lamp" type="accessory" x="800" y="932" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="206" name="lamp" type="accessory" x="440" y="548" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="207" name="lamp" type="accessory" x="384" y="548" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="208" name="lamp" type="accessory" x="520" y="456" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="209" name="lamp" type="accessory" x="704" y="456" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="210" name="lamp" type="accessory" x="868" y="448" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="212" name="lamp" type="accessory" x="704" y="340" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="213" name="lamp" type="accessory" x="724" y="128" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="214" name="lamp" type="accessory" x="788" y="128" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="215" name="lamp" type="accessory" x="608" y="136" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="216" name="lamp" type="accessory" x="344" y="136" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="217" name="lamp" type="accessory" x="528" y="244" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="218" name="lamp" type="accessory" x="424" y="244" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="220" name="lamp" type="accessory" x="388" y="1260" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="221" name="lamp" type="accessory" x="324" y="1248" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="223" name="lamp" type="accessory" x="136" y="1224" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="224" name="lamp" type="accessory" x="256" y="1104" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="225" name="lamp" type="accessory" x="136" y="1104" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="226" name="lamp" type="accessory" x="196" y="840" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="227" name="lamp" type="accessory" x="300" y="876" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="228" name="lamp" type="accessory" x="444" y="876" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="229" name="lamp" type="accessory" x="592" y="876" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="230" name="lamp" type="accessory" x="756" y="600" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="231" name="lamp" type="accessory" x="612" y="560" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="232" name="lamp" type="accessory" x="260" y="372" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="233" name="lamp" type="accessory" x="60" y="416" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="234" name="lamp" type="accessory" x="192" y="148" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="236" name="lamp" type="accessory" x="516" y="2944" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="237" name="lamp" type="accessory" x="368" y="2960" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="238" name="lamp" type="accessory" x="500" y="2752" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

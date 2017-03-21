@@ -36,7 +36,7 @@ phina.define("qft.MapObject.Accessory", {
         this.superInit(parentScene, {width: this.options.width, height: this.options.height});
 
         this.id = options.id;
-        this.level = options.level || 0;
+        this.level = options.properties.level || 0;
     },
 
     setupAnimation: function() {
@@ -60,7 +60,7 @@ phina.define("qft.MapObject.Lamp", {
 
         //アニメーション設定
         this.setAnimation("normal");
-        this.advanceTime = 3;
+        this.advanceTime = 8;
     },
 });
 
