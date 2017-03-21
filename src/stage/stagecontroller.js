@@ -244,10 +244,10 @@ phina.define("qft.StageController", {
                             qft.MapObject.Lamp(this.parentScene, e).addChildTo(layer).setPosition(x, y);
                             break;
                         case "bonfire":
-                            qft.MapObject.Lamp(this.parentScene, e).addChildTo(layer).setPosition(x, y);
+                            qft.MapObject.Bonfire(this.parentScene, e).addChildTo(layer).setPosition(x, y);
                             break;
                         case "flame":
-                            qft.MapObject.Lamp(this.parentScene, e).addChildTo(layer).setPosition(x, y);
+                            qft.MapObject.Flame(this.parentScene, e).addChildTo(layer).setPosition(x, y);
                             break;
                     }
                     break;
