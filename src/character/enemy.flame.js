@@ -22,7 +22,7 @@ phina.define("qft.Enemy.Flame", {
         this.superInit(parentScene, {width: 16, height: 20});
 
         //表示用スプライト
-        this.sprite = phina.display.Sprite("flame", 24, 32).addChildTo(this);
+        this.sprite = phina.display.Sprite("flame02", 24, 32).addChildTo(this);
         this.sprite.setFrameTrimming(72, 0, 24, 128);
 
         this.setAnimation("normal");
