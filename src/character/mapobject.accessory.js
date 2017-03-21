@@ -38,6 +38,13 @@ phina.define("qft.MapObject.Accessory", {
         this.id = options.id;
         this.level = options.level || 0;
     },
+
+    setupAnimation: function() {
+        this.spcialAnimation = false;
+        this.frame = [];
+        this.frame["normal"] = [0, 1, 2, 3];
+        this.index = 0;
+    },
 });
 
 //ランプ
@@ -47,20 +54,13 @@ phina.define("qft.MapObject.Lamp", {
     init: function(parentScene, options) {
         this.superInit(parentScene, options);
 
-        //アニメーション設定
-        this.setAnimation("normal");
-        this.advanceTime = 3;
-
         //スプライト
         this.sprite = phina.display.Sprite("flame02", 24, 32).addChildTo(this).setFrameIndex(0);
         this.sprite.setFrameTrimming(this.level * 24, 0, 24, 128);
-    },
 
-    setupAnimation: function() {
-        this.spcialAnimation = false;
-        this.frame = [];
-        this.frame["normal"] = [0, 1, 2, 3];
-        this.index = 0;
+        //アニメーション設定
+        this.setAnimation("normal");
+        this.advanceTime = 3;
     },
 });
 
@@ -71,19 +71,29 @@ phina.define("qft.MapObject.Bonfire", {
     init: function(parentScene, options) {
         this.superInit(parentScene, options);
 
-        //アニメーション設定
-        this.setAnimation("normal");
-        this.advanceTime = 3;
-
         //スプライト
         this.sprite = phina.display.Sprite("flame02", 24, 32).addChildTo(this).setFrameIndex(0);
         this.sprite.setFrameTrimming(this.level * 24, 128, 24, 128);
-    },
 
-    setupAnimation: function() {
-        this.spcialAnimation = false;
-        this.frame = [];
-        this.frame["normal"] = [0, 1, 2, 3];
-        this.index = 0;
+        //アニメーション設定
+        this.setAnimation("normal");
+        this.advanceTime = 3;
+    },
+});
+
+//炎
+phina.define("qft.MapObject.Flame", {
+    superClass: "qft.MapObject.Accessory",
+
+    init: function(parentScene, options) {
+        this.superInit(parentScene, options);
+
+        //表示用スプライト
+        this.sprite = phina.display.Sprite("flame02", 24, 32).addChildTo(this);
+        this.sprite.setFrameTrimming(this.level * 24 + 72, 0, 24, 128);
+
+        //アニメーション設定
+        this.setAnimation("normal");
+        this.advanceTime = 3;
     },
 });
