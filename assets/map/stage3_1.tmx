@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="150" tilewidth="16" tileheight="16" nextobjectid="132">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="150" tilewidth="16" tileheight="16" nextobjectid="136">
  <tileset firstgid="1" name="A1" tilewidth="16" tileheight="16" tilecount="768" columns="32">
   <image source="TileA1.png" width="512" height="384"/>
  </tileset>
@@ -800,7 +800,7 @@
     <property name="vertical" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="130" name="warp" type="gate" x="3040" y="2188" width="32" height="64">
+  <object id="130" name="warp" type="gate" x="3040" y="2192" width="32" height="64">
    <properties>
     <property name="nextID" type="int" value="131"/>
    </properties>
@@ -808,6 +808,16 @@
   <object id="131" name="warp" type="gate" x="3664" y="2192" width="32" height="64">
    <properties>
     <property name="nextID" type="int" value="130"/>
+   </properties>
+  </object>
+  <object id="133" name="lamp" type="accessory" x="104" y="1520" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="135" name="lamp" type="accessory" x="208" y="1520" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
    </properties>
   </object>
  </objectgroup>

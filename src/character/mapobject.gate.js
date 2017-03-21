@@ -37,7 +37,8 @@ phina.define("qft.MapObject.Gate", {
             .addChildTo(this)
             .setScale(2)
             .setFrameIndex(0);
-        this.advanceTime = 6;
+        this.setAnimation("normal");
+        this.advanceTime = 4;
 
         //ゲート機能
         var properties = options.properties;
@@ -55,7 +56,6 @@ phina.define("qft.MapObject.Gate", {
                     this.tweener.clear()
                         .wait(120)
                         .call(function(){
-                            this.already = false;
                             next.leavePlayer();
                         }.bind(this));
                 });
@@ -66,10 +66,6 @@ phina.define("qft.MapObject.Gate", {
     },
 
     update: function() {
-        if (this.time % this.advenceTime == 0) {
-//            this.sprite.frameIndex++;
-        }
-
         //プレイヤーとの当たり判定
         var pl = this.parentScene.player;
         var hit = this.hitTestElement(pl);
@@ -77,7 +73,13 @@ phina.define("qft.MapObject.Gate", {
             this.already = true;
             this.flare('entergate');
         }
-        if (this.already && !hit) this.already = false;
+    },
+
+    setupAnimation: function(options) {
+        this.spcialAnimation = false;
+        this.frame = [];
+        this.frame["normal"] = [0, 1, 2, 3];
+        this.index = 0;
     },
 
     //プレイヤーがゲートに入る
