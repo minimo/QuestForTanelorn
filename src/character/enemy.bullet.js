@@ -42,9 +42,8 @@ phina.define("qft.Enemy.Bullet", {
     explode: false,
 
     init: function(parentScene, options) {
-        this.superInit(parentScene, {width: 20, height: 20});
-        options = options || {};
-        this.$extend(options);
+        options = (options || {}).$extend({width: 20, height: 20});
+        this.superInit(parentScene, options);
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("bullet", 24, 32).addChildTo(this).setFrameIndex(9);

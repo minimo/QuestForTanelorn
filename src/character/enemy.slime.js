@@ -28,9 +28,8 @@ phina.define("qft.Enemy.Slime", {
     point: 100,
 
     init: function(parentScene, options) {
-        this.superInit(parentScene, {width: 16, height: 18});
-
-        this.level = options.level || 0;
+        options = (options || {}).$extend({width: 16, height: 16});
+        this.superInit(parentScene, options);
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("monster01", 24, 32).addChildTo(this);

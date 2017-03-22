@@ -5,7 +5,7 @@
  *  This Program is MIT license.
  */
 
-//スライム
+//蛇
 phina.define("qft.Enemy.Snake", {
     superClass: "qft.Enemy",
 
@@ -28,7 +28,8 @@ phina.define("qft.Enemy.Snake", {
     point: 100,
 
     init: function(parentScene, options) {
-        this.superInit(parentScene, {width: 16, height: 18});
+        options = (options || {}).$extend({width: 16, height: 18});
+        this.superInit(parentScene, options);
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("monster01", 24, 32).addChildTo(this);

@@ -19,11 +19,15 @@ phina.define("qft.Enemy.Flame", {
     muteki: true,
 
     init: function(parentScene, options) {
-        this.superInit(parentScene, {width: 16, height: 20});
+        options = (options || {}).$extend({width: 16, height: 20});
+        this.superInit(parentScene, options);
+
+        this.pattern = options.pattern || 0;
+        this.power += this.level * 5;
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("flame02", 24, 32).addChildTo(this);
-        this.sprite.setFrameTrimming(72, 0, 24, 128);
+        this.sprite.setFrameTrimming(this.pattern * 24 + 72, 0, 24, 128);
 
         this.setAnimation("normal");
         this.advanceTime = 3;

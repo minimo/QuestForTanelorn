@@ -34,7 +34,8 @@ phina.define("qft.Enemy.Wisp", {
     point: 50,
 
     init: function(parentScene, options) {
-        this.superInit(parentScene, {width: 16, height: 16});
+        options = (options || {}).$extend({width: 16, height: 16});
+        this.superInit(parentScene, options);
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("monster01", 24, 32).addChildTo(this);
@@ -106,7 +107,8 @@ phina.define("qft.Enemy.WispHard", {
     point: 50,
 
     init: function(parentScene, options) {
-        this.superInit(parentScene, {width: 16, height: 16});
+        options = (options || {}).$extend({width: 16, height: 16});
+        this.superInit(parentScene, options);
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("monster01", 24, 32).addChildTo(this);
@@ -145,7 +147,7 @@ phina.define("qft.Enemy.WispHard", {
                     b.vy = -10;
                     b.vx = (i*2) * this.scaleX;
                 }
-                this.attackCount = 90;
+                this.attackCount = 150 - this.level * 15;
             }
         } else {
             this.attackCount = 30;
@@ -202,7 +204,7 @@ phina.define("qft.Enemy.WispBomb", {
     update: function() {
         if (this.onFloor) {
             if (this.onScreen) app.playSE("bomb");
-            var b = this.parentScene.spawnEnemy(this.x, this.y, "Flame", {pattern: "pattern1"});
+            var b = this.parentScene.spawnEnemy(this.x, this.y, "Flame", {pattern: 1});
             this.remove();
         }
     },

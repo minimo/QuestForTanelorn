@@ -33,9 +33,8 @@ phina.define("qft.Enemy.DemonHard", {
     flyingX: 0,     //飛行開始Ｘ座標
 
     init: function(parentScene, options) {
-        this.superInit(parentScene, {width: 20, height: 20});
-
-        this.level = options.level || 0;
+        options = (options || {}).$extend({width: 20, height: 20});
+        this.superInit(parentScene, options);
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("monster01", 24, 32).addChildTo(this);

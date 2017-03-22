@@ -39,8 +39,9 @@ phina.define("qft.Enemy", {
     init: function(parentScene, options) {
         options = options || {};
         this.superInit(parentScene, options);
-        this.$extend(options);
         this.setupAnimation();
+        this.options = options;
+        this.level = options.level || 0;
 
         this.on('enterframe', function() {
             //向きの指定
