@@ -143,7 +143,7 @@ phina.define("qft.Enemy.WispHard", {
             this.attackCount--;
             if (this.attackCount == 0) {
                 for (var i = 0; i < 4; i++) {
-                    var b = this.parentScene.spawnEnemy(this.x, this.y, "WispBomb", {pattern: "pattern1"});
+                    var b = this.parentScene.spawnEnemy(this.x, this.y, "WispBomb", {pattern: 1});
                     b.vy = -10;
                     b.vx = (i*2) * this.scaleX;
                 }
@@ -194,8 +194,8 @@ phina.define("qft.Enemy.WispBomb", {
         this.sprite = phina.display.Sprite("particle", 16, 16).addChildTo(this).setFrameIndex(31);
         this.advanceTime = 3;
 
-        this.pattern = options.pattern || "pattern1";
-        this.setAnimation(this.pattern);
+        this.pattern = options.pattern || 1;
+        this.setAnimation("pattern"+this.pattern);
 
         this.on('dead', function() {
         });
