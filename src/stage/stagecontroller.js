@@ -178,8 +178,8 @@ phina.define("qft.StageController", {
         var events = tmx.getObjectGroup("event").objects;
         events.forEach(function(e) {
             var that = this;
-            var x = e.x + e.width / 2;
-            var y = e.y + e.height / 2;
+            var x = e.x + (e.width || 16) / 2;
+            var y = e.y + (e.height || 16) / 2;
             switch (e.type) {
                 case "player":
                     if (e.name == "start") {
@@ -193,7 +193,11 @@ phina.define("qft.StageController", {
                     }
                     break;
                 case "enemy":
-                    qft.Enemy[e.name](this.parentScene, e.properties).addChildTo(mapLayer.enemyLayer).setPosition(x, y);
+                    if (qft.Enemy[e.name]) {
+                        qft.Enemy[e.name](this.parentScene, e.properties).addChildTo(mapLayer.enemyLayer).setPosition(x, y);
+                    } else {
+                        console.warn("unknown enemy: "+e.name);
+                    }
                     break;
                 case "item":
                     qft.Item(this.parentScene, e).addChildTo(mapLayer.objLayer).setPosition(x, y);
@@ -249,8 +253,15 @@ phina.define("qft.StageController", {
                         case "flame":
                             qft.MapObject.Flame(this.parentScene, e).addChildTo(layer).setPosition(x, y);
                             break;
+                        case "candle":
+                            qft.MapObject.Candle(this.parentScene, e).addChildTo(layer).setPosition(x, y);
+                            break;
+                        default:
+                            console.warn("unknown map accessory: "+e.name);
                     }
                     break;
+                default:
+                    console.warn("unknown map object type: "+e.type);
             }
         }.bind(this));
         return mapLayer;
