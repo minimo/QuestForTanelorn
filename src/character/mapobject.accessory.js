@@ -43,6 +43,7 @@ phina.define("qft.MapObject.Accessory", {
         this.spcialAnimation = false;
         this.frame = [];
         this.frame["normal"] = [0, 1, 2, 3];
+        this.frame["normal2"] = [1, 2, 3, 0];
         this.index = 0;
     },
 });
@@ -59,7 +60,11 @@ phina.define("qft.MapObject.Lamp", {
         this.sprite.setFrameTrimming(this.level * 24, 0, 24, 128);
 
         //アニメーション設定
-        this.setAnimation("normal");
+        if (this.id % 2) {
+            this.setAnimation("normal");
+        } else {
+            this.setAnimation("normal2");
+        }
         this.advanceTime = 8;
     },
 });
