@@ -102,3 +102,37 @@ phina.define("qft.MapObject.Flame", {
         this.advanceTime = 3;
     },
 });
+
+//火
+phina.define("qft.MapObject.Fire", {
+    superClass: "qft.MapObject.Accessory",
+
+    init: function(parentScene, options) {
+        this.superInit(parentScene, options);
+
+        //表示用スプライト
+        this.sprite = phina.display.Sprite("flame05", 24, 32).addChildTo(this);
+        this.sprite.setFrameTrimming(this.level * 24 + 72, 0, 24, 128);
+
+        //アニメーション設定
+        this.setAnimation("normal");
+        this.advanceTime = 3;
+    },
+});
+
+//燭台
+phina.define("qft.MapObject.Candle", {
+    superClass: "qft.MapObject.Accessory",
+
+    init: function(parentScene, options) {
+        this.superInit(parentScene, options);
+
+        //表示用スプライト
+        this.sprite = phina.display.Sprite("flame05", 24, 32).addChildTo(this);
+        this.sprite.setFrameTrimming(this.level * 24 + 72, 128, 24, 128);
+
+        //アニメーション設定
+        this.setAnimation("normal");
+        this.advanceTime = 3;
+    },
+});
