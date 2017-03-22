@@ -479,12 +479,20 @@ phina.define("qft.Player", {
 
     //武器変更
     setWeapon: function(kind) {
+        //攻撃属性初期化
+        this.attackCollision.isSlash = false;
+        this.attackCollision.isSting = false;
+        this.attackCollision.isBlow = false;
+        this.attackCollision.isArrow = false;
+        this.attackCollision.isFire = false;
+        this.attackCollision.isIce = false;
         switch (kind) {
             case 0:
                 //ショートソード
                 this.power = 10;
                 this.attackCollision.width = 14;
                 this.attackCollision.height = 30;
+                this.attackCollision.isSlash = true;
                 this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
                 this.weapon.setPosition(-3, 3);
                 break;
@@ -493,6 +501,7 @@ phina.define("qft.Player", {
                 this.power = 15;
                 this.attackCollision.width = 24;
                 this.attackCollision.height = 35;
+                this.attackCollision.isSlash = true;
                 this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
                 this.weapon.setPosition(-3, 3);
                 break;
@@ -501,6 +510,7 @@ phina.define("qft.Player", {
                 this.power = 20;
                 this.attackCollision.width = 14;
                 this.attackCollision.height = 26;
+                this.attackCollision.isSlash = true;
                 this.frame["attack"] = [ 44, 44, 44, 43, 43, 43, 42, 42, 42, 41, 41, 41, "stop"];
                 this.weapon.setPosition(-3, 3);
                 break;
@@ -509,6 +519,7 @@ phina.define("qft.Player", {
                 this.power = 10;
                 this.attackCollision.width = 39;
                 this.attackCollision.height = 10;
+                this.attackCollision.isSting = true;
                 this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
                 this.weapon.setPosition(0, 0);
                 break;
@@ -517,6 +528,7 @@ phina.define("qft.Player", {
                 this.power = 5;
                 this.attackCollision.width = 10;
                 this.attackCollision.height = 5;
+                this.attackCollision.isBlow = true;
                 this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
                 this.weapon.setPosition(0, 0);
                 break;
@@ -525,6 +537,8 @@ phina.define("qft.Player", {
                 this.power = 10;
                 this.attackCollision.width = 10;
                 this.attackCollision.height = 5;
+                this.attackCollision.isBlow = true;
+                this.attackCollision.isFire = true;
                 this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
                 this.weapon.setPosition(0, 0);
                 break;
@@ -679,8 +693,16 @@ phina.define("qft.PlayerAttack", {
     //攻撃力
     power: 1,
 
-    //あたり判定発生フラグ
+    //当たり判定発生フラグ
     isCollision: true,
+
+    //属性
+    isSlash: false,
+    isSting: false,
+    isBlow: false,
+    isArrow: false,
+    isFire: false,
+    isIce: false, 
 
     init: function(parentScene, options) {
         this.superInit(options);
@@ -697,11 +719,14 @@ phina.define("qft.PlayerAttack", {
                 this.sprite = phina.display.Sprite("item", 24, 24).addChildTo(this).setFrameIndex(30);
                 this.setAnimation("arrow");
                 this.frame = [30];
+                this.isArrow = true;
+                this.isSting = true;
                 break;
             case "fireball":
                 this.sprite = phina.display.Sprite("bullet", 24, 32).addChildTo(this).setFrameIndex(9);
                 this.power = options.power || 0;
                 this.frame = [9,10,11,10];
+                this.isFire = true;
                 break;
         }
     },
