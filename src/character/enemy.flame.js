@@ -18,11 +18,15 @@ phina.define("qft.Enemy.Flame", {
     //無敵フラグ
     muteki: true,
 
+    //寿命
+    lifeSpan: 120,
+
     init: function(parentScene, options) {
         options = (options || {}).$extend({width: 16, height: 20});
         this.superInit(parentScene, options);
 
         this.pattern = options.pattern || 0;
+        this.lifeSpan = options.lifeSpan || 120;
         this.power += this.level * 5;
 
         //表示用スプライト
@@ -36,15 +40,15 @@ phina.define("qft.Enemy.Flame", {
     },
 
     update: function() {
-        if (this.time > 120) {
-            this.remove();
-        } else if (this.time > 90) {
+        if (this.lifeSpan == 0) this.remove();
+        if (this.lifeSpan < 30) {
             if (this.time % 2 == 0) this.visible = !this.visible;
-        } else if (this.time > 60) {
+        } else if (this.lifeSpan < 60){
             if (this.time % 5 == 0) this.visible = !this.visible;
-        } else if (this.time > 30) {
+        } else if (this.lifeSpan < 90) {
             if (this.time % 10 == 0) this.visible = !this.visible;
         }
+        this.lifeSpan--;
     },
 
     setupAnimation: function() {
