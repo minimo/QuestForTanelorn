@@ -42,8 +42,8 @@ phina.define("qft.MapObject.Accessory", {
     setupAnimation: function() {
         this.spcialAnimation = false;
         this.frame = [];
-        this.frame["normal"] = [0, 1, 2, 3];
-        this.frame["normal2"] = [1, 2, 3, 0];
+        this.frame["normal"] = [2, 1, 0, 3];
+        this.frame["normal2"] = [1, 0, 3, 2];
         this.index = 0;
     },
 });
