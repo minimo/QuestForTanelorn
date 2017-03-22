@@ -702,7 +702,7 @@ phina.define("qft.PlayerAttack", {
     isBlow: false,
     isArrow: false,
     isFire: false,
-    isIce: false, 
+    isIce: false,
 
     init: function(parentScene, options) {
         this.superInit(options);

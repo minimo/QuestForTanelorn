@@ -36,6 +36,14 @@ phina.define("qft.Enemy", {
     //ポイント
     point: 0,
 
+    //属性ダメージ倍率
+    damageSlash: 1,
+    damageSting: 1,
+    damageBlow: 1,
+    damageArrow: 1,
+    damageFire: 1,
+    damageIce: 1,
+
     init: function(parentScene, options) {
         options = options || {};
         this.superInit(parentScene, options);
@@ -93,6 +101,13 @@ phina.define("qft.Enemy", {
         }
 
         var power = target.power;
+        if (target.isSlash) power *= this.damageSlash;
+        if (target.isSting) power *= this.damageSting;
+        if (target.isBlow) power *= this.damageBlow;
+        if (target.isArrow) power *= this.damageArrow;
+        if (target.isFire) power *= this.damageFire;
+        if (target.isIce) power *= this.damageIce;
+        power = Math.floor(power);
         this.knockback(power, dir);
         this.mutekiTime = 10;
         this.hp -= power;
