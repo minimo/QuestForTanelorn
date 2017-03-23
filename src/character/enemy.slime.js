@@ -27,6 +27,10 @@ phina.define("qft.Enemy.Slime", {
     //得点
     point: 100,
 
+    //属性ダメージ倍率
+    damageSting: 0.8,
+    damageBlow: 0.5,
+
     init: function(parentScene, options) {
         options = (options || {}).$extend({width: 16, height: 16});
         this.superInit(parentScene, options);

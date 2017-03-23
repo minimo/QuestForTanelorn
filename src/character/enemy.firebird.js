@@ -35,7 +35,8 @@ phina.define("qft.Enemy.FireBird", {
 
     //属性ダメージ倍率
     damageArrow: 3,
-    damegeIce: 5,
+    damageFire: 0.5,
+    damegeIce: 2,
 
     defaultOptions: {
         speed: 2,

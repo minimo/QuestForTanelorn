@@ -489,7 +489,7 @@ phina.define("qft.Player", {
         switch (kind) {
             case 0:
                 //ショートソード
-                this.power = 10;
+                this.attackCollision.power = 10;
                 this.attackCollision.width = 14;
                 this.attackCollision.height = 30;
                 this.attackCollision.isSlash = true;
@@ -498,7 +498,7 @@ phina.define("qft.Player", {
                 break;
             case 1:
                 //ロングソード
-                this.power = 15;
+                this.attackCollision.power = 15;
                 this.attackCollision.width = 24;
                 this.attackCollision.height = 35;
                 this.attackCollision.isSlash = true;
@@ -507,7 +507,7 @@ phina.define("qft.Player", {
                 break;
             case 2:
                 //斧
-                this.power = 20;
+                this.attackCollision.power = 20;
                 this.attackCollision.width = 14;
                 this.attackCollision.height = 26;
                 this.attackCollision.isSlash = true;
@@ -516,7 +516,7 @@ phina.define("qft.Player", {
                 break;
             case 3:
                 //槍
-                this.power = 10;
+                this.attackCollision.power = 10;
                 this.attackCollision.width = 39;
                 this.attackCollision.height = 10;
                 this.attackCollision.isSting = true;
@@ -525,7 +525,7 @@ phina.define("qft.Player", {
                 break;
             case 4:
                 //弓
-                this.power = 5;
+                this.attackCollision.power = 5;
                 this.attackCollision.width = 10;
                 this.attackCollision.height = 5;
                 this.attackCollision.isBlow = true;
@@ -534,7 +534,7 @@ phina.define("qft.Player", {
                 break;
             case 5:
                 //魔法の杖
-                this.power = 10;
+                this.attackCollision.power = 10;
                 this.attackCollision.width = 10;
                 this.attackCollision.height = 5;
                 this.attackCollision.isBlow = true;
@@ -598,7 +598,8 @@ phina.define("qft.Player", {
                     .call(function() {
                         that.attack = false;
                     });
-                    var arrow = qft.PlayerAttack(this.parentScene, {width: 15, height: 5, power: this.power, type: "arrow"})
+                    var arrowPower = this.attackCollision.power;
+                    var arrow = qft.PlayerAttack(this.parentScene, {width: 15, height: 5, power: arrowPower, type: "arrow"})
                         .addChildTo(this.parentScene.playerLayer)
                         .setScale(this.scaleX, 1)
                         .setPosition(this.x, this.y);
