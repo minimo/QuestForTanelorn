@@ -18,11 +18,11 @@ phina.define("qft.StageController", {
     timeLimit: FPS*60*5,
 
     //経過時間トリガイベント
-    seq: [],
+    seq: null,
     index: 0,
 
     //マップトリガイベント
-    event: [],
+    event: null,
 
     init: function(parentScene) {
         this.superInit();
@@ -30,6 +30,9 @@ phina.define("qft.StageController", {
         this.parentScene = parentScene;
         this.mapLayer = [];
         this.player = parentScene.player;
+
+        this.seq = [];
+        this.event = [];
     },
 
     //時間イベント追加
