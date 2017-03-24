@@ -147,18 +147,18 @@ phina.define("qft.Enemy.WispHard", {
         }
 
         //攻撃
-        if (this.getDistancePlayer() < 128) {
+        if (this.getDistancePlayer() < 160) {
             this.attackCount--;
             if (this.attackCount == 0) {
-                for (var i = 0; i < 4; i++) {
+                for (var i = 0; i < this.level+4; i++) {
                     var b = this.parentScene.spawnEnemy(this.x, this.y, "WispBomb", {pattern: 1});
                     b.vy = -10;
                     b.vx = (i*2) * this.scaleX;
                 }
-                this.attackCount = 150 - this.level * 15;
+                this.attackCount = 180 - this.level * 15;
             }
         } else {
-            this.attackCount = 30;
+            this.attackCount = 60;
         }
     },
 
