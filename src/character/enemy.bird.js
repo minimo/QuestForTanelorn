@@ -34,7 +34,7 @@ phina.define("qft.Enemy.Bird", {
     point: 200,
 
     //属性ダメージ倍率
-    damageArrow: 3,
+    damageArrow: 5,
 
     defaultOptions: {
         speed: 2,
