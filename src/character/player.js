@@ -472,13 +472,16 @@ phina.define("qft.Player", {
 
         //現在使用武器設定
         this.equip.using = (this.equip.using + 1) % this.equip.weapons.length;
-        this.setWeapon(this.equip.weapons[this.equip.using]);
+        this.setWeapon(this.equip.weapons[this.equip.using], this.equip.level[this.equip.using]);
 
         app.playSE("select");
     },
 
     //武器変更
-    setWeapon: function(kind) {
+    setWeapon: function(kind, level) {
+        kind = kind || 0;
+        level = level || 0;
+
         //攻撃属性初期化
         this.attackCollision.isSlash = false;
         this.attackCollision.isSting = false;
@@ -486,10 +489,11 @@ phina.define("qft.Player", {
         this.attackCollision.isArrow = false;
         this.attackCollision.isFire = false;
         this.attackCollision.isIce = false;
+
         switch (kind) {
             case 0:
                 //ショートソード
-                this.attackCollision.power = 10;
+                this.attackCollision.power = 10 + level * 10;
                 this.attackCollision.width = 14;
                 this.attackCollision.height = 30;
                 this.attackCollision.isSlash = true;
@@ -498,7 +502,7 @@ phina.define("qft.Player", {
                 break;
             case 1:
                 //ロングソード
-                this.attackCollision.power = 15;
+                this.attackCollision.power = 20 + level * 10;
                 this.attackCollision.width = 24;
                 this.attackCollision.height = 35;
                 this.attackCollision.isSlash = true;
@@ -507,7 +511,7 @@ phina.define("qft.Player", {
                 break;
             case 2:
                 //斧
-                this.attackCollision.power = 20;
+                this.attackCollision.power = 30 + level * 10;
                 this.attackCollision.width = 14;
                 this.attackCollision.height = 26;
                 this.attackCollision.isSlash = true;
@@ -516,7 +520,7 @@ phina.define("qft.Player", {
                 break;
             case 3:
                 //槍
-                this.attackCollision.power = 10;
+                this.attackCollision.power = 15 + level * 10;
                 this.attackCollision.width = 39;
                 this.attackCollision.height = 10;
                 this.attackCollision.isSting = true;
@@ -525,7 +529,7 @@ phina.define("qft.Player", {
                 break;
             case 4:
                 //弓
-                this.attackCollision.power = 5;
+                this.attackCollision.power = 1;
                 this.attackCollision.width = 10;
                 this.attackCollision.height = 5;
                 this.attackCollision.isBlow = true;
@@ -549,6 +553,7 @@ phina.define("qft.Player", {
 
     //装備武器により攻撃モーションを変える
     weaponAttack: function() {
+        var level = this.equip.level[this.equip.using];
         this.attack = true;
         var that = this;
         switch (this.weapon.frameIndex) {
@@ -598,7 +603,7 @@ phina.define("qft.Player", {
                     .call(function() {
                         that.attack = false;
                     });
-                    var arrowPower = this.attackCollision.power;
+                    var arrowPower = 5 + level * 10;
                     var arrow = qft.PlayerAttack(this.parentScene, {width: 15, height: 5, power: arrowPower, type: "arrow"})
                         .addChildTo(this.parentScene.playerLayer)
                         .setScale(this.scaleX, 1)
@@ -617,15 +622,16 @@ phina.define("qft.Player", {
                     .call(function() {
                         that.attack = false;
                     });
-                    var arrow = qft.PlayerAttack(this.parentScene, {width: 15, height: 10, index: 30, power: 20, type: "fireball"})
+                    var magicPower = 20 + level * 10;
+                    var magic = qft.PlayerAttack(this.parentScene, {width: 15, height: 10, index: 30, power: magicPower, type: "fireball"})
                         .addChildTo(this.parentScene.playerLayer)
                         .setScale(this.scaleX, 1)
                         .setPosition(this.x, this.y);
-                    arrow.tweener.setUpdateType('fps').clear()
+                    magic.tweener.setUpdateType('fps').clear()
                         .by({x: 100*this.scaleX}, 30, "easeInQuart")
                         .call(function() {
                             this.remove();
-                        }.bind(arrow));
+                        }.bind(magic));
                 break;
         }
         return this;
@@ -718,16 +724,19 @@ phina.define("qft.PlayerAttack", {
         switch (this.type) {
             case "arrow":
                 this.sprite = phina.display.Sprite("item", 24, 24).addChildTo(this).setFrameIndex(30);
-                this.setAnimation("arrow");
                 this.frame = [30];
                 this.isArrow = true;
                 this.isSting = true;
                 break;
             case "fireball":
                 this.sprite = phina.display.Sprite("bullet", 24, 32).addChildTo(this).setFrameIndex(9);
-                this.power = options.power || 0;
-                this.frame = [9,10,11,10];
+                this.frame = [9, 10, 11, 10];
                 this.isFire = true;
+                break;
+            case "masakari":
+                this.sprite = phina.display.Sprite("item", 24, 24).addChildTo(this).setFrameIndex(2);
+                this.frame = [2];
+                this.isSlash = true;
                 break;
         }
     },
@@ -760,10 +769,9 @@ phina.define("qft.PlayerAttack", {
         this.time++;
     },
 
+    //ヒット後処理
     hit: function(target) {
         switch (this.type) {
-            case "arrow":
-                break;
             case "fireball":
                 this.explode(target);
                 break;
@@ -772,7 +780,15 @@ phina.define("qft.PlayerAttack", {
 
     //刺さる
     stick: function(e) {
-        app.playSE("arrowstick");
+        //効果音
+        switch (this.type) {
+            case "arrow":
+                app.playSE("arrowstick");
+                break;
+            case "masakari":
+                break;
+        }
+
         if (this.scaleX == 1) {
             this.x = e.left;
         } else {
@@ -790,9 +806,6 @@ phina.define("qft.PlayerAttack", {
         this.parentScene.spawnEffect(this.x, this.y);
         app.playSE("bomb");
         this.remove();
-    },
-
-    setAnimation: function(name) {
     },
 });
 
