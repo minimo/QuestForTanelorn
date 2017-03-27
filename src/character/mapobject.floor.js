@@ -33,17 +33,17 @@ phina.define("qft.MapObject.Floor", {
         this.superInit(parentScene, {width: this.options.width, height: this.options.height});
 
         this.id = options.id;
-        this.moveAngle = options.moveAngle || 0;
-        this.moveLength = options.moveLength || 128;
-        this.moveSpeed = options.moveSpeed || 60;
-        this.moveWait = options.moveWait || 60;
+        this.moveAngle = options.properties.moveAngle || 0;
+        this.moveLength = options.properties.moveLength || 128;
+        this.moveSpeed = options.properties.moveSpeed || 60;
+        this.moveWait = options.properties.moveWait || 60;
 
         //移動パターン
-        this.startX = e.x + (e.width || 16) / 2;
-        this.startY = e.y + (e.height || 16) / 2;
-        var rad = this.moveAngle.toRad();
-        this.endX = this.x + Math.cos(rad) * this.moveLength;
-        this.endY = this.y + Math.sin(rad) * this.moveLength;
+        this.startX = options.x + (options.width || 16) / 2;
+        this.startY = options.y + (options.height || 16) / 2;
+        var rad = this.moveAngle.toRadian();
+        this.endX = this.startX + Math.cos(rad) * this.moveLength;
+        this.endY = this.startY + Math.sin(rad) * this.moveLength;
         this.tweener.clear()
             .moveTo(this.endX, this.endY, this.moveSpeed, "easeInOutSine")
             .wait(this.moveWait)
@@ -53,13 +53,13 @@ phina.define("qft.MapObject.Floor", {
 
         //スプライト
         this.index = options.index;
-        this.sprite = phina.display.Sprite("block", 32, 32).addChildTo(this).setFrameIndex(this.index);
+//        this.sprite = phina.display.Sprite("block", 32, 32).addChildTo(this).setFrameIndex(this.index);
     },
 
     update: function(e) {
         if (this.collision) {
-            this.collision.vx = this.collision.x - this.x;
-            this.collision.vy = this.collision.y - this.y;
+            this.collision.vx = this.x - this.collision.x;
+            this.collision.vy = this.y - this.collision.y;
             this.collision.x = this.x;
             this.collision.y = this.y;
         }
@@ -70,10 +70,11 @@ phina.define("qft.MapObject.Floor", {
         this.collision = phina.display.RectangleShape({width: this.width, height: this.height})
             .addChildTo(layer)
             .setPosition(this.x, this.y)
-            .setVisible(DEBUG_COLLISION);
+            .setVisible(true);
         this.collision.alpha = 0.3;
         this.collision.vx = 0;
         this.collision.vy = 0;
         this.collision.ignore = false;
+        this.collision.type = "floor";
     }
 });

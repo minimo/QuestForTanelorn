@@ -286,6 +286,12 @@ phina.define("qft.Character", {
             if (ret.collisionScript) {
                 ret.collisionScript(this, 2);
             }
+            //動く床の場合
+            if (this._collision[2].type == "floor") {
+                this.friction = 0;
+            } else {
+                this.friction = 0.5;
+            }
         }
         //右側接触
         if (this._collision[1].hit && !this.isCatchLadder) {
