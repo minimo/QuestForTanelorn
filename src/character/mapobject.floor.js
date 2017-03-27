@@ -35,6 +35,18 @@ phina.define("qft.MapObject.Floor", {
         this.id = options.id;
         this.moveAngle = options.moveAngle || 0;
         this.moveLength = options.moveLength || 128;
+        this.moveSpeed = options.moveSpeed || 1;
+
+        //移動パターン
+        this.startX = e.x + (e.width || 16) / 2;
+        this.startY = e.y + (e.height || 16) / 2;
+        var rad = this.moveAngle.toRad();
+        this.endX = this.x + Math.cos(rad) * this.moveLength;
+        this.endY = this.y + Math.sin(rad) * this.moveLength;
+        this.tweener.clear()
+            .moveTo(this.endX, this.endY, this.moveSpeed, "easeInOutSine")
+            .moveTo(this.startX, this.startY, this.moveSpeed, "easeInOutSine")
+            .setLoop(true);
 
         //スプライト
         this.index = options.index;
