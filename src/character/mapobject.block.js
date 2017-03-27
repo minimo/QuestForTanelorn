@@ -55,6 +55,13 @@ phina.define("qft.MapObject.Block", {
         this.waku = phina.display.RectangleShape(param).setPosition(0, 0);
         if (options.enableFrame) this.waku.addChildTo(this);
 
+        //スクリプト
+        if (options.properties.script) {
+            var sc = "(function(app) {"+options.properties.script+"})";
+            var f = eval(sc);
+            this.on('enterframe', f);
+        }
+
         this.on('dead', function() {
             this.sprite.remove();
             this.waku.remove();
@@ -130,4 +137,16 @@ phina.define("qft.MapObject.Block", {
                 app.playSE("hit_blunt");
             });
     },
+
+    //当たり判定の追加
+    addCollision: function (layer) {
+        this.collision = phina.display.RectangleShape({width: 32, height: 32})
+            .addChildTo(layer)
+            .setPosition(this.x, this.y)
+            .setVisible(DEBUG_COLLISION);
+        this.collision.alpha = 0.3;
+        this.collision.vx = 0;
+        this.collision.vy = 0;
+        this.collision.ignore = false;
+    }
 });
