@@ -111,7 +111,7 @@ phina.define("qft.Enemy.FireBird", {
             this.speed = this.options.speed;
             this.returnTime -= 1;
             //落し物
-            if (this.time % 90 == this.bombInterval) {
+            if (this.getDistancePlayer() < 512 && this.time % 90 == this.bombInterval) {
                 this.parentScene.spawnEnemy(this.x, this.y, "FireBirdBomb", {});
             }
         }

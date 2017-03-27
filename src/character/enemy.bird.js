@@ -108,7 +108,7 @@ phina.define("qft.Enemy.Bird", {
         }
 
         //落し物
-        if (this.time % 90 == this.bombInterval) {
+        if (this.getDistancePlayer() < 512 && this.time % 90 == this.bombInterval) {
             this.parentScene.spawnEnemy(this.x, this.y, "BirdBomb", {});
         }
 
