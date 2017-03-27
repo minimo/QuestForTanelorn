@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="200" tilewidth="16" tileheight="16" nextobjectid="239">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="200" tilewidth="16" tileheight="16" nextobjectid="240">
  <tileset firstgid="1" name="A1" tilewidth="16" tileheight="16" tilecount="768" columns="32">
   <image source="TileA1.png" width="512" height="384"/>
  </tileset>
@@ -814,7 +814,7 @@
   <object id="128" name="in" type="check" x="760" y="916" width="32" height="32"/>
   <object id="138" name="Slime" type="enemy" x="600" y="636" width="32" height="32"/>
   <object id="139" name="Snake" type="enemy" x="412" y="956" width="32" height="32"/>
-  <object id="140" name="Snake" type="enemy" x="124" y="952" width="32" height="32"/>
+  <object id="140" name="Snake" type="enemy" x="296" y="948" width="32" height="32"/>
   <object id="141" name="Snake" type="enemy" x="632" y="932" width="32" height="32"/>
   <object id="142" name="Demon" type="enemy" x="508" y="956" width="32" height="32"/>
   <object id="144" name="Demon" type="enemy" x="116" y="248" width="32" height="32"/>
@@ -1139,5 +1139,6 @@
     <property name="level" type="int" value="1"/>
    </properties>
   </object>
+  <object id="239" name="rod" type="itembox" x="108" y="956" width="32" height="32"/>
  </objectgroup>
 </map>
