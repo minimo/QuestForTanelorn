@@ -35,7 +35,8 @@ phina.define("qft.MapObject.Floor", {
         this.id = options.id;
         this.moveAngle = options.moveAngle || 0;
         this.moveLength = options.moveLength || 128;
-        this.moveSpeed = options.moveSpeed || 1;
+        this.moveSpeed = options.moveSpeed || 60;
+        this.moveWait = options.moveWait || 60;
 
         //移動パターン
         this.startX = e.x + (e.width || 16) / 2;
@@ -45,7 +46,9 @@ phina.define("qft.MapObject.Floor", {
         this.endY = this.y + Math.sin(rad) * this.moveLength;
         this.tweener.clear()
             .moveTo(this.endX, this.endY, this.moveSpeed, "easeInOutSine")
+            .wait(this.moveWait)
             .moveTo(this.startX, this.startY, this.moveSpeed, "easeInOutSine")
+            .wait(this.moveWait)
             .setLoop(true);
 
         //スプライト
@@ -55,6 +58,8 @@ phina.define("qft.MapObject.Floor", {
 
     update: function(e) {
         if (this.collision) {
+            this.collision.vx = this.collision.x - this.x;
+            this.collision.vy = this.collision.y - this.y;
             this.collision.x = this.x;
             this.collision.y = this.y;
         }
