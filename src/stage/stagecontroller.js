@@ -147,9 +147,11 @@ phina.define("qft.StageController", {
         //マップ当たり判定取得
         var objects = tmx.getObjectGroup("collision").objects;
         objects.forEach(function(e) {
-            var c = phina.display.RectangleShape({width: e.width, height: e.height})
+            var width = e.width || 16;
+            var height = e.height || 16;
+            var c = phina.display.RectangleShape({width: width, height: height})
                 .addChildTo(mapLayer.collisionLayer)
-                .setPosition(e.x+e.width/2, e.y+e.height/2)
+                .setPosition(e.x+width/2, e.y+height/2)
                 .setVisible(DEBUG_COLLISION);
             c.on('enterframe', function() {
                 this.x += this.vx;
