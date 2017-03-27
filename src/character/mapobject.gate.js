@@ -16,14 +16,14 @@ phina.define("qft.MapObject.Gate", {
     //重力加速度
     gravity: 0.0,
 
-    //アニメーション間隔
-    advanceTime: 3,
-
     //地形無視
     ignoreCollision: true,
 
     //実行済みフラグ
     already: false,
+
+    //アニメーションフラグ
+    isAdvanceAnimation: false,
 
     init: function(parentScene, options) {
         this.superInit(parentScene, {width: 36, height: 64});
@@ -33,12 +33,7 @@ phina.define("qft.MapObject.Gate", {
         this.offset = options.properties.offset || 0;
 
         //スプライト
-        this.sprite = phina.display.Sprite("gate", 16, 32)
-            .addChildTo(this)
-            .setScale(2)
-            .setFrameIndex(0);
-        this.setAnimation("normal");
-        this.advanceTime = 4;
+        this.sprite = null;
 
         //ゲート機能
         var properties = options.properties;
@@ -54,8 +49,10 @@ phina.define("qft.MapObject.Gate", {
                     this.enterPlayer();
                     this.parentScene.warp(next.x, next.y+next.offset);
                     this.tweener.clear()
-                        .wait(120)
+                        .wait(135)
                         .call(function(){
+                            this.already = false;
+                            next.already = true;
                             next.leavePlayer();
                         }.bind(this));
                 });
@@ -73,22 +70,34 @@ phina.define("qft.MapObject.Gate", {
             this.already = true;
             this.flare('entergate');
         }
-    },
 
-    setupAnimation: function(options) {
-        this.spcialAnimation = false;
-        this.frame = [];
-        this.frame["normal"] = [0, 1, 2, 3];
-        this.index = 0;
+        //パーティクル
+        if (this.time % 3 == 0) {
+            (2).times(function(i) {
+                var sp = phina.display.Sprite("particle", 16, 16)
+                    .addChildTo(this)
+                    .setFrameIndex(0)
+                    .setScale(0)
+                    .setPosition(Math.randint(-16, 16), Math.randint(-3, 3));
+                sp.alpha = 0.3;
+                sp.tweener.clear()
+                    .by({y: -32, alpha:  0.7, scaleX:  0.5, scaleY:  0.5}, 500, "easeInSine")
+                    .by({y: -32, alpha: -0.7, scaleX: -0.5, scaleY: -0.5}, 500, "easeInSine")
+                    .call(function() {
+                        this.remove();
+                    }.bind(sp));
+            }.bind(this));
+        }
     },
 
     //プレイヤーがゲートに入る
     enterPlayer: function() {
-        var enterOffset = this.enterOffset || 0;
+        var enterOffset = 0;
         var player = this.parentScene.player;
         player.alpha = 0;
         player.isControl = false;
         player.muteki = true;
+
         var pl = qft.PlayerDummy("player1")
             .setPosition(player.x, player.y)
             .addChildTo(this.parentScene.mapLayer.playerLayer);
@@ -110,7 +119,7 @@ phina.define("qft.MapObject.Gate", {
         player.isControl = false;
         player.muteki = true;
         var pl = qft.PlayerDummy("player1")
-            .setPosition(this.x, this.y+16)
+            .setPosition(this.x, this.y)
             .addChildTo(this.parentScene.mapLayer.playerLayer);
         pl.alpha = 0;
         pl.setAnimation("walk");
