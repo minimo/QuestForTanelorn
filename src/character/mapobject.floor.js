@@ -44,14 +44,14 @@ phina.define("qft.MapObject.Floor", {
         //始点と終点
         this.startX = options.x + (options.width || 16) / 2;
         this.startY = options.y + (options.height || 16) / 2;
+        var rad = this.moveAngle.toRadian();
+        this.endX = this.startX + Math.cos(rad) * this.moveLength;
+        this.endY = this.startY + Math.sin(rad) * this.moveLength;
 
         //移動パターン
         switch (this.moveType) {
             //直線運動
             case "linear":
-                var rad = this.moveAngle.toRadian();
-                this.endX = this.startX + Math.cos(rad) * this.moveLength;
-                this.endY = this.startY + Math.sin(rad) * this.moveLength;
                 this.tweener.clear()
                     .moveTo(this.endX, this.endY, this.moveSpeed, "easeInOutSine")
                     .wait(this.moveWait)
@@ -65,13 +65,13 @@ phina.define("qft.MapObject.Floor", {
                 if (options.properties.counterClockWise) {
                     //反時計回り
                     this.tweener.clear()
-                        .to({angle: -360}, moveSpeed)
+                        .to({angle: -360}, this.moveSpeed)
                         .set({angle: 0})
                         .setLoop(true);
                 } else {
                     //時計回り
                     this.tweener.clear()
-                        .to({angle: 360}, moveSpeed)
+                        .to({angle: 360}, this.moveSpeed)
                         .set({angle: 0})
                         .setLoop(true);
                     break;
@@ -94,10 +94,10 @@ phina.define("qft.MapObject.Floor", {
     },
 
     update: function(e) {
-        if (this.type == "circle") {
-            var rad = this.angle.toRadian();
-            this.x = this.startX + Math.cos(rad) * this.moveRadius;
-            this.y = this.startY + Math.sin(rad) * this.moveRadius;
+        if (this.moveType == "circle") {
+            var rad = this.radius.toRadian();
+            this.x = this.endX + Math.cos(rad) * this.moveRadius;
+            this.y = this.endY + Math.sin(rad) * this.moveRadius;
         }
 
         if (this.collision) {
