@@ -53,7 +53,18 @@ phina.define("qft.MapObject.Floor", {
 
         //スプライト
         this.index = options.index;
-//        this.sprite = phina.display.Sprite("block", 32, 32).addChildTo(this).setFrameIndex(this.index);
+        var sw = Math.floor(this.width / 16);
+        var sh = Math.floor(this.height / 16)+32;
+        for (var x = 0; x < sw; x++) {
+            var idx = (x % 2) + 1;
+            if (x == 0) idx = 0;
+            if (x == sw-1) idx = 3;
+            var s = phina.display.Sprite("floor", 16, 96)
+                .addChildTo(this)
+                .setFrameTrimming(this.index * 64, 32, 64, 96)
+                .setFrameIndex(idx)
+                .setPosition(x * 16 - this.width / 2 + 8, 0);
+        }
     },
 
     update: function(e) {
@@ -70,7 +81,7 @@ phina.define("qft.MapObject.Floor", {
         this.collision = phina.display.RectangleShape({width: this.width, height: this.height})
             .addChildTo(layer)
             .setPosition(this.x, this.y)
-            .setVisible(true);
+            .setVisible(DEBUG_COLLISION);
         this.collision.alpha = 0.3;
         this.collision.vx = 0;
         this.collision.vy = 0;

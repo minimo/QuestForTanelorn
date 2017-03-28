@@ -53,6 +53,7 @@ phina.define("qft.Assets", {
                             "flame03":    "assets/image/object_fire03a.png",
                             "flame05":    "assets/image/object_fire05a.png",
                             "block":      "assets/image/block.png",
+                            "floor":      "assets/map/TileA4.png",
                         },
                         sound: {
                             "click":      "assets/sound/se_maoudamashii_system44.mp3",
