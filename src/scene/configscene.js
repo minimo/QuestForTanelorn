@@ -48,7 +48,7 @@ phina.define("qft.ConfigScene", {
             .addChildTo(this.menuBase)
             .setPosition(0, -SC_H*0.3);
 
-        this.menu = ["System","Practice","Exit"];
+        this.menu = ["System", "Practice", "Exit"];
         this.menuText = [];
         for (var i = 0; i < this.menu.length; i++) {
             this.menuText[i] = phina.display.Label({text: this.menu[i], fontSize: 40}.$safe(labelParam))
@@ -88,6 +88,8 @@ phina.define("qft.ConfigScene", {
 
             //決定
             if (ct.ok) {
+                if (this.select == 0) {
+                }
                 if (this.select == 1) {
                     app.playSE("ok");
                     this.menuBase.tweener.clear()
