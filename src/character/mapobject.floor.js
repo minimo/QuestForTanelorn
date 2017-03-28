@@ -33,24 +33,50 @@ phina.define("qft.MapObject.Floor", {
         this.superInit(parentScene, {width: this.options.width, height: this.options.height});
 
         this.id = options.id;
+
+        this.moveType = options.properties.moveType || "linear";
         this.moveAngle = options.properties.moveAngle || 0;
         this.moveLength = options.properties.moveLength || 128;
+        this.moveRadius = options.properties.moveRadius || 64;
         this.moveSpeed = options.properties.moveSpeed || 60;
         this.moveWait = options.properties.moveWait || 60;
 
-        //移動パターン
+        //始点と終点
         this.startX = options.x + (options.width || 16) / 2;
         this.startY = options.y + (options.height || 16) / 2;
-        var rad = this.moveAngle.toRadian();
-        this.endX = this.startX + Math.cos(rad) * this.moveLength;
-        this.endY = this.startY + Math.sin(rad) * this.moveLength;
-        this.tweener.clear()
-            .moveTo(this.endX, this.endY, this.moveSpeed, "easeInOutSine")
-            .wait(this.moveWait)
-            .moveTo(this.startX, this.startY, this.moveSpeed, "easeInOutSine")
-            .wait(this.moveWait)
-            .setLoop(true);
 
+        //移動パターン
+        switch (this.moveType) {
+            //直線運動
+            case "linear":
+                var rad = this.moveAngle.toRadian();
+                this.endX = this.startX + Math.cos(rad) * this.moveLength;
+                this.endY = this.startY + Math.sin(rad) * this.moveLength;
+                this.tweener.clear()
+                    .moveTo(this.endX, this.endY, this.moveSpeed, "easeInOutSine")
+                    .wait(this.moveWait)
+                    .moveTo(this.startX, this.startY, this.moveSpeed, "easeInOutSine")
+                    .wait(this.moveWait)
+                    .setLoop(true);
+                break;
+            //円運動
+            case "circle":
+                this.angle = 0;
+                if (options.properties.counterClockWise) {
+                    //反時計回り
+                    this.tweener.clear()
+                        .to({angle: -360}, moveSpeed)
+                        .set({angle: 0})
+                        .setLoop(true);
+                } else {
+                    //時計回り
+                    this.tweener.clear()
+                        .to({angle: 360}, moveSpeed)
+                        .set({angle: 0})
+                        .setLoop(true);
+                    break;
+                }
+        }
         //スプライト
         this.index = options.index;
         var sw = Math.floor(this.width / 16);
@@ -68,6 +94,12 @@ phina.define("qft.MapObject.Floor", {
     },
 
     update: function(e) {
+        if (this.type == "circle") {
+            var rad = this.angle.toRadian();
+            this.x = this.startX + Math.cos(rad) * this.moveRadius;
+            this.y = this.startY + Math.sin(rad) * this.moveRadius;
+        }
+
         if (this.collision) {
             this.collision.vx = this.x - this.collision.x;
             this.collision.vy = this.y - this.collision.y;
