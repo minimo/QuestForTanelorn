@@ -60,7 +60,7 @@ phina.define("qft.Stage3", {
             .wait(60)
             .call(function() {
                 pl.setAnimation("up");
-                pl.tweener.clear().moveTo(487, 271, 1000)
+                pl.tweener.clear().moveTo(86, 272, 1000)
                     .call(function() {
                         pl.animation = false;
                     })
