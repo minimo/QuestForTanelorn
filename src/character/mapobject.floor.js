@@ -81,6 +81,7 @@ phina.define("qft.MapObject.Floor", {
         this.index = options.index;
         var sw = Math.floor(this.width / 16);
         var sh = Math.floor(this.height / 16)+32;
+        var top = this.height / 2;
         for (var x = 0; x < sw; x++) {
             var idx = (x % 2) + 1;
             if (x == 0) idx = 0;
@@ -89,7 +90,7 @@ phina.define("qft.MapObject.Floor", {
                 .addChildTo(this)
                 .setFrameTrimming(this.index * 64, 32, 64, 96)
                 .setFrameIndex(idx)
-                .setPosition(x * 16 - this.width / 2 + 8, 0);
+                .setPosition(x * 16 - this.width / 2 + 8, 16-top);
         }
     },
 
