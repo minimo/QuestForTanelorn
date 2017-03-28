@@ -18,6 +18,9 @@ phina.define("qft.Character", {
     //横移動減衰率
     friction: 0.5,
 
+    //床移動減衰率
+    floorFriction: 0.5,
+
     //反発係数
     rebound: 0,
 
@@ -127,7 +130,12 @@ phina.define("qft.Character", {
 
         this.on('enterframe', function(e) {
             this.x += this.vx;
-            this.vx *= this.friction;
+            if (this.onFloor) {
+                this.vx *= this.floorFriction;
+            } else {
+                this.vx *= this.friction;
+            }
+
             if (this.isCatchLadder) {
                 this.y += this.vy;
                 this.vy = 0;
@@ -275,6 +283,9 @@ phina.define("qft.Character", {
             this.vx += ret.vx;
             this.isJump = false;
             this.onFloor = true;
+            if (this.isPlayer) {
+                this.floorFriction = this._collision[2].hit.friction == undefined? 0.5: this._collision[2].hit.friction;
+            }
             this.throughFloor = null;
             if (this.rebound > 0) {
                 this.isJump = true;
@@ -285,12 +296,6 @@ phina.define("qft.Character", {
             this.resetCollisionPosition();
             if (ret.collisionScript) {
                 ret.collisionScript(this, 2);
-            }
-            //動く床の場合
-            if (this._collision[2].type == "floor") {
-                this.friction = 0;
-            } else {
-                this.friction = 0.5;
             }
         }
         //右側接触

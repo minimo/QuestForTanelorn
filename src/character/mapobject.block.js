@@ -148,5 +148,6 @@ phina.define("qft.MapObject.Block", {
         this.collision.vx = 0;
         this.collision.vy = 0;
         this.collision.ignore = false;
+        this.collision.type = "block";
     }
 });
