@@ -281,6 +281,7 @@ phina.define("qft.Character", {
             var ret = this._collision[2].hit;
             this.y = ret.y-ret.height*ret.originY-h;
             this.x += ret.vx || 0;
+            if (ret.vy > 0) this.y += ret.vy || 0;
             this.isJump = false;
             this.onFloor = true;
             this.floorFriction = ret.friction == undefined? 0.5: ret.friction;
