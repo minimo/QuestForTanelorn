@@ -76,6 +76,5 @@ phina.define("qft.MapObject.Floor", {
         this.collision.vy = 0;
         this.collision.ignore = false;
         this.collision.type = "floor";
-        this.collision.friction = 0;
     }
 });

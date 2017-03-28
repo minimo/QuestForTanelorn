@@ -280,12 +280,11 @@ phina.define("qft.Character", {
         if (this._collision[2].hit && !this.isCatchLadder) {
             var ret = this._collision[2].hit;
             this.y = ret.y-ret.height*ret.originY-h;
-            this.vx += ret.vx;
+            this.x += ret.vx || 0;
             this.isJump = false;
             this.onFloor = true;
-            if (this.isPlayer) {
-                this.floorFriction = this._collision[2].hit.friction == undefined? 0.5: this._collision[2].hit.friction;
-            }
+            this.floorFriction = ret.friction == undefined? 0.5: ret.friction;
+
             this.throughFloor = null;
             if (this.rebound > 0) {
                 this.isJump = true;

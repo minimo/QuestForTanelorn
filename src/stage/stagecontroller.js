@@ -162,6 +162,7 @@ phina.define("qft.StageController", {
             c.vy = 0;
             c.alpha = 0.3;
             c.ignore = false;
+            c.friction = e.properties.friction == undefined? 0.5: e.properties.friction;
             if (e.name) c.name = e.name;
             if (e.type) c.type = e.type;
             c.$extend(e.properties);
