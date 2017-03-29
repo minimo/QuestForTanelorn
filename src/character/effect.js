@@ -105,7 +105,7 @@ phina.define("qft.EffectData", {
                         height: 64,
                         interval: 1,
                         startIndex: 0,
-                        maxIndex: 17,
+                        maxIndex: 8,
                         trimming: {x: 0, y: 0, width: 512, height: 128},
                     };
                 case "explode_large":
