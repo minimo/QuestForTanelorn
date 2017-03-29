@@ -47,14 +47,14 @@ phina.define("qft.Effect", {
 
         this.on('enterframe', function() {
             if (this.time % this.interval == 0) {
-                this.sprite.frameIndex++;
-                if (this.sprite.frameIndex > this.maxIndex) {
+                if (this.sprite.frameIndex == this.maxIndex) {
                     if (this.options.loop) {
                         this.sprite.frameIndex = 0;
                     } else {
                         this.remove();
                     }
                 }
+                this.sprite.frameIndex++;
             }
             this.time++;
         });
@@ -72,6 +72,7 @@ phina.define("qft.Effect", {
             var t = options.trimming;
             this.sprite.setFrameTrimming(t.x, t.y, t.width, t.height);
         }
+        this.maxIndex = options.maxIndex;
         this.sprite.alpha = options.alpha;
     },
 });
