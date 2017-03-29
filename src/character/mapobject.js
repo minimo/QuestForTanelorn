@@ -82,7 +82,7 @@ phina.define("qft.MapObject.Message", {
     },
 });
 
-//イベント  
+//イベント
 phina.define("qft.MapObject.Event", {
     superClass: "phina.display.DisplayElement",
 
