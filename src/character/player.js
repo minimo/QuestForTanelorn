@@ -58,6 +58,9 @@ phina.define("qft.Player", {
         change: false,
     },
 
+    //ステージ開始時ステータス
+    startStatus: null,
+
     init: function(parentScene) {
         this.superInit(parentScene, {width: 16, height: 20});
         var that = this;
@@ -103,6 +106,9 @@ phina.define("qft.Player", {
         this.on('dead', function(e) {
             this.parentScene.flare('gameover');
         });
+
+        //ステージ開始時ステータス
+        this.saveStatus();
     },
     update: function(app) {
         //オブジェクトレイヤー接触判定
@@ -393,7 +399,7 @@ phina.define("qft.Player", {
         this.vx = 0;
         this.vy = -6;
         this.tweener.clear()
-            .wait(120)
+            .wait(90)
             .call(function(){
                 this.flare('dead');
             }.bind(this));
@@ -691,6 +697,38 @@ phina.define("qft.Player", {
         }.bind(this));
         return ret;
     },
+
+    //現在ステータス保存
+    saveStatus: function() {
+        //所持武器、アイテム等ステータスの取得
+        var eq = this.equip;
+        var equip = {
+            using: 0,
+            weapons: eq.weapons.concat(),
+            level: eq.level.concat(),
+            switchOk: true,
+        };
+        var items = this.items.concat();
+        var kill = this.kill;
+        var numJumpMax = this.numJumpMax;
+
+        this.startStatus = {
+            hp: this.hp,
+            power: this.power,
+            deffence: this.deffence,
+            equip: equip,
+            item: items,
+            kill: kill,
+            numJumpMax: numJumpMax,
+        };
+    },
+
+    //ステータス復元
+    restoreStatus: function() {
+        this.$extend(this.startStatus);
+        this.parentScene.playerWeapon.rotation = 0;
+        this.setWeapon(this.equip.using);
+    },
 });
 
 //プレイヤー攻撃判定
@@ -887,9 +925,18 @@ phina.define("qft.PlayerWeapon", {
             this.weapons[i].index = i;
             this.weapons[i].update = function() {
                 this.rotation = -that.rotation;
-                var index = that.player.equip.weapons[this.index];
-                this.setFrameIndex(index);
+                var weapons = that.player.equip.weapons;
+                if (this.index < weapons.length) {
+                    var index = that.player.equip.weapons[this.index];
+                    this.setFrameIndex(index);
+                    this.visible = true;
+                } else {
+                    this.visible = false;
+                }
             }
         }.bind(this));
+    },
+
+    clear: function() {
     },
 });

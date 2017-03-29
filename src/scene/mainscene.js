@@ -108,6 +108,7 @@ phina.define("qft.MainScene", {
             if (this.stageNumber < this.stageNumberMax) {
                 this.stageNumber++;
                 this.setupStage();
+                this.player.saveStatus();
             } else {
                 //エンディング
                app.pushScene(qft.EndingScene(this));
@@ -480,6 +481,7 @@ phina.define("qft.MainScene", {
     //リスタート
     restart: function() {
         this.player.reset();
+        this.player.restoreStatus();
         this.setupStage();
         this.menuSelect = 0;
     },
