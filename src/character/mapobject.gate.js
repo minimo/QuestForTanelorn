@@ -32,6 +32,7 @@ phina.define("qft.MapObject.Gate", {
         var width = options.width || 36;
         var height = options.height || 64;
         this.superInit(parentScene, {width: width, height: height});
+        this.width_half = width / 2;
         this.height_half = height / 2;
 
         this.id = options.id;
@@ -91,17 +92,17 @@ phina.define("qft.MapObject.Gate", {
 
     update: function() {
         //パーティクル
-        if (!this.isLock && this.time % 3 == 0) {
+        if (!this.isLock && this.time % 6 == 0) {
             (2).times(function(i) {
                 var sp = phina.display.Sprite("particle", 16, 16)
                     .addChildTo(this)
                     .setFrameIndex(0)
                     .setScale(0)
-                    .setPosition(Math.randint(-16, 16), this.height_half + Math.randint(-4, 4));
+                    .setPosition(Math.randint(-this.width_half, this.width_half), this.height_half + Math.randint(-4, 4));
                 sp.alpha = 0.3;
                 sp.tweener.clear()
                     .by({y: -48, alpha:  0.9, scaleX:  0.3, scaleY:  0.3}, 1000, "easeInSine")
-                    .by({y: -48, alpha: -0.9, scaleX: -0.3, scaleY: -0.3}, 1000, "easeInSine")
+                    .by({y: -48, alpha: -0.9, scaleX: -0.3, scaleY: -0.3}, 1000, "easeOutSine")
                     .call(function() {
                         this.remove();
                     }.bind(sp));
