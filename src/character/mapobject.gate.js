@@ -118,6 +118,7 @@ phina.define("qft.MapObject.Gate", {
         player.isControl = false;
         player.muteki = true;
         var pl = qft.PlayerDummy("player1").setPosition(player.x, player.y).addChildTo(this.parentScene.mapLayer.playerLayer);
+        pl.scaleX = -player.scaleX;
         pl.setAnimation("walk");
         pl.tweener.clear().setUpdateType('fps')
             .moveTo(this.x, this.y+enterOffset, 15)
@@ -137,6 +138,7 @@ phina.define("qft.MapObject.Gate", {
         player.isControl = false;
         player.muteki = true;
         var pl = qft.PlayerDummy("player1").setPosition(this.x, this.y).addChildTo(this.parentScene.mapLayer.playerLayer);
+        pl.scaleX = -player.scaleX;
         pl.alpha = 0;
         pl.setAnimation("walk");
         pl.tweener.clear().setUpdateType('fps')
