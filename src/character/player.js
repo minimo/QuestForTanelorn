@@ -115,7 +115,7 @@ phina.define("qft.Player", {
         this.onDoor = null;
         this.parentScene.objLayer.children.forEach(function(e) {
             //扉判定
-            if (e instanceof qft.MapObject.Door) {
+            if (e instanceof qft.MapObject.Door || e instanceof qft.MapObject.Gate) {
                 if (e.hitTestElement(this)) {
                     this.onDoor = e;
                     return;

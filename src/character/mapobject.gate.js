@@ -22,6 +22,9 @@ phina.define("qft.MapObject.Gate", {
     //実行済みフラグ
     already: false,
 
+    //ロックされているか
+    isLock: false,
+
     //アニメーションフラグ
     isAdvanceAnimation: false,
 
@@ -30,7 +33,10 @@ phina.define("qft.MapObject.Gate", {
         this.$safe(options);
 
         this.id = options.id;
-        this.offset = options.properties.offset || 0;
+        this.isLock = options.properties.lock || false;
+        this.name = options.name;
+        this.enterOffset = options.properties.enterOffset || 0;
+        this.sprite.visible = options.properties.visible == undefined? true: options.properties.visible;
 
         //スプライト
         this.sprite = null;
@@ -42,19 +48,39 @@ phina.define("qft.MapObject.Gate", {
             case "warp":
                 this.nextID = properties.nextID;
                 this.offset = properties.offset || 0;
-                this.on('entergate', function() {
+                this.on('enterdoor', function() {
                     //行き先の検索
                     var next = this.findGate(this.nextID);
                     if (!next) return;
                     this.enterPlayer();
                     this.parentScene.warp(next.x, next.y+next.offset);
                     this.tweener.clear()
-                        .wait(135)
+                        .wait(120)
                         .call(function(){
                             this.already = false;
-                            next.already = true;
                             next.leavePlayer();
                         }.bind(this));
+                });
+                break;
+            //マップ切り替え
+            case "mapswitch":
+                this.nextID = properties.nextID;
+                this.offset = properties.offset || 0;
+                this.toLayerNumber = properties.toLayerNumber;
+                this.on('enterdoor', function() {
+                    var layer = this.parentScene.stageController.mapLayer[this.toLayerNumber];
+                    var next = this.parentScene.stageController.findObject(this.nextID, this.toLayerNumber);
+                    if (!next) return;
+                    this.enterPlayer();
+                    this.tweener.clear()
+                        .wait(60)
+                        .call(function(){
+                            this.parentScene.switchMap(layer);
+                            this.parentScene.player.setPosition(next.x, next.y + next.offset);
+                            this.already = false;
+                            next.leavePlayer();
+                        }.bind(this));
+                    this.parentScene.fg.tweener.clear().wait(30).fadeIn(30).fadeOut(30);
                 });
                 break;
         }
@@ -63,14 +89,6 @@ phina.define("qft.MapObject.Gate", {
     },
 
     update: function() {
-        //プレイヤーとの当たり判定
-        var pl = this.parentScene.player;
-        var hit = this.hitTestElement(pl);
-        if (hit && !this.already && this.x-3 < pl.x && pl.x < this.x+3) {
-            this.already = true;
-            this.flare('entergate');
-        }
-
         //パーティクル
         if (this.time % 3 == 0) {
             (2).times(function(i) {
@@ -92,17 +110,17 @@ phina.define("qft.MapObject.Gate", {
 
     //プレイヤーがゲートに入る
     enterPlayer: function() {
-        var enterOffset = 0;
+        var enterOffset = this.enterOffset;
         var player = this.parentScene.player;
         player.alpha = 0;
         player.isControl = false;
         player.muteki = true;
-
         var pl = qft.PlayerDummy("player1")
             .setPosition(player.x, player.y)
             .addChildTo(this.parentScene.mapLayer.playerLayer);
         pl.setAnimation("walk");
         pl.tweener.clear().setUpdateType('fps')
+            .moveTo(this.x, this.y+this.height/2-16+enterOffset, 15)
             .call(function() {
                 pl.animation = false;
             })
@@ -119,7 +137,7 @@ phina.define("qft.MapObject.Gate", {
         player.isControl = false;
         player.muteki = true;
         var pl = qft.PlayerDummy("player1")
-            .setPosition(this.x, this.y)
+            .setPosition(this.x, this.y+16)
             .addChildTo(this.parentScene.mapLayer.playerLayer);
         pl.alpha = 0;
         pl.setAnimation("walk");
