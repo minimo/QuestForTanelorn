@@ -142,10 +142,14 @@ phina.define("qft.StageController", {
 
         //バックグラウンド画像
         var background = tmx.getImage("background");
+        var background2 = tmx.getImage("background2");
+        if (background2) phina.display.Sprite(background2).addChildTo(mapLayer.backgroundLayer).setOrigin(0, 0);
         phina.display.Sprite(background).addChildTo(mapLayer.backgroundLayer).setOrigin(0, 0);
 
         //フォアグラウンド画像
         var foreground = tmx.getImage("foreground");
+        var foreground2 = tmx.getImage("foreground2");
+        if (foreground2) phina.display.Sprite(foreground2).addChildTo(mapLayer.foregroundLayer).setOrigin(0, 0);
         phina.display.Sprite(foreground).addChildTo(mapLayer.foregroundLayer).setOrigin(0, 0);
 
         //マップ当たり判定取得
