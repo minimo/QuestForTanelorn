@@ -29,8 +29,10 @@ phina.define("qft.MapObject.Gate", {
     isAdvanceAnimation: false,
 
     init: function(parentScene, options) {
-        this.superInit(parentScene, {width: 36, height: 64});
-        this.$safe(options);
+        var width = options.width || 36;
+        var height = options.height || 64;
+        this.superInit(parentScene, {width: width, height: height});
+        this.height_half = height / 2;
 
         this.id = options.id;
         this.isLock = options.properties.lock || false;
@@ -89,17 +91,17 @@ phina.define("qft.MapObject.Gate", {
 
     update: function() {
         //パーティクル
-        if (this.time % 3 == 0) {
+        if (!this.isLock && this.time % 3 == 0) {
             (2).times(function(i) {
                 var sp = phina.display.Sprite("particle", 16, 16)
                     .addChildTo(this)
                     .setFrameIndex(0)
                     .setScale(0)
-                    .setPosition(Math.randint(-16, 16), Math.randint(-3, 3));
+                    .setPosition(Math.randint(-16, 16), this.height_half + Math.randint(-4, 4));
                 sp.alpha = 0.3;
                 sp.tweener.clear()
-                    .by({y: -32, alpha:  0.7, scaleX:  0.5, scaleY:  0.5}, 500, "easeInSine")
-                    .by({y: -32, alpha: -0.7, scaleX: -0.5, scaleY: -0.5}, 500, "easeInSine")
+                    .by({y: -48, alpha:  0.9, scaleX:  0.3, scaleY:  0.3}, 1000, "easeInSine")
+                    .by({y: -48, alpha: -0.9, scaleX: -0.3, scaleY: -0.3}, 1000, "easeInSine")
                     .call(function() {
                         this.remove();
                     }.bind(sp));
