@@ -234,6 +234,7 @@ phina.define("phina.asset.TiledMap", {
         }
         if (numLayer == 0) return null;
 
+        var generated = false;
         var width = this.width * this.tilewidth;
         var height = this.height * this.tileheight;
         var canvas = phina.graphics.Canvas().setSize(width, height);
@@ -258,6 +259,7 @@ phina.define("phina.asset.TiledMap", {
                             count++;
                         }
                     }
+                    generated = true;
                 }
             }
             //オブジェクトグループ
@@ -270,6 +272,7 @@ phina.define("phina.asset.TiledMap", {
                             this._setMapChip(canvas, e.gid, e.x, e.y, opacity);
                         }
                     }.bind(this));
+                    generated = true;
                 }
             }
             //イメージレイヤー
@@ -278,9 +281,12 @@ phina.define("phina.asset.TiledMap", {
                     var len = this.layers[i];
                     var image = phina.asset.AssetManager.get('image', this.layers[i].image.source);
                     canvas.context.drawImage(image.domElement, this.layers[i].x, this.layers[i].y);
+                    generated = true;
                 }
             }
         }
+
+        if (!generated) return null;
 
         var texture = phina.asset.Texture();
         texture.domElement = canvas.domElement;
