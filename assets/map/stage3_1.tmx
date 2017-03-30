@@ -578,7 +578,6 @@
   <object id="159" x="784" y="400" width="60" height="44"/>
   <object id="164" x="960" y="1040" width="240" height="64"/>
   <object id="165" x="624" y="1040" width="224" height="64"/>
-  <object id="189" x="2980" y="2116" width="28" height="124"/>
  </objectgroup>
  <objectgroup name="event">
   <object id="1" type="door" x="152" y="2000" width="36" height="64">
@@ -965,7 +964,6 @@
    </properties>
   </object>
   <object id="195" name="down" type="check" x="892" y="688" width="32" height="32"/>
-  <object id="196" name="start" type="player" x="1944" y="660" width="32" height="32">
    <properties>
     <property name="direction" type="int" value="0"/>
    </properties>
