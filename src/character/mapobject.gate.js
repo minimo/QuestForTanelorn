@@ -36,7 +36,6 @@ phina.define("qft.MapObject.Gate", {
         this.isLock = options.properties.lock || false;
         this.name = options.name;
         this.enterOffset = options.properties.enterOffset || 0;
-        this.sprite.visible = options.properties.visible == undefined? true: options.properties.visible;
 
         //スプライト
         this.sprite = null;
@@ -115,12 +114,10 @@ phina.define("qft.MapObject.Gate", {
         player.alpha = 0;
         player.isControl = false;
         player.muteki = true;
-        var pl = qft.PlayerDummy("player1")
-            .setPosition(player.x, player.y)
-            .addChildTo(this.parentScene.mapLayer.playerLayer);
+        var pl = qft.PlayerDummy("player1").setPosition(player.x, player.y).addChildTo(this.parentScene.mapLayer.playerLayer);
         pl.setAnimation("walk");
         pl.tweener.clear().setUpdateType('fps')
-            .moveTo(this.x, this.y+this.height/2-16+enterOffset, 15)
+            .moveTo(this.x, this.y+enterOffset, 15)
             .call(function() {
                 pl.animation = false;
             })
@@ -136,9 +133,7 @@ phina.define("qft.MapObject.Gate", {
         player.alpha = 0;
         player.isControl = false;
         player.muteki = true;
-        var pl = qft.PlayerDummy("player1")
-            .setPosition(this.x, this.y+16)
-            .addChildTo(this.parentScene.mapLayer.playerLayer);
+        var pl = qft.PlayerDummy("player1").setPosition(this.x, this.y).addChildTo(this.parentScene.mapLayer.playerLayer);
         pl.alpha = 0;
         pl.setAnimation("walk");
         pl.tweener.clear().setUpdateType('fps')
