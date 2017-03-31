@@ -856,6 +856,7 @@ phina.define("qft.PlayerDummy", {
         this.frame = [];
         this.frame["stand"] = [13, 14];
         this.frame["walk"] = [ 3,  4,  5,  4];
+        this.frame["walk_stop"] = [ 3,  4,  5,  4, "stop"];
         this.frame["up"] =   [ 9, 10, 11, 10];
         this.frame["up_stop"] =   [10, "stop"];
         this.frame["down"] = [ 0,  1,  2,  1];
@@ -867,6 +868,8 @@ phina.define("qft.PlayerDummy", {
         this.nowAnimation = "stand";
         this.animation = true;
 
+        this.bx = 0;
+        this.by = 0;
         this.time = 0;
     },
 
@@ -876,6 +879,12 @@ phina.define("qft.PlayerDummy", {
             if (this.frame[this.nowAnimation][this.index] == "stop") this.index--;
             this.frameIndex = this.frame[this.nowAnimation][this.index];
         }
+
+        if (this.x < this.bx) this.scaleX = 1;
+        if (this.x > this.bx) this.scaleX = -1;
+        this.bx = this.x;
+        this.by = this.y;
+
         this.time++;
     },
 
