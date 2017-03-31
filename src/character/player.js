@@ -615,7 +615,7 @@ phina.define("qft.Player", {
                         that.attack = false;
                     });
                     var arrowPower = 5 + level * 10;
-                    var arrow = qft.PlayerAttack(this.parentScene, {width: 15, height: 5, power: arrowPower, type: "arrow"})
+                    var arrow = qft.PlayerAttack(this.parentScene, {width: 15, height: 10, power: arrowPower, type: "arrow"})
                         .addChildTo(this.parentScene.playerLayer)
                         .setScale(this.scaleX, 1)
                         .setPosition(this.x, this.y);
