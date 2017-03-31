@@ -10,7 +10,7 @@ phina.define("qft.Stage2", {
     superClass: "qft.StageController",
 
     //タイムリミット
-    timeLimit: FPS*30*7,
+    timeLimit: FPS*60*7,
 
     init: function(parentScene, tmx) {
         this.superInit(parentScene, tmx);
