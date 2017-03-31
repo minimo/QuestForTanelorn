@@ -41,7 +41,8 @@ phina.define("qft.ItemBox", {
 
         //内容物
         this.name = options.name;
-        this.level = options.properties.level || 0;
+        this.kind = options.properties? options.properties.kind: undefined;
+        this.level = options.properties? options.properties.level: 0;
     },
 
     update: function() {
@@ -80,20 +81,37 @@ phina.define("qft.ItemBox", {
         this.isAdvanceAnimation = true;
         this.opened = true;
         this.setAnimation("open");
-        if (this.empty) {
-        } else {
-            this.tweener.clear()
-                .wait(10)
-                .call(function() {
-                    var options = {
-                        name: this.name,
-                        properties: {
-                            level: this.level
-                        }
-                    };
-                    var i = this.parentScene.spawnItem(this.x, this.y, options);
-                    i.vy = -5;
-                }.bind(this))
+        switch (this.name) {
+            case "empty":
+                break;
+            case "item":
+                this.tweener.clear()
+                    .wait(10)
+                    .call(function() {
+                        var options = {
+                            kind: this.kind,
+                            properties: {
+                                level: this.level
+                            }
+                        };
+                        var i = this.parentScene.spawnItem(this.x, this.y, options);
+                        i.vy = -5;
+                    }.bind(this));
+                break;
+            default:
+                this.tweener.clear()
+                    .wait(10)
+                    .call(function() {
+                        var options = {
+                            name: this.name,
+                            properties: {
+                                level: this.level
+                            }
+                        };
+                        var i = this.parentScene.spawnItem(this.x, this.y, options);
+                        i.vy = -5;
+                    }.bind(this));
+                break;
         }
     },
 
