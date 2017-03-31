@@ -564,6 +564,7 @@ phina.define("qft.Player", {
         var that = this;
         switch (this.weapon.frameIndex) {
             case 0:
+                //ショートソード
                 this.weapon.tweener.clear()
                     .set({rotation: 200, alpha: 1.0})
                     .to({rotation: 360}, 5)
@@ -573,6 +574,7 @@ phina.define("qft.Player", {
                     });
                 break;
             case 1:
+                //ロングソード
                 this.weapon.tweener.clear()
                     .set({rotation: 200, alpha: 1.0})
                     .to({rotation: 360}, 6)
@@ -582,6 +584,7 @@ phina.define("qft.Player", {
                     });
                 break;
             case 2:
+                //斧
                 this.weapon.tweener.clear()
                     .set({rotation: 400, alpha: 1.0})
                     .to({rotation: 270}, 8)
@@ -591,16 +594,18 @@ phina.define("qft.Player", {
                     });
                 break;
             case 3:
+                //槍
                 this.weapon.tweener.clear()
                     .set({rotation: -45, alpha: 1.0})
                     .by({x: -10}, 2)
-                    .by({x: 10}, 5)
+                    .by({x: 10}, 2)
                     .fadeOut(1)
                     .call(function() {
                         that.attack = false;
                     });
                 break;
             case 4:
+                //弓
                 this.weapon.tweener.clear()
                     .set({rotation: -45, alpha: 1.0})
                     .by({x: 7}, 3)
@@ -621,6 +626,7 @@ phina.define("qft.Player", {
                         }.bind(arrow));
                 break;
             case 5:
+                //魔法の杖
                 this.weapon.tweener.clear()
                     .set({rotation: 200, alpha: 1.0})
                     .to({rotation: 360}, 8)
