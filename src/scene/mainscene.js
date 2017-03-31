@@ -17,9 +17,6 @@ phina.define("qft.MainScene", {
     //残り時間（フレーム単位）
     timeLimit: 120,
 
-    //メニュー選択中アイテム番号
-    menuSelect: 0,
-
     //メッセージスタック
     messageStack: [],
 
@@ -144,6 +141,7 @@ phina.define("qft.MainScene", {
             fontWeight: ''
         };
         var that = this;
+        this.messageStack = [];
         this.eventMessage = phina.display.Label({text: ""}.$safe(labelParam))
             .setPosition(SC_W*0.5, SC_H*0.2)
             .addChildTo(this);
@@ -482,8 +480,8 @@ phina.define("qft.MainScene", {
     restart: function() {
         this.player.reset();
         this.player.restoreStatus();
+        this.playerWeapon.rotation = 0;
         this.setupStage();
-        this.menuSelect = 0;
     },
 
     //ステージクリア
