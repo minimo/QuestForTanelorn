@@ -432,6 +432,8 @@ phina.define("qft.Player", {
                         },
                     };
                     var drop = this.parentScene.spawnItem(this.x, this.y, options);
+                    drop.friction = 0.8;
+                    drop.vx = 5 * -this.scaleX;
                     drop.vy = -5;
                     drop.throwAway = true;
                     this.equip.weapons[dropIndex] = item.kind;
@@ -973,6 +975,28 @@ phina.define("qft.PlayerWeapon", {
                     this.visible = true;
                 } else {
                     this.visible = false;
+                }
+            }
+            var labelParam = {
+                fill: "white",
+                stroke: "black",
+                strokeWidth: 2,
+
+                fontFamily: "Orbitron",
+                align: "center",
+                baseline: "middle",
+                fontSize: 10,
+                fontWeight: ''
+            };
+            //強化レベル表示
+            this.weapons[i].level = phina.display.Label({text: ""}.$safe(labelParam)).setPosition(6, 6).addChildTo(this.weapons[i]);
+            this.weapons[i].level.index = i;
+            this.weapons[i].level.update = function() {
+                var level = that.player.equip.level[this.index];
+                if (level != 0) {
+                    this.text = "+"+level;
+                } else {
+                    this.text = "";
                 }
             }
         }.bind(this));
