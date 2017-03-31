@@ -408,7 +408,7 @@ phina.define("qft.Player", {
     //アイテム取得
     getItem: function(item) {
         //武器
-        if (item.weapon) {
+        if (item.isWeapon) {
             //既に持っている武器かチェック
             var index = this.equip.weapons.findIndex(function(e, i, a) {
                 return e == item.kind;
@@ -442,21 +442,26 @@ phina.define("qft.Player", {
             return;
         }
         //装備品
-        if (item.equip) {
+        if (item.isEquip) {
             this.items.push(item.kind);
             app.playSE("getitem");
         }
         //食べ物
-        if (item.food) {
+        if (item.isFood) {
             this.hp += item.power;
             app.playSE("recovery");
             if (this.hp > 100) this.hp = 100;
         }
         //鍵
-        if (item.key) {
+        if (item.isKey) {
             this.keys.push(item);
             app.playSE("getkeyitem");
             this.parentScene.flare('getkey', {key: item});
+        }
+        //得点アイテム
+        if (item.isItem) {
+            this.parentScene.totalScore += item.point;
+            app.playSE("getitem");
         }
         return this;
     },

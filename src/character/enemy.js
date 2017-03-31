@@ -44,6 +44,14 @@ phina.define("qft.Enemy", {
     damageFire: 1,
     damageIce: 1,
 
+    //アイテムドロップ率（％）
+    dropRate: 0,
+    dropItem: ITEM_COIN,
+
+    //レアドロップ率（％）
+    rareDropRate: 0,
+    rareDropItem: ITEM_BAG,
+
     init: function(parentScene, options) {
         options = options || {};
         this.superInit(parentScene, options);
@@ -85,6 +93,19 @@ phina.define("qft.Enemy", {
         });
 
         this.on('dead', function() {
+            //レアアイテムドロップ判定
+            var dice = Math.randint(1, 100);
+            if (dice <= this.rareDropRate) {
+                var i = this.parentScene.spawnItem(this.x, this.y, {kind: this.rareDropItem});
+                i.vy = -5;
+            } else {
+                //通常アイテムドロップ判定
+                var dice = Math.randint(1, 100);
+                if (dice <= this.dropRate) {
+                    var i = this.parentScene.spawnItem(this.x, this.y, {kind: this.dropItem});
+                    i.vy = -5;
+                }
+            }
             this.remove();
         });
     },

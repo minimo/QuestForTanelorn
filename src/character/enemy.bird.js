@@ -42,6 +42,14 @@ phina.define("qft.Enemy.Bird", {
         returnTime: 120,
     },
 
+    //アイテムドロップ率（％）
+    dropRate: 10,
+    dropItem: ITEM_COIN,
+
+    //レアドロップ率（％）
+    rareDropRate: 3,
+    rareDropItem: ITEM_BAG,
+
     init: function(parentScene, options) {
         options = (options || {}).$extend({width: 16, height: 18});
         options = options.$safe(this.defaultOptions);

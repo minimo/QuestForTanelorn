@@ -31,6 +31,14 @@ phina.define("qft.Enemy.Slime", {
     damageSting: 0.8,
     damageBlow: 0.5,
 
+    //アイテムドロップ率（％）
+    dropRate: 30,
+    dropItem: ITEM_COIN,
+
+    //レアドロップ率（％）
+    rareDropRate: 5,
+    rareDropItem: ITEM_BAG,
+
     init: function(parentScene, options) {
         options = (options || {}).$extend({width: 16, height: 16});
         this.superInit(parentScene, options);

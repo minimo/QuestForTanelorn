@@ -38,6 +38,14 @@ phina.define("qft.Enemy.FireBird", {
     damageFire: 0.5,
     damegeIce: 2,
 
+    //アイテムドロップ率（％）
+    dropRate: 10,
+    dropItem: ITEM_COIN,
+
+    //レアドロップ率（％）
+    rareDropRate: 3,
+    rareDropItem: ITEM_BAG,
+
     defaultOptions: {
         speed: 2,
         direction: 0,

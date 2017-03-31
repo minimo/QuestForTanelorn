@@ -27,6 +27,14 @@ phina.define("qft.Enemy.Demon", {
     //得点
     point: 500,
 
+    //アイテムドロップ率（％）
+    dropRate: 5,
+    dropItem: ITEM_JEWEL,
+
+    //レアドロップ率（％）
+    rareDropRate: 2,
+    rareDropItem: ITEM_JEWELBOX,
+
     init: function(parentScene, options) {
         options = (options || {}).$extend({width: 20, height: 20});
         this.superInit(parentScene, options);

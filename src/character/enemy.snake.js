@@ -27,6 +27,14 @@ phina.define("qft.Enemy.Snake", {
     //得点
     point: 100,
 
+    //アイテムドロップ率（％）
+    dropRate: 10,
+    dropItem: ITEM_COIN,
+
+    //レアドロップ率（％）
+    rareDropRate: 3,
+    rareDropItem: ITEM_BAG,
+
     init: function(parentScene, options) {
         options = (options || {}).$extend({width: 16, height: 18});
         this.superInit(parentScene, options);

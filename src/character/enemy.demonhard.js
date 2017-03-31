@@ -32,6 +32,14 @@ phina.define("qft.Enemy.DemonHard", {
     flyingPhase: 0, //行動フェーズ
     flyingX: 0,     //飛行開始Ｘ座標
 
+    //アイテムドロップ率（％）
+    dropRate: 10,
+    dropItem: ITEM_JEWEL,
+
+    //レアドロップ率（％）
+    rareDropRate: 2,
+    rareDropItem: ITEM_JEWELBOX,
+
     init: function(parentScene, options) {
         options = (options || {}).$extend({width: 20, height: 20});
         this.superInit(parentScene, options);

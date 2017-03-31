@@ -22,11 +22,11 @@ phina.define("qft.Item", {
     throwAway: false,
 
     //大まかな種別フラグ
-    weapon: false,
-    equip: false,
-    food: false,
-    item: false,
-    key: false,
+    isWeapon: false,
+    isEquip: false,
+    isFood: false,
+    isItem: false,
+    isKey: false,
 
     //アイテム情報
     status: null,
@@ -44,35 +44,40 @@ phina.define("qft.Item", {
         this.level = options.properties? options.properties.level: 0;
 
         //アイテム種別
-        switch (options.name) {
-            case "shortsword":
-                this.kind = ITEM_SHORTSWORD;
-                break;
-            case "longsword":
-                this.kind = ITEM_LONGSWORD;
-                break;
-            case "ax":
-                this.kind = ITEM_AX;
-                break;
-            case "spear":
-                this.kind = ITEM_SPEAR;
-                break;
-            case "bow":
-                this.kind = ITEM_BOW;
-                break;
-            case "rod":
-                this.kind = ITEM_ROD;
-                break;
-            case "key":
-                this.kind = ITEM_KEY;
-                break;
-            case "food":
-                this.kind = ITEM_MEAT + this.level;
-                break;
-            default:
-                this.kind = 0;
-                if (options.properties) this.kind = options.properties.kind || 0;
-                break;
+        if (options.kind) {
+            this.kind = options.kind;
+        } else {
+            //アイテム名から判定
+            switch (options.name) {
+                case "shortsword":
+                    this.kind = ITEM_SHORTSWORD;
+                    break;
+                case "longsword":
+                    this.kind = ITEM_LONGSWORD;
+                    break;
+                case "ax":
+                    this.kind = ITEM_AX;
+                    break;
+                case "spear":
+                    this.kind = ITEM_SPEAR;
+                    break;
+                case "bow":
+                    this.kind = ITEM_BOW;
+                    break;
+                case "rod":
+                    this.kind = ITEM_ROD;
+                    break;
+                case "key":
+                    this.kind = ITEM_KEY;
+                    break;
+                case "food":
+                    this.kind = ITEM_MEAT + this.level;
+                    break;
+                default:
+                    this.kind = 0;
+                    if (options.properties) this.kind = options.properties.kind || 0;
+                    break;
+            }
         }
 
         //アイテムステータス取得
@@ -104,7 +109,7 @@ phina.define("qft.ItemInfo", {
                     return {
                         name: "SHORT SWORD",
                         type: "sword",
-                        weapon: true,
+                        isWeapon: true,
                         power: 10,
                         collision: {
                             width: 14,
@@ -115,7 +120,7 @@ phina.define("qft.ItemInfo", {
                     return {
                         name: "LONG SWORD",
                         type: "sword",
-                        weapon: true,
+                        isWeapon: true,
                         power: 15,
                         collision: {
                             width: 24,
@@ -126,7 +131,7 @@ phina.define("qft.ItemInfo", {
                     return {
                         name: "AX",
                         type: "ax",
-                        weapon: true,
+                        isWeapon: true,
                         power: 20,
                         collision: {
                             width: 14,
@@ -137,7 +142,7 @@ phina.define("qft.ItemInfo", {
                     return {
                         name: "SPEAR",
                         type: "spear",
-                        weapon: true,
+                        isWeapon: true,
                         power: 10,
                         collision: {
                             width: 39,
@@ -148,7 +153,7 @@ phina.define("qft.ItemInfo", {
                     return {
                         name: "BOW",
                         type: "bow",
-                        weapon: true,
+                        isWeapon: true,
                         power: 5,
                         collision: {
                             width: 20,
@@ -159,7 +164,7 @@ phina.define("qft.ItemInfo", {
                     return {
                         name: "MAGIC ROD",
                         type: "rod",
-                        weapon: true,
+                        isWeapon: true,
                         power: 5,
                         collision: {
                             width: 20,
@@ -170,7 +175,7 @@ phina.define("qft.ItemInfo", {
                     return {
                         name: "BOOK",
                         type: "book",
-                        weapon: true,
+                        isWeapon: true,
                         power: 10,
                         collision: {
                             width: 20,
@@ -181,118 +186,134 @@ phina.define("qft.ItemInfo", {
                     return {
                         name: "SHIELD",
                         type: "equip",
-                        equip: true,
+                        isEquip: true,
                     };
                 case ITEM_ARMOR:
                     return {
                         name: "ARMOR",
                         type: "equip",
-                        equip: true,
+                        isEquip: true,
                     };
                 case ITEM_HAT:
                     return {
                         name: "HAT",
                         type: "equip",
-                        equip: true,
+                        isEquip: true,
                     };
                 case ITEM_BOOTS:
                     return {
                         name: "BOOTS",
                         type: "equip",
-                        equip: true,
+                        isEquip: true,
                     };
                 case ITEM_GROVE:
                     return {
                         name: "GROVE",
                         type: "equip",
-                        equip: true,
+                        isEquip: true,
                     };
                 case ITEM_RING:
                     return {
                         name: "RING",
                         type: "equip",
-                        equip: true,
+                        isEquip: true,
                     };
                 case ITEM_SCROLL:
                     return {
                         name: "SCROLL",
                         type: "item",
-                        item: true,
+                        isItem: true,
+                        point: 1000,
                     };
                 case ITEM_LETTER:
                     return {
                         name: "LETTER",
                         type: "item",
-                        item: true,
+                        isItem: true,
+                        point: 100,
                     };
                 case ITEM_CARD:
                     return {
                         name: "CARD",
                         type: "item",
-                        item: true,
+                        isItem: true,
+                        point: 1000,
                     };
                 case ITEM_KEY:
                     return {
                         name: "KEY",
                         type: "key",
-                        key: true,
+                        isKey: true,
+                        point: 2000,
                     };
                 case ITEM_COIN:
                     return {
                         name: "COIN",
                         type: "item",
-                        item: true,
-                        point: 2000,
+                        isItem: true,
+                        point: 500,
                     };
                 case ITEM_BAG:
                     return {
                         name: "BAG",
                         type: "item",
-                        item: true,
-                        point: 5000,
+                        isItem: true,
+                        point: 1000,
                     };
                 case ITEM_ORB:
                     return {
                         name: "ORB",
                         type: "item",
-                        item: true,
+                        isItem: true,
                         point: 5000,
                     };
                 case ITEM_STONE:
                     return {
                         name: "STONE",
                         type: "item",
-                        item: true,
-                        point: 5000,
+                        isItem: true,
+                        point: 2000,
                     };
                 case ITEM_JEWEL:
+                    return {
+                        name: "JEWEL",
+                        type: "item",
+                        isItem: true,
+                        point: 5000,
+                    };
                 case ITEM_JEWELBOX:
+                    return {
+                        name: "JEWELBOX",
+                        type: "item",
+                        isItem: true,
+                        point: 10000,
+                    };
                 case ITEM_MEAT:
                     return {
                         name: "MEAT",
                         type: "food",
-                        food: true,
+                        isFood: true,
                         power: 30,
                     };
                 case ITEM_APPLE:
                     return {
-                        name: "MEAT",
+                        name: "APPLE",
                         type: "food",
-                        food: true,
+                        isFood: true,
                         power: 20,
                     };
                 case ITEM_HARB:
                     return {
-                        name: "MEAT",
+                        name: "HARB",
                         type: "food",
-                        food: true,
+                        isFood: true,
                         power: 50,
                     };
                 case ITEM_POTION:
                     return {
-                        name: "MEAT",
+                        name: "POTION",
                         type: "food",
-                        food: true,
+                        isFood: true,
                         power: 100,
                     };
                 default:

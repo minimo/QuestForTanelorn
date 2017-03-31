@@ -33,6 +33,14 @@ phina.define("qft.Enemy.Wisp", {
     //得点
     point: 50,
 
+    //アイテムドロップ率（％）
+    dropRate: 10,
+    dropItem: ITEM_STONE,
+
+    //レアドロップ率（％）
+    rareDropRate: 0,
+    rareDropItem: ITEM_STONE,
+
     //属性ダメージ倍率
     damageFire: 0.8,
     damegeIce: 2,
@@ -109,6 +117,14 @@ phina.define("qft.Enemy.WispHard", {
 
     //得点
     point: 50,
+
+    //アイテムドロップ率（％）
+    dropRate: 10,
+    dropItem: ITEM_STONE,
+
+    //レアドロップ率（％）
+    rareDropRate: 5,
+    rareDropItem: ITEM_JEWEL,
 
     //属性ダメージ倍率
     damageFire: 0.5,
