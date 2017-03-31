@@ -451,16 +451,18 @@ phina.define("qft.Player", {
             this.hp += item.power;
             app.playSE("recovery");
             if (this.hp > 100) this.hp = 100;
+            this.parentScene.totalScore += (item.point || 0);
         }
         //鍵
         if (item.isKey) {
             this.keys.push(item);
             app.playSE("getkeyitem");
             this.parentScene.flare('getkey', {key: item});
+            this.parentScene.totalScore += (item.point || 0);
         }
         //得点アイテム
         if (item.isItem) {
-            this.parentScene.totalScore += item.point;
+            this.parentScene.totalScore += (item.point || 0);
             app.playSE("getitem");
         }
         return this;
@@ -557,6 +559,15 @@ phina.define("qft.Player", {
                 this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
                 this.weapon.setPosition(0, 0);
                 break;
+            case 6:
+                //魔導書
+                this.attackCollision.power = 30 + level * 10;
+                this.attackCollision.width = 14;
+                this.attackCollision.height = 26;
+                this.attackCollision.isSlash = true;
+                this.frame["attack"] = [ 44, 44, 44, 43, 43, 43, 42, 42, 42, 41, 41, 41, "stop"];
+                this.weapon.setPosition(-3, 3);
+                break;
         }
         this.weapon.setFrameIndex(kind);
         return this;
@@ -649,6 +660,16 @@ phina.define("qft.Player", {
                         .call(function() {
                             this.remove();
                         }.bind(magic));
+                break;
+            case 6:
+                //魔導書
+                this.weapon.tweener.clear()
+                    .set({rotation: 400, alpha: 1.0})
+                    .to({rotation: 270}, 8)
+                    .fadeOut(1)
+                    .call(function() {
+                        that.attack = false;
+                    });
                 break;
         }
         return this;

@@ -67,6 +67,9 @@ phina.define("qft.Item", {
                 case "rod":
                     this.kind = ITEM_ROD;
                     break;
+                case "book":
+                    this.kind = ITEM_BOOK;
+                    break;
                 case "key":
                     this.kind = ITEM_KEY;
                     break;
@@ -75,7 +78,7 @@ phina.define("qft.Item", {
                     break;
                 default:
                     this.kind = 0;
-                    if (options.properties) this.kind = options.properties.kind || 0;
+                    if (options.properties) this.kind = options.properties.kind || ITEM_COIN;
                     break;
             }
         }
