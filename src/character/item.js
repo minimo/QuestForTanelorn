@@ -41,12 +41,16 @@ phina.define("qft.Item", {
         this.superInit(parentScene, {width: 16, height: 16});
 
         //アイテムレベル
-        this.level = options.properties? options.properties.level: 0;
+        this.level = 0;
+        this.kind = null;
+        if (options.properties) {
+            this.level = options.properties.level || 0;
+            this.kind = options.properties.kind;
+        }
+        if (options.kind !== undefined) this.kind = options.kind;
 
         //アイテム種別
-        if (options.kind) {
-            this.kind = options.kind;
-        } else {
+        if (this.kind == null) {
             //アイテム名から判定
             switch (options.name) {
                 case "shortsword":
@@ -78,7 +82,6 @@ phina.define("qft.Item", {
                     break;
                 default:
                     this.kind = 0;
-                    if (options.properties) this.kind = options.properties.kind || ITEM_COIN;
                     break;
             }
         }
