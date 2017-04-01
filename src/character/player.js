@@ -413,7 +413,7 @@ phina.define("qft.Player", {
             var index = this.equip.weapons.findIndex(function(e, i, a) {
                 return e == item.kind;
             });
-            if (index) {
+            if (index != -1) {
                 //所持武器を拾ったらその武器のレベルが上がる
                 this.equip.level[index]++;
             } else {
