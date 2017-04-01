@@ -754,8 +754,8 @@
   </object>
   <object id="14" name="longsword" type="itembox" x="512" y="3024" width="32" height="32"/>
   <object id="19" name="Slime" type="enemy" x="576" y="2788" width="32" height="32"/>
-  <object id="20" name="Slime" type="enemy" x="720" y="2392" width="32" height="32"/>
-  <object id="21" name="Slime" type="enemy" x="600" y="2384" width="32" height="32"/>
+  <object id="20" name="Slime" type="enemy" x="672" y="2444" width="32" height="32"/>
+  <object id="21" name="Slime" type="enemy" x="576" y="2444" width="32" height="32"/>
   <object id="22" name="clear" type="door" x="469" y="191" width="36" height="128"/>
   <object id="37" name="bow" type="itembox" x="336" y="2272" width="32" height="32"/>
   <object id="66" name="key" type="itembox" x="160" y="1872" width="32" height="32">
@@ -774,8 +774,8 @@
   <object id="71" name="Wisp" type="enemy" x="39" y="2508" width="32" height="32"/>
   <object id="73" name="Wisp" type="enemy" x="87" y="2240" width="32" height="32"/>
   <object id="74" name="Wisp" type="enemy" x="236" y="2352" width="32" height="32"/>
-  <object id="75" name="Slime" type="enemy" x="304" y="2028" width="32" height="32"/>
-  <object id="76" name="Slime" type="enemy" x="424" y="2016" width="32" height="32"/>
+  <object id="75" name="Slime" type="enemy" x="268" y="2044" width="32" height="32"/>
+  <object id="76" name="Slime" type="enemy" x="392" y="2044" width="32" height="32"/>
   <object id="77" name="Slime" type="enemy" x="372" y="1660" width="32" height="32"/>
   <object id="78" name="Slime" type="enemy" x="772" y="1424" width="32" height="32"/>
   <object id="79" name="Wisp" type="enemy" x="411" y="2824" width="32" height="32"/>
@@ -817,14 +817,14 @@
   <object id="140" name="Snake" type="enemy" x="296" y="948" width="32" height="32"/>
   <object id="141" name="Snake" type="enemy" x="632" y="932" width="32" height="32"/>
   <object id="142" name="Demon" type="enemy" x="508" y="956" width="32" height="32"/>
-  <object id="144" name="Demon" type="enemy" x="116" y="248" width="32" height="32"/>
+  <object id="144" name="Demon" type="enemy" x="112" y="268" width="32" height="32"/>
   <object id="145" name="food" type="itembox" x="272" y="2864" width="32" height="32">
    <properties>
     <property name="level" type="int" value="3"/>
    </properties>
   </object>
   <object id="146" name="Bird" type="enemy" x="588" y="1552" width="32" height="32"/>
-  <object id="147" name="food" type="itembox" x="48" y="252" width="32" height="32">
+  <object id="147" name="food" type="itembox" x="48" y="268" width="32" height="32">
    <properties>
     <property name="level" type="int" value="3"/>
    </properties>
@@ -1142,12 +1142,7 @@
   <object id="239" name="rod" type="itembox" x="108" y="956" width="32" height="32"/>
   <object id="240" name="item" type="itembox" x="672" y="2048" width="32" height="32">
    <properties>
-    <property name="kind" type="int" value="17"/>
-   </properties>
-  </object>
-  <object id="243" name="item" type="itembox" x="768" y="2448" width="32" height="32">
-   <properties>
-    <property name="kind" type="int" value="17"/>
+    <property name="kind" type="int" value="18"/>
    </properties>
   </object>
   <object id="244" name="item" type="itembox" x="352" y="288" width="32" height="32">
