@@ -413,11 +413,8 @@ phina.define("qft.Player", {
             var index = this.equip.weapons.findIndex(function(e, i, a) {
                 return e == item.kind;
             });
-            if (index != -1) {
-                //所持武器を拾ったらその武器のレベルが上がる
-                this.equip.level[index]++;
-            } else {
-                //持って無い場合
+            if (index == null || index == -1) {
+                //持って無い武器だった場合
                 if (this.equip.weapons.length < 3) {
                     //リストに追加
                     this.equip.weapons.push(item.kind);
@@ -439,9 +436,11 @@ phina.define("qft.Player", {
                     this.equip.weapons[dropIndex] = item.kind;
                     this.equip.level[dropIndex] = item.level;
                 }
+            } else {
+                //所持武器を拾ったらその武器のレベルが上がる
+                this.equip.level[index]++;
             }
             app.playSE("getitem");
-            return;
         }
         //装備品
         if (item.isEquip) {
