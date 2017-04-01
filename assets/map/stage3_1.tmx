@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="150" tilewidth="16" tileheight="16" nextobjectid="202">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="150" tilewidth="16" tileheight="16" nextobjectid="205">
  <tileset firstgid="1" name="A1" tilewidth="16" tileheight="16" tilecount="768" columns="32">
   <image source="TileA1.png" width="512" height="384"/>
  </tileset>
@@ -950,7 +950,8 @@
   </object>
   <object id="191" type="message" x="2928" y="2192" width="32" height="32">
    <properties>
-    <property name="text" value="開発中につき行き止まり"/>
+    <property name="text">転送の魔法陣
+魔法陣に乗って上キーを押すと転送</property>
    </properties>
   </object>
   <object id="192" name="bonfire" type="accessory" x="2448" y="876" width="24" height="32">
@@ -964,18 +965,11 @@
    </properties>
   </object>
   <object id="195" name="down" type="check" x="892" y="688" width="32" height="32"/>
-  <object id="197" name="start" type="player" x="2964" y="2192" width="32" height="32">
-   <properties>
-    <property name="direction" type="int" value="0"/>
-   </properties>
-  </object>
-  <object id="198" name="item" type="itembox" x="2840" y="2188" width="32" height="32">
-   <properties>
-    <property name="kind" type="int" value="21"/>
-   </properties>
-  </object>
   <object id="199" name="longsword" type="itembox" x="928" y="2032" width="32" height="32"/>
   <object id="200" name="ax" type="itembox" x="1104" y="1488" width="32" height="32"/>
   <object id="201" name="rod" type="itembox" x="4388" y="384" width="32" height="32"/>
+  <object id="202" name="longsword" type="itembox" x="576" y="2052" width="32" height="32"/>
+  <object id="203" name="longsword" type="itembox" x="652" y="2052" width="32" height="32"/>
+  <object id="204" name="longsword" type="itembox" x="500" y="2008" width="32" height="32"/>
  </objectgroup>
 </map>
