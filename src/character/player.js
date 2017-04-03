@@ -72,7 +72,7 @@ phina.define("qft.Player", {
         this.sprite = phina.display.Sprite("player1", 32, 32).addChildTo(this).setFrameIndex(0);
 
         //武器用スプライト
-        this.weapon = phina.display.Sprite("item", 24, 24)
+        this.weapon = phina.display.Sprite("weapons", 24, 24)
             .addChildTo(this.back)
             .setFrameIndex(0)
             .setOrigin(1, 1)
@@ -439,6 +439,9 @@ phina.define("qft.Player", {
             } else {
                 //所持武器を拾ったらその武器のレベルが上がる
                 this.equip.level[index]++;
+                var id = this.equip.weapons[this.equip.using];
+                var lv = this.equip.level[this.equip.using];
+                this.setWeapon(id, lv);
             }
             app.playSE("getitem");
         }
@@ -486,7 +489,9 @@ phina.define("qft.Player", {
 
         //現在使用武器設定
         this.equip.using = (this.equip.using + 1) % this.equip.weapons.length;
-        this.setWeapon(this.equip.weapons[this.equip.using], this.equip.level[this.equip.using]);
+        var id = this.equip.weapons[this.equip.using];
+        var lv = this.equip.level[this.equip.using];
+        this.setWeapon(id, lv);
 
         app.playSE("select");
     },
@@ -495,6 +500,10 @@ phina.define("qft.Player", {
     setWeapon: function(kind, level) {
         kind = kind || 0;
         level = level || 0;
+
+        //武器画像設定
+        var index = kind * 10 + level;
+        this.weapon.setFrameIndex(index);
 
         //攻撃属性初期化
         this.attackCollision.isSlash = false;
@@ -570,16 +579,16 @@ phina.define("qft.Player", {
                 this.weapon.setPosition(-3, 3);
                 break;
         }
-        this.weapon.setFrameIndex(kind);
         return this;
     },
 
     //装備武器により攻撃モーションを変える
     weaponAttack: function() {
+        var kind = this.equip.weapons[this.equip.using];
         var level = this.equip.level[this.equip.using];
         this.attack = true;
         var that = this;
-        switch (this.weapon.frameIndex) {
+        switch (kind) {
             case 0:
                 //ショートソード
                 this.weapon.tweener.clear()
@@ -760,7 +769,10 @@ phina.define("qft.Player", {
     restoreStatus: function() {
         this.$extend(this.startStatus);
         this.parentScene.playerWeapon.rotation = 0;
-        this.setWeapon(this.equip.using);
+
+        var id = this.equip.weapons[this.equip.using];
+        var lv = this.equip.level[this.equip.using];
+        this.setWeapon(id, lv);
     },
 });
 
@@ -961,7 +973,7 @@ phina.define("qft.PlayerWeapon", {
             var x =  Math.sin(rad)*18;
             var y = -Math.cos(rad)*18;
             rad -= rad_1;
-            this.weapons[i] = phina.display.Sprite("item", 24, 24)
+            this.weapons[i] = phina.display.Sprite("weapons", 24, 24)
                 .addChildTo(this)
                 .setPosition(x, y);
             this.weapons[i].index = i;
@@ -969,7 +981,9 @@ phina.define("qft.PlayerWeapon", {
                 this.rotation = -that.rotation;
                 var weapons = that.player.equip.weapons;
                 if (this.index < weapons.length) {
-                    var index = that.player.equip.weapons[this.index];
+                    var kind = that.player.equip.weapons[this.index];
+                    var level = that.player.equip.level[this.index];
+                    var index = kind * 10 + level;
                     this.setFrameIndex(index);
                     this.visible = true;
                 } else {

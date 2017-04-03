@@ -37,6 +37,7 @@ phina.define("qft.Assets", {
                     return {
                         image: {
                             "player2":    "assets/image/actor19.png",
+                            "weapons":    "assets/image/weapons.png",
                             "item":       "assets/image/item.png",
                             "itembox":    "assets/image/takarabako.png",
                             "particle":   "assets/image/particle.png",
