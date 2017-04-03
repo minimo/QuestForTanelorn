@@ -968,8 +968,5 @@
   <object id="199" name="longsword" type="itembox" x="928" y="2032" width="32" height="32"/>
   <object id="200" name="ax" type="itembox" x="1104" y="1488" width="32" height="32"/>
   <object id="201" name="rod" type="itembox" x="4388" y="384" width="32" height="32"/>
-  <object id="202" name="longsword" type="itembox" x="576" y="2052" width="32" height="32"/>
-  <object id="203" name="longsword" type="itembox" x="652" y="2052" width="32" height="32"/>
-  <object id="204" name="longsword" type="itembox" x="500" y="2008" width="32" height="32"/>
  </objectgroup>
 </map>
