@@ -640,13 +640,13 @@ phina.define("qft.Player", {
                     .call(function() {
                         that.attack = false;
                     });
-                    var arrowPower = 5 + level * 10;
+                    var arrowPower = 5 + level * 5;
                     var arrow = qft.PlayerAttack(this.parentScene, {width: 15, height: 10, power: arrowPower, type: "arrow"})
                         .addChildTo(this.parentScene.playerLayer)
                         .setScale(this.scaleX, 1)
                         .setPosition(this.x, this.y);
                     arrow.tweener.setUpdateType('fps').clear()
-                        .by({x: 150*this.scaleX}, 7)
+                        .by({x: (150 + level * 5) * this.scaleX}, 7)
                         .call(function() {
                             this.remove();
                         }.bind(arrow));
