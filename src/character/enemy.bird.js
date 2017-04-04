@@ -71,13 +71,13 @@ phina.define("qft.Enemy.Bird", {
     },
 
     update: function() {
-        var px, py;
+        var c1, c2;
         if (this.vertical) {
             //方向決定
             if (this.direction == 0) this.vy = this.speed;
             if (this.direction == 180) this.vy = -this.speed;
-            px = 0;
-            py = 12;
+            c1 = 0;
+            c2 = 2;
             if (this.getDistancePlayer() < 256) {
                 if (this.x < this.parentScene.player.x) this.sprite.scaleX = 1; else this.sprite.scaleX = -1;
             }
@@ -85,15 +85,15 @@ phina.define("qft.Enemy.Bird", {
             //方向決定
             if (this.direction == 0) this.vx = this.speed;
             if (this.direction == 180) this.vx = -this.speed;
-            px = 12;
-            py = 0;
+            c1 = 1;
+            c2 = 3;
         }
 
         //壁に当たったら折り返し
-        if (this.checkMapCollision2(this.x-px, this.y-py, 5, 5)) {
+        if (this._collision[c1].hit) {
             this.direction = 0;
             this.returnTime = this.options.returnTime;
-        } else if (this.checkMapCollision2(this.x+px, this.y+py, 5, 5)) {
+        } else if (this._collision[c2].hit) {
             this.direction = 180;
             this.returnTime = this.options.returnTime;
         }

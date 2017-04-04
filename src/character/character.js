@@ -102,6 +102,10 @@ phina.define("qft.Character", {
         this._collision[3] = phina.display.RectangleShape({width: 2, height: h});
         this.collisionResult = null;
 
+        //当たり判定チェック位置オフセット
+        this.offsetCollisionX = options.offsetCollisionX || 0;
+        this.offsetCollisionY = options.offsetCollisionY || 0;
+
         //当たり判定情報再設定
         this.setupCollision();
 
@@ -400,8 +404,8 @@ phina.define("qft.Character", {
 
     //当たり判定用エレメントの位置再セット
     resetCollisionPosition: function() {
-        var w = Math.floor(this.width/2)+6;
-        var h = Math.floor(this.height/2)+6;
+        var w = Math.floor(this.width/2) + 6 + this.offsetCollisionX;
+        var h = Math.floor(this.height/2)+ 6 + this.offsetCollisionY;
         this._collision[0].setPosition(this.x, this.y - h);
         this._collision[1].setPosition(this.x + w, this.y);
         this._collision[2].setPosition(this.x, this.y + h);
