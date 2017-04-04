@@ -85,8 +85,10 @@ phina.define("qft.Player", {
         this.attackCollision = phina.display.RectangleShape({width: 14, height: 26});
         //当たり判定デバッグ用
         if (DEBUG_COLLISION) {
-            this.attackCollision.addChildTo(this.parentScene.playerLayer);
-            this.attackCollision.alpha = 0.3;
+            this.on('displaycollision', function(e) {
+                this.attackCollision.addChildTo(this.parentScene.playerLayer);
+                this.attackCollision.alpha = 0.3;
+            });
             this.on('removed', function(e) {
                 this.attackCollision.remove();
             });

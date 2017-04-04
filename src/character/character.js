@@ -111,7 +111,7 @@ phina.define("qft.Character", {
 
         //当たり判定デバッグ用
         if (DEBUG_COLLISION) {
-            this.on('added', function(e) {
+            this.on('displaycollision', function(e) {
                 this._collision[0].addChildTo(this.parentScene.objLayer);
                 this._collision[1].addChildTo(this.parentScene.objLayer);
                 this._collision[2].addChildTo(this.parentScene.objLayer);
