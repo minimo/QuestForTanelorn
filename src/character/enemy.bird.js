@@ -71,8 +71,6 @@ phina.define("qft.Enemy.Bird", {
     },
 
     update: function() {
-        if (this.isDead) return;
-
         var px, py;
         if (this.vertical) {
             //方向決定

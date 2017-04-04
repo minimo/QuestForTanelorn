@@ -63,11 +63,15 @@ phina.define("qft.Enemy.Snake", {
                 this.direction = 180;
             } else if (this.checkMapCollision2(this.x-5, this.y+20, 5, 5) == null) {
                 this.direction = 0;
-            } else if (this.checkMapCollision2(this.x-12, this.y, 5, 5)) {
-                this.direction = 0;
-            } else if (this.checkMapCollision2(this.x+12, this.y, 5, 5)) {
-                this.direction = 180;
             }
+
+            //壁に当たったら折り返す
+            if (this._collision[1].hit) {
+                this.direction = 180;
+            } else if (this._collision[3].hit) {
+                this.direction = 0;
+            }
+
             //プレイヤーが近くにいたらジャンプ攻撃
             if (look && !this.isJump && dis < 40) {
                 this.isJump = true;
