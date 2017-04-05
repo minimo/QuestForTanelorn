@@ -490,6 +490,16 @@ phina.define("qft.MainScene", {
         this.player.restoreStatus();
         this.playerWeapon.rotation = 0;
         this.setupStage();
+
+        this.totalScore = 0;
+        this.totalKill = 0;
+
+        //スコアと討伐数を前ステージクリア時に戻す
+        if (!this.practice && this.stageNumber > 1) {
+            var result = this.clearResult[this.stageNumber - 1];
+            this.totalScore = result.score;
+            this.totalKill = result.kill;
+        }
     },
 
     //ステージクリア
