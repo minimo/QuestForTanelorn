@@ -20,12 +20,17 @@ phina.define("qft.MainScene", {
     //メッセージスタック
     messageStack: [],
 
-    //ステージクリア
+    //ステージクリアフラグ
     isStageClear: false,
 
     //スコア
     totalScore: 0,
-    stageScore: 0,
+
+    //敵討伐数
+    totalKill: 0,
+
+    //ステージクリア時情報
+    clearResult: [],
 
     //マップ外のスクリーン移動を許可するか
     limitWidth: false,
@@ -64,6 +69,9 @@ phina.define("qft.MainScene", {
 
         //ステージ情報初期化
         this.setupStage();
+
+        //ステージクリア時情報
+        this.clearResult = [];
 
         this.fg = phina.display.RectangleShape(param)
             .addChildTo(this)
@@ -512,6 +520,15 @@ phina.define("qft.MainScene", {
         app.playBGM("stageclear", false, function() {
             bgmFinish = true;
         });
+
+        //クリア時点情報保存
+        var data = {
+            stage: this.stageNumber,
+            score: this.totalScore,
+            kill: this.totalKill,
+            time: this.stageController.timeLimit - this.timeLimit,
+        };
+        this.clearResult[this.stageNumber] = data;
 
         //次ステージのアセット読み込み
         if (this.stageNumber < this.stageNumberMax) {

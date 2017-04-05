@@ -135,8 +135,8 @@ phina.define("qft.Enemy", {
         if (this.hp <= 0) {
             this.hp = 0;
             this.flare('dead');
-            this.parentScene.player.kill++;
             this.parentScene.totalScore += this.point;
+            this.parentScene.totalKill++;
         }
         app.playSE("hit");
         if (dir == 0) this.direction = 180; else this.direction = 0;

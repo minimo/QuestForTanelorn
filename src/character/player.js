@@ -39,9 +39,6 @@ phina.define("qft.Player", {
     //所持クリア条件キー
     keys: null,
 
-    //討伐モンスター数
-    kill: 0,
-
     //操作可能フラグ
     isControl: true,
 
@@ -354,9 +351,6 @@ phina.define("qft.Player", {
 
         //所持クリア条件キー
         this.keys = [];
-
-        //討伐モンスター数
-        this.kill = 0;
 
         //操作可能フラグ
         this.isControl = true;
@@ -753,7 +747,6 @@ phina.define("qft.Player", {
             switchOk: true,
         };
         var items = this.items.concat();
-        var kill = this.kill;
         var numJumpMax = this.numJumpMax;
 
         this.startStatus = {
@@ -762,7 +755,6 @@ phina.define("qft.Player", {
             deffence: this.deffence,
             equip: equip,
             item: items,
-            kill: kill,
             numJumpMax: numJumpMax,
         };
     },
