@@ -185,6 +185,7 @@ phina.define("qft.MainScene", {
 
         var ct = app.controller;
         if (!this.isStageClear) {
+            //通常時処理
             //メニューシーンへ移行
             if (this.time > 15) {
                 if (ct.pause || ct.menu) {
@@ -216,6 +217,7 @@ phina.define("qft.MainScene", {
                 this.player.dead();
             }
         } else {
+            //ステージクリア時処理
             //残りタイムをスコア加算
             if (this.timeLimit >= 60) {
                 this.timeLimit -= 60;
@@ -231,6 +233,7 @@ phina.define("qft.MainScene", {
                 }
             }
         }
+
         //スクリーン表示位置をプレイヤー中心になる様に調整
         var map = this.mapLayer.map;
         this.mapLayer.x = SC_W*0.5-this.player.x;
