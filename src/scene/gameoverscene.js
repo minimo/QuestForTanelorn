@@ -13,7 +13,7 @@ phina.define("qft.GameOverScene", {
         this.superInit({width: SC_W, height: SC_H});
         this.parentScene = parentScene;
 
-        //�o�b�N�O���E���h
+        //バックグラウンド
         var param = {
             width: SC_W,
             height: SC_H,
@@ -81,11 +81,13 @@ phina.define("qft.GameOverScene", {
                 this.yes.tweener.clear().to({scaleX: 1, scaleY: 1}, 500, "easeOutBounce");
                 this.no.tweener.clear().to({scaleX: 0.7, scaleY: 0.7}, 500, "easeOutBounce");
                 app.playSE("select");
+                this.text3.text = "ステージ開始時の状態に戻ってやり直します"
             } else if (ct.right && this.select == 0) {
                 this.select = 1;
                 this.yes.tweener.clear().to({scaleX: 0.7, scaleY: 0.7}, 500, "easeOutBounce");
                 this.no.tweener.clear().to({scaleX: 1, scaleY: 1}, 500, "easeOutBounce");
                 app.playSE("select");
+                this.text3.text = "タイトルに戻ります"
             }
             if (ct.ok || ct.cancel) {
                 if (this.select == 0) {
@@ -131,6 +133,12 @@ phina.define("qft.GameOverScene", {
             .addChildTo(this);
         this.no.alpha = 0;
         this.no.tweener.clear().to({y: SC_H*0.6, alpha: 1}, 500, "easeInSine");
+
+        this.text3 = phina.display.Label({text: "ステージ開始時の状態に戻ってやり直します", fontSize: 15}.$safe(labelParam))
+            .setPosition(SC_W*0.5, SC_H*0.75+10)
+            .addChildTo(this);
+        this.text3.alpha = 0;
+        this.text3.tweener.clear().to({y: SC_H*0.75, alpha: 1}, 500, "easeInSine");
 
         this.bg.tweener.clear().to({alpha:0.3}, 500, "easeInSine");
     },
