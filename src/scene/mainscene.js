@@ -36,8 +36,8 @@ phina.define("qft.MainScene", {
     limitWidth: false,
     limitHeight: true,
 
-    //スクリーン座標プレイヤー中央固定フラグ
-    attensionPlayer: true,
+    //プレイヤースクリーン中央固定フラグ
+    centerPlayer: true,
 
     init: function(options) {
         this.superInit({width: SC_W, height: SC_H});
@@ -238,7 +238,7 @@ phina.define("qft.MainScene", {
         }
 
         //スクリーン表示位置をプレイヤー中心になる様に調整
-        if (this.attensionPlayer) {
+        if (this.centerPlayer) {
             var map = this.mapLayer.map;
             this.mapLayer.x = SC_W*0.5-this.player.x;
             this.mapLayer.y = SC_H*0.5-this.player.y;
