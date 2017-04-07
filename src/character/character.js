@@ -111,7 +111,7 @@ phina.define("qft.Character", {
 
         //当たり判定デバッグ用
         if (DEBUG_COLLISION) {
-            this.on('displaycollision', function(e) {
+            this.one('displaycollision', function(e) {
                 this._collision[0].addChildTo(this.parentScene.objLayer);
                 this._collision[1].addChildTo(this.parentScene.objLayer);
                 this._collision[2].addChildTo(this.parentScene.objLayer);
@@ -124,7 +124,7 @@ phina.define("qft.Character", {
                 var c = phina.display.RectangleShape({width: this.width, height: this.height}).addChildTo(this);
                 c.alpha = 0.3;
             });
-            this.on('removed', function(e) {
+            this.one('removed', function(e) {
                 this._collision[0].remove();
                 this._collision[1].remove();
                 this._collision[2].remove();
@@ -133,6 +133,8 @@ phina.define("qft.Character", {
         }
 
         this.on('enterframe', function(e) {
+            if (DEBUG_COLLISION) this.flare('displaycollision');
+
             //画面内判定
             var ps = this.parentScene;
             if (ps.screenX-128 < this.x && this.x < ps.screenX + SC_W+128 && 
