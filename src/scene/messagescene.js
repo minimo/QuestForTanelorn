@@ -1,11 +1,11 @@
 /*
- *  menuscene.js
+ *  messagescene.js
  *  2016/12/28
  *  @auther minimo  
  *  This Program is MIT license.
  */
  
-phina.define("qft.MenuScene", {
+phina.define("qft.MessageScene", {
     superClass: "phina.display.DisplayScene",
 
     init: function(currentScene) {
