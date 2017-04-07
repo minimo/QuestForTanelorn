@@ -134,7 +134,7 @@ phina.define("qft.GameOverScene", {
         this.no.alpha = 0;
         this.no.tweener.clear().to({y: SC_H*0.6, alpha: 1}, 500, "easeInSine");
 
-        this.text3 = phina.display.Label({text: "ステージ開始時の状態に戻ってやり直します", fontSize: 15}.$safe(labelParam))
+        this.text3 = phina.display.Label({text: "ステージ開始時の状態に戻ってやり直します", fontSize: 10}.$safe(labelParam))
             .setPosition(SC_W*0.5, SC_H*0.75+10)
             .addChildTo(this);
         this.text3.alpha = 0;
