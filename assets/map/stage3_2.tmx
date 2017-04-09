@@ -380,7 +380,7 @@
    <properties>
     <property name="enterOffset" type="int" value="-16"/>
     <property name="lock" type="bool" value="false"/>
-    <property name="nextID" type="int" value="87"/>
+    <property name="nextID" type="int" value="171"/>
     <property name="offset" type="int" value="48"/>
     <property name="toLayerNumber" type="int" value="0"/>
    </properties>
