@@ -300,12 +300,12 @@
     <property name="enableThrough" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="22" type="floor" x="1456" y="976" width="32" height="16">
+  <object id="22" type="floor" x="1448" y="976" width="48" height="16">
    <properties>
     <property name="collision" value="e.vy = -11;"/>
    </properties>
   </object>
-  <object id="26" type="floor" x="1584" y="976" width="32" height="16">
+  <object id="26" type="floor" x="1576" y="976" width="48" height="16">
    <properties>
     <property name="collision" value="e.vy = -11;"/>
    </properties>
