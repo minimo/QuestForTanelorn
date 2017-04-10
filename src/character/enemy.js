@@ -98,12 +98,14 @@ phina.define("qft.Enemy", {
             if (dice <= this.rareDropRate) {
                 var i = this.parentScene.spawnItem(this.x, this.y, {kind: this.rareDropItem});
                 i.vy = -5;
+                i.isEnemyDrop = true;
             } else {
                 //通常アイテムドロップ判定
                 var dice = Math.randint(1, 100);
                 if (dice <= this.dropRate) {
                     var i = this.parentScene.spawnItem(this.x, this.y, {kind: this.dropItem});
                     i.vy = -5;
+                    i.isEnemyDrop = true;
                 }
             }
             this.remove();

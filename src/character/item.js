@@ -28,6 +28,9 @@ phina.define("qft.Item", {
     isItem: false,
     isKey: false,
 
+    //敵ドロップアイテムフラグ
+    isEnemyDrop: false,
+
     //アイテム情報
     status: null,
 
@@ -91,6 +94,9 @@ phina.define("qft.Item", {
 
         //アイテムスプライト
         this.sprite = phina.display.Sprite("item", 24, 24).addChildTo(this).setFrameIndex(this.kind);
+
+        //寿命
+        this.lifeSpan = 150;
     },
 
     update: function() {
@@ -103,6 +109,18 @@ phina.define("qft.Item", {
             }
         } else {
             if (this.throwAway) this.throwAway = false;
+        }
+
+        if (this.isEnemyDrop) {
+            if (this.lifeSpan == 0) this.remove();
+            if (this.lifeSpan < 30) {
+                if (this.time % 2 == 0) this.visible = !this.visible;
+            } else if (this.lifeSpan < 60){
+                if (this.time % 5 == 0) this.visible = !this.visible;
+            } else if (this.lifeSpan < 90) {
+                if (this.time % 10 == 0) this.visible = !this.visible;
+            }
+            this.lifeSpan--;
         }
     },
 });
