@@ -46,7 +46,16 @@ phina.define("qft.TitleScene", {
             .addChildTo(this).setPosition(SC_W*0.5, SC_H*0.8);
         this.textLabel2 = phina.display.Label({text: "Push [X] to Configuration", fontSize: 15}.$safe(labelParam))
             .addChildTo(this).setPosition(SC_W*0.5, SC_H*0.8+20);
-
+/*
+        this.menu = ["Start", "Continue", "Config"];
+        this.menuText = [];
+        for (var i = 0; i < this.menu.length; i++) {
+            this.menuText[i] = phina.display.Label({text: this.menu[i], fontSize: 30}.$safe(labelParam))
+                .addChildTo(this)
+                .setPosition(SC_W*0.5, SC_H*0.7+i*30)
+                .setScale(0.7);
+        }
+*/
         this.fg = phina.display.RectangleShape(param)
             .addChildTo(this)
             .setPosition(SC_W*0.5, SC_H*0.5);
