@@ -200,8 +200,8 @@ phina.define("qft.Player", {
                         this.throughFloor = null;
                     }
 
-                    //扉に入る（接地時のみ）
-                    if (this.onFloor && this.onDoor && !this.onDoor.isLock && !this.onDoor.already) {
+                    //扉に入る（接地時＆左右キーオフ時のみ）
+                    if (!ct.left && !ct.right && this.onFloor && this.onDoor && !this.onDoor.isLock && !this.onDoor.already) {
                         this.vx = 0;
                         this.vy = 0;
                         this.onDoor.flare('enterdoor');
