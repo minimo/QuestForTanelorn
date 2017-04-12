@@ -70,7 +70,7 @@ phina.define("qft.Enemy", {
             }
 
             //ステージクリアの場合は当たり判定無し
-            if (this.parentScene.isStageCler) return;
+            if (this.parentScene.isStageClear) return;
 
             var pl = this.parentScene.player;
             //プレイヤー攻撃との当たり判定
