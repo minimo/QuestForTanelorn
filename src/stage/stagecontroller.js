@@ -9,6 +9,8 @@
 phina.define("qft.StageController", {
     superClass: "phina.app.Object2D",
 
+    stageNumber: 0,
+
     parentScene: null,
     mapLayer: null,
     player: null,
@@ -33,6 +35,15 @@ phina.define("qft.StageController", {
 
         this.seq = [];
         this.event = [];
+    },
+
+    //マップ画像データ静的保存
+    _static: {
+        map: [],
+        foreground: [],
+        foreground2: [],
+        background: [],
+        background2: [],
     },
 
     //時間イベント追加
@@ -137,19 +148,43 @@ phina.define("qft.StageController", {
         mapLayer.foregroundLayer = phina.display.DisplayElement().addChildTo(mapLayer);
 
         //マップ画像取得
-        var mapImage = tmx.getImage("map");
+        var mapImage;
+        if (qft.StageController.map[this.stageNumber]) {
+            mapImage = qft.StageController.map[this.stageNumber];
+        } else {
+            mapImage = tmx.getImage("map");
+            qft.StageController.map[this.stageNumber] = mapImage;
+        }
         mapLayer.map = phina.display.Sprite(mapImage).addChildTo(mapLayer.mapImageLayer).setOrigin(0, 0);
 
         //バックグラウンド画像
-        var background = tmx.getImage("background");
-        var background2 = tmx.getImage("background2");
+        var background2 = qft.StageController.background2[this.stageNumber];
+        if (!background2) {
+            background2 = tmx.getImage("background2");
+            qft.StageController.background2[this.stageNumber] = background2;
+        }
         if (background2) phina.display.Sprite(background2).addChildTo(mapLayer.backgroundLayer).setOrigin(0, 0);
+
+        var background = qft.StageController.background[this.stageNumber];
+        if (!background) {
+            background = tmx.getImage("background");
+            qft.StageController.background[this.stageNumber] = background;
+        }
         phina.display.Sprite(background).addChildTo(mapLayer.backgroundLayer).setOrigin(0, 0);
 
         //フォアグラウンド画像
-        var foreground = tmx.getImage("foreground");
-        var foreground2 = tmx.getImage("foreground2");
+        var foreground2 = qft.StageController.foreground2[this.stageNumber];
+        if (!foreground2) {
+            foreground2 = tmx.getImage("foreground2");
+            qft.StageController.foreground2[this.stageNumber] = foreground2;
+        }
         if (foreground2) phina.display.Sprite(foreground2).addChildTo(mapLayer.foregroundLayer).setOrigin(0, 0);
+
+        var foreground = qft.StageController.foreground[this.stageNumber];
+        if (!foreground) {
+            foreground = tmx.getImage("foreground");
+            qft.StageController.foreground[this.stageNumber] = foreground;
+        }
         phina.display.Sprite(foreground).addChildTo(mapLayer.foregroundLayer).setOrigin(0, 0);
 
         //マップ当たり判定取得
