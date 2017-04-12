@@ -185,7 +185,7 @@ phina.define("qft.StageController", {
             background = tmx.getImage("background");
             qft.StageController.background[this.stageNumber] = background;
         }
-//        phina.display.Sprite(background).addChildTo(mapLayer.backgroundLayer).setOrigin(0, 0);
+        phina.display.Sprite(background).addChildTo(mapLayer.backgroundLayer).setOrigin(0, 0);
 
         //フォアグラウンド画像
         var foreground2 = qft.StageController.foreground2[this.stageNumber];
@@ -200,7 +200,7 @@ phina.define("qft.StageController", {
             foreground = tmx.getImage("foreground");
             qft.StageController.foreground[this.stageNumber] = foreground;
         }
-//        phina.display.Sprite(foreground).addChildTo(mapLayer.foregroundLayer).setOrigin(0, 0);
+        phina.display.Sprite(foreground).addChildTo(mapLayer.foregroundLayer).setOrigin(0, 0);
 
         //マップ当たり判定取得
         var objects = tmx.getObjectGroup("collision").objects;
