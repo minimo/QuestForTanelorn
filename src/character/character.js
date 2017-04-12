@@ -133,7 +133,7 @@ phina.define("qft.Character", {
         }
 
         this.on('enterframe', function(e) {
-            if (DEBUG_COLLISION) this.flare('displaycollision');
+            if (this.time == 0 && DEBUG_COLLISION) this.flare('displaycollision');
 
             //画面内判定
             var ps = this.parentScene;
