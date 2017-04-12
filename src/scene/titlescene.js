@@ -43,19 +43,22 @@ phina.define("qft.TitleScene", {
             fontSize: 70,
         };
         this.textLabel1 = phina.display.Label({text: "Push button to START", fontSize: 15}.$safe(labelParam))
-            .addChildTo(this).setPosition(SC_W*0.5, SC_H*0.8);
+//            .addChildTo(this).setPosition(SC_W*0.5, SC_H*0.8);
         this.textLabel2 = phina.display.Label({text: "Push [X] to Configuration", fontSize: 15}.$safe(labelParam))
-            .addChildTo(this).setPosition(SC_W*0.5, SC_H*0.8+20);
-/*
+//            .addChildTo(this).setPosition(SC_W*0.5, SC_H*0.8+20);
+
         this.menu = ["Start", "Continue", "Config"];
         this.menuText = [];
         for (var i = 0; i < this.menu.length; i++) {
             this.menuText[i] = phina.display.Label({text: this.menu[i], fontSize: 30}.$safe(labelParam))
                 .addChildTo(this)
-                .setPosition(SC_W*0.5, SC_H*0.7+i*30)
+                .setPosition(SC_W*0.5, SC_H*0.65+i*40)
                 .setScale(0.7);
         }
-*/
+        this.select = 0;
+        this.selectMax = 3;
+        this.menuText[0].setScale(1);
+
         this.fg = phina.display.RectangleShape(param)
             .addChildTo(this)
             .setPosition(SC_W*0.5, SC_H*0.5);
@@ -70,13 +73,39 @@ phina.define("qft.TitleScene", {
     },
 
     update: function(app) {
-        if (this.time > 10) {
+        if (this.time > 15) {
             var ct = app.controller;
+            if (ct.down && this.select < this.selectMax-1) {
+                this.menuText[this.select].tweener.clear().to({scaleX: 0.7, scaleY: 0.7}, 500, "easeOutBounce");
+                this.select++;
+                this.menuText[this.select].tweener.clear().to({scaleX: 1.0, scaleY: 1.0}, 500, "easeOutBounce");
+                this.time = 10;
+                app.playSE("select");
+            }
+            if (ct.up && this.select > 0) {
+                this.menuText[this.select].tweener.clear().to({scaleX: 0.7, scaleY: 0.7}, 500, "easeOutBounce");
+                this.select--;
+                this.menuText[this.select].tweener.clear().to({scaleX: 1.0, scaleY: 1.0}, 500, "easeOutBounce");
+                this.time = 10;
+                app.playSE("select");
+            }
             if (ct.ok || app.mouse.getPointing()) {
-                this.exit("main");
+                this.time = 0;
+                switch (this.select) {
+                    case 0:
+                        this.exit("main");
+                        break;
+                    case 1:
+                        this.exit("main");
+                        break;
+                    case 2:
+                        app.pushScene(qft.ConfigScene(this));
+                        break;
+                }
             }
             if (ct.cancel) {
                 app.pushScene(qft.ConfigScene(this));
+                this.time = 0;
             }
         }
         if (this.time > 30 * 120) {
