@@ -591,5 +591,31 @@ phina.define("qft.MainScene", {
         } else {
             this.exit("title");
         }
-    }
+    },
+
+    //現在のステータスをローカルストレージへ保存
+    saveGame: function() {
+        var saveObj = {
+            stageNumber: this.stageNumber,
+            result: this.clearResult,
+            playerStatus: this.player.startStatus,
+        };
+        localStorage.setItem("stage", JSON.stringify(saveObj));
+        return saveObj;
+    },
+
+    //ローカルストレージから直前の保存状態を読み込み
+    loadGame: function() {
+        var defaultData = {
+            stageNumber: 1,
+            result: [],
+            playerStatus: {},
+        };
+        var data = localStorage.getItem("stage");
+        if (data) {
+            var d = JSON.parse(cfg).$safe(defaultData);
+            this.stageNumber = d.stageNumber;
+            this.result = d.result;
+        }
+    },
 });
