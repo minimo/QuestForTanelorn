@@ -48,16 +48,25 @@ phina.define("qft.TitleScene", {
 //            .addChildTo(this).setPosition(SC_W*0.5, SC_H*0.8+20);
 
         this.menu = ["Start", "Continue", "Config"];
+        this.menuComment = ["ゲームを開始します", "直前のゲームオーバーになったステージから開始します", "設定メニューを開きます"];
         this.menuText = [];
         for (var i = 0; i < this.menu.length; i++) {
             this.menuText[i] = phina.display.Label({text: this.menu[i], fontSize: 30}.$safe(labelParam))
                 .addChildTo(this)
-                .setPosition(SC_W*0.5, SC_H*0.65+i*40)
+                .setPosition(SC_W*0.5, SC_H*0.6+i*30)
                 .setScale(0.7);
         }
         this.select = 0;
         this.selectMax = 3;
         this.menuText[0].setScale(1);
+
+        //メニューコメント
+        var that = this;
+        this.comment = phina.display.Label({text: "", fontSize: 10}.$safe(labelParam))
+            .addChildTo(this).setPosition(SC_W*0.5, SC_H*0.9);
+        this.comment.update = function() {
+            this.text = that.menuComment[that.select];
+        }
 
         this.fg = phina.display.RectangleShape(param)
             .addChildTo(this)
@@ -117,7 +126,7 @@ phina.define("qft.TitleScene", {
     //タイトルロゴ表示
     dispTitleLogo: function(x, y) {
         x = x || SC_W * 0.5;
-        y = y || SC_H * 0.5;
+        y = y || SC_H * 0.45;
 
         var labelParam = {
             fill: "white",
