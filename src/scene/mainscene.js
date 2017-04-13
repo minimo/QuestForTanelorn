@@ -539,9 +539,6 @@ phina.define("qft.MainScene", {
             bgmFinish = true;
         });
 
-        //マップイメージクリア
-        qft.StageController.clearMapImage(stageNumber);
-
         //クリア時点情報保存
         var data = {
             stage: this.stageNumber,
