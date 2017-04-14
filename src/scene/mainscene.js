@@ -43,10 +43,10 @@ phina.define("qft.MainScene", {
         this.superInit({width: SC_W, height: SC_H});
         options = (options || {}).$safe({
             startStage: 1,
-            practice: false,
+            isPractice: false,
         })
         this.stageNumber = options.startStage || 1;
-        this.practice = options.practice;
+        this.isPractice = options.iaPractice;
 
         //バックグラウンド
         var param = {
@@ -503,7 +503,7 @@ phina.define("qft.MainScene", {
         this.totalKill = 0;
 
         //スコアと討伐数を前ステージクリア時に戻す
-        if (!this.practice && this.stageNumber > 1) {
+        if (!this.isPractice && this.stageNumber > 1) {
             var result = this.clearResult[this.stageNumber - 1];
             this.totalScore = result.score;
             this.totalKill = result.kill;
@@ -568,7 +568,7 @@ phina.define("qft.MainScene", {
                 this.text = "Push button to next stage.";
                 var ct = app.controller;
                 if (ct.ok || ct.cancel) {
-                    if (that.practice) {
+                    if (that.isPractice) {
                         that._exitGame = true;
                     } else {
                         that.flare('nextstage');
@@ -583,7 +583,7 @@ phina.define("qft.MainScene", {
 
     exitGame: function() {
         app.playBGM("openingbgm");
-        if (this.practice) {
+        if (this.isPractice) {
             this.exit();
         } else {
             this.exit("title");

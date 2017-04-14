@@ -29,7 +29,7 @@ phina.define("qft.SceneFlow", {
                 className: "qft.MainScene",
                 arguments: {
                     startStage: 1,
-                    practice: false,
+                    isPractice: false,
                 },
                 nextLabel: "title",
             },{
@@ -66,12 +66,10 @@ phina.define("qft.PracticePlatform", {
     onresume: function() {
         this.count++;
         if (this.count == 1) {
-            app.pushScene(qft.MainScene({startStage: this.options.startStage, practice: true}));
+            app.pushScene(qft.MainScene({startStage: this.options.startStage, isPractice: true}));
         }
         if (this.count == 2){
             this.exit();
         }
     }
 });
-
-
