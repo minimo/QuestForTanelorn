@@ -70,6 +70,7 @@ phina.define("qft.TitleScene", {
         this.fg.tweener.clear().fadeOut(15);
 
         this.on('resume', function() {
+            this.fg.tweener.clear().fadeOut(15);
             this.time = 0;
         });
 
@@ -97,12 +98,36 @@ phina.define("qft.TitleScene", {
                 this.time = 0;
                 switch (this.select) {
                     case 0:
-                        this.exit("main");
+                        //通常開始
+                        app.playSE("ok");
+                        this.fg.tweener.clear()
+                            .fadeIn(3)
+                            .call(function() {
+                                this.exit("main");
+                            }.bind(this));
                         break;
                     case 1:
-                        this.exit("main");
+                        //コンティニュー
+                        app.playSE("ok");
+                        this.fg.tweener.clear()
+                            .fadeIn(3)
+                            .call(function() {
+                                var stage = 1;
+                                var data = localStorage.getItem("stage");
+                                if (data) {
+                                    var d = JSON.parse(data);
+                                    stage = d.stageNumber;
+                                }
+                                if (stage == 1) {
+                                    //ステージ１からの場合は普通に開始
+                                    this.exit("main");
+                                } else {
+                                    app.pushScene(qft.ContinuePlatform({assetType: "stage"+stage ,startStage: stage}));
+                                }
+                            }.bind(this));
                         break;
                     case 2:
+                        //設定メニュー
                         app.pushScene(qft.ConfigScene(this));
                         break;
                 }

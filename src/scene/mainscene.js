@@ -44,9 +44,11 @@ phina.define("qft.MainScene", {
         options = (options || {}).$safe({
             startStage: 1,
             isPractice: false,
+            isContinue: false,
         })
         this.stageNumber = options.startStage || 1;
-        this.isPractice = options.iaPractice;
+        this.isPractice = options.isPractice;
+        this.isContinue = options.isContinue;
 
         //バックグラウンド
         var param = {
@@ -73,9 +75,6 @@ phina.define("qft.MainScene", {
         //ステージ情報初期化
         this.setupStage();
 
-        //ステージクリア時情報
-        this.clearResult = [];
-
         this.fg = phina.display.RectangleShape(param)
             .addChildTo(this)
             .setPosition(SC_W*0.5, SC_H*0.5);
@@ -89,6 +88,14 @@ phina.define("qft.MainScene", {
 
         app.volumeBGM = 0.5;
         app.volumeSE = 0.2;
+
+        //ステージクリア時情報
+        this.clearResult = [];
+        this.totalScore = 0;
+        this.totalKill = 0;
+
+        //コンティニュー時状態ロード
+        if (this.isContinue) this.loadGame();
 
         //メニューを開く
         this.on('openmenu', function(e) {
@@ -136,6 +143,10 @@ phina.define("qft.MainScene", {
         //ゲーム終了
         this._exitGame = false;
         this.on('exitgame', function(e) {
+            this._exitGame = true;
+            this.saveGame();
+        });
+        this.on('exitgame_nosave', function(e) {
             this._exitGame = true;
         });
 
@@ -594,6 +605,8 @@ phina.define("qft.MainScene", {
     saveGame: function() {
         var saveObj = {
             stageNumber: this.stageNumber,
+            score: this.totalScore,
+            kill: this.totalKill,
             result: this.clearResult,
             playerStatus: this.player.startStatus,
         };
@@ -603,16 +616,22 @@ phina.define("qft.MainScene", {
 
     //ローカルストレージから直前の保存状態を読み込み
     loadGame: function() {
-        var defaultData = {
-            stageNumber: 1,
-            result: [],
-            playerStatus: {},
-        };
         var data = localStorage.getItem("stage");
         if (data) {
-            var d = JSON.parse(cfg).$safe(defaultData);
-            this.stageNumber = d.stageNumber;
-            this.result = d.result;
+            var d = JSON.parse(data).$safe({
+                stageNumber: 1,
+                result: [],
+                playerStatus: {},
+            });
+            this.totalScore = d.score;
+            this.totalKill = d.kill;
+            this.clearResult = d.result;
+
+            //プレイヤー情報復元
+            this.player.startStatus = d.playerStatus;
+            this.player.restoreStatus();
+            this.playerWeapon.rotation = 0;
         }
+        return d;
     },
 });

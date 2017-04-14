@@ -81,20 +81,25 @@ phina.define("qft.GameOverScene", {
                 this.yes.tweener.clear().to({scaleX: 1, scaleY: 1}, 500, "easeOutBounce");
                 this.no.tweener.clear().to({scaleX: 0.7, scaleY: 0.7}, 500, "easeOutBounce");
                 app.playSE("select");
-                this.text3.text = "ステージ開始時の状態に戻ってやり直します"
+                this.text3.text = "ステージ開始時の状態に戻ってやり直します";
             } else if (ct.right && this.select == 0) {
                 this.select = 1;
                 this.yes.tweener.clear().to({scaleX: 0.7, scaleY: 0.7}, 500, "easeOutBounce");
                 this.no.tweener.clear().to({scaleX: 1, scaleY: 1}, 500, "easeOutBounce");
                 app.playSE("select");
-                this.text3.text = "タイトルに戻ります"
+                this.text3.text = "タイトルに戻ります";
             }
             if (ct.ok || ct.cancel) {
                 if (this.select == 0) {
                     this.parentScene.flare('continue');
                     this.exit();
                 } else {
-                    this.parentScene.flare('exitgame');
+                    //コンティニュー時はセーブしない
+                    if (this.parentScene.isContinue) {
+                        this.parentScene.flare('exitgame_nosave');
+                    } else {
+                        this.parentScene.flare('exitgame');
+                    }
                     this.exit();
                 }
             }
