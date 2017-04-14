@@ -42,11 +42,6 @@ phina.define("qft.TitleScene", {
             baseline: "middle",
             fontSize: 70,
         };
-        this.textLabel1 = phina.display.Label({text: "Push button to START", fontSize: 15}.$safe(labelParam))
-//            .addChildTo(this).setPosition(SC_W*0.5, SC_H*0.8);
-        this.textLabel2 = phina.display.Label({text: "Push [X] to Configuration", fontSize: 15}.$safe(labelParam))
-//            .addChildTo(this).setPosition(SC_W*0.5, SC_H*0.8+20);
-
         this.menu = ["Start", "Continue", "Config"];
         this.menuComment = ["ゲームを開始します", "直前のゲームオーバーになったステージから開始します", "設定メニューを開きます"];
         this.menuText = [];
