@@ -95,8 +95,7 @@ phina.define("qft.ContinuePlatform", {
     onresume: function() {
         this.count++;
         if (this.count == 1) {
-            scene.loadGame(qft.MainScene({startStage: this.options.startStage, isContinue: true}));
-            app.pushScene(scene);
+            app.pushScene(qft.MainScene({startStage: this.options.startStage, isContinue: true}));
         }
         if (this.count == 2){
             this.exit();
