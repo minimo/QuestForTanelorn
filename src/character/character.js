@@ -137,8 +137,8 @@ phina.define("qft.Character", {
 
             //画面内判定
             var ps = this.parentScene;
-            if (ps.screenX-128 < this.x && this.x < ps.screenX + SC_W+128 && 
-                ps.screenY-128 < this.y && this.y < ps.screenY + SC_H+128) {
+            if (ps.screenX-SC_W < this.x && this.x < ps.screenX + SC_W*2 && 
+                ps.screenY-SC_H < this.y && this.y < ps.screenY + SC_H*2) {
                 this.onScreen = true;
             } else {
                 this.onScreen = false;
