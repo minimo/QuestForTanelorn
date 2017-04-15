@@ -112,18 +112,7 @@ phina.define("qft.TitleScene", {
                         this.fg.tweener.clear()
                             .fadeIn(3)
                             .call(function() {
-                                var stage = 1;
-                                var data = localStorage.getItem("stage");
-                                if (data) {
-                                    var d = JSON.parse(data);
-                                    stage = d.stageNumber;
-                                }
-                                if (stage == 1) {
-                                    //ステージ１からの場合は普通に開始
-                                    this.exit("main");
-                                } else {
-                                    app.pushScene(qft.ContinuePlatform({assetType: "stage"+stage ,startStage: stage}));
-                                }
+                                this.exit("continue");
                             }.bind(this));
                         break;
                     case 2:

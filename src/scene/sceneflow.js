@@ -33,6 +33,13 @@ phina.define("qft.SceneFlow", {
                 },
                 nextLabel: "title",
             },{
+                label: "continue",
+                className: "qft.MainScene",
+                arguments: {
+                    isContinue: true,
+                },
+                nextLabel: "title",
+            },{
                 label: "ending",
                 className: "qft.EndingScene",
                 nextLabel: "main",

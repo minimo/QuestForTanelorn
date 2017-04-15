@@ -72,22 +72,8 @@ phina.define("qft.MainScene", {
         //プレイヤーキャラクタ
         this.player = qft.Player(this);
 
-        //ステージ情報初期化
-        this.setupStage();
-
-        this.fg = phina.display.RectangleShape(param)
-            .addChildTo(this)
-            .setPosition(SC_W*0.5, SC_H*0.5);
-        this.fg.tweener.setUpdateType('fps').clear().fadeOut(30);
-
-        //スクリーン初期化
+       //スクリーン初期化
         this.setupScreen();
-
-        //バーチャルパッドの可視化
-//        app.virtualPad.addChildTo(this);
-
-        app.volumeBGM = 0.5;
-        app.volumeSE = 0.2;
 
         //ステージクリア時情報
         this.clearResult = [];
@@ -96,6 +82,20 @@ phina.define("qft.MainScene", {
 
         //コンティニュー時状態ロード
         if (this.isContinue) this.loadGame();
+
+        //ステージ情報初期化
+        this.setupStage();
+
+        this.fg = phina.display.RectangleShape(param)
+            .addChildTo(this)
+            .setPosition(SC_W*0.5, SC_H*0.5);
+        this.fg.tweener.setUpdateType('fps').clear().fadeOut(30);
+
+        //バーチャルパッドの可視化
+//        app.virtualPad.addChildTo(this);
+
+        app.volumeBGM = 0.5;
+        app.volumeSE = 0.2;
 
         //メニューを開く
         this.on('openmenu', function(e) {
@@ -623,6 +623,7 @@ phina.define("qft.MainScene", {
                 result: [],
                 playerStatus: {},
             });
+            this.stageNumber = d.stageNumber;
             this.totalScore = d.score;
             this.totalKill = d.kill;
             this.clearResult = d.result;
