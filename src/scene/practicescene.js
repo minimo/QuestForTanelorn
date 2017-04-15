@@ -121,3 +121,31 @@ phina.define("qft.ConfigScene_Practice", {
     },
 });
 
+phina.define("qft.PracticePlatform", {
+    superClass: "phina.display.DisplayScene",
+
+    init: function(options) {
+        this.superInit();
+        this.options = (options || {}).$safe({
+            assetType: "stage2",
+            startStage: 2,
+        })
+        this.count = 0;
+    },
+
+    onenter: function() {
+        app.pushScene(qft.LoadingScene({
+            assets: qft.Assets.get(this.options),
+        }));
+    },
+
+    onresume: function() {
+        this.count++;
+        if (this.count == 1) {
+            app.pushScene(qft.MainScene({startStage: this.options.startStage, isPractice: true}));
+        }
+        if (this.count == 2){
+            this.exit();
+        }
+    }
+});
