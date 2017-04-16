@@ -55,6 +55,8 @@ phina.define("qft.TitleScene", {
         this.selectMax = 3;
         this.menuText[0].setScale(1);
 
+        this.menu2 = ["Beginning", "Continue", "select"];
+
         //メニューコメント
         var that = this;
         this.comment = phina.display.Label({text: "", fontSize: 10}.$safe(labelParam))
