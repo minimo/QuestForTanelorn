@@ -39,12 +39,16 @@ phina.define("qft.Application", {
             this.updateController();
             this.virtualPad.updateInfo();
         });
+        this.controller = {};
 
         //サウンドセット
         this.soundset = phina.extension.SoundSet();
     },
 
     updateController: function() {
+        var before = this.controller;
+        before.before = null;
+
         var gp = this.gamepad;
         var kb = this.keyboard;
         var angle1 = gp.getKeyAngle();
@@ -77,6 +81,9 @@ phina.define("qft.Application", {
 
             analog1: gp.getStickDirection(0),
             analog2: gp.getStickDirection(1),
+
+            //前フレーム情報
+            before: before,
         };
     },
 
