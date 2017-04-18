@@ -32,6 +32,8 @@ phina.define("qft.TitleScene", {
         //タイトルロゴの表示
         this.dispTitleLogo();
 
+        //メニューアイテム表示
+        var that = this;
         var labelParam = {
             fill: "white",
             stroke: "black",
@@ -49,13 +51,22 @@ phina.define("qft.TitleScene", {
             this.menuText[i] = phina.display.Label({text: this.menu[i], fontSize: 30}.$safe(labelParam))
                 .addChildTo(this)
                 .setPosition(SC_W*0.5, SC_H*0.6+i*30)
-                .setScale(0.7);
+                .setScale(0.7)
+                .setInteractive(true);
+            this.menuText[i].idx = i;
+            this.menuText[i].onpointend = function() {
+                if (that.select == this.idx) {
+                    that.flare('menuselect');
+                } else {
+                    that.menuText[that.select].tweener.clear().to({scaleX: 0.7, scaleY: 0.7}, 500, "easeOutBounce");
+                    that.select = this.idx;
+                    this.tweener.clear().to({scaleX: 1.0, scaleY: 1.0}, 500, "easeOutBounce");
+                }
+            }
         }
         this.select = 0;
         this.selectMax = 3;
         this.menuText[0].setScale(1);
-
-        this.menu2 = ["Beginning", "Continue", "select"];
 
         //メニューコメント
         var that = this;
@@ -71,9 +82,36 @@ phina.define("qft.TitleScene", {
         this.fg.tweener.setUpdateType('fps');
         this.fg.tweener.clear().fadeOut(15);
 
-        this.on('resume', function() {
+        this.on('resume', e => {
             this.fg.tweener.clear().fadeOut(15);
             this.time = 0;
+        });
+
+        this.on('menuselect', e => {
+            switch (this.select) {
+                case 0:
+                    //通常開始
+                    app.playSE("ok");
+                    this.fg.tweener.clear()
+                        .fadeIn(3)
+                        .call(function() {
+                            this.exit("main");
+                        }.bind(this));
+                    break;
+                case 1:
+                    //コンティニュー
+                    app.playSE("ok");
+                    this.fg.tweener.clear()
+                        .fadeIn(3)
+                        .call(function() {
+                            this.exit("continue");
+                        }.bind(this));
+                    break;
+                case 2:
+                    //設定メニュー
+                    app.pushScene(qft.ConfigScene(this));
+                    break;
+            }
         });
 
         this.time = 0;
@@ -96,7 +134,7 @@ phina.define("qft.TitleScene", {
             app.playSE("select");
         }
         if (this.time > 15) {
-            if (ct.ok || app.mouse.getPointing()) {
+            if (ct.ok){
                 this.time = 0;
                 switch (this.select) {
                     case 0:
