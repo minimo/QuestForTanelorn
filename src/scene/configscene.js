@@ -48,6 +48,8 @@ phina.define("qft.ConfigScene", {
             .addChildTo(this.menuBase)
             .setPosition(0, -SC_H*0.3);
 
+        //メニューテキスト表示
+        var that = this;
         this.menu = ["System", "Practice", "Exit"];
         this.menuText = [];
         for (var i = 0; i < this.menu.length; i++) {
@@ -55,16 +57,47 @@ phina.define("qft.ConfigScene", {
                 .addChildTo(this.menuBase)
                 .setPosition(0, -SC_H*0.15+SC_H*0.15*i)
                 .setScale(0.7);
-        }
 
+            //タッチ判定用
+            var param2 = {
+                width: SC_W*0.3,
+                height: SC_H*0.10,
+                fill: "rgba(0,100,200,0.5)",
+                stroke: "rgba(0,100,200,0.5)",
+                backgroundColor: 'transparent',
+            };
+            var c = phina.display.RectangleShape(param2)
+                .addChildTo(this.menuBase)
+                .setPosition(0, -SC_H*0.15+SC_H*0.15*i)
+                .setInteractive(true);
+            c.alpha = 0;
+            c.select = i;
+            c.onpointstart = function() {
+                if (that.isSelected || that.time < 10) return;
+                if (this.select == that.select) {
+                    that.ok = true;
+                } else {
+                    that.menuText[that.select].tweener.clear().to({scaleX: 0.7, scaleY: 0.7}, 500, "easeOutBounce");
+                    that.select = this.select;
+                    that.menuText[that.select].tweener.clear().to({scaleX: 1.0, scaleY: 1.0}, 500, "easeOutBounce");
+                }
+            }
+        }
+        this.isSelected = false;
         this.select = 0;
         this.selectMax = 3;
         this.menuText[0].setScale(1);
+        this.ok = false;
+        this.cansel = false;
 
         this.time = 0;
 
         this.on('resume', function() {
             this.menuBase.tweener.clear().fadeIn(500);
+            this.time = 0;
+            this.isSelected = false;
+            this.ok = false;
+            this.cansel = false;
         });
     },
 
@@ -87,7 +120,7 @@ phina.define("qft.ConfigScene", {
 
         if (this.time > 15) {
             //決定
-            if (ct.ok) {
+            if (ct.ok || this.ok) {
                 if (this.select == 0) {
                 }
                 if (this.select == 1) {

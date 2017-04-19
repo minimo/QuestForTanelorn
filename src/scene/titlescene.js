@@ -55,8 +55,8 @@ phina.define("qft.TitleScene", {
 
             //タッチ判定用
             var param2 = {
-                width:SC_W*0.3,
-                height:SC_H*0.08,
+                width: SC_W*0.3,
+                height: SC_H*0.08,
                 fill: "rgba(0,100,200,0.5)",
                 stroke: "rgba(0,100,200,0.5)",
                 backgroundColor: 'transparent',
@@ -68,14 +68,13 @@ phina.define("qft.TitleScene", {
             c.alpha = 0;
             c.select = i;
             c.onpointstart = function() {
-                if (this.isSelected) return;
+                if (that.isSelected || that.time < 10) return;
                 if (this.select == that.select) {
-                    that.flare('menuselect');
+                    that.ok = true;
                 } else {
                     that.menuText[that.select].tweener.clear().to({scaleX: 0.7, scaleY: 0.7}, 500, "easeOutBounce");
                     that.select = this.select;
                     that.menuText[that.select].tweener.clear().to({scaleX: 1.0, scaleY: 1.0}, 500, "easeOutBounce");
-                    that.select == this.select;
                 }
             }
         }
@@ -83,6 +82,8 @@ phina.define("qft.TitleScene", {
         this.select = 0;
         this.selectMax = 3;
         this.menuText[0].setScale(1);
+        this.ok = false;
+        this.cansel = false;
 
         //メニューコメント
         var that = this;
@@ -103,36 +104,8 @@ phina.define("qft.TitleScene", {
             this.fg.tweener.clear().fadeOut(15);
             this.time = 0;
             this.isSelected = false;
-            this.select = 0;
-        });
-
-        this.on('menuselect', e => {
-            this.isSelected = true;
-            this.time = 0;
-            switch (this.select) {
-                case 0:
-                    //通常開始
-                    app.playSE("ok");
-                    this.fg.tweener.clear()
-                        .fadeIn(3)
-                        .call(function() {
-                            this.exit("main");
-                        }.bind(this));
-                    break;
-                case 1:
-                    //コンティニュー
-                    app.playSE("ok");
-                    this.fg.tweener.clear()
-                        .fadeIn(3)
-                        .call(function() {
-                            this.exit("continue");
-                        }.bind(this));
-                    break;
-                case 2:
-                    //設定メニュー
-                    app.pushScene(qft.ConfigScene(this));
-                    break;
-            }
+            this.ok = false;
+            this.cansel = false;
         });
 
         this.time = 0;
@@ -157,10 +130,35 @@ phina.define("qft.TitleScene", {
             app.playSE("select");
         }
         if (this.time > 15) {
-            if (ct.ok){
-                this.flare('menuselect');
+            if (ct.ok || this.ok){
+                this.isSelected = true;
+                this.time = 0;
+                switch (this.select) {
+                    case 0:
+                        //通常開始
+                        app.playSE("ok");
+                        this.fg.tweener.clear()
+                            .fadeIn(3)
+                            .call(function() {
+                                this.exit("main");
+                            }.bind(this));
+                        break;
+                    case 1:
+                        //コンティニュー
+                        app.playSE("ok");
+                        this.fg.tweener.clear()
+                            .fadeIn(3)
+                            .call(function() {
+                                this.exit("continue");
+                            }.bind(this));
+                        break;
+                    case 2:
+                        //設定メニュー
+                        app.pushScene(qft.ConfigScene(this));
+                        break;
+                }
             }
-            if (ct.cancel) {
+            if (ct.cancel || this.cancel) {
                 app.pushScene(qft.ConfigScene(this));
                 this.isSelected = true;
                 this.time = 0;

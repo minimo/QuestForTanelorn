@@ -32,6 +32,8 @@ phina.define("qft.ConfigScene_Practice", {
             .addChildTo(this.menuBase)
             .setPosition(SC_W*0.5, SC_H*0.3);
 
+        //メニューテキスト表示
+        var that = this;
         this.menu = ["1", "2", "3", "4", "5", "6", "7"];
         this.menuText = [];
         for (var i = 0; i < this.menu.length; i++) {
@@ -39,20 +41,82 @@ phina.define("qft.ConfigScene_Practice", {
                 .addChildTo(this.menuBase)
                 .setPosition(SC_W*0.5+(SC_W*0.1*i)-(SC_W*0.1*(this.menu.length-1)/2), SC_H*0.5)
                 .setScale(0.7);
+
+            //タッチ判定用
+            var param2 = {
+                width: 60,
+                height: SC_H*0.10,
+                fill: "rgba(0,100,200,0.5)",
+                stroke: "rgba(0,100,200,0.5)",
+                backgroundColor: 'transparent',
+            };
+            var c = phina.display.RectangleShape(param2)
+                .addChildTo(this.menuBase)
+                .setPosition(SC_W*0.5+(SC_W*0.1*i)-(SC_W*0.1*(this.menu.length-1)/2), SC_H*0.5)
+                .setInteractive(true);
+            c.alpha = 1;
+            c.select = i;
+            c.onpointstart = function() {
+                if (that.isSelected || that.time < 10) return;
+                if (this.select == that.select) {
+                    that.ok = true;
+                } else {
+                    if (that.vselect == 0) {
+                        that.menuText[that.select].tweener.clear().to({scaleX: 0.7, scaleY: 0.7}, 500, "easeOutBounce");
+                    } else {
+                        that.exitText.tweener.clear().to({scaleX: 0.7, scaleY: 0.7}, 500, "easeOutBounce");
+                    }
+                    that.select = this.select;
+                    that.menuText[that.select].tweener.clear().to({scaleX: 1.0, scaleY: 1.0}, 500, "easeOutBounce");
+                    that.vselect = 0;
+                }
+            }
         }
 
         this.exitText = phina.display.Label({text: "Exit", fontSize: 40}.$safe(labelParam))
             .addChildTo(this.menuBase)
             .setPosition(SC_W*0.5, SC_H*0.7)
             .setScale(0.7);
-
-        this.select = 0;
-        this.selectMax = this.menu.length;
-        this.menuText[0].setScale(1);
+        //タッチ判定用
+        var param2 = {
+            width: SC_W*0.3,
+            height: SC_H*0.10,
+            fill: "rgba(0,100,200,0.5)",
+            stroke: "rgba(0,100,200,0.5)",
+            backgroundColor: 'transparent',
+        };
+        var c = phina.display.RectangleShape(param2)
+            .addChildTo(this.menuBase)
+            .setPosition(SC_W*0.5, SC_H*0.7)
+            .setInteractive(true);
+        c.alpha = 0;
+        c.onpointstart = function() {
+            if (that.isSelected || that.time < 10) return;
+            if (that.vselect == 1) {
+                that.ok = true;
+            } else {
+                that.menuText[that.select].tweener.clear().to({scaleX: 0.7, scaleY: 0.7}, 500, "easeOutBounce");
+                that.exitText.tweener.clear().to({scaleX: 1.0, scaleY: 1.0}, 500, "easeOutBounce");
+                that.vselect = 1;
+            }
+        }
 
         this.vselect = 0;
+        this.select = 0;
+        this.isSelected = false;
+        this.selectMax = this.menu.length;
+        this.menuText[0].setScale(1);
+        this.ok = false;
+        this.cancel = false;
 
         this.time = 0;
+
+        this.on('resume', function() {
+            this.time = 0;
+            this.isSelected = false;
+            this.ok = false;
+            this.cansel = false;
+        });
     },
 
     update: function() {
@@ -87,7 +151,7 @@ phina.define("qft.ConfigScene_Practice", {
         }
 
         if (this.time > 15) {
-            if (ct.ok || app.mouse.getPointing()) {
+            if (ct.ok || this.ok) {
                 if (this.vselect == 0) {
                     var stage = this.select+1;
                     if (stage == 1) {
@@ -103,7 +167,7 @@ phina.define("qft.ConfigScene_Practice", {
                 }
                 this.time = 0;
             }
-            if (ct.cancel) {
+            if (ct.cancel || this.cancel) {
                 app.playSE("cancel");
                 this.exitMenu();
                 this.time = 0;
