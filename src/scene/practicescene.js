@@ -32,7 +32,7 @@ phina.define("qft.ConfigScene_Practice", {
             .addChildTo(this.menuBase)
             .setPosition(SC_W*0.5, SC_H*0.3);
 
-        //ƒƒjƒ…[ƒeƒLƒXƒg•\Ž¦
+        //ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒ†ã‚­ã‚¹ãƒˆè¡¨ç¤º
         var that = this;
         this.menu = ["1", "2", "3", "4", "5", "6", "7"];
         this.menuText = [];
@@ -42,9 +42,9 @@ phina.define("qft.ConfigScene_Practice", {
                 .setPosition(SC_W*0.5+(SC_W*0.1*i)-(SC_W*0.1*(this.menu.length-1)/2), SC_H*0.5)
                 .setScale(0.7);
 
-            //ƒ^ƒbƒ`”»’è—p
+            //ã‚¿ãƒƒãƒåˆ¤å®šç”¨
             var param2 = {
-                width: 60,
+                width: 30,
                 height: SC_H*0.10,
                 fill: "rgba(0,100,200,0.5)",
                 stroke: "rgba(0,100,200,0.5)",
@@ -54,7 +54,7 @@ phina.define("qft.ConfigScene_Practice", {
                 .addChildTo(this.menuBase)
                 .setPosition(SC_W*0.5+(SC_W*0.1*i)-(SC_W*0.1*(this.menu.length-1)/2), SC_H*0.5)
                 .setInteractive(true);
-            c.alpha = 1;
+            c.alpha = 0;
             c.select = i;
             c.onpointstart = function() {
                 if (that.isSelected || that.time < 10) return;
@@ -77,7 +77,7 @@ phina.define("qft.ConfigScene_Practice", {
             .addChildTo(this.menuBase)
             .setPosition(SC_W*0.5, SC_H*0.7)
             .setScale(0.7);
-        //ƒ^ƒbƒ`”»’è—p
+        //ã‚¿ãƒƒãƒåˆ¤å®šç”¨
         var param2 = {
             width: SC_W*0.3,
             height: SC_H*0.10,
