@@ -42,28 +42,44 @@ phina.define("qft.TitleScene", {
             fontFamily: "titlefont2",
             align: "center",
             baseline: "middle",
-            fontSize: 70,
+            fontSize: 30,
         };
         this.menu = ["Start", "Continue", "Config"];
         this.menuComment = ["ゲームを開始します", "直前のゲームオーバーになったステージから開始します", "設定メニューを開きます"];
         this.menuText = [];
         for (var i = 0; i < this.menu.length; i++) {
-            this.menuText[i] = phina.display.Label({text: this.menu[i], fontSize: 30}.$safe(labelParam))
+            this.menuText[i] = phina.display.Label({text: this.menu[i]}.$safe(labelParam))
                 .addChildTo(this)
                 .setPosition(SC_W*0.5, SC_H*0.6+i*30)
-                .setScale(0.7)
+                .setScale(0.7);
+
+            //タッチ判定用
+            var param2 = {
+                width:SC_W*0.3,
+                height:SC_H*0.08,
+                fill: "rgba(0,100,200,0.5)",
+                stroke: "rgba(0,100,200,0.5)",
+                backgroundColor: 'transparent',
+            };
+            var c = phina.display.RectangleShape(param2)
+                .addChildTo(this)
+                .setPosition(SC_W*0.5, SC_H*0.6+i*30)
                 .setInteractive(true);
-            this.menuText[i].idx = i;
-            this.menuText[i].onpointend = function() {
-                if (that.select == this.idx) {
+            c.alpha = 0;
+            c.select = i;
+            c.onpointstart = function() {
+                if (this.isSelected) return;
+                if (this.select == that.select) {
                     that.flare('menuselect');
                 } else {
                     that.menuText[that.select].tweener.clear().to({scaleX: 0.7, scaleY: 0.7}, 500, "easeOutBounce");
-                    that.select = this.idx;
-                    this.tweener.clear().to({scaleX: 1.0, scaleY: 1.0}, 500, "easeOutBounce");
+                    that.select = this.select;
+                    that.menuText[that.select].tweener.clear().to({scaleX: 1.0, scaleY: 1.0}, 500, "easeOutBounce");
+                    that.select == this.select;
                 }
             }
         }
+        this.isSelected = false;
         this.select = 0;
         this.selectMax = 3;
         this.menuText[0].setScale(1);
@@ -71,7 +87,8 @@ phina.define("qft.TitleScene", {
         //メニューコメント
         var that = this;
         this.comment = phina.display.Label({text: "", fontSize: 10}.$safe(labelParam))
-            .addChildTo(this).setPosition(SC_W*0.5, SC_H*0.9);
+            .addChildTo(this)
+            .setPosition(SC_W*0.5, SC_H*0.9);
         this.comment.update = function() {
             this.text = that.menuComment[that.select];
         }
@@ -85,9 +102,13 @@ phina.define("qft.TitleScene", {
         this.on('resume', e => {
             this.fg.tweener.clear().fadeOut(15);
             this.time = 0;
+            this.isSelected = false;
+            this.select = 0;
         });
 
         this.on('menuselect', e => {
+            this.isSelected = true;
+            this.time = 0;
             switch (this.select) {
                 case 0:
                     //通常開始
@@ -118,6 +139,8 @@ phina.define("qft.TitleScene", {
     },
 
     update: function(app) {
+        if (this.isSelected) return;
+
         var ct = app.controller;
         if (ct.down && !ct.before.down && this.select < this.selectMax-1) {
             this.menuText[this.select].tweener.clear().to({scaleX: 0.7, scaleY: 0.7}, 500, "easeOutBounce");
@@ -135,34 +158,11 @@ phina.define("qft.TitleScene", {
         }
         if (this.time > 15) {
             if (ct.ok){
-                this.time = 0;
-                switch (this.select) {
-                    case 0:
-                        //通常開始
-                        app.playSE("ok");
-                        this.fg.tweener.clear()
-                            .fadeIn(3)
-                            .call(function() {
-                                this.exit("main");
-                            }.bind(this));
-                        break;
-                    case 1:
-                        //コンティニュー
-                        app.playSE("ok");
-                        this.fg.tweener.clear()
-                            .fadeIn(3)
-                            .call(function() {
-                                this.exit("continue");
-                            }.bind(this));
-                        break;
-                    case 2:
-                        //設定メニュー
-                        app.pushScene(qft.ConfigScene(this));
-                        break;
-                }
+                this.flare('menuselect');
             }
             if (ct.cancel) {
                 app.pushScene(qft.ConfigScene(this));
+                this.isSelected = true;
                 this.time = 0;
             }
         }
