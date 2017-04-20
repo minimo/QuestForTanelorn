@@ -66,6 +66,9 @@ phina.define("qft.GameOverScene", {
         app.playBGM("gameover", false);
 
         this.select = 0; //0:YES 1:NO
+        this.pushyes = false;
+        this.pushno = false;
+        this.ok = false;
 
         this.time = 0;
     },
@@ -76,21 +79,23 @@ phina.define("qft.GameOverScene", {
             this.dispContinue();
         }
         if (this.time > 105) {
-            if (ct.left && this.select == 1) {
+            if ((ct.left || this.pushyes) && this.select == 1) {
                 this.select = 0;
+                this.pushyes = false;
                 this.yes.tweener.clear().to({scaleX: 1, scaleY: 1}, 500, "easeOutBounce");
                 this.no.tweener.clear().to({scaleX: 0.7, scaleY: 0.7}, 500, "easeOutBounce");
                 app.playSE("select");
                 this.text3.text = "ステージ開始時の状態に戻ってやり直します";
-            } else if (ct.right && this.select == 0) {
+            } else if ((ct.right || this.pushno) && this.select == 0) {
                 this.select = 1;
+                this.pushno = false;
                 this.yes.tweener.clear().to({scaleX: 0.7, scaleY: 0.7}, 500, "easeOutBounce");
                 this.no.tweener.clear().to({scaleX: 1, scaleY: 1}, 500, "easeOutBounce");
                 app.playSE("select");
                 this.text3.text = "タイトルに戻ります";
             }
-            if (ct.ok || ct.cancel) {
-                if (this.select == 0) {
+            if (ct.ok || ct.cancel || this.ok) {
+                if (this.select == 0 && !ct.cancel) {
                     this.parentScene.flare('continue');
                     this.exit();
                 } else {
@@ -138,6 +143,40 @@ phina.define("qft.GameOverScene", {
             .addChildTo(this);
         this.no.alpha = 0;
         this.no.tweener.clear().to({y: SC_H*0.6, alpha: 1}, 500, "easeInSine");
+
+        //タッチ判定用
+        var that = this;
+        var param2 = {
+            width: 80,
+            height: SC_H*0.08,
+            fill: "rgba(0,100,200,0.5)",
+            stroke: "rgba(0,100,200,0.5)",
+            backgroundColor: 'transparent',
+        };
+        var yes = phina.display.RectangleShape(param2)
+            .addChildTo(this)
+            .setPosition(SC_W*0.4, SC_H*0.6+10)
+            .setInteractive(true);
+        yes.alpha = 0;
+        yes.onpointstart = function() {
+            if (that.select == 0) {
+                that.ok = true;
+            } else {
+                that.pushyes = true;
+            }
+        }
+        var no = phina.display.RectangleShape(param2)
+            .addChildTo(this)
+            .setPosition(SC_W*0.6, SC_H*0.6+10)
+            .setInteractive(true);
+        no.alpha = 0;
+        no.onpointstart = function() {
+            if (that.select == 0) {
+                that.ok = true;
+            } else {
+                that.pushno = true;
+            }
+        }
 
         this.text3 = phina.display.Label({text: "ステージ開始時の状態に戻ってやり直します", fontSize: 10}.$safe(labelParam))
             .setPosition(SC_W*0.5, SC_H*0.75+10)
