@@ -49,13 +49,8 @@ phina.define("phina.asset.TiledMap", {
     },
 
     //マップイメージ取得
-    getImage: function(layerName) {
-        if (layerName === undefined) {
-            return this._generateImage();
-//            return this.image;
-        } else {
-            return this._generateImage(layerName);
-        }
+    getImage: function(layerName, layerName2) {
+        return this._generateImage(layerName, layerName2);
     },
 
     //指定マップレイヤーを配列として取得
@@ -228,7 +223,7 @@ phina.define("phina.asset.TiledMap", {
     },
 
     //マップイメージ作成
-    _generateImage: function(layerName) {
+    _generateImage: function(layerName, layerName2) {
         var numLayer = 0;
         for (var i = 0; i < this.layers.length; i++) {
             if (this.layers[i].type == "layer" || this.layers[i].type == "imagelayer") numLayer++;
@@ -241,7 +236,7 @@ phina.define("phina.asset.TiledMap", {
         var canvas = phina.graphics.Canvas().setSize(width, height);
 
         for (var i = 0; i < this.layers.length; i++) {
-            if (layerName === undefined || layerName === this.layers[i].name) {
+            if (layerName === undefined || layerName === this.layers[i].name || layerName2 === this.layers[i].name) {
                 //マップレイヤー
                 if (this.layers[i].type == "layer" && this.layers[i].visible != "0") {
                     var layer = this.layers[i];
