@@ -152,7 +152,7 @@ phina.define("qft.GameOverScene", {
             .addChildTo(this)
             .setPosition(SC_W*0.4, SC_H*0.6)
             .setInteractive(true);
-        yes.alpha = 1;
+        yes.alpha = 0;
         yes.onpointstart = function() {
             if (that.select == 0) {
                 that.ok = true;
@@ -164,7 +164,7 @@ phina.define("qft.GameOverScene", {
             .addChildTo(this)
             .setPosition(SC_W*0.6, SC_H*0.6)
             .setInteractive(true);
-        no.alpha = 1;
+        no.alpha = 0;
         no.onpointstart = function() {
             if (that.select == 1) {
                 that.ok = true;
