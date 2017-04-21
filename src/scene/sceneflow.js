@@ -60,67 +60,29 @@ phina.define("qft.SceneFlow_Practice", {
     superClass: "phina.game.ManagerScene",
 
     init: function(options) {
-        options = options || {};
-        startLabel = options.startLabel || "start";
+        options = (options || {}).$safe({stageNumber: 2});
+        var startLabel = "start";
+        var assets = qft.Assets.get({assetType: "stage"+options.stageNumber});
         this.superInit({
             startLabel: startLabel,
             scenes: [{
                 label: "start",
-                className: "qft.ConfigScene_Practice",
-            },{
-                label: "stage1",
-                className: "qft.MainScene",
-                arguments: {
-                    startStage: 1,
-                    isPractice: true,
-                },
-                nextLabel: "start",
-            },{
-                label: "stage2",
                 className: "qft.LoadingScene",
                 arguments: {
-                    assetType: "stage2",
+                    assets: assets,
                 },
-                nextLabel: "stage2_main",
+                nextLabel: "main",
             },{
-                label: "stage2_main",
+                label: "main",
                 className: "qft.MainScene",
                 arguments: {
-                    startStage: 2,
+                    startStage: options.stageNumber,
                     isPractice: true,
                 },
-                nextLabel: "start",
-            },{
-                label: "stage3",
-                className: "qft.LoadingScene",
-                arguments: {
-                    assetType: "stage3",
-                },
-                nextLabel: "stage3_main",
-            },{
-                label: "stage3_main",
-                className: "qft.MainScene",
-                arguments: {
-                    startStage: 3,
-                    isPractice: true,
-                },
-                nextLabel: "start",
-            },{
-                label: "stage4",
-                className: "qft.LoadingScene",
-                arguments: {
-                    assetType: "stage4",
-                },
-                nextLabel: "stage4_main",
-            },{
-                label: "stage4_main",
-                className: "qft.MainScene",
-                arguments: {
-                    startStage: 4,
-                    isPractice: true,
-                },
-                nextLabel: "start",
             }],
         });
+    },
+    onfinish: function() {
+        this.exit();
     }
 });
