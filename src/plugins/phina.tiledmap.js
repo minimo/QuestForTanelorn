@@ -49,8 +49,8 @@ phina.define("phina.asset.TiledMap", {
     },
 
     //マップイメージ取得
-    getImage: function(layerName, layerName2) {
-        return this._generateImage(layerName, layerName2);
+    getImage: function() {
+        return this._generateImage(arguments);
     },
 
     //指定マップレイヤーを配列として取得
@@ -223,12 +223,15 @@ phina.define("phina.asset.TiledMap", {
     },
 
     //マップイメージ作成
-    _generateImage: function(layerName, layerName2) {
+    _generateImage: function(layerNames) {
         var numLayer = 0;
         for (var i = 0; i < this.layers.length; i++) {
             if (this.layers[i].type == "layer" || this.layers[i].type == "imagelayer") numLayer++;
         }
         if (numLayer == 0) return null;
+
+        var layerName = layerNames[0];
+        var layerName2 = layerNames[1];
 
         var generated = false;
         var width = this.width * this.tilewidth;
