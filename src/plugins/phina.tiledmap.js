@@ -48,11 +48,6 @@ phina.define("phina.asset.TiledMap", {
         xml.send(null);
     },
 
-    //マップイメージ取得
-    getImage: function() {
-        return this._generateImage(arguments);
-    },
-
     //指定マップレイヤーを配列として取得
     getMapData: function(layerName) {
         //レイヤー検索
@@ -82,6 +77,70 @@ phina.define("phina.asset.TiledMap", {
             }
         }
         return ls;
+    },
+
+    //マップイメージ作成
+    getImage: function(...args) {
+        var numLayer = 0;
+        for (var i = 0; i < this.layers.length; i++) {
+            if (this.layers[i].type == "layer" || this.layers[i].type == "imagelayer") numLayer++;
+        }
+        if (numLayer == 0) return null;
+
+        var generated = false;
+        var width = this.width * this.tilewidth;
+        var height = this.height * this.tileheight;
+        var canvas = phina.graphics.Canvas().setSize(width, height);
+
+        for (var i = 0; i < this.layers.length; i++) {
+            var find = args.indexOf(this.layers[i].name);
+            if (args.length == 0 || find >= 0) {
+                //マップレイヤー
+                if (this.layers[i].type == "layer" && this.layers[i].visible != "0") {
+                    var layer = this.layers[i];
+                    var mapdata = layer.data;
+                    var width = layer.width;
+                    var height = layer.height;
+                    var opacity = layer.opacity || 1.0;
+                    var count = 0;
+                    for (var y = 0; y < height; y++) {
+                        for (var x = 0; x < width; x++) {
+                            var index = mapdata[count];
+                                if (index !== -1) {
+                                //マップチップを配置
+                                this._setMapChip(canvas, index, x * this.tilewidth, y * this.tileheight, opacity);
+                            }
+                            count++;
+                        }
+                    }
+                    generated = true;
+                }
+                //オブジェクトグループ
+                if (this.layers[i].type == "objectgroup" && this.layers[i].visible != "0") {
+                    var layer = this.layers[i];
+                    var opacity = layer.opacity || 1.0;
+                    layer.objects.forEach(function(e) {
+                        if (e.gid) {
+                            this._setMapChip(canvas, e.gid, e.x, e.y, opacity);
+                        }
+                    }.bind(this));
+                    generated = true;
+                }
+                //イメージレイヤー
+                if (this.layers[i].type == "imagelayer" && this.layers[i].visible != "0") {
+                    var len = this.layers[i];
+                    var image = phina.asset.AssetManager.get('image', this.layers[i].image.source);
+                    canvas.context.drawImage(image.domElement, this.layers[i].x, this.layers[i].y);
+                    generated = true;
+                }
+            }
+        }
+
+        if (!generated) return null;
+
+        var texture = phina.asset.Texture();
+        texture.domElement = canvas.domElement;
+        return texture;
     },
 
     //オブジェクトレイヤーをクローンして返す
@@ -220,72 +279,6 @@ phina.define("phina.asset.TiledMap", {
             //読み込み終了
             this._resolve(that);
         }
-    },
-
-    //マップイメージ作成
-    _generateImage: function(layerNames) {
-        var numLayer = 0;
-        for (var i = 0; i < this.layers.length; i++) {
-            if (this.layers[i].type == "layer" || this.layers[i].type == "imagelayer") numLayer++;
-        }
-        if (numLayer == 0) return null;
-
-        var layerName = layerNames[0];
-        var layerName2 = layerNames[1];
-
-        var generated = false;
-        var width = this.width * this.tilewidth;
-        var height = this.height * this.tileheight;
-        var canvas = phina.graphics.Canvas().setSize(width, height);
-
-        for (var i = 0; i < this.layers.length; i++) {
-            if (layerName === undefined || layerName === this.layers[i].name || layerName2 === this.layers[i].name) {
-                //マップレイヤー
-                if (this.layers[i].type == "layer" && this.layers[i].visible != "0") {
-                    var layer = this.layers[i];
-                    var mapdata = layer.data;
-                    var width = layer.width;
-                    var height = layer.height;
-                    var opacity = layer.opacity || 1.0;
-                    var count = 0;
-                    for (var y = 0; y < height; y++) {
-                        for (var x = 0; x < width; x++) {
-                            var index = mapdata[count];
-                                if (index !== -1) {
-                                //マップチップを配置
-                                this._setMapChip(canvas, index, x * this.tilewidth, y * this.tileheight, opacity);
-                            }
-                            count++;
-                        }
-                    }
-                    generated = true;
-                }
-                //オブジェクトグループ
-                if (this.layers[i].type == "objectgroup" && this.layers[i].visible != "0") {
-                    var layer = this.layers[i];
-                    var opacity = layer.opacity || 1.0;
-                    layer.objects.forEach(function(e) {
-                        if (e.gid) {
-                            this._setMapChip(canvas, e.gid, e.x, e.y, opacity);
-                        }
-                    }.bind(this));
-                    generated = true;
-                }
-                //イメージレイヤー
-                if (this.layers[i].type == "imagelayer" && this.layers[i].visible != "0") {
-                    var len = this.layers[i];
-                    var image = phina.asset.AssetManager.get('image', this.layers[i].image.source);
-                    canvas.context.drawImage(image.domElement, this.layers[i].x, this.layers[i].y);
-                    generated = true;
-                }
-            }
-        }
-
-        if (!generated) return null;
-
-        var texture = phina.asset.Texture();
-        texture.domElement = canvas.domElement;
-        return texture;
     },
 
     //キャンバスの指定した座標にマップチップのイメージをコピーする
