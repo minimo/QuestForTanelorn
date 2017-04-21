@@ -241,9 +241,9 @@ phina.define("phina.asset.TiledMap", {
         var canvas = phina.graphics.Canvas().setSize(width, height);
 
         for (var i = 0; i < this.layers.length; i++) {
-            //マップレイヤー
-            if (this.layers[i].type == "layer" && this.layers[i].visible != "0") {
-                if (layerName === undefined || layerName === this.layers[i].name) {
+            if (layerName === undefined || layerName === this.layers[i].name) {
+                //マップレイヤー
+                if (this.layers[i].type == "layer" && this.layers[i].visible != "0") {
                     var layer = this.layers[i];
                     var mapdata = layer.data;
                     var width = layer.width;
@@ -262,10 +262,8 @@ phina.define("phina.asset.TiledMap", {
                     }
                     generated = true;
                 }
-            }
-            //オブジェクトグループ
-            if (this.layers[i].type == "objectgroup" && this.layers[i].visible != "0") {
-                if (layerName === undefined || layerName === this.layers[i].name) {
+                //オブジェクトグループ
+                if (this.layers[i].type == "objectgroup" && this.layers[i].visible != "0") {
                     var layer = this.layers[i];
                     var opacity = layer.opacity || 1.0;
                     layer.objects.forEach(function(e) {
@@ -275,10 +273,8 @@ phina.define("phina.asset.TiledMap", {
                     }.bind(this));
                     generated = true;
                 }
-            }
-            //イメージレイヤー
-            if (this.layers[i].type == "imagelayer" && this.layers[i].visible != "0") {
-                if (layerName === undefined || layerName === this.layers[i].name) {
+                //イメージレイヤー
+                if (this.layers[i].type == "imagelayer" && this.layers[i].visible != "0") {
                     var len = this.layers[i];
                     var image = phina.asset.AssetManager.get('image', this.layers[i].image.source);
                     canvas.context.drawImage(image.domElement, this.layers[i].x, this.layers[i].y);
