@@ -95,16 +95,11 @@ phina.define("qft.GameOverScene", {
                 this.text3.text = "タイトルに戻ります";
             }
             if (ct.ok || ct.cancel || this.ok) {
-                if (this.select == 0 && !ct.cancel) {
+                if (this.select == 0) {
                     this.parentScene.flare('continue');
                     this.exit();
                 } else {
-                    //コンティニュー時はセーブしない
-                    if (this.parentScene.isContinue) {
-                        this.parentScene.flare('exitgame_nosave');
-                    } else {
-                        this.parentScene.flare('exitgame');
-                    }
+                    this.parentScene.flare('exitgame');
                     this.exit();
                 }
             }
@@ -155,9 +150,9 @@ phina.define("qft.GameOverScene", {
         };
         var yes = phina.display.RectangleShape(param2)
             .addChildTo(this)
-            .setPosition(SC_W*0.4, SC_H*0.6+10)
+            .setPosition(SC_W*0.4, SC_H*0.6)
             .setInteractive(true);
-        yes.alpha = 0;
+        yes.alpha = 1;
         yes.onpointstart = function() {
             if (that.select == 0) {
                 that.ok = true;
@@ -167,11 +162,11 @@ phina.define("qft.GameOverScene", {
         }
         var no = phina.display.RectangleShape(param2)
             .addChildTo(this)
-            .setPosition(SC_W*0.6, SC_H*0.6+10)
+            .setPosition(SC_W*0.6, SC_H*0.6)
             .setInteractive(true);
-        no.alpha = 0;
+        no.alpha = 1;
         no.onpointstart = function() {
-            if (that.select == 0) {
+            if (that.select == 1) {
                 that.ok = true;
             } else {
                 that.pushno = true;
