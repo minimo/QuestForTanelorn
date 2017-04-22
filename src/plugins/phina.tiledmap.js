@@ -268,14 +268,10 @@ phina.define("phina.asset.TiledMap", {
                         });
                     }
                 });
-                //マップイメージ生成
-//                that.image = that._generateImage();
                 //読み込み終了
                 that._resolve(that);
             }.bind(this));
         } else {
-            //マップイメージ生成
-//            this.image = that._generateImage();
             //読み込み終了
             this._resolve(that);
         }
