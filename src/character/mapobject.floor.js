@@ -78,7 +78,7 @@ phina.define("qft.MapObject.Floor", {
                 }
         }
         //スプライト
-        this.index = options.index;
+        this.index = options.properties.index || 0;
         var sw = Math.floor(this.width / 16);
         var sh = Math.floor(this.height / 16)+32;
         var top = this.height / 2;
