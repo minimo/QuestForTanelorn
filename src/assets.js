@@ -47,6 +47,8 @@ phina.define("qft.Assets", {
                             "menuframe":  "assets/image/nc92367.png",
 
                             "monster01":  "assets/image/monster01.png",
+                            "monster02":  "assets/image/char_m_devil01.png",
+                            "monster03":  "assets/image/char_m_magi01.png",
                             "bullet":     "assets/image/effect_bullet01.png",
                             "effect":     "assets/image/effect.png",
                             "gate":       "assets/image/gate.png",
