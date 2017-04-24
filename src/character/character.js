@@ -173,8 +173,17 @@ phina.define("qft.Character", {
             //アニメーション
             if (this.sprite && this.isAdvanceAnimation && this.time % this.advanceTime == 0) {
                 this.index = (this.index+1) % this.frame[this.nowAnimation].length;
-                if (this.frame[this.nowAnimation][this.index] == "stop") this.index--;
-                this.sprite.frameIndex = this.frame[this.nowAnimation][this.index];
+                //次フレーム番号が特殊指定の場合
+                var next = this.frame[this.nowAnimation][this.index];
+                if (next == "stop") {
+                    //停止
+                    this.index--;
+                } else if (typeof next === "string") {
+                    //指定アニメーションへ変更
+                    this.setAnimation(next);
+                } else {
+                    this.sprite.frameIndex = next;
+                }
             }
 
             //無敵時間処理
