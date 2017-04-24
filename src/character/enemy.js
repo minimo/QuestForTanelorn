@@ -60,6 +60,9 @@ phina.define("qft.Enemy", {
         this.level = options.level || 0;
 
         this.on('enterframe', function() {
+            //画面外の場合は動作停止
+            if (!this.onScreen) return;
+
             //向きの指定
             if (this.vx != 0) {
                 if (this.vx > 0) {
