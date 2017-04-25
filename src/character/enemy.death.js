@@ -1,11 +1,11 @@
 /*
- *  enemy.wisp.js
+ *  enemy.death.js
  *  2016/12/31
  *  @auther minimo  
  *  This Program is MIT license.
  */
 
-//ウィスプ
+//死神
 phina.define("qft.Enemy.Death", {
     superClass: "qft.Enemy",
 

@@ -66,11 +66,12 @@ phina.define("qft.Enemy.FireBird", {
         this.advanceTime = 6;
         this.setupLifeGauge();
 
-        this.direction = this.options.direction || 0;
+        this.isVertical = this.options.vertical || false;
+        this.direction = this.options.direction || this.isVertical? 90: 0;
         this.speed = this.options.speed || 2;
-        this.vertical = this.options.vertical || false;
         this.returnTime = this.options.returnTime || 120;
-        this.bombInterval = this.options.bombInterval || 60;
+        this.bombInterval = this.options.bombInterval || 90;
+        this.attackInterval = 60;
 
         this.on('dead', function() {
             this.parentScene.spawnEffect(this.x, this.y);
@@ -82,54 +83,41 @@ phina.define("qft.Enemy.FireBird", {
     },
 
     update: function() {
-        var c1, c2;
-        if (this.vertical) {
-            //方向決定
-            if (this.direction == 0) this.vy = this.speed;
-            if (this.direction == 180) this.vy = -this.speed;
-            c1 = 0;
-            c2 = 2;
-            if (this.getDistancePlayer() < 256) {
-                if (this.x < this.parentScene.player.x) this.sprite.scaleX = 1; else this.sprite.scaleX = -1;
-            }
-        } else {
-            //方向決定
-            if (this.direction == 0) this.vx = this.speed;
-            if (this.direction == 180) this.vx = -this.speed;
-            c1 = 1;
-            c2 = 3;
+        //チェックする壁決定
+        var chk = 0;
+        if (!this.isVertical) chk = 1;
+
+        //壁に当たるか一定時間経過で折り返し
+        if (this._collision[chk].hit || this._collision[chk+2].hit || this.returnTime < 0) {
+            this.direction = (this.direction + 180) % 360;
+            this.returnTime = this.options.returnTime;
         }
 
-        //壁に当たったら折り返し
-        if (this._collision[c1].hit) {
-            this.direction = 0;
-            this.returnTime = this.options.returnTime;
-        } else if (this._collision[c2].hit) {
-            this.direction = 180;
-            this.returnTime = this.options.returnTime;
+        //プレイヤーをみつけたら加速
+        if (this.isLookPlayer()) {
+            this.speed = 4;
+            this.returnTime -= 2;
+        } else {
+            this.speed = 2;
+            this.returnTime--;
         }
 
         //プレイヤーをみつけたら攻撃
-        if (this.isLookPlayer() && this.getDistancePlayer() < 128 && this.stopTime == 0) {
-            if (this.time % 15 == 0) {
-                var b = this.parentScene.spawnEnemy(this.x, this.y+6, "Bullet", {pattern: "pattern2", explode: true, velocity: 3});
-                b.rotation = this.getPlayerAngle();
-            }
-            this.speed = 0;
-            this.stopTime = 60;
+        if (this.isLookPlayer() && this.getDistancePlayer() < 128 && this.attackInterval == 0) {
+            var b = this.parentScene.spawnEnemy(this.x, this.y+6, "Bullet", {pattern: "pattern2", explode: true, velocity: 3});
+            b.rotation = this.getPlayerAngle();
+            this.attackInterval = 60;
+            this.isStill = true;
         } else {
-            this.speed = this.options.speed;
-            this.returnTime -= 1;
+            //移動
+            var rad = this.direction.toRadian();
+            this.vx = Math.cos(rad) * this.speed;
+            this.vy = Math.sin(rad) * this.speed;
+ 
             //落し物
-            if (this.getDistancePlayer() < 512 && this.time % 90 == this.bombInterval) {
+            if (this.getDistancePlayer() < 512 && this.time % this.bombInterval == 0) {
                 this.parentScene.spawnEnemy(this.x, this.y, "FireBirdBomb", {});
             }
-        }
-
-        //一定時間過ぎたら折り返し
-        if (this.returnTime < 0) {
-            (this.direction == 0)? this.direction = 180: this.direction = 0;
-            this.returnTime = this.options.returnTime;
         }
 
         //向きの指定
@@ -140,10 +128,12 @@ phina.define("qft.Enemy.FireBird", {
                 this.scaleX = -1;
             }
         }
-        this.stopTime--;
-        if (this.stopTime < 0) {
-            this.stopTime = 0;
+        if (this.isVertical && this.getDistancePlayer() < 256) {
+            if (this.x < this.parentScene.player.x) this.scaleX = 1; else this.scaleX = -1;
         }
+
+        if (this.stopTime > 0) this.stopTime--;
+        if (this.attackInterval > 0) this.attackInterval--;
     },
 
     setupAnimation: function() {
