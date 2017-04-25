@@ -22,7 +22,7 @@ phina.define("qft.Enemy.FireBird", {
     eyesight: 256,
 
     //視野角
-    viewAngle: 60,
+    viewAngle: 90,
 
     //重力加速度
     gravity: 0,
@@ -71,53 +71,48 @@ phina.define("qft.Enemy.FireBird", {
         this.speed = this.options.speed || 2;
         this.returnTime = this.options.returnTime || 120;
         this.bombInterval = this.options.bombInterval || 90;
-        this.attackInterval = 60;
+        this.attackInterval = 0;
+        this.attackCount = 99;
+        this.isAttack = false;
 
         this.on('dead', function() {
             this.parentScene.spawnEffect(this.x, this.y);
             app.playSE("bomb");
         });
 
-        this.stopTime = 0;
-        this.attackCount = 0;
     },
 
     update: function() {
         //チェックする壁決定
-        var chk = 0;
-        if (!this.isVertical) chk = 1;
+        var chk = 1;
+        if (this.isVertical) chk = 0;
 
         //壁に当たるか一定時間経過で折り返し
         if (this._collision[chk].hit || this._collision[chk+2].hit || this.returnTime < 0) {
             this.direction = (this.direction + 180) % 360;
             this.returnTime = this.options.returnTime;
         }
-
-        //プレイヤーをみつけたら加速
-        if (this.isLookPlayer()) {
-            this.speed = 4;
-            this.returnTime -= 2;
+        //移動
+        var rad = this.direction.toRadian();
+        this.vx = Math.cos(rad) * this.speed;
+        this.vy = Math.sin(rad) * this.speed;
+        this.returnTime--;
+ 
+        //プレイヤーを見つけたら攻撃
+        var lookPlayer = this.isLookPlayer();
+        if (lookPlayer) {
+            if (this.attackInterval == 0) {
+                var b = this.parentScene.spawnEnemy(this.x, this.y+6, "Bullet", {pattern: "pattern2", explode: true, velocity: 3});
+                b.rotation = this.getPlayerAngle();
+                this.attackInterval = 90;
+            }
         } else {
-            this.speed = 2;
-            this.returnTime--;
+                this.attackInterval = 60;
         }
 
-        //プレイヤーをみつけたら攻撃
-        if (this.isLookPlayer() && this.getDistancePlayer() < 128 && this.attackInterval == 0) {
-            var b = this.parentScene.spawnEnemy(this.x, this.y+6, "Bullet", {pattern: "pattern2", explode: true, velocity: 3});
-            b.rotation = this.getPlayerAngle();
-            this.attackInterval = 60;
-            this.isStill = true;
-        } else {
-            //移動
-            var rad = this.direction.toRadian();
-            this.vx = Math.cos(rad) * this.speed;
-            this.vy = Math.sin(rad) * this.speed;
- 
-            //落し物
-            if (this.getDistancePlayer() < 512 && this.time % this.bombInterval == 0) {
-                this.parentScene.spawnEnemy(this.x, this.y, "FireBirdBomb", {});
-            }
+        //落し物
+        if (this.onScreen && this.time % this.bombInterval == 0) {
+            this.parentScene.spawnEnemy(this.x, this.y, "FireBirdBomb", {});
         }
 
         //向きの指定
@@ -132,7 +127,6 @@ phina.define("qft.Enemy.FireBird", {
             if (this.x < this.parentScene.player.x) this.scaleX = 1; else this.scaleX = -1;
         }
 
-        if (this.stopTime > 0) this.stopTime--;
         if (this.attackInterval > 0) this.attackInterval--;
     },
 
