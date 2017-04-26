@@ -257,6 +257,12 @@ phina.define("qft.StageController", {
                         case "candle":
                             qft.MapObject.Candle(this.parentScene, e).addChildTo(layer).setPosition(x, y);
                             break;
+                        case "lanthanum":
+                            qft.MapObject.Lanthanum(this.parentScene, e).addChildTo(layer).setPosition(x, y);
+                            break;
+                        case "candlelamp":
+                            qft.MapObject.CandleLamp(this.parentScene, e).addChildTo(layer).setPosition(x, y);
+                            break;
                         default:
                             console.warn("unknown map accessory: "+e.name);
                     }
