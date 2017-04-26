@@ -75,11 +75,14 @@ phina.define("qft.Enemy.FireBird", {
         this.attackCount = 99;
         this.isAttack = false;
 
+        this.on('damaged', e => {
+            if (this.isVertical) return;
+            if (e.direction == 0) this.direction = 180; else this.direction = 0;
+        });
         this.on('dead', function() {
             this.parentScene.spawnEffect(this.x, this.y);
             app.playSE("bomb");
         });
-
     },
 
     update: function() {

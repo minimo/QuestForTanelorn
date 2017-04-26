@@ -49,6 +49,10 @@ phina.define("qft.Enemy.Demon", {
 
         this.direction = 0;
         this.stopTime = 0;
+
+        this.on('damaged', e => {
+            if (e.direction == 0) this.direction = 180; else this.direction = 0;
+        });
     },
 
     update: function() {

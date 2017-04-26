@@ -68,6 +68,11 @@ phina.define("qft.Enemy.Bird", {
         this.speed = this.options.speed || 2;
         this.returnTime = this.options.returnTime || 120;
         this.bombInterval = this.options.bombInterval || 90;
+
+        this.on('damaged', e => {
+            if (this.isVertical) return;
+            if (e.direction == 0) this.direction = 180; else this.direction = 0;
+        });
     },
 
     update: function() {

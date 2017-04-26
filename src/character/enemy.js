@@ -139,12 +139,13 @@ phina.define("qft.Enemy", {
         this.hp -= power;
         if (this.hp <= 0) {
             this.hp = 0;
-            this.flare('dead');
             this.parentScene.totalScore += this.point;
             this.parentScene.totalKill++;
+            this.flare('dead');
+        } else {
+            this.flare('damaged', {direction: dir});
         }
         app.playSE("hit");
-        if (dir == 0) this.direction = 180; else this.direction = 0;
         return true;
     },
 
