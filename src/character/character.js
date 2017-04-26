@@ -136,15 +136,17 @@ phina.define("qft.Character", {
         }
 
         //吹き出し
+        var that = this;
         this.balloon = null;
         this.lastBalloon = "";
         this.balloonTime = 0;
         this.on('balloon', e => {
             if (this.time > this.balloonTime) this.lastBalloon = "";
             if (this.lastBalloon == e.pattern) return;
+            e.$safe({x: 0, y: -16});
             this.balloon = qft.Character.balloon({pattern: e.pattern, lifeSpan: e.lifeSpan, animationInterval: e.animationInterval})
                 .addChildTo(this)
-                .setPosition(0, -16);
+                .setPosition(e.x, e.y);
             this.lastBalloon = e.pattern;
             this.balloonTime = this.time + 120;
         });
@@ -223,6 +225,8 @@ phina.define("qft.Character", {
 
             //操作停止時間が終わったら気絶解除
             if (this.isStun && this.stopTime == 0) this.isStun = false;
+
+            if (this.balloon) this.balloon.scaleX = this.scaleX;
 
             this.time++;
             this.beforeAnimation = this.nowAnimation;

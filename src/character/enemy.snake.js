@@ -97,7 +97,7 @@ phina.define("qft.Enemy.Snake", {
         }
         if (look) {
             this.vx *= 4;
-            this.flare('balloon', {pattern: "!", lifeSpan: 15});
+            this.flare('balloon', {pattern: "!", lifeSpan: 15, y: 0});
         } else {
             this.flare('balloonerace');
         }
