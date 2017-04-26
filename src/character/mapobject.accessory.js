@@ -136,3 +136,51 @@ phina.define("qft.MapObject.Candle", {
         this.advanceTime = 3;
     },
 });
+
+//ランタン
+phina.define("qft.MapObject.Lanthanum", {
+    superClass: "qft.MapObject.Accessory",
+
+    init: function(parentScene, options) {
+        this.superInit(parentScene, options);
+
+        //表示用スプライト
+        this.sprite = phina.display.Sprite("accessory1", 16, 32).addChildTo(this);
+        this.sprite.setFrameTrimming(0, 96, 72, 32);
+
+        //アニメーション設定
+        this.setAnimation("normal");
+        this.advanceTime = 3;
+    },
+
+    setupAnimation: function() {
+        this.spcialAnimation = false;
+        this.frame = [];
+        this.frame["normal"] = [0, 1, 2, 1];
+        this.index = 0;
+    },
+});
+
+//ランプ
+phina.define("qft.MapObject.Lamp", {
+    superClass: "qft.MapObject.Accessory",
+
+    init: function(parentScene, options) {
+        this.superInit(parentScene, options);
+
+        //表示用スプライト
+        this.sprite = phina.display.Sprite("accessory1", 16, 32).addChildTo(this);
+        this.sprite.setFrameTrimming(0, 32, 72, 32);
+
+        //アニメーション設定
+        this.setAnimation("normal");
+        this.advanceTime = 3;
+    },
+
+    setupAnimation: function() {
+        this.spcialAnimation = false;
+        this.frame = [];
+        this.frame["normal"] = [0, 1, 2, 1];
+        this.index = 0;
+    },
+});

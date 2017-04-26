@@ -55,6 +55,7 @@ phina.define("qft.Assets", {
                             "flame02":    "assets/image/object_fire02a.png",
                             "flame03":    "assets/image/object_fire03a.png",
                             "flame05":    "assets/image/object_fire05a.png",
+                            "accessory1": "assets/image/map_effect2.png",
                             "block":      "assets/image/block.png",
                             "floor":      "assets/map/TileA4.png",
                         },
