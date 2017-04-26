@@ -161,8 +161,8 @@ phina.define("qft.MapObject.Lanthanum", {
     },
 });
 
-//ランプ
-phina.define("qft.MapObject.Lamp", {
+//ランプ２
+phina.define("qft.MapObject.CandleLamp", {
     superClass: "qft.MapObject.Accessory",
 
     init: function(parentScene, options) {
