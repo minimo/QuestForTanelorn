@@ -8,10 +8,10 @@
 phina.define("qft.Character.balloon", {
     superClass: "phina.display.Sprite",
 
-    //寿命フレーム
+    //蟇ｿ蜻ｽ繝輔Ξ繝ｼ繝
     lifeSpan: 30,
 
-    //アニメーション間隔
+    //繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ髢馴囈
     animationInterval: 6,
 
 
