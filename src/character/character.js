@@ -132,6 +132,25 @@ phina.define("qft.Character", {
             });
         }
 
+        //吹き出し
+        this.balloon = null;
+        this.lastBalloon = "";
+        this.balloonTime = 120;
+        this.on('balloon', e => {
+            if (this.time > this.balloonTime) this.lastBalloon = "";
+            if (this.lastBalloon == e.pattern) return;
+            this.balloon = qft.Character.balloon({pattern: e.pattern, lifeSpan: e.lifeSpan, animationInterval: e.animationInterval})
+                .addChildTo(this)
+                .setPosition(0, -16);
+            this.lastBalloon = e.pattern;
+            this.balloonTime = this.time + 120;
+        });
+        this.on('balloonerace', e => {
+            if (this.balloon == null) return;
+            this.balloon.remove();
+            this.balloon = null;
+        });
+
         this.on('enterframe', function(e) {
             //画面内判定
             var ps = this.parentScene;
