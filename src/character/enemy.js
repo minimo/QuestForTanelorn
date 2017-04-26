@@ -59,6 +59,19 @@ phina.define("qft.Enemy", {
         this.options = options;
         this.level = options.level || 0;
 
+        //吹き出し
+        this.lastBalloon = "";
+        this.balloonTime = 120;
+        this.on('balloon', e => {
+            if (this.time > this.balloonTime) this.lastBalloon = "";
+            if (this.lastBalloon == e.pattern) return;
+            qft.Character.balloon({pattern: e.pattern})
+                .addChildTo(this)
+                .setPosition(0, -16);
+            this.lastBalloon = e.pattern;
+            this.balloonTime = this.time + 120;
+        });
+
         this.on('enterframe', function() {
             //画面外の場合は動作停止
             if (!this.onScreen) return;

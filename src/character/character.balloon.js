@@ -9,13 +9,13 @@ phina.define("qft.Character.balloon", {
     superClass: "phina.display.Sprite",
 
     //寿命フレーム
-    lifeSpan: 60,
+    lifeSpan: 30,
 
     //アニメーション間隔
     animationInterval: 6,
 
 
-    init: function(parentScene, options) {
+    init: function(options) {
         this.superInit("balloon", 24, 32);
         this.setAnimation(options.pattern);
 

@@ -91,7 +91,10 @@ phina.define("qft.Enemy.Snake", {
                 this.vx = -1;
             }
         }
-        if (look) this.vx *= 4;
+        if (look) {
+            this.vx *= 4;
+            this.flare('balloon', {pattern: "!"});
+        }
     },
 
     setupAnimation: function() {
