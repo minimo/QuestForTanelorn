@@ -49,7 +49,7 @@ phina.define("qft.Character", {
     isDrop: false,
 
     //気絶フラグ
-    isStan: false,
+    isStun: false,
 
     //操作停止時間
     stopTime: 0,
@@ -222,7 +222,7 @@ phina.define("qft.Character", {
             if (this.stopTime < 0) this.stopTime = 0;
 
             //操作停止時間が終わったら気絶解除
-            if (this.isStan && this.stopTime == 0) this.isStan = false;
+            if (this.isStun && this.stopTime == 0) this.isStun = false;
 
             this.time++;
             this.beforeAnimation = this.nowAnimation;

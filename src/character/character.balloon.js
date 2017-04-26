@@ -45,7 +45,7 @@ phina.define("qft.Character.balloon", {
             case "zzz":
                 this.setFrameTrimming(0, 0, 24, 32);
                 break;
-            case "stan":
+            case "stun":
                 this.setFrameTrimming(144, 32, 48, 32);
                 break;
             case "light":

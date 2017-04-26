@@ -268,7 +268,7 @@ phina.define("qft.Player", {
         }
 
         //気絶状態
-        if (this.isStan) {
+        if (this.isStun) {
             this.flare('balloon', {pattern: "stan"});
             this.balloonTime = 0;
             this.setAnimation("damage");
