@@ -48,6 +48,9 @@ phina.define("qft.Character", {
     //落下死亡フラグ
     isDrop: false,
 
+    //気絶フラグ
+    isStan: false,
+
     //操作停止時間
     stopTime: 0,
 
@@ -135,7 +138,7 @@ phina.define("qft.Character", {
         //吹き出し
         this.balloon = null;
         this.lastBalloon = "";
-        this.balloonTime = 120;
+        this.balloonTime = 0;
         this.on('balloon', e => {
             if (this.time > this.balloonTime) this.lastBalloon = "";
             if (this.lastBalloon == e.pattern) return;
@@ -149,6 +152,7 @@ phina.define("qft.Character", {
             if (this.balloon == null) return;
             this.balloon.remove();
             this.balloon = null;
+            this.balloonTime = 0;
         });
 
         this.on('enterframe', function(e) {
@@ -214,7 +218,11 @@ phina.define("qft.Character", {
             }
 
             //操作停止時間
-            if (this.stopTime > 0) this.stopTime--;
+            this.stopTime--;
+            if (this.stopTime < 0) this.stopTime = 0;
+
+            //操作停止時間が終わったら気絶解除
+            if (this.isStan && this.stopTime == 0) this.isStan = false;
 
             this.time++;
             this.beforeAnimation = this.nowAnimation;

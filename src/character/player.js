@@ -229,6 +229,7 @@ phina.define("qft.Player", {
             }
 
         }
+
         //はしごから外れたら梯子掴み状態キャンセル
         if (this.isCatchLadder) {
             if (!this.onLadder && !ct.down || this.onLadder && !footLadder && !ct.up) {
@@ -264,6 +265,16 @@ phina.define("qft.Player", {
             if (ct.change && !this.before.change && this.equip.switchOk) {
                 this.switchWeapon();
             }
+        }
+
+        //気絶状態
+        if (this.isStan) {
+            this.flare('balloon', {pattern: "stan"});
+            this.balloonTime = 0;
+            this.setAnimation("damage");
+            //梯子掴みキャンセル
+            this.isCatchLadder = false;
+            if (ct.left && !ct.before.left || ct.right && !ct.before.right) this.stopTime--;
         }
 
         //アニメーション変更を検知
