@@ -101,7 +101,16 @@ phina.define("qft.Enemy.Demon", {
                 this.vx = -1;
             }
         }
-        if (look) this.vx *= 3;
+        if (look) {
+            this.vx *= 3;
+            this.flare('balloon', {pattern: "!"});
+        } else {
+            if (dis < 256) {
+                this.flare('balloon', {pattern: "?"});
+            } else {
+                this.flare('balloonerace');
+            }
+        }
 
         this.stopTime--;
         if (this.stopTime > 0) {

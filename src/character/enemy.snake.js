@@ -48,6 +48,10 @@ phina.define("qft.Enemy.Snake", {
         this.setupLifeGauge();
 
         this.direction = 0;
+
+        this.on('damaged', e => {
+            if (e.direction == 0) this.direction = 180; else this.direction = 0;
+        });
     },
 
     update: function() {
@@ -93,7 +97,9 @@ phina.define("qft.Enemy.Snake", {
         }
         if (look) {
             this.vx *= 4;
-            this.flare('balloon', {pattern: "!"});
+            this.flare('balloon', {pattern: "!", lifeSpan: 15});
+        } else {
+            this.flare('balloonerace');
         }
     },
 

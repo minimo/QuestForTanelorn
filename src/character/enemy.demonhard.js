@@ -54,6 +54,10 @@ phina.define("qft.Enemy.DemonHard", {
 
         this.direction = 0;
         this.stopTime = 0;
+
+        this.on('damaged', e => {
+            if (e.direction == 0) this.direction = 180; else this.direction = 0;
+        });
     },
 
     update: function() {
@@ -122,7 +126,16 @@ phina.define("qft.Enemy.DemonHard", {
                 this.vy = -0.9 + Math.sin(this.time.toRad())*2;
             }
         }
-        if (look) this.vx *= 3;
+        if (look) {
+            this.vx *= 3;
+            this.flare('balloon', {pattern: "!"});
+        } else {
+            if (dis < 256) {
+                this.flare('balloon', {pattern: "?"});
+            } else {
+                this.flare('balloonerace');
+            }
+        }
 
         this.stopTime--;
         if (this.stopTime > 0) {

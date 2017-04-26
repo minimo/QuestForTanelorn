@@ -70,6 +70,10 @@ phina.define("qft.Enemy.Devil", {
 
         //停止フラグ
         this.isStill = false;
+
+        this.on('damaged', e => {
+            if (e.direction == 0) this.direction = 180; else this.direction = 0;
+        });
     },
 
     update: function() {
