@@ -60,7 +60,7 @@ phina.define("qft.Enemy.Bullet", {
         });
     },
 
-    update: function() {
+    algorithm: function() {
         var rad = this.rotation.toRadian();
         this.vx = Math.cos(rad) * this.velocity;
         this.vy = Math.sin(rad) * this.velocity;

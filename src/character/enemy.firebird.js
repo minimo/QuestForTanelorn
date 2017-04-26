@@ -85,7 +85,7 @@ phina.define("qft.Enemy.FireBird", {
         });
     },
 
-    update: function() {
+    algorithm: function() {
         //チェックする壁決定
         var chk = 1;
         if (this.isVertical) chk = 0;

@@ -62,7 +62,7 @@ phina.define("qft.Enemy.Death", {
         this.actionWait = 0;
     },
 
-    update: function() {
+    algorithm: function() {
         if (this.isLookPlayer()) {
             if (this.getDistancePlayer() < 256 && this.actionWait == 0) {
                 //一定距離内に入ったら攻撃する

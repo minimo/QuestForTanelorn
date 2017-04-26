@@ -39,7 +39,7 @@ phina.define("qft.Enemy.Flame", {
         this.direction = 0;
     },
 
-    update: function() {
+    algorithm: function() {
         if (this.lifeSpan == 0) this.remove();
         if (this.lifeSpan < 30) {
             if (this.time % 2 == 0) this.visible = !this.visible;

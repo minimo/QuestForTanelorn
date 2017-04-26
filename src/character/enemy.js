@@ -93,6 +93,8 @@ phina.define("qft.Enemy", {
                 this.hit();
                 pl.damage(this);
             }
+
+            if (this.stopTime == 0) this.algorithm();
         });
 
         this.on('dead', function() {
@@ -113,6 +115,9 @@ phina.define("qft.Enemy", {
             }
             this.remove();
         });
+    },
+
+    algorithm: function() {
     },
 
     damage: function(target) {

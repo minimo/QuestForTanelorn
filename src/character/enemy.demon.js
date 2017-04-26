@@ -55,7 +55,7 @@ phina.define("qft.Enemy.Demon", {
         });
     },
 
-    update: function() {
+    algorithm: function() {
         //プレイヤーとの距離
         var dis = this.getDistancePlayer();
         var look = this.isLookPlayer();

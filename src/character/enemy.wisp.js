@@ -61,7 +61,7 @@ phina.define("qft.Enemy.Wisp", {
         this.move = false;
     },
 
-    update: function() {
+    algorithm: function() {
         //プレイヤーが近くにいたら寄っていく
         if (this.isLookPlayer()) {
             var player = this.parentScene.player;

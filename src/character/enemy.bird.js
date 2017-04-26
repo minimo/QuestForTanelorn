@@ -75,7 +75,7 @@ phina.define("qft.Enemy.Bird", {
         });
     },
 
-    update: function() {
+    algorithm: function() {
         //チェックする壁決定
         var chk = 0;
         if (!this.isVertical) chk = 1;

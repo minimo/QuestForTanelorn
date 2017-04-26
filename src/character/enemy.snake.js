@@ -54,7 +54,7 @@ phina.define("qft.Enemy.Snake", {
         });
     },
 
-    update: function() {
+    algorithm: function() {
         if (this.isDead) return;
 
         //プレイヤーとの距離

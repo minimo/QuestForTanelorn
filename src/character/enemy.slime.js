@@ -60,7 +60,7 @@ phina.define("qft.Enemy.Slime", {
         });
     },
 
-    update: function() {
+    algorithm: function() {
         if (this.isDead) return;
 
         var look = this.isLookPlayer();
