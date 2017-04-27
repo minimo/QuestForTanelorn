@@ -56,6 +56,7 @@ phina.define("qft.Player", {
         attack: false,
         jump: false,
         change: false,
+        isStun: false,
     },
 
     //ステージ開始時ステータス
@@ -273,9 +274,18 @@ phina.define("qft.Player", {
         //気絶状態
         if (this.isStun) {
             this.setAnimation("damage");
+
             //梯子掴みキャンセル
             this.isCatchLadder = false;
-            if (ct.left && !ct.before.left || ct.right && !ct.before.right) this.stopTime--;
+
+            //レバガチャで気絶復帰を早める
+            if (ct.left && !ct.before.left ||
+                ct.right && !ct.before.right ||
+                ct.up && !ct.before.up ||
+                ct.down && !ct.before.down) this.stopTime -= 2;
+        } else if (this.before.isStun) {
+            //気絶復帰したらアニメーションを標準に
+            this.setAnimation("stand");
         }
 
         //アニメーション変更を検知
