@@ -524,10 +524,6 @@ phina.define("qft.Player", {
         kind = kind || 0;
         level = level || 0;
 
-        //武器画像設定
-        var index = kind * 10 + level;
-        this.weapon.setFrameIndex(index);
-
         //属性初期化
         this.attackCollision.$extend({
             isSlash: false,
@@ -547,6 +543,7 @@ phina.define("qft.Player", {
         switch (kind) {
             case 0:
                 //ショートソード
+                level = 0;
                 this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
                 this.weapon.setPosition(-3, 3);
                 break;
@@ -567,6 +564,7 @@ phina.define("qft.Player", {
                 break;
             case 4:
                 //弓
+                level = 0;
                 this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
                 this.weapon.setPosition(0, 0);
                 break;
@@ -581,6 +579,11 @@ phina.define("qft.Player", {
                 this.weapon.setPosition(-3, 3);
                 break;
         }
+
+        //武器画像設定
+        var index = kind * 10 + Math.min(level, 9);
+        this.weapon.setFrameIndex(index);
+
         return this;
     },
 
@@ -806,10 +809,11 @@ phina.define("qft.PlayerAttack", {
         //表示スプライト
         switch (this.type) {
             case "arrow":
-                this.sprite = phina.display.Sprite("item", 24, 24).addChildTo(this).setFrameIndex(30);
-                this.frame = [30];
+                this.sprite = phina.display.Sprite("weapons", 24, 24).addChildTo(this).setFrameIndex(1);
+                this.frame = [1];
                 this.isArrow = true;
                 this.isSting = true;
+                this.stunPower = 10;
                 break;
             case "fireball":
                 this.sprite = phina.display.Sprite("bullet", 24, 32).addChildTo(this).setFrameIndex(9);
@@ -817,9 +821,11 @@ phina.define("qft.PlayerAttack", {
                 this.isFire = true;
                 break;
             case "masakari":
-                this.sprite = phina.display.Sprite("item", 24, 24).addChildTo(this).setFrameIndex(2);
-                this.frame = [2];
+                this.sprite = phina.display.Sprite("weapons", 24, 24).addChildTo(this).setFrameIndex(20);
+                this.frame = [20];
                 this.isSlash = true;
+                this.isBrow = true;
+                this.stunPower = 50;
                 break;
         }
     },
@@ -983,7 +989,7 @@ phina.define("qft.PlayerWeapon", {
                 if (this.index < weapons.length) {
                     var kind = that.player.equip.weapons[this.index];
                     var level = that.player.equip.level[this.index];
-                    var index = kind * 10 + level;
+                    var index = kind * 10 + Math.min(level, 9);
                     this.setFrameIndex(index);
                     this.visible = true;
                 } else {

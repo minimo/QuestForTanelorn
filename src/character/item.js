@@ -93,7 +93,29 @@ phina.define("qft.Item", {
         this.$extend(qft.ItemInfo.get(this.kind));
 
         //アイテムスプライト
-        this.sprite = phina.display.Sprite("item", 24, 24).addChildTo(this).setFrameIndex(this.kind);
+        if (this.isWeapon) {
+            //武器の場合
+            var index = this.kind * 10 + Math.min(this.level, 9);
+            this.sprite = phina.display.Sprite("weapons", 24, 24).addChildTo(this).setFrameIndex(index);
+
+            if (this.level > 0) {
+                //強化レベル表示
+                var labelParam = {
+                    fill: "white",
+                    stroke: "black",
+                    strokeWidth: 2,
+
+                    fontFamily: "Orbitron",
+                    align: "center",
+                    baseline: "middle",
+                    fontSize: 10,
+                    fontWeight: ''
+                };
+                phina.display.Label({text: "+"+this.level}.$safe(labelParam)).setPosition(6, 6).addChildTo(this);
+            }
+        } else {
+            this.sprite = phina.display.Sprite("item", 24, 24).addChildTo(this).setFrameIndex(this.kind);
+        }
 
         //寿命
         this.lifeSpan = 150;
