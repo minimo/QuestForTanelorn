@@ -21,6 +21,9 @@ phina.define("qft.Enemy.Death", {
     //攻撃力
     power: 20,
 
+    //気絶確率
+    stunPower: 50,
+
     //視力
     eyesight: 512,
 
@@ -111,6 +114,9 @@ phina.define("qft.Enemy.DeathFlame", {
 
     //攻撃力
     power: 10,
+
+    //気絶確率
+    stunPower: 80,
 
     //地形無視
     ignoreCollision: true,
