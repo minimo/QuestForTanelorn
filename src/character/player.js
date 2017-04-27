@@ -17,6 +17,9 @@ phina.define("qft.Player", {
     //攻撃力
     power: 10,
 
+    //気絶確率
+    stunPower: 1,
+
     //防御力
     deffence: 10,
 
@@ -269,8 +272,6 @@ phina.define("qft.Player", {
 
         //気絶状態
         if (this.isStun) {
-            this.flare('balloon', {pattern: "stan"});
-            this.balloonTime = 0;
             this.setAnimation("damage");
             //梯子掴みキャンセル
             this.isCatchLadder = false;
@@ -308,6 +309,7 @@ phina.define("qft.Player", {
         this.before.attack = ct.attack;
         this.before.jump = ct.up || ct.jump;
         this.before.change = ct.change;
+        this.before.isStun = this.isStun;
 
         //ダウンキー連続押下フレームカウント
         if (this.onFloor && !this.isCatchLadder && ct.down && !ct.right && !ct.left && !ct.up && !ct.attack) {
@@ -512,76 +514,55 @@ phina.define("qft.Player", {
         var index = kind * 10 + level;
         this.weapon.setFrameIndex(index);
 
-        //攻撃属性初期化
-        this.attackCollision.isSlash = false;
-        this.attackCollision.isSting = false;
-        this.attackCollision.isBlow = false;
-        this.attackCollision.isArrow = false;
-        this.attackCollision.isFire = false;
-        this.attackCollision.isIce = false;
+        //属性初期化
+        this.attackCollision.$extend({
+            isSlash: false,
+            isSting: false.
+            isBlow: false,
+            isArrow: false,
+            isFire: false,
+            isIce: false,
+            stunPower: 1,
+        });
+
+        //アイテム情報取得
+        var spec = qft.ItemInfo.get(kind);
+        this.attackCollision.$extend(spec);
+        this.attackCollision.power += level * (spec.levelBonus || 10);
 
         switch (kind) {
             case 0:
                 //ショートソード
-                this.attackCollision.power = 10 + level * 10;
-                this.attackCollision.width = 14;
-                this.attackCollision.height = 30;
-                this.attackCollision.isSlash = true;
                 this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
                 this.weapon.setPosition(-3, 3);
                 break;
             case 1:
                 //ロングソード
-                this.attackCollision.power = 20 + level * 10;
-                this.attackCollision.width = 24;
-                this.attackCollision.height = 35;
-                this.attackCollision.isSlash = true;
                 this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
                 this.weapon.setPosition(-3, 3);
                 break;
             case 2:
                 //斧
-                this.attackCollision.power = 30 + level * 10;
-                this.attackCollision.width = 14;
-                this.attackCollision.height = 26;
-                this.attackCollision.isSlash = true;
                 this.frame["attack"] = [ 44, 44, 44, 43, 43, 43, 42, 42, 42, 41, 41, 41, "stop"];
                 this.weapon.setPosition(-3, 3);
                 break;
             case 3:
                 //槍
-                this.attackCollision.power = 15 + level * 10;
-                this.attackCollision.width = 39;
-                this.attackCollision.height = 10;
-                this.attackCollision.isSting = true;
                 this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
                 this.weapon.setPosition(0, 0);
                 break;
             case 4:
                 //弓
-                this.attackCollision.power = 1;
-                this.attackCollision.width = 10;
-                this.attackCollision.height = 5;
-                this.attackCollision.isBlow = true;
                 this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
                 this.weapon.setPosition(0, 0);
                 break;
             case 5:
                 //魔法の杖
-                this.attackCollision.power = 10;
-                this.attackCollision.width = 10;
-                this.attackCollision.height = 5;
-                this.attackCollision.isBlow = true;
-                this.attackCollision.isFire = true;
                 this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
                 this.weapon.setPosition(0, 0);
                 break;
             case 6:
                 //魔導書
-                this.attackCollision.power = 30 + level * 10;
-                this.attackCollision.width = 14;
-                this.attackCollision.height = 26;
-                this.attackCollision.isSlash = true;
                 this.frame["attack"] = [ 44, 44, 44, 43, 43, 43, 42, 42, 42, 41, 41, 41, "stop"];
                 this.weapon.setPosition(-3, 3);
                 break;
