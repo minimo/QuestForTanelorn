@@ -148,6 +148,7 @@ phina.define("qft.ItemInfo", {
                         isWeapon: true,
                         isSlash: true,
                         power: 15,
+                        stunPower: 5,
                         collision: {
                             width: 24,
                             height: 25
@@ -186,6 +187,7 @@ phina.define("qft.ItemInfo", {
                         isWeapon: true,
                         isBrow: true,
                         power: 5,
+                        stunPower: 5,
                         collision: {
                             width: 20,
                             height: 10
@@ -212,7 +214,7 @@ phina.define("qft.ItemInfo", {
                         isWeapon: true,
                         isBrow: true,
                         power: 10,
-                        stunPower: 30,
+                        stunPower: 40,
                         collision: {
                             width: 20,
                             height: 20

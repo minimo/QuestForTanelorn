@@ -24,6 +24,9 @@ phina.define("qft.Enemy", {
     //攻撃力
     power: 10,
 
+    //気絶確率
+    stunPower: 1,
+
     //視力
     eyesight: 64,
 
@@ -149,6 +152,10 @@ phina.define("qft.Enemy", {
             this.flare('dead');
         } else {
             this.flare('damaged', {direction: dir});
+
+            //気絶判定
+            var dice = Math.randint(1, 100);
+            if (dice <= target.stunPower) this.flare('stun', {power: target.power});
         }
         app.playSE("hit");
         return true;

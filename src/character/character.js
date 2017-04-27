@@ -141,6 +141,7 @@ phina.define("qft.Character", {
         this.lastBalloon = "";
         this.balloonTime = 0;
         this.on('balloon', e => {
+            if (this.isStun) return;
             if (this.time > this.balloonTime) this.lastBalloon = "";
             if (this.lastBalloon == e.pattern) return;
             if (this.balloon) this.balloon.remove();
@@ -156,6 +157,17 @@ phina.define("qft.Character", {
             this.balloon.remove();
             this.balloon = null;
             this.balloonTime = 0;
+        });
+
+        //気絶状態
+        this.on('stun', e => {
+            this.isStun = true;
+            this.stopTime = e.power * 10;
+            this.balloon = qft.Character.balloon({pattern: "stun", lifeSpan: this.stopTime})
+                .addChildTo(this)
+                .setPosition(e.x, e.y);
+            this.lastBalloon = e.pattern;
+            this.balloonTime = this.time + 120;
         });
 
         this.on('enterframe', function(e) {
@@ -225,7 +237,10 @@ phina.define("qft.Character", {
             if (this.stopTime < 0) this.stopTime = 0;
 
             //操作停止時間が終わったら気絶解除
-            if (this.isStun && this.stopTime == 0) this.isStun = false;
+            if (this.isStun && this.stopTime == 0) {
+                this.isStun = false;
+                this.flare('balloonerace');
+            }
 
             if (this.balloon) this.balloon.scaleX = this.scaleX;
 

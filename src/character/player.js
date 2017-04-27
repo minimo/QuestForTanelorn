@@ -395,6 +395,10 @@ phina.define("qft.Player", {
             this.mutekiTime = 60;
             this.stopTime = 15;
             if (this.nowAnimation != "jump") this.setAnimation("damage");
+
+            //気絶判定
+            var dice = Math.randint(1, 100);
+            if (dice <= target.stunPower) this.flare('stun', {power: target.power});
         }
         return true;
     },
@@ -517,7 +521,7 @@ phina.define("qft.Player", {
         //属性初期化
         this.attackCollision.$extend({
             isSlash: false,
-            isSting: false.
+            isSting: false,
             isBlow: false,
             isArrow: false,
             isFire: false,
