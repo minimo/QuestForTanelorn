@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="200" tilewidth="16" tileheight="16" nextobjectid="247">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="200" tilewidth="16" tileheight="16" nextobjectid="248">
  <tileset firstgid="1" name="A1" tilewidth="16" tileheight="16" tilecount="768" columns="32">
   <image source="TileA1.png" width="512" height="384"/>
  </tileset>
@@ -1140,11 +1140,6 @@
    </properties>
   </object>
   <object id="239" name="rod" type="itembox" x="108" y="956" width="32" height="32"/>
-  <object id="240" name="item" type="itembox" x="672" y="2048" width="32" height="32">
-   <properties>
-    <property name="kind" type="int" value="18"/>
-   </properties>
-  </object>
   <object id="244" name="item" type="itembox" x="352" y="288" width="32" height="32">
    <properties>
     <property name="kind" type="int" value="21"/>
@@ -1158,6 +1153,11 @@
   <object id="246" name="item" type="itembox" x="416" y="288" width="32" height="32">
    <properties>
     <property name="kind" type="int" value="18"/>
+   </properties>
+  </object>
+  <object id="247" name="food" type="itembox" x="660" y="2040" width="32" height="32">
+   <properties>
+    <property name="level" type="int" value="2"/>
    </properties>
   </object>
  </objectgroup>

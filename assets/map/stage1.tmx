@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="420" height="70" tilewidth="16" tileheight="16" nextobjectid="241">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="420" height="70" tilewidth="16" tileheight="16" nextobjectid="242">
  <tileset firstgid="1" name="A1" tilewidth="16" tileheight="16" tilecount="768" columns="32">
   <image source="TileA1.png" width="512" height="384"/>
  </tileset>
@@ -512,9 +512,9 @@
   <object id="34" name="longsword" type="itembox" x="431" y="911" width="32" height="32"/>
   <object id="40" name="ax" type="itembox" x="1104" y="832" width="32" height="32"/>
   <object id="41" name="clear" type="door" x="6054" y="784" width="36" height="128"/>
-  <object id="81" name="spear" type="itembox" x="2048" y="576" width="32" height="32"/>
+  <object id="81" name="longsword" type="itembox" x="2144" y="572" width="32" height="32"/>
   <object id="107" name="Slime" type="enemy" x="2076" y="928" width="32" height="32"/>
-  <object id="108" name="Slime" type="enemy" x="2136" y="568" width="32" height="32"/>
+  <object id="108" name="Slime" type="enemy" x="2240" y="572" width="32" height="32"/>
   <object id="109" name="Wisp" type="enemy" x="3359" y="784" width="32" height="32"/>
   <object id="110" name="Wisp" type="enemy" x="3399" y="868" width="32" height="32"/>
   <object id="111" name="Wisp" type="enemy" x="3271" y="716" width="32" height="32"/>
@@ -579,8 +579,8 @@
   </object>
   <object id="214" name="Snake" type="enemy" x="980" y="824" width="32" height="32"/>
   <object id="215" name="Snake" type="enemy" x="1040" y="824" width="32" height="32"/>
-  <object id="216" name="Bird" type="enemy" x="2384" y="532" width="32" height="32"/>
-  <object id="217" name="Bird" type="enemy" x="2536" y="676" width="32" height="32"/>
+  <object id="216" name="Bird" type="enemy" x="2092" y="500" width="32" height="32"/>
+  <object id="217" name="Bird" type="enemy" x="2380" y="584" width="32" height="32"/>
   <object id="218" name="Bird" type="enemy" x="4312" y="784" width="32" height="32"/>
   <object id="230" name="food" type="itembox" x="2560" y="216" width="32" height="32">
    <properties>
@@ -593,5 +593,6 @@
     <property name="kind" type="int" value="17"/>
    </properties>
   </object>
+  <object id="241" name="spear" type="itembox" x="2044" y="572" width="32" height="32"/>
  </objectgroup>
 </map>
