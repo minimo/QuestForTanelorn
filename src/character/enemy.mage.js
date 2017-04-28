@@ -86,7 +86,7 @@ phina.define("qft.Enemy.Mage", {
 
             //逃げるフェーズ
             if (this.phase == 1) {
-                if (this.phase == 0 && look && !this.isJump && distance < 64) {
+                if (this.phase == 0 && look && !this.isJump && distance < 96) {
                     if (this.x < this.player.x) this.diretion = 0; else this.direction = 180;
                     this.speed = 3;
                 } else {
@@ -94,12 +94,24 @@ phina.define("qft.Enemy.Mage", {
                     this.speed = 0;
                     this.phase = 3;
                 }
-                if (!look) this.phase = 0;
             }
 
             //攻撃フェーズ
-            if (this.phase == 3) {
+            if (this.phase == 2) {
+                if (this.phase == 0 && look && !this.isJump && distance < 64) {
+                    //プレイヤーが近づいたら逃げる
+                    this.sprite.setFrameTrimming((this.level % 2) * 144 + 72, Math.floor(this.level / 2) * 128, 72, 128);
+                    this.phase = 1;
+                } else {
+                    //プレイヤーが遠くにいる場合は攻撃
+                    this.sprite.setFrameTrimming((this.level % 2) * 144, Math.floor(this.level / 2) * 128, 72, 128);
+                    var b = this.parentScene.spawnEnemy(this.x, this.y, "Bullet", {explode: true});
+                    b.rotation = this.getPlayerAngle();
+                }
             }
+
+            //プレイヤーが見えない場合は通常フェーズ
+            if (!look) this.phase = 0;
         }
 
         if (this.onFloor || this.isJump) {
