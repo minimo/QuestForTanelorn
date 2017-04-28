@@ -98,9 +98,9 @@ phina.define("qft.Enemy.Death", {
         this.spcialAnimation = false;
         this.frame = [];
         this.frame["move"] = [3, 4, 5, 4];
-        this.frame["up"] =   [0, 1, 0, 2];
-        this.frame["down"] = [6, 7, 6, 8];
-        this.frame["attack"] = [6, 7, 6, 8];
+        this.frame["up"] = [6, 7, 6, 8];
+        this.frame["down"] =   [0, 1, 0, 2];
+        this.frame["attack"] = [3, 4, 5, 4];
         this.index = 0;
     },
 });
@@ -128,6 +128,8 @@ phina.define("qft.Enemy.DeathFlame", {
         this.pattern = options.pattern || 0;
         this.lifeSpan = options.lifeSpan || 120;
         this.power += this.level * 5;
+
+        this.setupAnimation(this.pattern);
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("flame03", 24, 32).addChildTo(this);

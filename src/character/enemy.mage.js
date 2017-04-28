@@ -84,9 +84,21 @@ phina.define("qft.Enemy.Mage", {
                 this.speed = 3;
             }
 
+            //逃げるフェーズ
             if (this.phase == 1) {
-                if (this.x < this.player.x) this.diretion = 0; else this.direction = 180;
+                if (this.phase == 0 && look && !this.isJump && distance < 64) {
+                    if (this.x < this.player.x) this.diretion = 0; else this.direction = 180;
+                    this.speed = 3;
+                } else {
+                    if (this.x < this.player.x) this.diretion = 180; else this.direction = 0;
+                    this.speed = 0;
+                    this.phase = 3;
+                }
                 if (!look) this.phase = 0;
+            }
+
+            //攻撃フェーズ
+            if (this.phase == 3) {
             }
         }
 

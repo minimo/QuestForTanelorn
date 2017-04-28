@@ -31,7 +31,7 @@ phina.define("qft.Enemy.Flame", {
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("flame02", 24, 32).addChildTo(this);
-        this.sprite.setFrameTrimming(this.pattern * 24 + 72, 0, 24, 128);
+        this.sprite.setFrameTrimming(Math.min(this.pattern, 2) * 24 + 72, 0, 24, 128);
 
         this.setAnimation("normal");
         this.advanceTime = 3;

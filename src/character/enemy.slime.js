@@ -45,7 +45,7 @@ phina.define("qft.Enemy.Slime", {
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("monster01", 24, 32).addChildTo(this);
-        this.sprite.setFrameTrimming(this.level * 72, 256, 72, 128);
+        this.sprite.setFrameTrimming(Math.min(this.level, 4) * 72, 256, 72, 128);
         this.hp += this.level * 10;
         this.power += this.level * 5;
 
@@ -54,6 +54,7 @@ phina.define("qft.Enemy.Slime", {
         this.setupLifeGauge();
 
         this.direction = 0;
+        this.speed = 1;
 
         this.on('damaged', e => {
             if (e.direction == 0) this.direction = 180; else this.direction = 0;
@@ -78,20 +79,31 @@ phina.define("qft.Enemy.Slime", {
                 this.direction = 0;
             }
 
-            //プレイヤーが近くにいたらジャンプ攻撃
-            if (look && !this.isJump && this.getDistancePlayer() < 40) {
-                this.isJump = true;
-                this.vy = -6;
-                var pl = this.parentScene.player;
-                if (this.x > pl.x) {
-                    this.direction = 180;
-                } else {
-                    this.direction = 0;
+            if (this.level < 4) {
+                //プレイヤーが近くにいたらジャンプ攻撃
+                if (look && !this.isJump && this.getDistancePlayer() < 40) {
+                    this.isJump = true;
+                    this.vy = -6;
+                    var pl = this.parentScene.player;
+                    if (this.x > pl.x) {
+                        this.direction = 180;
+                    } else {
+                        this.direction = 0;
+                    }
+                }
+            } else {
+                //プレイヤーが近くにいたら攻撃
+                if (look && !this.isJump && this.getDistancePlayer() < 64 && this.time % 180 == 0) {
+                    for (var i = 0; i < this.level+4; i++) {
+                        var b = this.parentScene.spawnEnemy(this.x, this.y, "WispBomb", {pattern: 2});
+                        b.vy = -10;
+                        b.vx = (i*2) * this.scaleX;
+                    }
                 }
             }
         }
         if (this.onFloor || this.isJump) {
-            this.vx =  2 + Math.floor(this.level*0.5);
+            this.vx =  2 + Math.floor(this.level*0.5) * this.speed;
             if (this.direction == 180) {
                 this.vx *= -1;
             }
