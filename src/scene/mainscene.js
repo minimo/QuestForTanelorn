@@ -64,7 +64,7 @@ phina.define("qft.MainScene", {
         this.bg.tweener.setUpdateType('fps');
 
         //背景
-        this.backgroundImage = phina.display.Sprite("background").addChildTo(this).setPosition(SC_W*0.5, SC_H*0.5);
+        this.backgroundImage = phina.display.Sprite("background").addChildTo(this).setPosition(0, SC_H*0.5).setOrigin(0, 0.5);
 
         //管理用基準レイヤ
         this.baseLayer = phina.display.DisplayElement().addChildTo(this);
@@ -265,6 +265,9 @@ phina.define("qft.MainScene", {
             //スクリーン座標
             this.screenX = -this.mapLayer.x;
             this.screenY = -this.mapLayer.y;
+
+            //バックグラウンドのX座標を全体の割合から計算
+            this.backgroundImage.x = -Math.floor(this.backgroundImage.width * (this.player.x / map.width)*0.01);
         }
 
         this.time++;
