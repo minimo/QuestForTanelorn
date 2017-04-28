@@ -1,4 +1,4 @@
-/*
+1/*
  *  enemy.slime.js
  *  2016/12/31
  *  @auther minimo  
@@ -61,8 +61,6 @@ phina.define("qft.Enemy.Slime", {
     },
 
     algorithm: function() {
-        if (this.isDead) return;
-
         var look = this.isLookPlayer();
 
         if (this.onFloor) {

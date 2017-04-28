@@ -31,7 +31,7 @@ phina.define("qft.Enemy.Wisp", {
     ignoreCollision: true,
 
     //得点
-    point: 50,
+    point: 100,
 
     //アイテムドロップ率（％）
     dropRate: 10,
@@ -116,7 +116,7 @@ phina.define("qft.Enemy.WispHard", {
     ignoreCollision: true,
 
     //得点
-    point: 50,
+    point: 300,
 
     //アイテムドロップ率（％）
     dropRate: 10,

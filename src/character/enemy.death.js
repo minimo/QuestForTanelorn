@@ -45,8 +45,8 @@ phina.define("qft.Enemy.Death", {
     rareDropItem: ITEM_STONE,
 
     //属性ダメージ倍率
-    damageFire: 0.8,
-    damegeIce: 2,
+    damageFire: 2.0,
+    damegeIce: 0.8,
 
     init: function(parentScene, options) {
         options = (options || {}).$extend({width: 16, height: 16});
