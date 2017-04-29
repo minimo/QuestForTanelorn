@@ -91,9 +91,11 @@ phina.define("qft.Enemy.Devil", {
         if (this.isLookPlayer()) {
             this.speed = 4;
             this.returnTime -= 2;
+            this.flare('balloon', {pattern: "!", lifeSpan: 15, y: 0});
         } else {
             this.speed = 2;
             this.returnTime--;
+            this.flare('balloonerace');
         }
 
         var rad = this.direction.toRadian();
