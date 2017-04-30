@@ -103,8 +103,12 @@ phina.define("qft.Enemy.Devil", {
         this.vy = Math.sin(rad) * this.speed;
 
         //落し物
-        if (this.getDistancePlayer() < 512 && this.time % 90 == this.bombInterval) {
-            this.parentScene.spawnEnemy(this.x, this.y, "BirdBomb", {});
+        if (this.onScreen && this.time % this.attackInterval == 0) {
+            for (var i = 0; i < this.level+4; i++) {
+                var b = this.parentScene.spawnEnemy(this.x, this.y, "WispBomb", {pattern: 0});
+                b.vy = -10;
+                b.vx = (i*2) * this.scaleX;
+            }
         }
 
         //向きの指定
