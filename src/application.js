@@ -43,6 +43,19 @@ phina.define("qft.Application", {
 
         //サウンドセット
         this.soundset = phina.extension.SoundSet();
+
+        //Labelデフォルト設定
+        phina.display.Label.defaults = $extend({
+            fill: "white",
+            stroke: "blue",
+            strokeWidth: 2,
+
+            fontFamily: "Orbitron",
+            align: "center",
+            baseline: "middle",
+            fontSize: 32,
+            fontWeight: ''
+        };
     },
 
     updateController: function() {
