@@ -11,6 +11,7 @@ phina.extension = phina.extension || {};
 //setAlphaを追加
 phina.display.DisplayElement.prototype.setAlpha = function(val) {
     this.alpha = val;
+    return this;
 };
 
 //スプライト機能拡張
