@@ -1,12 +1,12 @@
 /*
- *  enemy.demonhard.js
- *  2017/01/13
+ *  enemy.archdemon.js
+ *  2017/05/01
  *  @auther minimo  
  *  This Program is MIT license.
  */
 
-//デーモン（強)
-phina.define("qft.Enemy.DemonHard", {
+//アークデーモン
+phina.define("qft.Enemy.ArchDemon", {
     superClass: "qft.Enemy",
 
     //ヒットポイント
@@ -22,7 +22,7 @@ phina.define("qft.Enemy.DemonHard", {
     eyesight: 128,
 
     //視野角
-    viewAngle: 90,
+    viewAngle: 180,
 
     //得点
     point: 500,
