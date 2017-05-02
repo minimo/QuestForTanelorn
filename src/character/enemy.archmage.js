@@ -19,7 +19,7 @@ phina.define("qft.Enemy.ArchMage", {
     power: 10,
 
     //視力
-    eyesight: 256,
+    eyesight: 192,
 
     //視野角
     viewAngle: 360,
@@ -40,8 +40,9 @@ phina.define("qft.Enemy.ArchMage", {
         this.superInit(parentScene, options);
 
         //表示用スプライト
+        var lv = Math.min(this.level, 4);
         this.sprite = phina.display.Sprite("monster03", 24, 32).addChildTo(this);
-        this.sprite.setFrameTrimming((this.level % 2) * 144, Math.floor(this.level / 2) * 128, 72, 128);
+        this.sprite.setFrameTrimming((lv % 2) * 144 + 72, Math.floor(lv / 2) * 128, 72, 128);
         this.hp += this.level * 5;
         this.power += this.level * 5;
 
@@ -64,85 +65,53 @@ phina.define("qft.Enemy.ArchMage", {
         var look = this.isLookPlayer();
         var distance = this.getDistancePlayer();
 
-        if (this.onFloor) {
-            //プレイヤーが近くにいたら距離を取る
-            if (this.phase == 0 && look && !this.isJump && distance < 128) {
-                this.flare('balloon', {pattern: "!"});
-                this.phase = 1;
-                this.speed = 3;
-            }
-
-            //逃げるフェーズ
-            if (this.phase == 1) {
-                if (distance < 128) {
-                    if (this.x < player.x) this.direction = 180; else this.direction = 0;
-                    this.speed = 3;
-                } else {
-                    if (this.x < player.x) this.direction = 0; else this.direction = 180;
-                    this.speed = 0;
-                    this.phase = 2;
-                }
-                this.sprite.setFrameTrimming((this.level % 2) * 144, Math.floor(this.level / 2) * 128, 72, 128);
-            }
-
-            //攻撃フェーズ
-            if (this.phase == 2) {
-                if (distance < 96) {
-                    //プレイヤーが近づいたら逃げる
-                    this.phase = 1;
-                } else {
-                    //プレイヤーが遠くにいる場合は攻撃
-                    if (this.time % 15 == 0) this.isAttack = true;
-                }
-            }
-
-            //発狂モード
-            if (this.phase == 3) {
-                if (this.time % 5 == 0) this.isAttack = true;
-            }
-
-            if (this.isAttack) {
-                this.isAttack = false;
-                var b = this.parentScene.spawnEnemy(this.x, this.y, "Bullet", {explode: true});
-                b.rotation = this.getPlayerAngle() + Math.randint(-40, 40);
-                if (this.x < player.x) {
-                    this.diretion = 0;
-                    this.scaleX = 1;
-                } else {
-                    this.direction = 180;
-                    this.scaleX = -1;
-                }
-                this.sprite.setFrameTrimming((this.level % 2) * 144 + 72, Math.floor(this.level / 2) * 128, 72, 128);
-            }
-
-            //これ以上進めない場合は折り返す
-            var cantescape = false;
-            if (this._collision[1].hit || this.checkMapCollision2(this.x+5, this.y+20, 5, 5) == null) {
-                this.direction = 180;
-                if (this.phase == 1) cantescape = true;
-            } else if (this._collision[3].hit || this.checkMapCollision2(this.x-5, this.y+20, 5, 5) == null) {
-                this.direction = 0;
-                if (this.phase == 1) cantescape = true;
-            }
-            //逃げられない場合は発狂モード
-            if (cantescape) {
-                this.phase = 3;
-                this.speed = 0;
-            }
-
-            //プレイヤーが離れたら通常フェーズ
-            if (distance > 128 + 64) {
-                this.sprite.setFrameTrimming((this.level % 2) * 144, Math.floor(this.level / 2) * 128, 72, 128);
-                this.phase = 0;
-                this.speed = 1;
-            }
+        //これ以上進めない場合は折り返す
+        var cantescape = false;
+        if (this._collision[1].hit) {
+            this.direction = 180;
+        } else if (this._collision[3].hit) {
+            this.direction = 0;
         }
 
-        if (this.onFloor || this.isJump) {
+        //通常フェーズでプレイヤーを発見したら警戒フェーズに移る
+        if (this.phase == 0 && look) {
+            this.flare('balloon', {pattern: "!"});
+            this.phase = 1;
+            this.speed = 0;
+        }
+
+        //プレイヤーが離れたら通常フェーズ
+        if (distance > 192 || !look) {
+            this.flare('balloonerace');
+            this.phase = 0;
+            this.speed = 1;
+        }
+
+        //通常
+        if (this.phase == 0) {
             this.vx = this.speed;
             if (this.direction == 180) {
                 this.vx *= -1;
             }
+        } else {
+            if (this.x < player.x) this.direction = 0; else this.direction = 180;
+        }
+
+        //警戒
+        if (this.phase == 1) {
+            if (this.balloon == null) this.flare('balloon', {pattern: "..."});
+            if (distance < 128) this.phase = 2;
+        }
+
+        //攻撃
+        if (this.phase == 2) {
+            if (this.time % 60 == 0) this.isAttack = true;
+        }
+
+        if (this.isAttack) {
+            this.isAttack = false;
+            var b = this.parentScene.spawnEnemy(this.x, this.y, "Bullet", {explode: true});
+            b.rotation = this.getPlayerAngle() + Math.randint(-30, 30);
         }
     },
 
