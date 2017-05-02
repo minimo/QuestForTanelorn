@@ -40,8 +40,9 @@ phina.define("qft.Enemy.Mage", {
         this.superInit(parentScene, options);
 
         //表示用スプライト
+        var lv = Math.min(this.level, 4);
         this.sprite = phina.display.Sprite("monster03", 24, 32).addChildTo(this);
-        this.sprite.setFrameTrimming((this.level % 2) * 144, Math.floor(this.level / 2) * 128, 72, 128);
+        this.sprite.setFrameTrimming((lv % 2) * 144, Math.floor(lv / 2) * 128, 72, 128);
         this.hp += this.level * 5;
         this.power += this.level * 5;
 
@@ -82,7 +83,8 @@ phina.define("qft.Enemy.Mage", {
                     this.speed = 0;
                     this.phase = 2;
                 }
-                this.sprite.setFrameTrimming((this.level % 2) * 144, Math.floor(this.level / 2) * 128, 72, 128);
+                var lv = Math.min(this.level, 4);
+                this.sprite.setFrameTrimming((lv % 2) * 144, Math.floor(lv / 2) * 128, 72, 128);
             }
 
             //攻撃フェーズ
@@ -112,7 +114,8 @@ phina.define("qft.Enemy.Mage", {
                     this.direction = 180;
                     this.scaleX = -1;
                 }
-                this.sprite.setFrameTrimming((this.level % 2) * 144 + 72, Math.floor(this.level / 2) * 128, 72, 128);
+                var lv = Math.min(this.level, 4);
+                this.sprite.setFrameTrimming((lv % 2) * 144 + 72, Math.floor(lv / 2) * 128, 72, 128);
             }
 
             //これ以上進めない場合は折り返す
@@ -132,7 +135,8 @@ phina.define("qft.Enemy.Mage", {
 
             //プレイヤーが離れたら通常フェーズ
             if (distance > 128 + 64) {
-                this.sprite.setFrameTrimming((this.level % 2) * 144, Math.floor(this.level / 2) * 128, 72, 128);
+                var lv = Math.min(this.level, 4);
+                this.sprite.setFrameTrimming((lv % 2) * 144, Math.floor(lv / 2) * 128, 72, 128);
                 this.phase = 0;
                 this.speed = 1;
             }
