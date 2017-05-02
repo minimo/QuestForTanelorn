@@ -115,16 +115,16 @@ phina.define("qft.ItemBox", {
         }
     },
 
-    setupAnimation: function(options) {
+    setupAnimation: function() {
         this.spcialAnimation = false;
         this.frame = [];
-        if (options.color == "gold") {
+        if (this.options.color == "gold") {
             this.frame["close"] = [2];
             this.frame["open"] = [2, 6, 8, "stop"];
-        } else if (options.color == "red") {
+        } else if (this.options.color == "red") {
             this.frame["close"] = [1];
             this.frame["open"] = [1, 4, 7, "stop"];
-        } else if (options.color == "blue") {
+        } else if (this.options.color == "blue") {
             this.frame["close"] = [0];
             this.frame["open"] = [0, 3, 6, "stop"];
         } else {

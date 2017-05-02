@@ -94,7 +94,7 @@ phina.define("qft.Character", {
         this.boundingType = "rect";
         this.tweener.setUpdateType('fps');
 
-        this.$extend(options);
+        this.options = options || {};
         this.setupAnimation();
 
         //当り判定用（0:上 1:右 2:下 3:左）
