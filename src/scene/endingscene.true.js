@@ -38,7 +38,6 @@ phina.define("qft.EndingScene.true", {
         var ct = app.controller;
         if (this.time > 120) {
             if (ct.ok || ct.cancel) {
-                app.playBGM("openingbgm");
                 this.parentScene.flare('exitgame');
                 this.exit();
             }
