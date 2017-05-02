@@ -33,7 +33,7 @@ phina.define("qft.Enemy.Bullet", {
     power: 10,
 
     //地形無視
-    ignoreCollision: true,
+    ignoreCollision: false,
 
     //得点
     point: 0,
@@ -49,6 +49,7 @@ phina.define("qft.Enemy.Bullet", {
         this.sprite = phina.display.Sprite("bullet", 24, 32).addChildTo(this).setFrameIndex(9);
         this.advanceTime = 3;
 
+        this.explode = options.explode || true;
         this.pattern = options.pattern || "pattern1";
         this.setAnimation(this.pattern);
 
@@ -67,6 +68,13 @@ phina.define("qft.Enemy.Bullet", {
         this.velocity *= this.accel;
         if (this.vx > 1) this.sprite.scaleX = 1; else this.sprite.scaleX = -1;
         if (this.time > this.lifespan) this.remove();
+
+        if (!this.ignoreCollision) {
+            if (this._collision[0].hit ||
+                this._collision[1].hit ||
+                this._collision[2].hit ||
+                this._collision[3].hit) this.flare('dead');
+        }
     },
 
     setupAnimation: function() {

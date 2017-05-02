@@ -27,6 +27,9 @@ phina.define("qft.Enemy.ArchMage", {
     //得点
     point: 100,
 
+    //重力加速度
+    gravity: 0,
+
     //アイテムドロップ率（％）
     dropRate: 30,
     dropItem: ITEM_COIN,
@@ -94,24 +97,44 @@ phina.define("qft.Enemy.ArchMage", {
                 this.vx *= -1;
             }
         } else {
-            if (this.x < player.x) this.direction = 0; else this.direction = 180;
+            if (this.x < player.x) {
+                this.scaleX = 1;
+                this.direction = 0;
+            } else {
+                this.scaleX = -1;
+                this.direction = 180;
+            }
         }
 
         //警戒
         if (this.phase == 1) {
-            if (this.balloon == null) this.flare('balloon', {pattern: "..."});
+            if (this.balloon == null) this.flare('balloon', {pattern: "...", animationInterval : 15});
             if (distance < 128) this.phase = 2;
         }
 
         //攻撃
         if (this.phase == 2) {
+            this.flare('balloonerace');
+            if (this.time % 30 == 0) this.isAttack = true;
+            if (distance < 92) this.phase = 3;
+        }
+        if (this.phase == 3) {
+            this.flare('balloonerace');
             if (this.time % 60 == 0) this.isAttack = true;
         }
 
         if (this.isAttack) {
             this.isAttack = false;
-            var b = this.parentScene.spawnEnemy(this.x, this.y, "Bullet", {explode: true});
-            b.rotation = this.getPlayerAngle() + Math.randint(-30, 30);
+            if (this.phase == 2) {
+                var b = this.parentScene.spawnEnemy(this.x, this.y, "Bullet", {explode: true});
+                b.rotation = this.getPlayerAngle() + Math.randint(-30, 30);
+            }
+            if (this.phase == 3) {
+                for (var i = 0; i < 4; i++) {
+                    var b = this.parentScene.spawnEnemy(this.x, this.y, "Bullet", {explode: true});
+                    b.rotation = this.getPlayerAngle() + Math.randint(-60, 60);
+                }
+            }
         }
     },
 
