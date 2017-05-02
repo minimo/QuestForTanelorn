@@ -93,7 +93,9 @@ phina.define("qft.Character", {
         this.parentScene = parentScene;
         this.boundingType = "rect";
         this.tweener.setUpdateType('fps');
-        this.setupAnimation(options);
+
+        this.$extend(options);
+        this.setupAnimation();
 
         //当り判定用（0:上 1:右 2:下 3:左）
         var w = Math.floor(this.width/4);
@@ -472,7 +474,7 @@ phina.define("qft.Character", {
         return this;
     },
 
-    setupAnimation: function(options) {
+    setupAnimation: function() {
         this.spcialAnimation = false;
         this.frame = [];
         this.frame["stand"] = [13, 14];

@@ -33,7 +33,7 @@ phina.define("qft.Enemy.Bullet", {
     power: 10,
 
     //地形無視
-    ignoreCollision: false,
+    ignoreCollision: true,
 
     //得点
     point: 0,
