@@ -45,7 +45,7 @@ phina.define("qft.Application", {
         this.soundset = phina.extension.SoundSet();
 
         //Labelデフォルト設定
-        phina.display.Label.defaults = $extend({
+        phina.display.Label.defaults.$extend({
             fill: "white",
             stroke: "blue",
             strokeWidth: 2,
@@ -55,7 +55,7 @@ phina.define("qft.Application", {
             baseline: "middle",
             fontSize: 32,
             fontWeight: ''
-        };
+        });
     },
 
     updateController: function() {
