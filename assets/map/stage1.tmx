@@ -594,6 +594,5 @@
    </properties>
   </object>
   <object id="241" name="spear" type="itembox" x="2044" y="572" width="32" height="32"/>
-  <object id="242" name="Devil" type="enemy" x="672" y="928" width="32" height="32"/>
  </objectgroup>
 </map>
