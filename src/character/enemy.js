@@ -46,6 +46,8 @@ phina.define("qft.Enemy", {
     damageArrow: 1,
     damageFire: 1,
     damageIce: 1,
+    damageHoly: 1,
+    damageDark: 1,
 
     //アイテムドロップ率（％）
     dropRate: 0,
@@ -141,6 +143,8 @@ phina.define("qft.Enemy", {
         if (target.isArrow) power *= this.damageArrow;
         if (target.isFire) power *= this.damageFire;
         if (target.isIce) power *= this.damageIce;
+        if (target.isHoly) power *= this.damageHoly;
+        if (target.isDark) power *= this.damageDark;
         power = Math.floor(power);
         this.knockback(power, dir);
         this.mutekiTime = 10;

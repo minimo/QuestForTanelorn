@@ -235,6 +235,7 @@ phina.define("qft.ItemInfo", {
                         type: "book",
                         isWeapon: true,
                         isBrow: true,
+                        isHoly: true,
                         power: 10,
                         stunPower: 40,
                         collision: {
