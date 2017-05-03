@@ -512,7 +512,7 @@
   <object id="34" name="longsword" type="itembox" x="431" y="911" width="32" height="32"/>
   <object id="40" name="ax" type="itembox" x="1104" y="832" width="32" height="32"/>
   <object id="41" name="clear" type="door" x="6054" y="784" width="36" height="128"/>
-  <object id="81" name="longsword" type="itembox" x="2144" y="572" width="32" height="32"/>
+  <object id="81" name="apple" type="itembox" x="2144" y="572" width="32" height="32"/>
   <object id="107" name="Slime" type="enemy" x="2076" y="928" width="32" height="32"/>
   <object id="108" name="Slime" type="enemy" x="2240" y="572" width="32" height="32"/>
   <object id="109" name="Wisp" type="enemy" x="3359" y="784" width="32" height="32"/>
@@ -555,11 +555,7 @@
     <property name="color" value="gold"/>
    </properties>
   </object>
-  <object id="177" name="food" type="itembox" x="4816" y="528" width="32" height="32">
-   <properties>
-    <property name="level" type="int" value="1"/>
-   </properties>
-  </object>
+  <object id="177" name="harb" type="itembox" x="4816" y="528" width="32" height="32"/>
   <object id="180" name="Snake" type="enemy" x="4688" y="608" width="32" height="32"/>
   <object id="181" name="Slime" type="enemy" x="4672" y="432" width="32" height="32"/>
   <object id="193" name="up" type="check" x="1360" y="945" width="32" height="32"/>
@@ -581,17 +577,9 @@
   <object id="216" name="Bird" type="enemy" x="2092" y="500" width="32" height="32"/>
   <object id="217" name="Bird" type="enemy" x="2380" y="584" width="32" height="32"/>
   <object id="218" name="Bird" type="enemy" x="4312" y="784" width="32" height="32"/>
-  <object id="230" name="food" type="itembox" x="2560" y="216" width="32" height="32">
-   <properties>
-    <property name="level" type="int" value="0"/>
-   </properties>
-  </object>
+  <object id="230" name="apple" type="itembox" x="2560" y="216" width="32" height="32"/>
   <object id="231" name="Slime" type="enemy" x="2608" y="232" width="32" height="32"/>
-  <object id="236" name="item" type="itembox" x="1128" y="1024" width="32" height="32">
-   <properties>
-    <property name="kind" type="int" value="17"/>
-   </properties>
-  </object>
+  <object id="236" name="coin" type="itembox" x="1128" y="1024" width="32" height="32"/>
   <object id="241" name="spear" type="itembox" x="2044" y="572" width="32" height="32"/>
  </objectgroup>
 </map>

@@ -386,7 +386,7 @@
     <property name="level" type="int" value="1"/>
    </properties>
   </object>
-  <object id="173" name="food" type="itembox" x="40" y="807" width="32" height="32">
+  <object id="173" name="potion" type="itembox" x="40" y="807" width="32" height="32">
    <properties>
     <property name="level" type="int" value="3"/>
    </properties>
@@ -395,11 +395,7 @@
   <object id="175" name="ax" type="itembox" x="1104" y="367" width="32" height="32"/>
   <object id="176" name="Slime" type="enemy" x="1220" y="883" width="32" height="32"/>
   <object id="177" name="Snake" type="enemy" x="2168" y="795" width="32" height="32"/>
-  <object id="178" name="food" type="itembox" x="892" y="415" width="32" height="32">
-   <properties>
-    <property name="level" type="int" value="3"/>
-   </properties>
-  </object>
+  <object id="178" name="potion" type="itembox" x="892" y="415" width="32" height="32"/>
   <object id="179" name="bonfire" type="accessory" x="1648" y="1079" width="24" height="32">
    <properties>
     <property name="level" type="int" value="1"/>
@@ -432,9 +428,8 @@
     <property name="text" value="↑宝物庫　→砦"/>
    </properties>
   </object>
-  <object id="186" name="longsword" type="itembox" x="928" y="911" width="32" height="32"/>
   <object id="187" name="Slime" type="enemy" x="2012" y="1115" width="32" height="32"/>
-  <object id="188" name="food" type="itembox" x="1560" y="1083" width="32" height="32">
+  <object id="188" name="potion" type="itembox" x="1560" y="1083" width="32" height="32">
    <properties>
     <property name="level" type="int" value="3"/>
    </properties>
@@ -456,7 +451,7 @@
     <property name="nextID" type="int" value="183"/>
    </properties>
   </object>
-  <object id="196" name="food" type="itembox" x="2800" y="176" width="32" height="32">
+  <object id="196" name="meat" type="itembox" x="2800" y="176" width="32" height="32">
    <properties>
     <property name="level" type="int" value="2"/>
    </properties>
@@ -466,7 +461,7 @@
     <property name="color" value="red"/>
    </properties>
   </object>
-  <object id="198" name="longsword" type="itembox" x="2928" y="176" width="32" height="32">
+  <object id="198" name="jewel" type="itembox" x="2928" y="176" width="32" height="32">
    <properties>
     <property name="color" value="red"/>
    </properties>

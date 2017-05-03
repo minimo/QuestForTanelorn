@@ -251,11 +251,7 @@
     <property name="visible" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="9" name="food" type="itembox" x="400" y="224" width="32" height="32">
-   <properties>
-    <property name="level" type="int" value="2"/>
-   </properties>
-  </object>
+  <object id="9" name="meat" type="itembox" x="400" y="224" width="32" height="32"/>
   <object id="10" name="Snake" type="enemy" x="524" y="216" width="32" height="32"/>
   <object id="11" name="Snake" type="enemy" x="644" y="220" width="32" height="32"/>
   <object id="12" name="Snake" type="enemy" x="260" y="212" width="32" height="32"/>

@@ -818,11 +818,7 @@
   <object id="141" name="Snake" type="enemy" x="632" y="932" width="32" height="32"/>
   <object id="142" name="Demon" type="enemy" x="508" y="956" width="32" height="32"/>
   <object id="144" name="Demon" type="enemy" x="112" y="268" width="32" height="32"/>
-  <object id="145" name="food" type="itembox" x="272" y="2864" width="32" height="32">
-   <properties>
-    <property name="level" type="int" value="3"/>
-   </properties>
-  </object>
+  <object id="145" name="potion" type="itembox" x="272" y="2864" width="32" height="32"/>
   <object id="146" name="Bird" type="enemy" x="588" y="1552" width="32" height="32"/>
   <object id="147" name="food" type="itembox" x="48" y="268" width="32" height="32">
    <properties>
@@ -1140,25 +1136,21 @@
    </properties>
   </object>
   <object id="239" name="rod" type="itembox" x="108" y="956" width="32" height="32"/>
-  <object id="244" name="item" type="itembox" x="352" y="288" width="32" height="32">
+  <object id="244" name="jewel" type="itembox" x="352" y="288" width="32" height="32">
    <properties>
     <property name="kind" type="int" value="21"/>
    </properties>
   </object>
-  <object id="245" name="item" type="itembox" x="384" y="288" width="32" height="32">
+  <object id="245" name="jewel" type="itembox" x="384" y="288" width="32" height="32">
    <properties>
     <property name="kind" type="int" value="20"/>
    </properties>
   </object>
-  <object id="246" name="item" type="itembox" x="416" y="288" width="32" height="32">
+  <object id="246" name="jewel" type="itembox" x="416" y="288" width="32" height="32">
    <properties>
     <property name="kind" type="int" value="18"/>
    </properties>
   </object>
-  <object id="247" name="food" type="itembox" x="660" y="2040" width="32" height="32">
-   <properties>
-    <property name="level" type="int" value="2"/>
-   </properties>
-  </object>
+  <object id="247" name="meat" type="itembox" x="660" y="2040" width="32" height="32"/>
  </objectgroup>
 </map>
