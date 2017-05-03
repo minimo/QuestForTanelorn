@@ -151,6 +151,7 @@ phina.define("qft.ItemInfo", {
     _static: {
         get: function(kind) {
             switch (kind) {
+                case "shortsword":
                 case ITEM_SHORTSWORD:
                     return {
                         name: "SHORT SWORD",
@@ -163,6 +164,7 @@ phina.define("qft.ItemInfo", {
                             height: 30
                         }
                     };
+                case "longsword":
                 case ITEM_LONGSWORD:
                     return {
                         name: "LONG SWORD",
@@ -176,6 +178,7 @@ phina.define("qft.ItemInfo", {
                             height: 25
                         }
                     };
+                case "ax":
                 case ITEM_AX:
                     return {
                         name: "AX",
@@ -190,6 +193,7 @@ phina.define("qft.ItemInfo", {
                             height: 26
                         }
                     };
+                case "spear":
                 case ITEM_SPEAR:
                     return {
                         name: "SPEAR",
@@ -202,6 +206,7 @@ phina.define("qft.ItemInfo", {
                             height: 10
                         }
                     };
+                case "bow":
                 case ITEM_BOW:
                     return {
                         name: "BOW",
@@ -215,6 +220,7 @@ phina.define("qft.ItemInfo", {
                             height: 10
                         }
                     };
+                case "rod":
                 case ITEM_ROD:
                     return {
                         name: "MAGIC ROD",
@@ -229,6 +235,7 @@ phina.define("qft.ItemInfo", {
                             height: 10
                         }
                     };
+                case "book":
                 case ITEM_BOOK:
                     return {
                         name: "BOOK",
@@ -243,42 +250,49 @@ phina.define("qft.ItemInfo", {
                             height: 20
                         }
                     };
+                case "shield":
                 case ITEM_SHIELD:
                     return {
                         name: "SHIELD",
                         type: "equip",
                         isEquip: true,
                     };
+                case "armor":
                 case ITEM_ARMOR:
                     return {
                         name: "ARMOR",
                         type: "equip",
                         isEquip: true,
                     };
+                case "hat":
                 case ITEM_HAT:
                     return {
                         name: "HAT",
                         type: "equip",
                         isEquip: true,
                     };
+                case "boots":
                 case ITEM_BOOTS:
                     return {
                         name: "BOOTS",
                         type: "equip",
                         isEquip: true,
                     };
+                case "grove":
                 case ITEM_GROVE:
                     return {
                         name: "GROVE",
                         type: "equip",
                         isEquip: true,
                     };
+                case "ring":
                 case ITEM_RING:
                     return {
                         name: "RING",
                         type: "equip",
                         isEquip: true,
                     };
+                case "scroll":
                 case ITEM_SCROLL:
                     return {
                         name: "SCROLL",
@@ -286,6 +300,7 @@ phina.define("qft.ItemInfo", {
                         isItem: true,
                         point: 1000,
                     };
+                case "letter":
                 case ITEM_LETTER:
                     return {
                         name: "LETTER",
@@ -293,6 +308,7 @@ phina.define("qft.ItemInfo", {
                         isItem: true,
                         point: 100,
                     };
+                case "card":
                 case ITEM_CARD:
                     return {
                         name: "CARD",
@@ -300,6 +316,7 @@ phina.define("qft.ItemInfo", {
                         isItem: true,
                         point: 1000,
                     };
+                case "key":
                 case ITEM_KEY:
                     return {
                         name: "KEY",
@@ -307,6 +324,7 @@ phina.define("qft.ItemInfo", {
                         isKey: true,
                         point: 2000,
                     };
+                case "coin":
                 case ITEM_COIN:
                     return {
                         name: "COIN",
@@ -314,6 +332,7 @@ phina.define("qft.ItemInfo", {
                         isItem: true,
                         point: 500,
                     };
+                case "bag":
                 case ITEM_BAG:
                     return {
                         name: "BAG",
@@ -321,6 +340,7 @@ phina.define("qft.ItemInfo", {
                         isItem: true,
                         point: 1000,
                     };
+                case "orb":
                 case ITEM_ORB:
                     return {
                         name: "ORB",
@@ -328,6 +348,7 @@ phina.define("qft.ItemInfo", {
                         isItem: true,
                         point: 5000,
                     };
+                case "stone":
                 case ITEM_STONE:
                     return {
                         name: "STONE",
@@ -335,6 +356,7 @@ phina.define("qft.ItemInfo", {
                         isItem: true,
                         point: 2000,
                     };
+                case "jewel":
                 case ITEM_JEWEL:
                     return {
                         name: "JEWEL",
@@ -342,6 +364,7 @@ phina.define("qft.ItemInfo", {
                         isItem: true,
                         point: 5000,
                     };
+                case "jewelbox":
                 case ITEM_JEWELBOX:
                     return {
                         name: "JEWELBOX",
@@ -349,6 +372,7 @@ phina.define("qft.ItemInfo", {
                         isItem: true,
                         point: 10000,
                     };
+                case "meat":
                 case ITEM_MEAT:
                     return {
                         name: "MEAT",
@@ -356,6 +380,7 @@ phina.define("qft.ItemInfo", {
                         isFood: true,
                         power: 30,
                     };
+                case "apple":
                 case ITEM_APPLE:
                     return {
                         name: "APPLE",
@@ -363,6 +388,7 @@ phina.define("qft.ItemInfo", {
                         isFood: true,
                         power: 20,
                     };
+                case "harb":
                 case ITEM_HARB:
                     return {
                         name: "HARB",
@@ -370,6 +396,7 @@ phina.define("qft.ItemInfo", {
                         isFood: true,
                         power: 50,
                     };
+                case "potion":
                 case ITEM_POTION:
                     return {
                         name: "POTION",
