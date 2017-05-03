@@ -81,7 +81,7 @@ phina.define("qft.Item", {
                     this.kind = ITEM_KEY;
                     break;
                 case "food":
-                    this.kind = ITEM_MEAT + this.level;
+                    this.kind = ITEM_APPLE + this.level;
                     break;
                 default:
                     this.kind = 0;
@@ -372,14 +372,6 @@ phina.define("qft.ItemInfo", {
                         isItem: true,
                         point: 10000,
                     };
-                case "meat":
-                case ITEM_MEAT:
-                    return {
-                        name: "MEAT",
-                        type: "food",
-                        isFood: true,
-                        power: 30,
-                    };
                 case "apple":
                 case ITEM_APPLE:
                     return {
@@ -394,7 +386,15 @@ phina.define("qft.ItemInfo", {
                         name: "HARB",
                         type: "food",
                         isFood: true,
-                        power: 50,
+                        power: 40,
+                    };
+                case "meat":
+                case ITEM_MEAT:
+                    return {
+                        name: "MEAT",
+                        type: "food",
+                        isFood: true,
+                        power: 70,
                     };
                 case "potion":
                 case ITEM_POTION:
