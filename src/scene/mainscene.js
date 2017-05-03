@@ -431,6 +431,10 @@ phina.define("qft.MainScene", {
                 this.stageController = qft.Stage4(this);
                 this.switchMap(this.stageController.mapLayer[0]);
                 break;
+            case 999:
+                this.stageController = qft.Stage999(this);
+                this.switchMap(this.stageController.mapLayer[0]);
+                break;
         };
 
         //ステージクリアフラグクリア

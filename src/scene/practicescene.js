@@ -34,7 +34,7 @@ phina.define("qft.ConfigScene_Practice", {
 
         //メニューテキスト表示
         var that = this;
-        this.menu = ["1", "2", "3", "4", "5", "6", "7"];
+        this.menu = ["1", "2", "3", "4", "5", "6", "P"];
         this.menuText = [];
         for (var i = 0; i < this.menu.length; i++) {
             this.menuText[i] = phina.display.Label({text: this.menu[i], fontSize: 40}.$safe(labelParam))
@@ -156,7 +156,11 @@ phina.define("qft.ConfigScene_Practice", {
                     if (this.select == 0) {
                         app.pushScene(qft.MainScene({startStage: 1, isPractice: true}));
                     } else {
-                        app.pushScene(qft.SceneFlow_Practice({stageNumber: this.select+1}));
+                        if (this.select == 6) {
+                            app.pushScene(qft.MainScene({startStage: 999, isPractice: true}));
+                        } else {
+                            app.pushScene(qft.SceneFlow_Practice({stageNumber: this.select+1}));
+                        }
                     }
                     app.stopBGM();
                 }
