@@ -54,38 +54,11 @@ phina.define("qft.Item", {
 
         //アイテム種別
         if (this.kind == null) {
-            //アイテム名から判定
-            switch (options.name) {
-                case "shortsword":
-                    this.kind = ITEM_SHORTSWORD;
-                    break;
-                case "longsword":
-                    this.kind = ITEM_LONGSWORD;
-                    break;
-                case "ax":
-                    this.kind = ITEM_AX;
-                    break;
-                case "spear":
-                    this.kind = ITEM_SPEAR;
-                    break;
-                case "bow":
-                    this.kind = ITEM_BOW;
-                    break;
-                case "rod":
-                    this.kind = ITEM_ROD;
-                    break;
-                case "book":
-                    this.kind = ITEM_BOOK;
-                    break;
-                case "key":
-                    this.kind = ITEM_KEY;
-                    break;
-                case "food":
-                    this.kind = ITEM_APPLE + this.level;
-                    break;
-                default:
-                    this.kind = 0;
-                    break;
+            if (options.name == "food") {
+                this.kind = ITEM_APPLE + this.level;
+            } else {
+                var name = "ITEM_"+options.name.toUpperCase();
+                this.kind = eval(name);
             }
         }
 
