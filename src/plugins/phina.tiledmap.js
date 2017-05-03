@@ -281,6 +281,9 @@ phina.define("phina.asset.TiledMap", {
     _setMapChip: function(canvas, index, x, y, opacity) {
         //タイルセットからマップチップを取得
         var chip = this.tilesets.chips[index];
+        if (!chip) {
+            return;
+        }
         var image = phina.asset.AssetManager.get('image', chip.image);
         if (!image) {
             console.log(chip.image);
