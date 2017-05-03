@@ -71,6 +71,7 @@ phina.define("qft.Player", {
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("player1", 32, 32).addChildTo(this).setFrameIndex(0);
+        this.sprite.scaleX = -1;
 
         //武器用スプライト
         this.weapon = phina.display.Sprite("weapons", 24, 24)
