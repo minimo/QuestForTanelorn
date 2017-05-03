@@ -445,7 +445,7 @@
   </object>
   <object id="214" name="food" type="itembox" x="2329" y="359" width="32" height="32">
    <properties>
-    <property name="level" type="int" value="2"/>
+    <property name="level" type="int" value="3"/>
    </properties>
   </object>
   <object id="215" name="Slime" type="enemy" x="2117" y="719" width="32" height="32">

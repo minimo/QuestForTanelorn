@@ -557,19 +557,18 @@
   </object>
   <object id="177" name="food" type="itembox" x="4816" y="528" width="32" height="32">
    <properties>
-    <property name="level" type="int" value="2"/>
+    <property name="level" type="int" value="1"/>
    </properties>
   </object>
   <object id="180" name="Snake" type="enemy" x="4688" y="608" width="32" height="32"/>
   <object id="181" name="Slime" type="enemy" x="4672" y="432" width="32" height="32"/>
   <object id="193" name="up" type="check" x="1360" y="945" width="32" height="32"/>
-  <object id="196" name="rod" type="itembox" x="368" y="752" width="32" height="32"/>
+  <object id="196" name="item" type="itembox" x="368" y="752" width="32" height="32"/>
   <object id="201" name="Slime" type="enemy" x="4752" y="588" width="32" height="32"/>
   <object id="202" name="Slime" type="enemy" x="3180" y="596" width="32" height="32"/>
   <object id="203" name="Slime" type="enemy" x="3064" y="552" width="32" height="32"/>
   <object id="204" name="Slime" type="enemy" x="2700" y="944" width="32" height="32"/>
   <object id="205" name="Slime" type="enemy" x="940" y="1008" width="32" height="32"/>
-  <object id="207" name="Snake" type="enemy" x="3272" y="216" width="32" height="32"/>
   <object id="208" name="Snake" type="enemy" x="3988" y="964" width="32" height="32"/>
   <object id="209" name="Snake" type="enemy" x="4344" y="416" width="32" height="32"/>
   <object id="210" type="message" x="1312" y="960" width="32" height="32">
@@ -584,7 +583,7 @@
   <object id="218" name="Bird" type="enemy" x="4312" y="784" width="32" height="32"/>
   <object id="230" name="food" type="itembox" x="2560" y="216" width="32" height="32">
    <properties>
-    <property name="level" type="int" value="1"/>
+    <property name="level" type="int" value="0"/>
    </properties>
   </object>
   <object id="231" name="Slime" type="enemy" x="2608" y="232" width="32" height="32"/>
