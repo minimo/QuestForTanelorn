@@ -52,8 +52,10 @@ phina.define("qft.Enemy.ArchDemon", {
         this.advanceTime = 6;
         this.setupLifeGauge();
 
-        this.direction = 0;
+        this.phase = 0;
+        this.isAttack = false;
         this.stopTime = 0;
+        this.direction = 0;
 
         this.on('damaged', e => {
             if (e.direction == 0) this.direction = 180; else this.direction = 0;
@@ -82,11 +84,10 @@ phina.define("qft.Enemy.ArchDemon", {
 
             //プレイヤーが近くにいたら攻撃
             if (look && !this.isJump && dis > 64 && dis < this.eyesight && this.stopTime == 0) {
-                //火を吐く
-                var b = this.parentScene.spawnEnemy(this.x, this.y, "Bullet", {explode: true});
-                b.rotation = this.getPlayerAngle();
+                this.isAttack = true;
                 this.stopTime = 60;
             }
+
             if (look && !this.isJump && dis < 64 && this.stopTime == 0) {
                 //飛びかかる
                 this.isJump = true;
@@ -101,40 +102,39 @@ phina.define("qft.Enemy.ArchDemon", {
             //飛行モード移行
             if (!this.isJump && this.time % 300 == 0) {
                 this.flying = true;
-                this.flyingPhase = 0;
                 this.flyingX = Math.floor(this.x);
                 this.vx = 0;
                 this.tweener.clear()
                     .by({y: -64}, 60, "easeSineOut")
                     .wait(15)
                     .call(function(){
-                        this.flyingPhase = 1;
+                        this.phase = 1;
                     }.bind(this));
             }
         }
-        if (!this.flying) {
-            if (this.onFloor || this.isJump) {
-                if (this.direction == 0) {
-                    this.vx = 1;
-                } else {
-                    this.vx = -1;
-                }
-            }
-        } else {
-            if (this.flyingPhase == 1) {
-                this.vx = 1;
-                this.vy = -0.9 + Math.sin(this.time.toRad())*2;
-            }
+
+        //飛びます飛びます
+        if (this.flying) {
+            this.vy = Math.sin(this.time.toRadian()*6);
         }
+
+        //プレイヤーを発見したらバルーンを出したり消したり
         if (look) {
             this.vx *= 3;
             this.flare('balloon', {pattern: "!"});
         } else {
-            if (dis < 256) {
+            if (dis < 128) {
                 this.flare('balloon', {pattern: "?"});
             } else {
                 this.flare('balloonerace');
             }
+        }
+
+        //攻撃するよ
+        if (this.isAttack) {
+            this.isAttack = false;
+            var b = this.parentScene.spawnEnemy(this.x, this.y, "Bullet", {explode: true});
+            b.rotation = this.getPlayerAngle();
         }
 
         this.stopTime--;
