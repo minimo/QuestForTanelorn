@@ -10,7 +10,7 @@ phina.define("qft.Enemy.Knight", {
     superClass: "qft.Enemy",
 
     //ヒットポイント
-    hp: 150,
+    hp: 70,
 
     //防御力
     deffence: 10,
@@ -27,6 +27,9 @@ phina.define("qft.Enemy.Knight", {
     //得点
     point: 1000,
 
+    //使用武器
+    weapon: "sword",
+
     //アイテムドロップ率（％）
     dropRate: 7,
     dropItem: ITEM_JEWEL,
@@ -39,14 +42,20 @@ phina.define("qft.Enemy.Knight", {
         options = (options || {}).$extend({width: 20, height: 20});
         this.superInit(parentScene, options);
 
+        var index = 1;
+        if (options.weapon == "spear") {
+            index = 3;
+            this.weapon = "spear";
+        }
+
         //武器スプライト
         this.weapon = phina.display.Sprite("item", 24, 24)
             .addChildTo(this)
-            .setFrameIndex(1)
-            .setAlpha(0)
+            .setFrameIndex(index)
             .setOrigin(1, 1)
-            .setPosition(0, 4)
-            .setScale(-1, 1);
+            .setPosition(-2, 2)
+            .setScale(-1, 1)
+            .setRotation(430);
         this.weapon.tweener.setUpdateType('fps');
 
         //表示用スプライト
@@ -84,22 +93,7 @@ phina.define("qft.Enemy.Knight", {
 
             //攻撃
             if (look && !this.isJump && dis < 40 && this.stopTime == 0 && !this.isAttack) {
-                var that = this;
-                var atk = qft.EnemyAttack(this.parentScene, {width:24, height: 24, power: 30})
-                    .addChildTo(this.parentScene.enemyLayer)
-                    .setPosition(this.x+this.scaleX*24, this.y-8)
-                    .setAlpha(0.0);
-                if (DEBUG_COLLISION) atk.setAlpha(0.5);
-                this.weapon.tweener.clear()
-                    .set({rotation: 270, alpha: 1.0})
-                    .to({rotation: 430}, 6)
-                    .fadeOut(1)
-                    .call(function() {
-                        that.isAttack = false;
-                        atk.remove();
-                    });
-                this.isAttack = true;
-                this.stopTime = 30;
+                this.attack();
             }
         }
 
@@ -132,6 +126,24 @@ phina.define("qft.Enemy.Knight", {
         if (this.stopTime < 0) this.stopTime = 0;
         this.forgotTime--;
         if (this.forgotTime < 0) this.stopTime = 0;
+    },
+
+    attack: function() {
+        var that = this;
+        var atk = qft.EnemyAttack(this.parentScene, {width:24, height: 24, power: 30})
+            .addChildTo(this.parentScene.enemyLayer)
+            .setPosition(this.x+this.scaleX*18, this.y)
+            .setAlpha(0.0);
+        if (DEBUG_COLLISION) atk.setAlpha(0.3);
+        this.weapon.tweener.clear()
+            .set({rotation: 270, alpha: 1.0})
+            .to({rotation: 430}, 6)
+            .call(function() {
+                that.isAttack = false;
+                atk.remove();
+            });
+        this.isAttack = true;
+        this.stopTime = 30;
     },
 
     setupAnimation: function() {
