@@ -113,15 +113,7 @@
    </properties>
   </object>
   <object id="8" name="ArchDemon" type="enemy" x="332" y="136" width="32" height="32"/>
-  <object id="9" name="Knight" type="enemy" x="744" y="120" width="32" height="32">
-   <properties>
-    <property name="weapon" value="spear"/>
-   </properties>
-  </object>
-  <object id="10" name="Knight" type="enemy" x="248" y="160" width="32" height="32">
-   <properties>
-    <property name="weapon" value="ax"/>
-   </properties>
-  </object>
+  <object id="9" name="Knight" type="enemy" x="904" y="136" width="32" height="32"/>
+  <object id="10" name="Death" type="enemy" x="624" y="128" width="32" height="32"/>
  </objectgroup>
 </map>
