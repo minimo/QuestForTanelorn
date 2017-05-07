@@ -16,10 +16,10 @@ phina.define("qft.Enemy.Knight", {
     deffence: 10,
 
     //攻撃力
-    power: 30,
+    power: 10,
 
     //視力
-    eyesight: 96,
+    eyesight: 128,
 
     //視野角
     viewAngle: 90,
@@ -58,6 +58,7 @@ phina.define("qft.Enemy.Knight", {
 
         this.direction = 0;
         this.stopTime = 0;
+        this.forgotTime = 0;
         this.isAttack = false;
 
         this.on('damaged', e => {
@@ -67,6 +68,7 @@ phina.define("qft.Enemy.Knight", {
 
     algorithm: function() {
         //プレイヤーとの距離
+        var pl = this.parentScene.player;
         var dis = this.getDistancePlayer();
         var look = this.isLookPlayer();
 
@@ -79,19 +81,42 @@ phina.define("qft.Enemy.Knight", {
             }
 
             //攻撃
-            if (look && !this.isJump && dis < 48 && this.stopTime == 0 && !this.isAttack) {
+            if (look && !this.isJump && dis < 40 && this.stopTime == 0 && !this.isAttack) {
                 var that = this;
+                var atk = qft.EnemyAttack(this.parentScene, {width:24, height: 24, power: 30})
+                    .addChildTo(this.parentScene.enemyLayer)
+                    .setPosition(this.x+this.scaleX*24, this.y-8)
+                    .setAlpha(0.0);
+                if (DEBUG_COLLISION) atk.setAlpha(0.5);
                 this.weapon.tweener.clear()
                     .set({rotation: 270, alpha: 1.0})
                     .to({rotation: 430}, 6)
                     .fadeOut(1)
                     .call(function() {
                         that.isAttack = false;
+                        atk.remove();
                     });
                 this.isAttack = true;
                 this.stopTime = 30;
             }
         }
+
+        if (look) {
+            this.forgotTime = 120;
+            this.vx *= 3;
+            this.flare('balloon', {pattern: "!"});
+        } else {
+            this.flare('balloonerace');
+        }
+
+        //プレイヤー発見後一定時間追跡する
+        if (this.forgotTime > 0) {
+            if (this.x > pl.x) {
+                this.direction = 180;
+            } else {
+                this.direction = 0;
+            }
+       }
 
         if (this.onFloor || this.isJump) {
             if (this.direction == 0) {
@@ -101,18 +126,10 @@ phina.define("qft.Enemy.Knight", {
             }
         }
 
-        if (look) {
-            this.vx *= 3;
-            this.flare('balloon', {pattern: "!"});
-        } else {
-            this.flare('balloonerace');
-        }
-
-
         this.stopTime--;
-        if (this.stopTime < 0) {
-            this.stopTime = 0;
-        }
+        if (this.stopTime < 0) this.stopTime = 0;
+        this.forgotTime--;
+        if (this.forgotTime < 0) this.stopTime = 0;
     },
 
     setupAnimation: function() {

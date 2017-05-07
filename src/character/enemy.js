@@ -243,3 +243,30 @@ phina.define("qft.Enemy", {
     hit: function() {
     },
 });
+
+//敵攻撃判定
+phina.define("qft.EnemyAttack", {
+    superClass: "phina.display.RectangleShape",
+
+    //攻撃力
+    power: 1,
+
+    init: function(parentScene, options) {
+        options = (options || {}).$safe({width: 32, height: 32});
+        this.superInit(options);
+        this.parentScene = parentScene;
+
+        this.$extend(options);
+        this.time = 0;
+    },
+
+    update: function() {
+        var pl = this.parentScene.player;
+
+        //プレイヤーとの当たり判定
+        if (!pl.isDead && this.hitTestElement(pl)) {
+            pl.damage(this);
+        }
+        this.time++;
+    },
+});
