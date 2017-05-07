@@ -40,7 +40,9 @@ phina.define("qft.Enemy.Knight", {
         this.superInit(parentScene, options);
 
         //武器スプライト
-        this.weapon = phina.display.Sprite("item", 24, 24).addChildTo(this).setFrameIndex(1)
+        this.weapon = phina.display.Sprite("item", 24, 24)
+            .addChildTo(this)
+            .setFrameIndex(1)
             .setAlpha(0)
             .setOrigin(1, 1)
             .setPosition(0, 4)
@@ -101,14 +103,6 @@ phina.define("qft.Enemy.Knight", {
             }
         }
 
-        if (look) {
-            this.forgotTime = 120;
-            this.vx *= 3;
-            this.flare('balloon', {pattern: "!"});
-        } else {
-            this.flare('balloonerace');
-        }
-
         //プレイヤー発見後一定時間追跡する
         if (this.forgotTime > 0) {
             if (this.x > pl.x) {
@@ -116,7 +110,7 @@ phina.define("qft.Enemy.Knight", {
             } else {
                 this.direction = 0;
             }
-       }
+        }
 
         if (this.onFloor || this.isJump) {
             if (this.direction == 0) {
@@ -124,6 +118,14 @@ phina.define("qft.Enemy.Knight", {
             } else {
                 this.vx = -1;
             }
+        }
+
+        if (look) {
+            this.forgotTime = 120;
+            this.vx *= 3;
+            this.flare('balloon', {pattern: "!"});
+        } else {
+            this.flare('balloonerace');
         }
 
         this.stopTime--;
