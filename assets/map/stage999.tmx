@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="20" tilewidth="16" tileheight="16" nextobjectid="10">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="20" tilewidth="16" tileheight="16" nextobjectid="11">
  <tileset firstgid="1" name="A1" tilewidth="16" tileheight="16" tilecount="768" columns="32">
   <image source="TileA1.png" width="512" height="384"/>
  </tileset>
@@ -113,6 +113,11 @@
    </properties>
   </object>
   <object id="8" name="ArchDemon" type="enemy" x="332" y="136" width="32" height="32"/>
-  <object id="9" name="Knight" type="enemy" x="744" y="120" width="32" height="32"/>
+  <object id="9" name="Knight" type="enemy" x="744" y="120" width="32" height="32">
+   <properties>
+    <property name="weapon" value="spear"/>
+   </properties>
+  </object>
+  <object id="10" name="Knight" type="enemy" x="248" y="160" width="32" height="32"/>
  </objectgroup>
 </map>
