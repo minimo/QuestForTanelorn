@@ -27,9 +27,6 @@ phina.define("qft.Enemy.Knight", {
     //得点
     point: 1000,
 
-    //使用武器
-    weapon: "sword",
-
     //アイテムドロップ率（％）
     dropRate: 7,
     dropItem: ITEM_JEWEL,
@@ -42,21 +39,20 @@ phina.define("qft.Enemy.Knight", {
         options = (options || {}).$extend({width: 20, height: 20});
         this.superInit(parentScene, options);
 
-        var index = 1;
-        if (options.weapon == "spear") {
-            index = 3;
-            this.weapon = "spear";
-        }
-
         //武器スプライト
-        this.weapon = phina.display.Sprite("item", 24, 24)
+        this.weapon = phina.display.Sprite("weapons", 24, 24)
             .addChildTo(this)
-            .setFrameIndex(index)
+            .setFrameIndex(10 + Math.min(9, this.level))
             .setOrigin(1, 1)
             .setPosition(-2, 2)
             .setScale(-1, 1)
             .setRotation(430);
         this.weapon.tweener.setUpdateType('fps');
+        this.weapon.kind = "sword";
+        if (options.weapon == "spear") {
+            this.weapon.setFrameIndex(30 + Math.min(9, this.level));
+            this.weapon.kind = "spear";
+        }
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("monster02", 24, 32).addChildTo(this);
@@ -130,18 +126,38 @@ phina.define("qft.Enemy.Knight", {
 
     attack: function() {
         var that = this;
-        var atk = qft.EnemyAttack(this.parentScene, {width:24, height: 24, power: 30})
+        var width = 24, height = 24;
+        var atk = qft.EnemyAttack(this.parentScene, {width: 24, height: 24, power: 20 + this.level * 5})
             .addChildTo(this.parentScene.enemyLayer)
-            .setPosition(this.x+this.scaleX*18, this.y)
+            .setPosition(this.x + this.scaleX * 18, this.y)
             .setAlpha(0.0);
         if (DEBUG_COLLISION) atk.setAlpha(0.3);
-        this.weapon.tweener.clear()
-            .set({rotation: 270, alpha: 1.0})
-            .to({rotation: 430}, 6)
-            .call(function() {
-                that.isAttack = false;
-                atk.remove();
-            });
+        atk.tweener.setUpdateType('fps');
+
+        if (this.weapon.kind == "sword") {
+            this.weapon.tweener.clear()
+                .set({rotation: 270})
+                .to({rotation: 430}, 6)
+                .call(function() {
+                    that.isAttack = false;
+                    atk.remove();
+                });
+        } else if (this.weapon.kind == "spear") {
+            atk.width = 32;
+            atk.height = 8;
+            atk.setPosition(this.x + this.scaleX * 1, this.y);
+            atk.tweener.clear().by({x: 30 * this.scaleX}, 10).by({x: -30 * this.scaleX}, 10);
+
+            this.weapon.tweener.clear()
+                .set({rotation: 45, x: -20})
+                .by({x: 30}, 10)
+                .by({x: -30}, 10)
+               .call(function() {
+                    that.isAttack = false;
+                    atk.remove();
+                })
+                .set({rotation: 430, x: -2});
+        }
         this.isAttack = true;
         this.stopTime = 30;
     },

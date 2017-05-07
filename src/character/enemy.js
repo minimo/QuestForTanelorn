@@ -251,6 +251,9 @@ phina.define("qft.EnemyAttack", {
     //攻撃力
     power: 1,
 
+    //有効フラグ
+    isActive: true,
+
     init: function(parentScene, options) {
         options = (options || {}).$safe({width: 32, height: 32});
         this.superInit(options);
@@ -261,6 +264,7 @@ phina.define("qft.EnemyAttack", {
     },
 
     update: function() {
+        if (!this.isActive) return;
         var pl = this.parentScene.player;
 
         //プレイヤーとの当たり判定
