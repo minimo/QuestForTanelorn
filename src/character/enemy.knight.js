@@ -44,11 +44,15 @@ phina.define("qft.Enemy.Knight", {
             .addChildTo(this)
             .setFrameIndex(10 + Math.min(9, this.level))
             .setOrigin(1, 1)
-            .setPosition(-2, 2)
+            .setPosition(-4, 2)
             .setScale(-1, 1)
             .setRotation(430);
         this.weapon.tweener.setUpdateType('fps');
         this.weapon.kind = "sword";
+        if (options.weapon == "ax") {
+            this.weapon.setFrameIndex(20 + Math.min(9, this.level));
+            this.weapon.kind = "ax";
+        }
         if (options.weapon == "spear") {
             this.weapon.setFrameIndex(30 + Math.min(9, this.level));
             this.weapon.kind = "spear";
@@ -115,13 +119,14 @@ phina.define("qft.Enemy.Knight", {
             this.vx *= 3;
             this.flare('balloon', {pattern: "!"});
         } else {
-            this.flare('balloonerace');
+            if (this.forgotTime == 0) this.flare('balloonerace');
         }
 
         this.stopTime--;
         if (this.stopTime < 0) this.stopTime = 0;
         this.forgotTime--;
         if (this.forgotTime < 0) this.stopTime = 0;
+        if (this.forgotTime == 30) this.flare('balloon', {pattern: "?"});
     },
 
     attack: function() {
@@ -134,9 +139,14 @@ phina.define("qft.Enemy.Knight", {
         if (DEBUG_COLLISION) atk.setAlpha(0.3);
         atk.tweener.setUpdateType('fps');
 
-        if (this.weapon.kind == "sword") {
+        if (this.weapon.kind == "sword" || this.weapon.kind == "ax") {
+            atk.isActive = false;
             this.weapon.tweener.clear()
-                .set({rotation: 270})
+                .to({rotation: 270}, 3)
+                .wait(3)
+                .call(function() {
+                    atk.isActive = true;;
+                })
                 .to({rotation: 430}, 6)
                 .call(function() {
                     that.isAttack = false;
@@ -146,12 +156,13 @@ phina.define("qft.Enemy.Knight", {
             atk.width = 32;
             atk.height = 8;
             atk.setPosition(this.x + this.scaleX * 1, this.y);
-            atk.tweener.clear().by({x: 30 * this.scaleX}, 10).by({x: -30 * this.scaleX}, 10);
+            atk.tweener.clear().by({x: 20 * this.scaleX}, 10).by({x: -20 * this.scaleX}, 10);
 
             this.weapon.tweener.clear()
                 .set({rotation: 45, x: -20})
-                .by({x: 30}, 10)
-                .by({x: -30}, 10)
+                .wait(6)
+                .by({x: 20}, 6)
+                .by({x: -20}, 6)
                .call(function() {
                     that.isAttack = false;
                     atk.remove();
