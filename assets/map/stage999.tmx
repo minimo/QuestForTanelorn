@@ -113,7 +113,11 @@
    </properties>
   </object>
   <object id="8" name="ArchDemon" type="enemy" x="332" y="136" width="32" height="32"/>
-  <object id="9" name="Knight" type="enemy" x="904" y="136" width="32" height="32"/>
+  <object id="9" name="Knight" type="enemy" x="904" y="136" width="32" height="32">
+   <properties>
+    <property name="level" type="int" value="3"/>
+   </properties>
+  </object>
   <object id="10" name="Death" type="enemy" x="624" y="128" width="32" height="32"/>
  </objectgroup>
 </map>
