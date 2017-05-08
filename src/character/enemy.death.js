@@ -22,7 +22,7 @@ phina.define("qft.Enemy.Death", {
     power: 20,
 
     //気絶確率
-    stunPower: 50,
+    stunPower: 30,
 
     //視力
     eyesight: 512,
@@ -63,32 +63,59 @@ phina.define("qft.Enemy.Death", {
         this.direction = 0;
         this.isAttack = false;
         this.actionWait = 0;
+
+        this.isHide = false;
     },
 
     algorithm: function() {
-        if (this.isLookPlayer()) {
-            if (this.getDistancePlayer() < 256 && this.actionWait == 0) {
-                //一定距離内に入ったら攻撃する
-                for (var i = 0; i < this.level+4; i++) {
-                    var b = this.parentScene.spawnEnemy(this.x, this.y, "DeathFlame", {pattern: 1});
-                    b.vy = -10;
-                    b.vx = (i*2) * this.scaleX;
-                }
-                this.actionWait = 180;
+        var pl = this.parentScene.player;
+        var dis = this.getDistancePlayer();
+        var look = this.isLookPlayer();
+
+        if (look) {
+            //プレイヤーが見てない時のみ移動
+            var move = false;
+            if (this.x > pl.x) {
+                if (pl.scaleX == -1) move = true;
             } else {
+                if (pl.scaleX == 1) move = true;
+            }
+            if (move) {
                 //プレイヤーが見える位置にいたら寄っていく
-                var player = this.parentScene.player;
                 var p1 = phina.geom.Vector2(this.x, this.y);
-                var p2 = phina.geom.Vector2(player.x, player.y);
+                var p2 = phina.geom.Vector2(pl.x, pl.y);
                 var p = p2.sub(p1);
                 p.normalize();
                 this.vx = p.x;
                 this.vy = p.y;
                 this.setAnimation("move");
+
+                if (this.isHide) {
+                    this.isHide = false;
+                    this.tweener.clear().to({alpha: 1.0}, 15);
+                }
+            } else {
+                this.vx = 0;
+                this.vy = 0;
+                if (!this.isHide) {
+                    this.isHide = true;
+                    this.tweener.clear().to({alpha: 0.5}, 15);
+                }
             }
-        } else {
-            this.vx = 0;
-            this.vy = 0;
+        }
+
+        //一定距離内に入ったら攻撃する
+        if (this.isHide && dis < 256 && this.actionWait == 0) {
+            this.isAttack = true;
+        }
+
+        //攻撃
+        if (this.isAttack) {
+            this.isAttack = false;
+            var b = this.parentScene.spawnEnemy(this.x, this.y, "DeathFlame", {pattern: 1});
+            b.vy = -2;
+            b.vx = 16 * this.scaleX;
+            this.actionWait = 120;
         }
 
         if (this.actionWait > 0) this.actionWait--;
@@ -116,13 +143,13 @@ phina.define("qft.Enemy.DeathFlame", {
     power: 10,
 
     //重力加速度
-    gravity: 0.4,
+    gravity: 0.3,
 
     //横移動減衰率
-    friction: 0.2,
+    friction: 0.1,
 
     //気絶確率
-    stunPower: 80,
+    stunPower: 20,
 
     //地形無視
     ignoreCollision: true,
