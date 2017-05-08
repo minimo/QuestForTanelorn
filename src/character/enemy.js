@@ -71,6 +71,8 @@ phina.define("qft.Enemy", {
             //画面外の場合は動作停止
             if (!this.onScreen) return;
 
+            var pl = this.parentScene.player;
+
             //向きの指定
             if (this.vx != 0) {
                 if (this.vx > 0) {
@@ -84,7 +86,6 @@ phina.define("qft.Enemy", {
             if (this.parentScene.isStageClear) return;
 
             if (!this.isMuteki) {
-                var pl = this.parentScene.player;
                 //プレイヤー攻撃との当たり判定
                 if (pl.attack && this.hitTestElement(pl.attackCollision)) {
                     this.damage(pl.attackCollision);
