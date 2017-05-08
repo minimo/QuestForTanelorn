@@ -138,6 +138,9 @@ phina.define("qft.Enemy.Knight", {
             .setAlpha(0.0);
         if (DEBUG_COLLISION) atk.setAlpha(0.3);
         atk.tweener.setUpdateType('fps');
+        atk.update = function() {
+            this.x = that.x + that.scaleX * 18;
+        }
 
         if (this.weapon.kind == "sword" || this.weapon.kind == "ax") {
             atk.isActive = false;
@@ -145,7 +148,8 @@ phina.define("qft.Enemy.Knight", {
                 .to({rotation: 270}, 3)
                 .wait(3)
                 .call(function() {
-                    atk.isActive = true;;
+                    atk.isActive = true;
+                    that.vx = 16 * that.scaleX;
                 })
                 .to({rotation: 430}, 6)
                 .call(function() {
