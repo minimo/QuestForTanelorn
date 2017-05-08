@@ -115,6 +115,12 @@ phina.define("qft.Enemy.DeathFlame", {
     //攻撃力
     power: 10,
 
+    //重力加速度
+    gravity: 0.4,
+
+    //横移動減衰率
+    friction: 0.2,
+
     //気絶確率
     stunPower: 80,
 
@@ -141,7 +147,7 @@ phina.define("qft.Enemy.DeathFlame", {
         this.direction = 0;
     },
 
-    update: function() {
+    algorithm: function() {
     },
 
     setupAnimation: function(index) {
@@ -151,5 +157,11 @@ phina.define("qft.Enemy.DeathFlame", {
         this.frame["appear"] = [15+index, 9+index, 3+index, 21+index, "normal"];
         this.frame["normal"] = [ 0+index, 6+index,12+index, 18+index];
         this.index = 0;
+    },
+
+    dropDead: function() {
+        this.isDead = true;
+        this.isDrop = true;
+        return this;
     },
 });

@@ -57,4 +57,10 @@ phina.define("qft.Enemy.Flame", {
         this.frame["normal"] = [0, 1, 2, 3];
         this.index = 0;
     },
+
+    dropDead: function() {
+        this.isDead = true;
+        this.isDrop = true;
+        return this;
+    },
 });
