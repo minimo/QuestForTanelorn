@@ -397,7 +397,7 @@
   <object id="36" name="WispHard" type="enemy" x="316" y="60" width="32" height="32"/>
   <object id="37" name="Knight" type="enemy" x="64" y="380" width="32" height="32">
    <properties>
-    <property name="level" type="int" value="1"/>
+    <property name="level" type="int" value="0"/>
    </properties>
   </object>
   <object id="39" name="lamp" type="accessory" x="288" y="1424" width="24" height="32">
