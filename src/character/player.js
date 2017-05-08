@@ -390,7 +390,7 @@ phina.define("qft.Player", {
         if (this.mutekiTime > 0) return false;
         if (target.power == 0) return false;
         if (this.isDead) return false;
-        if (this.muteki) return false;
+        if (this.isMuteki) return false;
 
         var dir = 0;
         if (this.x < target.x) dir = 180;

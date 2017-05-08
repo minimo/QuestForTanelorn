@@ -127,7 +127,7 @@ phina.define("qft.Enemy", {
 
     damage: function(target) {
         if (this.mutekiTime > 0) return false;
-        if (this.muteki) return false;
+        if (this.isMuteki) return false;
 
         var dir = 0;
         if (target instanceof qft.PlayerAttack) {

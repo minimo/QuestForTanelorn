@@ -141,7 +141,7 @@ phina.define("qft.MapObject.Door", {
         var player = this.parentScene.player;
         player.alpha = 0;
         player.isControl = false;
-        player.muteki = true;
+        player.isMuteki = true;
         var pl = qft.PlayerDummy("player1")
             .setPosition(player.x, player.y)
             .addChildTo(this.parentScene.mapLayer.playerLayer);
@@ -162,7 +162,7 @@ phina.define("qft.MapObject.Door", {
         var player = this.parentScene.player;
         player.alpha = 0;
         player.isControl = false;
-        player.muteki = true;
+        player.isMuteki = true;
         var pl = qft.PlayerDummy("player1")
             .setPosition(this.x, this.y+16)
             .addChildTo(this.parentScene.mapLayer.playerLayer);
@@ -175,7 +175,7 @@ phina.define("qft.MapObject.Door", {
             .call(function() {
                 player.alpha = 1;
                 player.isControl = true;
-                player.muteki = false;
+                player.isMuteki = false;
                 pl.remove();
             });
     },

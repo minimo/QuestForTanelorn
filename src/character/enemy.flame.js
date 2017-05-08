@@ -16,7 +16,7 @@ phina.define("qft.Enemy.Flame", {
     power: 10,
 
     //無敵フラグ
-    muteki: true,
+    isMuteki: true,
 
     //寿命
     lifeSpan: 120,

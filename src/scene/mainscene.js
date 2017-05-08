@@ -448,7 +448,7 @@ phina.define("qft.MainScene", {
 
         //プレイヤー設定
         this.player.isControl = true;
-        this.player.muteki = false;
+        this.player.isMuteki = false;
         this.player.alpha = 1.0;
     },
 
@@ -457,7 +457,7 @@ phina.define("qft.MainScene", {
         this.player.isControl = false;
         this.player.gravity = 0;
         this.player.vx = 0;
-        this.player.muteki = true;
+        this.player.isMuteki = true;
         this.player.tweener.clear()
             .wait(45)
             .call(function(){
@@ -471,7 +471,7 @@ phina.define("qft.MainScene", {
             .wait(90)
             .call(function(){
                 this.isControl = true;
-                this.muteki = false;
+                this.isMuteki = false;
             }.bind(this.player));
     },
 
@@ -549,7 +549,7 @@ phina.define("qft.MainScene", {
 
         //プレイヤー所持キークリア
         this.player.keys = [];
-        this.player.muteki = true;
+        this.player.isMuteki = true;
 
         //クリアBGM
         var bgmFinish = false;

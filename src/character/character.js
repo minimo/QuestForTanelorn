@@ -55,7 +55,7 @@ phina.define("qft.Character", {
     stopTime: 0,
 
     //無敵フラグ
-    muteki: false,
+    isMuteki: false,
 
     //無敵時間
     mutekiTime: 0,
