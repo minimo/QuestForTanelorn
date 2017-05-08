@@ -237,7 +237,12 @@ phina.define("qft.Enemy", {
             this.value = that.hp;
             this.rotation = -that.rotation;
             this.scaleX = that.scaleX;
+
+            if (this.dispTime > 150) this.visible = false;
+            if (this.beforeValue == this.value) this.dispTime++; else this.dispTime = 0;
+            this.beforeValue = this.value;
         };
+        this.lifeGauge.dispTime = 0;
     },
 
     hit: function() {
