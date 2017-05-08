@@ -25,7 +25,7 @@ phina.define("qft.Enemy.Death", {
     stunPower: 30,
 
     //視力
-    eyesight: 512,
+    eyesight: 128,
 
     //視野角
     viewAngle: 360,
@@ -64,6 +64,9 @@ phina.define("qft.Enemy.Death", {
         this.isAttack = false;
         this.actionWait = 0;
 
+        this.phase = 0;
+        this.speed = 1;
+
         this.isHide = false;
     },
 
@@ -81,31 +84,54 @@ phina.define("qft.Enemy.Death", {
                 if (pl.scaleX == 1) move = true;
             }
             if (move) {
-                //プレイヤーが見える位置にいたら寄っていく
-                var p1 = phina.geom.Vector2(this.x, this.y);
-                var p2 = phina.geom.Vector2(pl.x, pl.y);
-                var p = p2.sub(p1);
-                p.normalize();
-                this.vx = p.x;
-                this.vy = p.y;
-                this.setAnimation("move");
-
                 if (this.isHide) {
                     this.isHide = false;
-                    this.tweener.clear().to({alpha: 1.0}, 15);
+                    this.tweener.clear()
+                        .wait(15)
+                        .to({alpha: 1.0, speed: 0.5}, 60, "easeInOutSine")
+                        .call(function() {
+                            if (this.mutekiTime == 0) this.isMuteki = false;
+                            this.isEnableAttackCollision = true;
+                        }.bind(this));
                 }
             } else {
-                this.vx = 0;
-                this.vy = 0;
                 if (!this.isHide) {
                     this.isHide = true;
-                    this.tweener.clear().to({alpha: 0.5}, 15);
+                    this.isEnableAttackCollision = false;
+                    this.tweener.clear()
+                        .wait(15)
+                        .to({alpha: 0.4, speed: 0}, 30, "easeInOutSine")
+                        .call(function() {
+                            this.isMuteki = true;
+                        }.bind(this));
                 }
+            }
+            var p1 = phina.geom.Vector2(this.x, this.y);
+            var p2 = phina.geom.Vector2(pl.x, pl.y);
+            var p = p2.sub(p1);
+            p.normalize();
+            this.vx = p.x * this.speed;
+            this.vy = p.y * this.speed;
+
+            this.flare('balloon', {pattern: "!"});
+        } else {
+            //プレイヤーを発見してない場合は近距離をうろうろする
+            if (this.phase == 0) {
+                this.flare('balloon', {pattern: "..."});
+                this.vx = 0;
+                this.vy = 0;
+                this.phase = 1;
+                this.tweener.clear()
+                    .set({scaleX: 1})
+                    .by({x: 64}, 120,"easeInOutSine")
+                    .set({scaleX: -1})
+                    .by({x: -64}, 120,"easeInOutSine")
+                    .setLoop(true);
             }
         }
 
         //一定距離内に入ったら攻撃する
-        if (this.isHide && dis < 256 && this.actionWait == 0) {
+        if (!this.isHide && dis < 256 && this.actionWait == 0) {
             this.isAttack = true;
         }
 

@@ -22,7 +22,7 @@ phina.define("qft.Enemy", {
     deffence: 1,
 
     //攻撃力
-    power: 10,
+    power: 0,
 
     //気絶確率
     stunPower: 1,
@@ -38,6 +38,9 @@ phina.define("qft.Enemy", {
 
     //ポイント
     point: 0,
+
+    //攻撃当たり判定有効フラグ
+    isEnableAttackCollision: true,
 
     //属性ダメージ倍率
     damageSlash: 1,
@@ -80,23 +83,28 @@ phina.define("qft.Enemy", {
             //ステージクリアの場合は当たり判定無し
             if (this.parentScene.isStageClear) return;
 
-            var pl = this.parentScene.player;
-            //プレイヤー攻撃との当たり判定
-            if (pl.attack && this.hitTestElement(pl.attackCollision)) {
-                this.damage(pl.attackCollision);
-            }
-            //プレイヤーショットとの当たり判定
-            this.parentScene.playerLayer.children.forEach(function(e) {
-                if (e instanceof qft.PlayerAttack && e.isCollision && this.hitTestElement(e)) {
-                    e.hit(this);
-                    e.remove();
-                    this.damage(e);
+            if (!this.isMuteki) {
+                var pl = this.parentScene.player;
+                //プレイヤー攻撃との当たり判定
+                if (pl.attack && this.hitTestElement(pl.attackCollision)) {
+                    this.damage(pl.attackCollision);
                 }
-            }.bind(this));
+                //プレイヤーショットとの当たり判定
+                this.parentScene.playerLayer.children.forEach(function(e) {
+                    if (e instanceof qft.PlayerAttack && e.isCollision && this.hitTestElement(e)) {
+                        e.hit(this);
+                        e.remove();
+                        this.damage(e);
+                    }
+                }.bind(this));
+            }
+
             //プレイヤーとの当たり判定
-            if (!this.isDead && !pl.isDead && this.hitTestElement(pl)) {
-                this.hit();
-                pl.damage(this);
+            if (this.isEnableAttackCollision) {
+                if (!this.isDead && !pl.isDead && this.power > 0 && this.hitTestElement(pl)) {
+                    this.hit();
+                    pl.damage(this);
+                }
             }
 
             if (this.stopTime == 0) this.algorithm();
