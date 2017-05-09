@@ -135,13 +135,13 @@ phina.define("qft.Enemy.Knight", {
                             }
                         }
                     }
-                    //プレイヤー追跡中で崖がある場合は着地点あるか調べて飛び降りる
+                    //プレイヤー追跡中で崖がある場合は着地点があるか調べて飛び降りる
                     if (isReturnCliff) {
                         var jumpOk = false;
                         if (this.direction == 0) {
-                            if (this.checkMapCollision2(this.x-5, this.y+20, 5, 64)) jumpOk = true;
+                            if (this.checkMapCollision2(this.x-5, this.y+20, 5, 96)) jumpOk = true;
                         } else {
-                            if (this.checkMapCollision2(this.x+5, this.y+20, 5, 64)) jumpOk = true;
+                            if (this.checkMapCollision2(this.x+5, this.y+20, 5, 96)) jumpOk = true;
                         }
                         if (jumpOk) {
                             this.isJump = true;
@@ -181,6 +181,7 @@ phina.define("qft.Enemy.Knight", {
             .setPosition(this.x + this.scaleX * 18, this.y)
             .setAlpha(0.0);
         if (DEBUG_COLLISION) atk.setAlpha(0.3);
+        atk.master = this;
         atk.tweener.setUpdateType('fps');
         atk.update = function() {
             this.x = that.x + that.scaleX * 18;

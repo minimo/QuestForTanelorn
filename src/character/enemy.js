@@ -280,11 +280,29 @@ phina.define("qft.EnemyAttack", {
             if (!this.isActive) return;
             var pl = this.parentScene.player;
 
+            //プレイヤー攻撃と当たった場合はエフェクトを出して無効化
+            if (pl.attack && this.hitTestElement(pl.attackCollision)) {
+                this.bump();
+                return;
+            }
+
             //プレイヤーとの当たり判定
             if (!pl.isDead && this.hitTestElement(pl)) {
                 pl.damage(this);
             }
             this.time++;
         });
+    },
+
+    //判定同士がぶつかった場合の処理
+    bump: function() {
+        this.isActice = false;
+        if (this.master) {
+            var pl = this.parentScene.player;
+            pl.knockback(5, this.master.direction);
+            this.master.knockback(5, (this.master.direction + 180) % 360);
+            this.parentScene.spawnEffect(this.x, this.y, {name: "explode"});
+            app.playSE("bomb");
+        }
     },
 });
