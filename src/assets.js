@@ -51,6 +51,7 @@ phina.define("qft.Assets", {
                             "monster03":  "assets/image/char_m_magi01.png",
                             "bullet":     "assets/image/effect_bullet01.png",
                             "effect":     "assets/image/effect.png",
+                            "effect2":    "assets/image/effect01a.png",
                             "gate":       "assets/image/gate.png",
                             "flame02":    "assets/image/object_fire02a.png",
                             "flame03":    "assets/image/object_fire03a.png",
@@ -76,6 +77,7 @@ phina.define("qft.Assets", {
                             "select":     "assets/sound/se_maoudamashii_system45.mp3",
                             "getitem":    "assets/sound/ata_a49.mp3",
                             "recovery":   "assets/sound/se_maoudamashii_magical01.mp3",
+                            "tinkling":   "assets/sound/tinkling.mp3",
                             "bgm1":       "assets/sound/DS-ba01m.mp3",
                         },
                         font: {
