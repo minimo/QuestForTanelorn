@@ -302,7 +302,7 @@ phina.define("qft.EnemyAttack", {
             pl.knockback(5, this.master.direction);
             this.master.knockback(5, (this.master.direction + 180) % 360);
             this.parentScene.spawnEffect(this.x, this.y, {name: "explode"});
-            app.playSE("bomb");
+            app.playSE("tinkling");
         }
     },
 });

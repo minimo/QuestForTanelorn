@@ -171,7 +171,6 @@ phina.define("qft.Enemy.Knight", {
         //停止中処理
         if (this.stopTime > 0) {
             this.vx = 0;
-            this.vy = 0;
         }
 
         this.stopTime--;
