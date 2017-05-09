@@ -131,9 +131,7 @@ phina.define("qft.Enemy.Death", {
         }
 
         //一定距離内に入ったら攻撃する
-        if (!this.isHide && dis < 256 && this.actionWait == 0) {
-            this.isAttack = true;
-        }
+        if (!this.isHide && dis < 128 && this.actionWait == 0) this.isAttack = true;
 
         //攻撃
         if (this.isAttack) {
@@ -178,7 +176,10 @@ phina.define("qft.Enemy.DeathFlame", {
     stunPower: 20,
 
     //地形無視
-    ignoreCollision: true,
+    ignoreCollision: false,
+
+    //寿命
+    lifeSpan: 120,
 
     init: function(parentScene, options) {
         options = (options || {}).$extend({width: 16, height: 20});
@@ -201,6 +202,15 @@ phina.define("qft.Enemy.DeathFlame", {
     },
 
     algorithm: function() {
+        if (this.lifeSpan == 0) this.remove();
+        if (this.lifeSpan < 30) {
+            if (this.time % 2 == 0) this.visible = !this.visible;
+        } else if (this.lifeSpan < 60){
+            if (this.time % 5 == 0) this.visible = !this.visible;
+        } else if (this.lifeSpan < 90) {
+            if (this.time % 10 == 0) this.visible = !this.visible;
+        }
+        this.lifeSpan--;
     },
 
     setupAnimation: function(index) {

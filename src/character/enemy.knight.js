@@ -102,11 +102,12 @@ phina.define("qft.Enemy.Knight", {
 
         if (look) {
             this.forgotTime = 120;
-            this.vx *= 3;
+            this.stopTime = 0;
             this.flare('balloon', {pattern: "!"});
         } else {
             if (this.forgotTime == 0) this.flare('balloonerace');
         }
+        if (this.forgotTime > 0) this.vx *= 3;
 
         if (this.onFloor) {
             //これ以上進めない場合は折り返す
@@ -139,9 +140,9 @@ phina.define("qft.Enemy.Knight", {
                     if (isReturnCliff) {
                         var jumpOk = false;
                         if (this.direction == 0) {
-                            if (this.checkMapCollision2(this.x-5, this.y+20, 5, 96)) jumpOk = true;
-                        } else {
                             if (this.checkMapCollision2(this.x+5, this.y+20, 5, 96)) jumpOk = true;
+                        } else {
+                            if (this.checkMapCollision2(this.x-5, this.y+20, 5, 96)) jumpOk = true;
                         }
                         if (jumpOk) {
                             this.isJump = true;
@@ -149,9 +150,11 @@ phina.define("qft.Enemy.Knight", {
                         } else {
                             //着地点が無い場合は諦めて折り返す
                             this.forgotTime = 0;
+                            this.stopTime = 30;
                             this.direction = (this.direction + 180) % 360;
                             this.vx *= -1;
-                        }
+                            this.flare('balloon', {pattern: "..."});
+                         }
                     }
                 } else {
                     this.direction = (this.direction + 180) % 360;
@@ -163,6 +166,12 @@ phina.define("qft.Enemy.Knight", {
             if (look && !this.isJump && dis < 64 && this.stopTime == 0 && !this.isAttack) {
                 this.attack();
             }
+        }
+
+        //停止中処理
+        if (this.stopTime > 0) {
+            this.vx = 0;
+            this.vy = 0;
         }
 
         this.stopTime--;
