@@ -120,8 +120,8 @@ phina.define("qft.Enemy.Knight", {
                 if (this.checkMapCollision2(this.x-5, this.y+20, 5, 5) == null) isReturnCliff = true;
             }
             if (isReturnWall || isReturnCliff) {
-                //プレイヤー追跡中で段差がある場合は飛び越える
                 if (this.forgotTime > 0) {
+                    //プレイヤー追跡中で段差がある場合は飛び越える
                     if (isReturnWall) {
                         if (this.direction == 0) {
                             if (this.x < pl.x) {
@@ -145,7 +145,7 @@ phina.define("qft.Enemy.Knight", {
                         }
                         if (jumpOk) {
                             this.isJump = true;
-                            this.vy = -10;
+                            this.vy = -5;
                         } else {
                             //着地点が無い場合は諦めて折り返す
                             this.forgotTime = 0;
