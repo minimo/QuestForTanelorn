@@ -52,6 +52,17 @@ var app;
 window.onload = function() {
     app = qft.Application();
     app.replaceScene(qft.SceneFlow());
+
+    //モバイル対応
+    if (phina.isMobile) {
+        app.domElement.addEventListener('touchend', function dummy() {
+            var s = phina.asset.Sound();
+            s.loadFromBuffer();
+            s.play().stop();
+            app.domElement.removeEventListener('touchend', dummy);
+        });
+    }
+
     app.run();
 //    app.enableStats();
 };
