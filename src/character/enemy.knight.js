@@ -19,7 +19,7 @@ phina.define("qft.Enemy.Knight", {
     power: 10,
 
     //視力
-    eyesight: 128,
+    eyesight: 192,
 
     //視野角
     viewAngle: 90,
@@ -83,22 +83,8 @@ phina.define("qft.Enemy.Knight", {
         var dis = this.getDistancePlayer();
         var look = this.isLookPlayer();
 
-        if (this.onFloor) {
-            //これ以上進めない場合は折り返す
-            if (this._collision[1].hit || this.checkMapCollision2(this.x+5, this.y+20, 5, 5) == null) {
-                this.direction = 180;
-            } else if (this._collision[3].hit || this.checkMapCollision2(this.x-5, this.y+20, 5, 5) == null) {
-                this.direction = 0;
-            }
-
-            //攻撃
-            if (look && !this.isJump && dis < 64 && this.stopTime == 0 && !this.isAttack) {
-                this.attack();
-            }
-        }
-
         //プレイヤー発見後一定時間追跡する
-        if (this.forgotTime > 0) {
+        if (this.forgotTime > 0 && !this.isAttack) {
             if (this.x > pl.x) {
                 this.direction = 180;
             } else {
@@ -122,10 +108,68 @@ phina.define("qft.Enemy.Knight", {
             if (this.forgotTime == 0) this.flare('balloonerace');
         }
 
+        if (this.onFloor) {
+            //これ以上進めない場合は折り返す
+            var isReturnWall = false;
+            var isReturnCliff = false;
+            if (this.vx > 0) {
+                if (this._collision[1].hit) isReturnWall = true;
+                if (this.checkMapCollision2(this.x+5, this.y+20, 5, 5) == null) isReturnCliff = true;
+            } else if (this.vx < 0) {
+                if (this._collision[3].hit) isReturnWall = true;
+                if (this.checkMapCollision2(this.x-5, this.y+20, 5, 5) == null) isReturnCliff = true;
+            }
+            if (isReturnWall || isReturnCliff) {
+                //プレイヤー追跡中で段差がある場合は飛び越える
+                if (this.forgotTime > 0) {
+                    if (isReturnWall) {
+                        if (this.direction == 0) {
+                            if (this.x < pl.x) {
+                                this.isJump = true;
+                                this.vy = -10;
+                            }
+                        } else {
+                            if (this.x > pl.x) {
+                                this.isJump = true;
+                                this.vy = -10;
+                            }
+                        }
+                    }
+                    //プレイヤー追跡中で崖がある場合は着地点あるか調べて飛び降りる
+                    if (isReturnCliff) {
+                        var jumpOk = false;
+                        if (this.direction == 0) {
+                            if (this.checkMapCollision2(this.x-5, this.y+20, 5, 64)) jumpOk = true;
+                        } else {
+                            if (this.checkMapCollision2(this.x+5, this.y+20, 5, 64)) jumpOk = true;
+                        }
+                        if (jumpOk) {
+                            this.isJump = true;
+                            this.vy = -10;
+                        } else {
+                            //着地点が無い場合は諦めて折り返す
+                            this.forgotTime = 0;
+                            this.direction = (this.direction + 180) % 360;
+                            this.vx *= -1;
+                        }
+                    }
+                } else {
+                    this.direction = (this.direction + 180) % 360;
+                    this.vx *= -1;
+                }
+            }
+
+            //攻撃
+            if (look && !this.isJump && dis < 64 && this.stopTime == 0 && !this.isAttack) {
+                this.attack();
+            }
+        }
+
         this.stopTime--;
         if (this.stopTime < 0) this.stopTime = 0;
+
         this.forgotTime--;
-        if (this.forgotTime < 0) this.stopTime = 0;
+        if (this.forgotTime < 0) this.forgotTime = 0;
         if (this.forgotTime == 30) this.flare('balloon', {pattern: "?"});
     },
 
