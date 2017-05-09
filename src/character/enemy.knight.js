@@ -135,7 +135,7 @@ phina.define("qft.Enemy.Knight", {
         var atk = qft.EnemyAttack(this.parentScene, {width: 24, height: 24, power: 20 + this.level * 5})
             .addChildTo(this.parentScene.enemyLayer)
             .setPosition(this.x + this.scaleX * 18, this.y)
-            .setAlpha(0.3);
+            .setAlpha(0.0);
         if (DEBUG_COLLISION) atk.setAlpha(0.3);
         atk.tweener.setUpdateType('fps');
         atk.update = function() {
@@ -143,7 +143,7 @@ phina.define("qft.Enemy.Knight", {
         }
 
         if (this.weapon.kind == "sword" || this.weapon.kind == "ax") {
-//            atk.isActive = false;
+            atk.isActive = false;
             this.weapon.tweener.clear()
                 .to({rotation: 270}, 3)
                 .wait(3)

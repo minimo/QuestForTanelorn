@@ -275,16 +275,16 @@ phina.define("qft.EnemyAttack", {
 
         this.$extend(options);
         this.time = 0;
-    },
 
-    update: function() {
-        if (!this.isActive) return;
-        var pl = this.parentScene.player;
+        this.on('enterframe', e => {
+            if (!this.isActive) return;
+            var pl = this.parentScene.player;
 
-        //プレイヤーとの当たり判定
-        if (!pl.isDead && this.hitTestElement(pl)) {
-            pl.damage(this);
-        }
-        this.time++;
+            //プレイヤーとの当たり判定
+            if (!pl.isDead && this.hitTestElement(pl)) {
+                pl.damage(this);
+            }
+            this.time++;
+        });
     },
 });
