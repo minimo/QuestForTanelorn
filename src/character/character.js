@@ -271,10 +271,13 @@ phina.define("qft.Character", {
 
     //ノックバックモーション
     knockback: function(power, direction) {
+        power = power || 0;
         if (power == 0) return;
+        if (direction === undefined) direction = (this.direction + 180) % 360;
+
         var sx = Math.cos(direction.toRadian());
         var sy = Math.sin(direction.toRadian());
-        var back = 32;
+        var back = 32 + Math.floor(power / 10);
         this.tweener.clear().by({x: back*sx, y: back*sy}, 10, "easeOutElastic");
         this.vx = 0;
         this.vy = 0;
