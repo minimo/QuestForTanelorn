@@ -268,6 +268,9 @@ phina.define("qft.EnemyAttack", {
     //有効フラグ
     isActive: true,
 
+    //寿命
+    lifeSpan: 15,
+
     init: function(parentScene, options) {
         options = (options || {}).$safe({width: 32, height: 32});
         this.superInit(options);
@@ -277,6 +280,11 @@ phina.define("qft.EnemyAttack", {
         this.time = 0;
 
         this.on('enterframe', e => {
+            this.time++;
+            if (this.time > this.lifeSpan) {
+                this.remove();
+                return;
+            }
             if (!this.isActive) return;
             var pl = this.parentScene.player;
 
@@ -290,7 +298,6 @@ phina.define("qft.EnemyAttack", {
             if (!pl.isDead && this.hitTestElement(pl)) {
                 pl.damage(this);
             }
-            this.time++;
         });
     },
 
