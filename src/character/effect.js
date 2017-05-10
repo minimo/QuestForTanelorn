@@ -153,6 +153,16 @@ phina.define("qft.EffectData", {
                         maxIndex: 8,
                         trimming: {x: 256, y: 128, width: 128, height: 64},
                     };
+                case "hit":
+                    return {
+                        assetName: "effect2",
+                        width: 72,
+                        height: 32,
+                        interval: 5,
+                        startIndex: 0,
+                        maxIndex: 3,
+                        trimming: {x: 0, y: 0, width: 72, height: 128},
+                    };
                 default:
                     return {};
             }
