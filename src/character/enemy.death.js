@@ -86,17 +86,14 @@ phina.define("qft.Enemy.Death", {
             if (move) {
                 if (this.isHide) {
                     this.isHide = false;
-                    this.tweener.clear()
-                        .wait(15)
-                        .to({alpha: 1.0, speed: 0.5}, 60, "easeInOutSine");
+                    this.tweener.clear().wait(15).to({alpha: 1.0, speed: 1}, 30, "easeInOutSine");
+                    this.flare('balloon', {pattern: "!"});
                 }
             } else {
                 if (!this.isHide) {
                     this.isHide = true;
                     this.isEnableAttackCollision = false;
-                    this.tweener.clear()
-                        .wait(15)
-                        .to({alpha: 0.4, speed: 0}, 20, "easeInOutSine");
+                    this.tweener.clear().wait(15).to({alpha: 0.4, speed: 0}, 20, "easeInOutSine");
                 }
             }
             var p1 = phina.geom.Vector2(this.x, this.y);
@@ -105,8 +102,8 @@ phina.define("qft.Enemy.Death", {
             p.normalize();
             this.vx = p.x * this.speed;
             this.vy = p.y * this.speed;
-
-            this.flare('balloon', {pattern: "!"});
+            
+            this.phase = 0;
         } else {
             //プレイヤーを発見してない場合は近距離をうろうろする
             if (this.phase == 0) {
@@ -135,6 +132,8 @@ phina.define("qft.Enemy.Death", {
 
         //一定距離内に入ったら攻撃する
         if (!this.isHide && dis < 128 && this.actionWait == 0) this.isAttack = true;
+
+        if (this.phase == 1 && this.time % 30 == 0) this.isAttack = true;
 
         //攻撃
         if (this.isAttack) {
@@ -170,7 +169,7 @@ phina.define("qft.Enemy.DeathFlame", {
     power: 10,
 
     //重力加速度
-    gravity: 0.3,
+    gravity: 0.1,
 
     //横移動減衰率
     friction: 0.1,
