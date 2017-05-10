@@ -85,7 +85,7 @@ phina.define("qft.Enemy", {
             //ステージクリアの場合は当たり判定無し
             if (this.parentScene.isStageClear) return;
 
-            if (!this.isMuteki) {
+            if (!this.isMuteki && this.mutekiTime == 0) {
                 //プレイヤー攻撃との当たり判定
                 if (pl.attack && this.hitTestElement(pl.attackCollision)) {
                     this.damage(pl.attackCollision);
@@ -101,7 +101,7 @@ phina.define("qft.Enemy", {
             }
 
             //プレイヤーとの当たり判定
-            if (this.isEnableAttackCollision) {
+            if (this.isEnableAttackCollision && this.mutekiTime == 0) {
                 if (!this.isDead && !pl.isDead && this.power > 0 && this.hitTestElement(pl)) {
                     this.hit();
                     pl.damage(this);
@@ -301,7 +301,7 @@ phina.define("qft.EnemyAttack", {
             var pl = this.parentScene.player;
             pl.knockback(5, this.master.direction);
             this.master.knockback(5, (this.master.direction + 180) % 360);
-            this.parentScene.spawnEffect(this.x, this.y, {name: "explode"});
+            this.parentScene.spawnEffect(this.x, this.y, {name: "hit"});
             app.playSE("tinkling");
         }
     },

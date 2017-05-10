@@ -88,11 +88,7 @@ phina.define("qft.Enemy.Death", {
                     this.isHide = false;
                     this.tweener.clear()
                         .wait(15)
-                        .to({alpha: 1.0, speed: 0.5}, 60, "easeInOutSine")
-                        .call(function() {
-                            if (this.mutekiTime == 0) this.isMuteki = false;
-                            this.isEnableAttackCollision = true;
-                        }.bind(this));
+                        .to({alpha: 1.0, speed: 0.5}, 60, "easeInOutSine");
                 }
             } else {
                 if (!this.isHide) {
@@ -100,10 +96,7 @@ phina.define("qft.Enemy.Death", {
                     this.isEnableAttackCollision = false;
                     this.tweener.clear()
                         .wait(15)
-                        .to({alpha: 0.4, speed: 0}, 30, "easeInOutSine")
-                        .call(function() {
-                            this.isMuteki = true;
-                        }.bind(this));
+                        .to({alpha: 0.4, speed: 0}, 20, "easeInOutSine");
                 }
             }
             var p1 = phina.geom.Vector2(this.x, this.y);
@@ -122,12 +115,22 @@ phina.define("qft.Enemy.Death", {
                 this.vy = 0;
                 this.phase = 1;
                 this.tweener.clear()
+                    .to({alpha: 1.0}, 30, "easeInOutSine")
                     .set({scaleX: 1})
-                    .by({x: 64}, 120,"easeInOutSine")
+                    .by({x: 96}, 120,"easeInOutSine")
                     .set({scaleX: -1})
-                    .by({x: -64}, 120,"easeInOutSine")
+                    .by({x: -96}, 120,"easeInOutSine")
                     .setLoop(true);
             }
+        }
+
+        //半透明時は無敵だけど攻撃判定も無い
+        if (this.alpha == 0.4) {
+            this.isMuteki = true;
+            this.isAttackCollision = false;
+        } else {
+            this.isMuteki = false;
+            this.isAttackCollision = true;
         }
 
         //一定距離内に入ったら攻撃する
@@ -177,6 +180,12 @@ phina.define("qft.Enemy.DeathFlame", {
 
     //地形無視
     ignoreCollision: false,
+
+    //無敵フラグ
+    isMuteki: true,
+
+    //攻撃当たり判定有効フラグ
+    isAttackCollision: true,
 
     //寿命
     lifeSpan: 120,
