@@ -10,6 +10,7 @@
 //デバッグフラグ
 DEBUG = false;
 DEBUG_COLLISION = false;
+DEBUG_EYESIGHT = false;
 
 //定数
 SC_W = 480;

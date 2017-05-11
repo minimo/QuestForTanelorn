@@ -28,7 +28,7 @@ phina.define("qft.Enemy", {
     stunPower: 1,
 
     //視力
-    eyesight: 64,
+    eyesight: 0,
 
     //視野角
     viewAngle: 90,
@@ -66,6 +66,13 @@ phina.define("qft.Enemy", {
         this.setupAnimation();
         this.options = options;
         this.level = options.level || 0;
+
+        //デバッグ時視界の可視化
+        if (DEBUG_EYESIGHT) {
+            var that = this;
+            var va = (this.viewAngle / 2).toRadian();
+            phina.display.ArcShape({radius: this.eyesight, startAngle: -va, endAngle: va}).addChildTo(this).setAlpha(0.3);
+        }
 
         this.on('enterframe', function() {
             //画面外の場合は動作停止
