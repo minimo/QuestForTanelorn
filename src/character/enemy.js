@@ -87,7 +87,7 @@ phina.define("qft.Enemy", {
 
             if (!this.isMuteki && this.mutekiTime == 0) {
                 //プレイヤー攻撃との当たり判定
-                if (pl.attack && this.hitTestElement(pl.attackCollision)) {
+                if (pl.isAttack && this.hitTestElement(pl.attackCollision)) {
                     this.damage(pl.attackCollision);
                 }
                 //プレイヤーショットとの当たり判定
@@ -289,7 +289,8 @@ phina.define("qft.EnemyAttack", {
             var pl = this.parentScene.player;
 
             //プレイヤー攻撃と当たった場合はエフェクトを出して無効化
-            if (pl.attack && this.hitTestElement(pl.attackCollision)) {
+            if (pl.isAttack && this.hitTestElement(pl.attackCollision)) {
+                this.isActice = false;
                 this.bump();
                 return;
             }
@@ -303,12 +304,11 @@ phina.define("qft.EnemyAttack", {
 
     //判定同士がぶつかった場合の処理
     bump: function() {
-        this.isActice = false;
+        this.parentScene.spawnEffect(this.x, this.y, {name: "hit"});
         if (this.master) {
             var pl = this.parentScene.player;
             pl.knockback(5, this.master.direction);
             this.master.knockback(5, (this.master.direction + 180) % 360);
-            this.parentScene.spawnEffect(this.x, this.y, {name: "hit"});
             app.playSE("tinkling");
         }
     },

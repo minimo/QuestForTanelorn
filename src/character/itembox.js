@@ -49,7 +49,7 @@ phina.define("qft.ItemBox", {
         if (!this.opened) {
             //プレイヤー攻撃（固定）との当たり判定
             var pl = this.parentScene.player;
-            if (pl.attack && this.hitTestElement(pl.attackCollision)) {
+            if (pl.isAttack && this.hitTestElement(pl.attackCollision)) {
                 this.damage(pl);
             }
             //プレイヤー攻撃判定との当たり判定

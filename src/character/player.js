@@ -45,6 +45,9 @@ phina.define("qft.Player", {
     //操作可能フラグ
     isControl: true,
 
+    //攻撃中フラグ
+    isAttack: false,
+
     //ドア上フラグ
     onDoor: false,
 
@@ -143,7 +146,7 @@ phina.define("qft.Player", {
         if (this.stopTime == 0) {
             //左移動
             if (ct.left) {
-                if (!this.isJump && !this.attack && !this.isCatchLadder) this.setAnimation("walk");
+                if (!this.isJump && !this.isAttack && !this.isCatchLadder) this.setAnimation("walk");
                 //はしご掴み状態で左に壁がある場合は不可
                 var c = this._collision[3];
                 if (!(this.isCatchLadder && this.checkMapCollision2(c.x+6, c.y, c.width, c.height))) {
@@ -153,7 +156,7 @@ phina.define("qft.Player", {
             }
             //右移動
             if (ct.right) {
-                if (!this.isJump && !this.attack && !this.isCatchLadder) this.setAnimation("walk");
+                if (!this.isJump && !this.isAttack && !this.isCatchLadder) this.setAnimation("walk");
                 //はしご掴み状態で右に壁がある場合は不可
                 var c = this._collision[1];
                 if (!(this.isCatchLadder && this.checkMapCollision2(c.x-6, c.y, c.width, c.height))) {
@@ -243,7 +246,7 @@ phina.define("qft.Player", {
         }
 
         //攻撃
-        if (!this.attack) {
+        if (!this.isAttack) {
             if (this.onFloor) {
                 if (this.nowAnimation != "damage") this.setAnimation("walk");
             } else if (this.isCatchLadder) {
@@ -314,7 +317,7 @@ phina.define("qft.Player", {
         this.attackCollision.x = this.x + this.scaleX*12;
         this.attackCollision.y = this.y;
 
-        //情報保存
+        //コントローラ他情報保存
         this.before.up = ct.up;
         this.before.down = ct.down;
         this.before.attack = ct.attack;
@@ -592,7 +595,7 @@ phina.define("qft.Player", {
     weaponAttack: function() {
         var kind = this.equip.weapons[this.equip.using];
         var level = this.equip.level[this.equip.using];
-        this.attack = true;
+        this.isAttack = true;
         var that = this;
         switch (kind) {
             case 0:
@@ -602,7 +605,7 @@ phina.define("qft.Player", {
                     .to({rotation: 360}, 5)
                     .fadeOut(1)
                     .call(function() {
-                        that.attack = false;
+                        that.isAttack = false;
                     });
                 break;
             case 1:
@@ -612,7 +615,7 @@ phina.define("qft.Player", {
                     .to({rotation: 360}, 6)
                     .fadeOut(1)
                     .call(function() {
-                        that.attack = false;
+                        that.isAttack = false;
                     });
                 break;
             case 2:
@@ -622,7 +625,7 @@ phina.define("qft.Player", {
                     .to({rotation: 270}, 8)
                     .fadeOut(1)
                     .call(function() {
-                        that.attack = false;
+                        that.isAttack = false;
                     });
                 break;
             case 3:
@@ -633,7 +636,7 @@ phina.define("qft.Player", {
                     .by({x: 10}, 2)
                     .fadeOut(1)
                     .call(function() {
-                        that.attack = false;
+                        that.isAttack = false;
                     });
                 break;
             case 4:
@@ -644,7 +647,7 @@ phina.define("qft.Player", {
                     .by({x: -7}, 3)
                     .fadeOut(1)
                     .call(function() {
-                        that.attack = false;
+                        that.isAttack = false;
                     });
                     var arrowPower = 5 + level * 5;
                     var arrow = qft.PlayerAttack(this.parentScene, {width: 15, height: 10, power: arrowPower, type: "arrow"})
@@ -664,7 +667,7 @@ phina.define("qft.Player", {
                     .to({rotation: 360}, 8)
                     .fadeOut(1)
                     .call(function() {
-                        that.attack = false;
+                        that.isAttack = false;
                     });
                     var magicPower = 20 + level * 10;
                     var magic = qft.PlayerAttack(this.parentScene, {width: 15, height: 10, index: 30, power: magicPower, type: "fireball"})
@@ -684,7 +687,7 @@ phina.define("qft.Player", {
                     .to({rotation: 270}, 8)
                     .fadeOut(1)
                     .call(function() {
-                        that.attack = false;
+                        that.isAttack = false;
                     });
                 break;
         }
