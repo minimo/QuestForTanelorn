@@ -92,6 +92,9 @@ phina.define("qft.Enemy.Knight", {
             }
         }
 
+        //一定距離以上離れたら追跡解除
+        if (dis > 512) this.forgotTime = 0;
+
         if (this.onFloor || this.isJump) {
             if (this.direction == 0) {
                 this.vx = 1;
