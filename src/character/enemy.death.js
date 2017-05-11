@@ -133,7 +133,8 @@ phina.define("qft.Enemy.Death", {
         //一定距離内に入ったら攻撃する
         if (!this.isHide && dis < 128 && this.actionWait == 0) this.isAttack = true;
 
-        if (this.phase == 1 && this.time % 30 == 0) this.isAttack = true;
+        //徘徊モードの場合は適当に攻撃
+        if (this.phase == 1 && this.time % 60 == 0) this.isAttack = true;
 
         //攻撃
         if (this.isAttack) {
