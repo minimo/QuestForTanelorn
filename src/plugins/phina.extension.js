@@ -153,3 +153,35 @@ phina.geom.Collision.testRectLine = function(rect, p1, p2) {
     if (phina.geom.Collision.testLineLine(p1, p2, r1, r4)) return true;
     return false;
 }
+
+
+//円弧の描画
+phina.define('phina.display.ArcShape', {
+  superClass: 'phina.display.Shape',
+
+  init: function(options) {
+    options = ({}).$safe(options, {
+      backgroundColor: 'transparent',
+      fill: 'red',
+      stroke: '#aaa',
+      strokeWidth: 4,
+      radius: 32,
+      startAngle: 0,
+      endAngle: 270,
+
+      anticlockwise: false,
+    });
+    this.superInit(options);
+
+    this.radius = options.radius;
+    this.startAngle = options.startAngle;
+    this.endAngle = options.endAngle;
+    this.anticlockwise = options.anticlockwise;
+
+    this.setBoundingType('circle');
+  },
+
+  prerender: function(canvas) {
+    canvas.fillPie(0, 0, this.radius, this.startAngle, this.endAngle);
+  },
+});
