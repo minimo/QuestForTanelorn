@@ -43,7 +43,7 @@ phina.define("qft.Enemy.Wisp", {
 
     //属性ダメージ倍率
     damageFire: 0.8,
-    damegeIce: 2,
+    damageIce: 2,
 
     init: function(parentScene, options) {
         options = (options || {}).$extend({width: 16, height: 16});
@@ -128,7 +128,7 @@ phina.define("qft.Enemy.WispHard", {
 
     //属性ダメージ倍率
     damageFire: 0.5,
-    damegeIce: 2,
+    damageIce: 2,
 
     init: function(parentScene, options) {
         options = (options || {}).$extend({width: 16, height: 16});
