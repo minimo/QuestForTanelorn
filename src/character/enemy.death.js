@@ -68,6 +68,14 @@ phina.define("qft.Enemy.Death", {
         this.speed = 1;
 
         this.isHide = false;
+
+        //初期位置保存
+        this.firstX = 0;
+        this.firstY = 0;
+        this.one('enerframe', e => {
+            this.firstX = this.x;
+            this.firstY = this.y;
+        });
     },
 
     algorithm: function() {
@@ -75,6 +83,23 @@ phina.define("qft.Enemy.Death", {
         var dis = this.getDistancePlayer();
         var look = this.isLookPlayer();
 
+        if (this.phase == 0) {
+            this.phase = 1;
+            this.tweener.clear()
+                .to({alpha: 1.0}, 30, "easeInOutSine")
+                .set({scaleX: 1})
+                .by({x: 96}, 120,"easeInOutSine")
+                .set({scaleX: -1})
+                .by({x: -96}, 120,"easeInOutSine")
+                .setLoop(true);
+        }
+
+        if (this.phase == 1) {
+            //徘徊モードの場合は適当に攻撃
+            if (this.time % 60 == 0) this.isAttack = true;
+        }
+
+/*
         if (look) {
             //プレイヤーが見てない時のみ移動
             var move = false;
@@ -132,9 +157,7 @@ phina.define("qft.Enemy.Death", {
 
         //一定距離内に入ったら攻撃する
         if (!this.isHide && dis < 128 && this.actionWait == 0) this.isAttack = true;
-
-        //徘徊モードの場合は適当に攻撃
-        if (this.phase == 1 && this.time % 60 == 0) this.isAttack = true;
+*/
 
         //攻撃
         if (this.isAttack) {
@@ -226,7 +249,7 @@ phina.define("qft.Enemy.DeathFlame", {
         index = index || 0;
         this.spcialAnimation = false;
         this.frame = [];
-        this.frame["appear"] = [15+index, 9+index, 3+index, 21+index, "normal"];
+        this.frame["appear"] = [ 9+index, 3+index,21+index, "normal"];
         this.frame["normal"] = [ 0+index, 6+index,12+index, 18+index];
         this.index = 0;
     },
