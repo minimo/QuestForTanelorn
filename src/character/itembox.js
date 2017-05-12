@@ -22,7 +22,7 @@ phina.define("qft.ItemBox", {
     kind: 0,
 
     //アニメーション間隔
-    advanceTime: 3,
+    animationInterval: 3,
 
     //反発係数
     rebound: 0.3,

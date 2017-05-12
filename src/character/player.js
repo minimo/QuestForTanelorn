@@ -296,8 +296,8 @@ phina.define("qft.Player", {
         if (this.nowAnimation != this.beforeAnimation) {
             this.time = 0;
             this.isAdvanceAnimation = true;
-            this.advanceTime = 6;
-            if (this.nowAnimation == "attack") this.advanceTime = 2;
+            this.animationInterval = 6;
+            if (this.nowAnimation == "attack") this.animationInterval = 2;
         } else {
             //歩行アニメーションの場合は移動している時のみ進める
             if (this.nowAnimation == "walk" && !ct.left && !ct.right) {
@@ -360,7 +360,7 @@ phina.define("qft.Player", {
         //アニメーション
         this.setAnimation("walk");
         this.beforeAnimation = "";
-        this.advanceTime = 6;
+        this.animationInterval = 6;
 
         //所持装備
         this.equip = {

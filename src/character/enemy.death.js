@@ -57,7 +57,7 @@ phina.define("qft.Enemy.Death", {
         this.sprite.setFrameTrimming(0, 128, 72, 128);
 
         this.setAnimation("move");
-        this.advanceTime = 10;
+        this.animationInterval = 10;
         this.setupLifeGauge();
 
         this.direction = 0;
@@ -228,7 +228,7 @@ phina.define("qft.Enemy.DeathFlame", {
         this.sprite.setFrameTrimming(0, 0, 144, 128);
 
         this.setAnimation("appear");
-        this.advanceTime = 3;
+        this.animationInterval = 3;
 
         this.direction = 0;
     },

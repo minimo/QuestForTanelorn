@@ -64,7 +64,7 @@ phina.define("qft.Enemy.Knight", {
         this.sprite.setPosition(0, -5).setScale(1.3);
 
         this.setAnimation("walk");
-        this.advanceTime = 6;
+        this.animationInterval = 6;
         this.setupLifeGauge();
 
         this.direction = 0;

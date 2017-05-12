@@ -47,7 +47,7 @@ phina.define("qft.Enemy.Bullet", {
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("bullet", 24, 32).addChildTo(this).setFrameIndex(9);
-        this.advanceTime = 3;
+        this.animationInterval = 3;
 
         this.explode = options.explode || true;
         this.pattern = options.pattern || "pattern1";

@@ -17,7 +17,7 @@ phina.define("qft.MapObject.Door", {
     gravity: 0.0,
 
     //アニメーション間隔
-    advanceTime: 3,
+    animationInterval: 3,
 
     //地形無視
     ignoreCollision: true,

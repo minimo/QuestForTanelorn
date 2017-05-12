@@ -15,7 +15,7 @@ phina.define("qft.MapObject.CheckIcon", {
     gravity: 0.0,
 
     //アニメーション間隔
-    advanceTime: 3,
+    animationInterval: 3,
 
     //地形無視
     ignoreCollision: true,
@@ -27,7 +27,7 @@ phina.define("qft.MapObject.CheckIcon", {
         //スプライト
         this.sprite = phina.display.Sprite("checkicon", 32, 32).addChildTo(this);
         this.setAnimation("up");
-        this.advanceTime = 10;
+        this.animationInterval = 10;
     },
 
     update: function(e) {

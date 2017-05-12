@@ -37,7 +37,7 @@ phina.define("qft.Enemy.Flame", {
         this.sprite.setFrameTrimming(Math.min(this.pattern, 2) * 24 + 72, 0, 24, 128);
 
         this.setAnimation("normal");
-        this.advanceTime = 3;
+        this.animationInterval = 3;
 
         this.direction = 0;
     },

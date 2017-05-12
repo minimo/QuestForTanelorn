@@ -23,7 +23,7 @@ phina.define("qft.MapObject.Block", {
     gravity: 0.0,
 
     //アニメーション間隔
-    advanceTime: 1,
+    animationInterval: 1,
 
     isAdvanceAnimation: false,
 

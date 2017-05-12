@@ -63,7 +63,7 @@ phina.define("qft.Enemy.FireBird", {
         this.sprite.setFrameTrimming(288, 0, 72, 128);
 
         this.setAnimation("walk");
-        this.advanceTime = 6;
+        this.animationInterval = 6;
         this.setupLifeGauge();
 
         this.isVertical = this.options.vertical || false;
@@ -165,7 +165,7 @@ phina.define("qft.Enemy.FireBirdBomb", {
         this.sprite = phina.display.Sprite("bullet", 24, 32).addChildTo(this).setFrameIndex(72);
 
         this.setAnimation("normal");
-        this.advanceTime = 6;
+        this.animationInterval = 6;
     },
 
     update: function() {

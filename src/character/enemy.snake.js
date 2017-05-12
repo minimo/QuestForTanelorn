@@ -44,7 +44,7 @@ phina.define("qft.Enemy.Snake", {
         this.sprite.setFrameTrimming(0, 384, 72, 128);
 
         this.setAnimation("walk");
-        this.advanceTime = 10;
+        this.animationInterval = 10;
         this.setupLifeGauge();
 
         this.direction = 0;

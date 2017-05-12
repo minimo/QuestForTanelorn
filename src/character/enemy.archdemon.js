@@ -49,7 +49,7 @@ phina.define("qft.Enemy.ArchDemon", {
         this.sprite.setFrameTrimming(this.level * 72, 640, 72, 128);
 
         this.setAnimation("walk");
-        this.advanceTime = 6;
+        this.animationInterval = 6;
         this.setupLifeGauge();
 
         this.phase = 0;

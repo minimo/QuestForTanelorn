@@ -44,7 +44,7 @@ phina.define("qft.Enemy.Demon", {
         this.sprite.setFrameTrimming(0, 640, 72, 128);
 
         this.setAnimation("walk");
-        this.advanceTime = 6;
+        this.animationInterval = 6;
         this.setupLifeGauge();
 
         this.direction = 0;

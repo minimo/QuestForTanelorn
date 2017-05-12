@@ -54,7 +54,7 @@ phina.define("qft.Enemy.Wisp", {
         this.sprite.setFrameTrimming(0, 512, 72, 128);
 
         this.setAnimation("stand");
-        this.advanceTime = 10;
+        this.animationInterval = 10;
         this.setupLifeGauge();
 
         this.direction = 0;
@@ -139,7 +139,7 @@ phina.define("qft.Enemy.WispHard", {
         this.sprite.setFrameTrimming(288, 512, 72, 128);
 
         this.setAnimation("stand");
-        this.advanceTime = 10;
+        this.animationInterval = 10;
         this.setupLifeGauge();
 
         this.direction = 0;
@@ -216,7 +216,7 @@ phina.define("qft.Enemy.WispBomb", {
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("particle", 16, 16).addChildTo(this).setFrameIndex(31);
-        this.advanceTime = 3;
+        this.animationInterval = 3;
 
         this.pattern = options.pattern || 1;
         this.setAnimation("pattern"+this.pattern);

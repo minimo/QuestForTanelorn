@@ -20,7 +20,7 @@ phina.define("qft.MapObject.Accessory", {
     gravity: 0.0,
 
     //アニメーション間隔
-    advanceTime: 2,
+    animationInterval: 2,
 
     isAdvanceAnimation: true,
 
@@ -65,7 +65,7 @@ phina.define("qft.MapObject.Lamp", {
         } else {
             this.setAnimation("normal2");
         }
-        this.advanceTime = 8;
+        this.animationInterval = 8;
     },
 });
 
@@ -82,7 +82,7 @@ phina.define("qft.MapObject.Bonfire", {
 
         //アニメーション設定
         this.setAnimation("normal");
-        this.advanceTime = 3;
+        this.animationInterval = 3;
     },
 });
 
@@ -99,7 +99,7 @@ phina.define("qft.MapObject.Flame", {
 
         //アニメーション設定
         this.setAnimation("normal");
-        this.advanceTime = 3;
+        this.animationInterval = 3;
     },
 });
 
@@ -116,7 +116,7 @@ phina.define("qft.MapObject.Fire", {
 
         //アニメーション設定
         this.setAnimation("normal");
-        this.advanceTime = 3;
+        this.animationInterval = 3;
     },
 });
 
@@ -133,7 +133,7 @@ phina.define("qft.MapObject.Candle", {
 
         //アニメーション設定
         this.setAnimation("normal");
-        this.advanceTime = 3;
+        this.animationInterval = 3;
     },
 });
 
@@ -150,7 +150,7 @@ phina.define("qft.MapObject.Lanthanum", {
 
         //アニメーション設定
         this.setAnimation("normal");
-        this.advanceTime = 3;
+        this.animationInterval = 3;
     },
 
     setupAnimation: function() {
@@ -174,7 +174,7 @@ phina.define("qft.MapObject.CandleLamp", {
 
         //アニメーション設定
         this.setAnimation("normal");
-        this.advanceTime = 3;
+        this.animationInterval = 3;
     },
 
     setupAnimation: function() {

@@ -47,7 +47,7 @@ phina.define("qft.Enemy.Mage", {
         this.power += this.level * 5;
 
         this.setAnimation("walk");
-        this.advanceTime = 10;
+        this.animationInterval = 10;
         this.setupLifeGauge();
 
         this.direction = 0;

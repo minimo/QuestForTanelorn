@@ -1,4 +1,4 @@
-1/*
+/*
  *  enemy.slime.js
  *  2016/12/31
  *  @auther minimo  
@@ -50,7 +50,7 @@ phina.define("qft.Enemy.Slime", {
         this.power += this.level * 5;
 
         this.setAnimation("walk");
-        this.advanceTime = 10;
+        this.animationInterval = 10;
         this.setupLifeGauge();
 
         this.direction = 0;

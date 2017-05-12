@@ -59,7 +59,7 @@ phina.define("qft.Enemy.Devil", {
         this.sprite.setFrameTrimming(72, 0, 72, 128);
 
         this.setAnimation("walk");
-        this.advanceTime = 6;
+        this.animationInterval = 6;
         this.setupLifeGauge();
 
         this.isVertical = this.options.vertical || false;
