@@ -76,6 +76,11 @@ phina.define("qft.Enemy.Death", {
             this.firstX = this.x;
             this.firstY = this.y;
         });
+
+        //被ダメージ時処理
+        this.one('damaged', e => {
+            this.phase = 0;
+        });
     },
 
     algorithm: function() {
@@ -162,9 +167,9 @@ phina.define("qft.Enemy.Death", {
         //攻撃
         if (this.isAttack) {
             this.isAttack = false;
-            var b = this.parentScene.spawnEnemy(this.x, this.y, "DeathFlame", {pattern: 1});
+            var b = this.parentScene.spawnEnemy(this.x, this.y, "DeathFlame", {pattern: 0});
             b.vy = -2;
-            b.vx = 16 * this.scaleX;
+            b.vx = 2 * this.scaleX;
             this.actionWait = 120;
         }
 
@@ -196,7 +201,7 @@ phina.define("qft.Enemy.DeathFlame", {
     gravity: 0.1,
 
     //横移動減衰率
-    friction: 0.1,
+    friction: 0.98,
 
     //気絶確率
     stunPower: 20,
@@ -225,7 +230,7 @@ phina.define("qft.Enemy.DeathFlame", {
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("flame03", 24, 32).addChildTo(this);
-        this.sprite.setFrameTrimming(0, 0, 144, 128);
+        this.sprite.setFrameTrimming(0, 0, 144, 128).setFrameIndex(15 + this.pattern);
 
         this.setAnimation("appear");
         this.animationInterval = 3;
@@ -249,8 +254,8 @@ phina.define("qft.Enemy.DeathFlame", {
         index = index || 0;
         this.spcialAnimation = false;
         this.frame = [];
-        this.frame["appear"] = [ 9+index, 3+index,21+index, "normal"];
-        this.frame["normal"] = [ 0+index, 6+index,12+index, 18+index];
+        this.frame["appear"] = [15+index, 9+index,  3+index, 21+index, "normal"];
+        this.frame["normal"] = [ 0+index, 6+index, 12+index, 18+index];
         this.index = 0;
     },
 

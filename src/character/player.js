@@ -305,12 +305,13 @@ phina.define("qft.Player", {
             } else {
                 this.isAdvanceAnimation = true;
             }
-            if (this.nowAnimation == "up" || this.nowAnimation == "down")
+            if (this.nowAnimation == "up" || this.nowAnimation == "down") {
                 if (ct.up || ct.down) {
                     this.isAdvanceAnimation = true;
                 } else {
                     this.isAdvanceAnimation = false;
                 }
+            }
         }
 
         //攻撃判定追従

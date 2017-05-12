@@ -69,6 +69,9 @@ phina.define("qft.Character", {
     //アニメーション進行可能フラグ
     isAdvanceAnimation: true,
 
+    //アニメーション変更検知フラグ
+    isChangeAnimation: false,
+
     //アニメーション間隔
     animationInterval: 6,
 
@@ -495,6 +498,7 @@ phina.define("qft.Character", {
         if (animName == this.nowAnimation) return;
         this.nowAnimation = animName;
         this.index = -1;
+        this.isChangeAnimation = true;
         return this;
     },
 
