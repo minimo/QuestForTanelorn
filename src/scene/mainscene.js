@@ -12,7 +12,7 @@ phina.define("qft.MainScene", {
     stageNumber: 1,
 
     //最大ステージ番号
-    stageNumberMax: 3,
+    stageNumberMax: 4,
 
     //残り時間（フレーム単位）
     timeLimit: 120,
@@ -429,6 +429,14 @@ phina.define("qft.MainScene", {
                 break;
             case 4:
                 this.stageController = qft.Stage4(this);
+                this.switchMap(this.stageController.mapLayer[0]);
+                break;
+            case 5:
+                this.stageController = qft.Stage5(this);
+                this.switchMap(this.stageController.mapLayer[0]);
+                break;
+            case 6:
+                this.stageController = qft.Stage6(this);
                 this.switchMap(this.stageController.mapLayer[0]);
                 break;
             case 999:

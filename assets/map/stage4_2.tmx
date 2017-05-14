@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="60" tilewidth="16" tileheight="16" nextobjectid="111">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="60" tilewidth="16" tileheight="16" nextobjectid="113">
  <tileset firstgid="1" name="A1" tilewidth="16" tileheight="16" tilecount="768" columns="32">
   <image source="TileA1.png" width="512" height="384"/>
  </tileset>
@@ -501,10 +501,10 @@
     <property name="moveSpeed" type="int" value="60"/>
    </properties>
   </object>
-  <object id="79" type="floor" x="2944" y="560" width="112" height="48">
+  <object id="79" type="floor" x="2804" y="376" width="112" height="48">
    <properties>
     <property name="index" type="int" value="5"/>
-    <property name="moveAngle" type="int" value="225"/>
+    <property name="moveAngle" type="int" value="45"/>
     <property name="moveLength" type="int" value="192"/>
     <property name="moveSpeed" type="int" value="60"/>
    </properties>
@@ -559,11 +559,11 @@
     <property name="level" type="int" value="1"/>
    </properties>
   </object>
-  <object id="90" type="floor" x="2664" y="220" width="112" height="48">
+  <object id="90" type="floor" x="2692" y="376" width="112" height="48">
    <properties>
     <property name="index" type="int" value="5"/>
     <property name="moveAngle" type="int" value="270"/>
-    <property name="moveLength" type="int" value="256"/>
+    <property name="moveLength" type="int" value="192"/>
     <property name="moveSpeed" type="int" value="90"/>
    </properties>
   </object>
@@ -587,27 +587,12 @@
     <property name="level" type="int" value="1"/>
    </properties>
   </object>
-  <object id="101" name="lamp" type="accessory" x="2688" y="324" width="24" height="32">
-   <properties>
-    <property name="level" type="int" value="1"/>
-   </properties>
-  </object>
   <object id="102" name="lamp" type="accessory" x="3056" y="324" width="24" height="32">
    <properties>
     <property name="level" type="int" value="1"/>
    </properties>
   </object>
-  <object id="103" name="lamp" type="accessory" x="2688" y="444" width="24" height="32">
-   <properties>
-    <property name="level" type="int" value="1"/>
-   </properties>
-  </object>
   <object id="104" name="lamp" type="accessory" x="3056" y="444" width="24" height="32">
-   <properties>
-    <property name="level" type="int" value="1"/>
-   </properties>
-  </object>
-  <object id="105" name="lamp" type="accessory" x="2880" y="444" width="24" height="32">
    <properties>
     <property name="level" type="int" value="1"/>
    </properties>
@@ -621,6 +606,11 @@
   <object id="110" name="candlelamp" type="accessory" x="2812" y="748" width="24" height="32">
    <properties>
     <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="111" name="key" type="itembox" x="3000" y="492" width="32" height="32">
+   <properties>
+    <property name="color" value="gold"/>
    </properties>
   </object>
  </objectgroup>
