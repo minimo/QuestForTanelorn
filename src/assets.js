@@ -120,6 +120,24 @@ phina.define("qft.Assets", {
                             "stage4_2": "assets/map/stage4_2.tmx",
                         },
                     };
+                case "stage5":
+                    return {
+                        sound: {
+                            "bgm5": "assets/sound/DS-076m.mp3",
+                        },
+                        tmx: {
+                            "stage5_1": "assets/map/stage5_1.tmx",
+                        },
+                    };
+                case "stage6":
+                    return {
+                        sound: {
+                            "bgm6": "assets/sound/DS-076m.mp3",
+                        },
+                        tmx: {
+                            "stage6_1": "assets/map/stage6_1.tmx",
+                        },
+                    };
                 default:
                     throw "invalid assetType: " + options.assetType;
             }
