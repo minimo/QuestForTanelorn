@@ -71,8 +71,10 @@ phina.define("qft.MapObject.Floor", {
             case "linear":
                 this.tweener.clear()
                     .moveTo(this.endX, this.endY, this.moveSpeed, "easeInOutSine")
+                    .call(function() {this.flare('linearend');}.bind(this))
                     .wait(this.moveWait)
                     .moveTo(this.startX, this.startY, this.moveSpeed, "easeInOutSine")
+                    .call(function() {this.flare('linearstart');}.bind(this))
                     .wait(this.moveWait)
                     .setLoop(true);
                 break;
@@ -83,12 +85,14 @@ phina.define("qft.MapObject.Floor", {
                     //反時計回り
                     this.tweener.clear()
                         .to({angle: -360}, this.moveSpeed)
+                        .call(function() {this.flare('criclrend');}.bind(this))
                         .set({angle: 0})
                         .setLoop(true);
                 } else {
                     //時計回り
                     this.tweener.clear()
                         .to({angle: 360}, this.moveSpeed)
+                        .call(function() {this.flare('circleend');}.bind(this))
                         .set({angle: 0})
                         .setLoop(true);
                     break;
