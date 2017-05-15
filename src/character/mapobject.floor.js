@@ -22,6 +22,9 @@ phina.define("qft.MapObject.Floor", {
     //移動フラグ
     isActive: true,
 
+    //プレイヤーが上に乗ってるフラグ
+    isOnPlayer: false,
+
     //アニメーション進行可能フラグ
     isAdvanceAnimation: false,
 
@@ -132,6 +135,14 @@ phina.define("qft.MapObject.Floor", {
         //停止と再生
         if (!this.isActive) this.tweener.pause();
         if (this.isActive) this.tweener.play();
+
+        //プレイヤーが上に乗っているか判定
+        if (this.parentScene.player.floorObject) {
+            if (this.parentScene.player.floorObject.parentObject === this)
+                this.isOnPlayer = true;
+        } else {
+            this.isOnPlayer = false;
+        }
     },
 
     //フロア当たり判定の追加
@@ -145,5 +156,6 @@ phina.define("qft.MapObject.Floor", {
         this.collision.vy = 0;
         this.collision.ignore = false;
         this.collision.type = "floor";
+        this.collision.parentObject = this;
     }
 });

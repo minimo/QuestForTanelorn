@@ -33,6 +33,9 @@ phina.define("qft.Character", {
     //床上フラグ
     isOnFloor: false,
 
+    //乗っているオブジェクト
+    floorObject: null,
+
     //はしご上フラグ
     isOnLadder: false,
 
@@ -251,6 +254,13 @@ phina.define("qft.Character", {
             }
 
             if (this.balloon) this.balloon.scaleX = this.scaleX;
+
+            //乗っている床の取得
+            if (this.isOnFloor) {
+                this.floorObject = this._collision[2].hit;
+            } else {
+                this.floorObject = null;
+            }
 
             this.time++;
             this.beforeAnimation = this.nowAnimation;
