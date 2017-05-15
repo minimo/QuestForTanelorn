@@ -67,7 +67,7 @@ phina.define("qft.Enemy.ArchDemon", {
         var dis = this.getDistancePlayer();
         var look = this.isLookPlayer();
 
-        if (this.onFloor) {
+        if (this.isOnFloor) {
             //崖っぷちで折り返す
             if (this.checkMapCollision2(this.x+5, this.y+20, 5, 5) == null) {
                 this.direction = 180;

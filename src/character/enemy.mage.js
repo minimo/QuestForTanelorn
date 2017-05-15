@@ -65,7 +65,7 @@ phina.define("qft.Enemy.Mage", {
         var look = this.isLookPlayer();
         var distance = this.getDistancePlayer();
 
-        if (this.onFloor) {
+        if (this.isOnFloor) {
             //プレイヤーが近くにいたら距離を取る
             if (this.phase == 0 && look && !this.isJump && distance < 128) {
                 this.flare('balloon', {pattern: "!"});
@@ -142,7 +142,7 @@ phina.define("qft.Enemy.Mage", {
             }
         }
 
-        if (this.onFloor || this.isJump) {
+        if (this.isOnFloor || this.isJump) {
             this.vx = this.speed;
             if (this.direction == 180) {
                 this.vx *= -1;

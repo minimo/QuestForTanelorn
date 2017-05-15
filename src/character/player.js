@@ -193,14 +193,14 @@ phina.define("qft.Player", {
                     }
                     //ジャンプ
                     var chk = this.checkMapCollision2(this.x, this.y-16, 5, 3);
-                    if (!this.isJump && this.onFloor && !this.onLadder && !chk) {
+                    if (!this.isJump && this.isOnFloor && !this.onLadder && !chk) {
                         this.setAnimation("jump");
                         this.isJump = true;
                         this.vy = -11;
                         this.numJump = 1;
                     }
                     //はしごを昇る（階段は接地時のみ）
-                    if (this.onLadder && !this.onStairs || this.onFloor && this.onStairs) {
+                    if (this.onLadder && !this.onStairs || this.isOnFloor && this.onStairs) {
                         this.setAnimation("up");
                         this.vx = 0;
                         this.vy = 0;
@@ -209,7 +209,7 @@ phina.define("qft.Player", {
                     }
 
                     //扉に入る（接地時＆左右キーオフ時のみ）
-                    if (!ct.left && !ct.right && this.onFloor && this.onDoor && !this.onDoor.isLock && !this.onDoor.already) {
+                    if (!ct.left && !ct.right && this.isOnFloor && this.onDoor && !this.onDoor.isLock && !this.onDoor.already) {
                         this.vx = 0;
                         this.vy = 0;
                         this.onDoor.flare('enterdoor');
@@ -228,7 +228,7 @@ phina.define("qft.Player", {
                     }
                     //床スルー
                     if (this.downFrame > 6 && !this.jump && !footLadder) {
-                        if (this.onFloor && !this.throughFloor) {
+                        if (this.isOnFloor && !this.throughFloor) {
                             var floor = this.checkMapCollision2(this.x, this.y+16, 5, 5);
                             if (floor && floor[0].enableThrough) this.throughFloor = floor[0];
                         }
@@ -247,7 +247,7 @@ phina.define("qft.Player", {
 
         //攻撃
         if (!this.isAttack) {
-            if (this.onFloor) {
+            if (this.isOnFloor) {
                 if (this.nowAnimation != "damage") this.setAnimation("walk");
             } else if (this.isCatchLadder) {
                 if (ct.up) {
@@ -327,7 +327,7 @@ phina.define("qft.Player", {
         this.before.isStun = this.isStun;
 
         //ダウンキー連続押下フレームカウント
-        if (this.onFloor && !this.isCatchLadder && ct.down && !ct.right && !ct.left && !ct.up && !ct.attack) {
+        if (this.isOnFloor && !this.isCatchLadder && ct.down && !ct.right && !ct.left && !ct.up && !ct.attack) {
             this.downFrame++;
         } else {
             this.downFrame = 0;
@@ -348,7 +348,7 @@ phina.define("qft.Player", {
         this.isDead = false;
         this.isCatchLadder = false;
         this.isDrop = false;
-        this.onFloor = false;
+        this.isOnFloor = false;
         this.isAdvanceAnimation = true;
         this.ignoreCollision = false;
 

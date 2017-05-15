@@ -151,7 +151,7 @@ phina.define("qft.Enemy.BirdBomb", {
     },
 
     update: function() {
-        if (this.onFloor) this.remove();
+        if (this.isOnFloor) this.remove();
     },
 
     setupAnimation: function() {

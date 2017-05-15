@@ -95,7 +95,7 @@ phina.define("qft.Enemy.Knight", {
         //一定距離以上離れたら追跡解除
         if (dis > 512) this.forgotTime = 0;
 
-        if (this.onFloor || this.isJump) {
+        if (this.isOnFloor || this.isJump) {
             if (this.direction == 0) {
                 this.vx = 1;
             } else {
@@ -112,7 +112,7 @@ phina.define("qft.Enemy.Knight", {
         }
         if (this.forgotTime > 0) this.vx *= 3;
 
-        if (this.onFloor) {
+        if (this.isOnFloor) {
             //これ以上進めない場合は折り返す
             var isReturnWall = false;
             var isReturnCliff = false;

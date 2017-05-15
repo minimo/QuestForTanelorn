@@ -60,7 +60,7 @@ phina.define("qft.Enemy.Demon", {
         var dis = this.getDistancePlayer();
         var look = this.isLookPlayer();
 
-        if (this.onFloor) {
+        if (this.isOnFloor) {
             //崖っぷちで折り返す
             if (this.checkMapCollision2(this.x+5, this.y+20, 5, 5) == null) {
                 this.direction = 180;
@@ -94,7 +94,7 @@ phina.define("qft.Enemy.Demon", {
                 }
             }
         }
-        if (this.onFloor || this.isJump) {
+        if (this.isOnFloor || this.isJump) {
             if (this.direction == 0) {
                 this.vx = 1;
             } else {

@@ -226,7 +226,7 @@ phina.define("qft.Enemy.WispBomb", {
     },
 
     update: function() {
-        if (this.onFloor) {
+        if (this.isOnFloor) {
             if (this.onScreen) app.playSE("bomb");
             var b = this.parentScene.spawnEnemy(this.x, this.y, "Flame", {pattern: 1});
             this.remove();

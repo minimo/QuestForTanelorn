@@ -64,7 +64,7 @@ phina.define("qft.Enemy.Slime", {
     algorithm: function() {
         var look = this.isLookPlayer();
 
-        if (this.onFloor) {
+        if (this.isOnFloor) {
             //崖っぷちで折り返す
             if (this.checkMapCollision2(this.x+5, this.y+20, 5, 5) == null) {
                 this.direction = 180;
@@ -102,7 +102,7 @@ phina.define("qft.Enemy.Slime", {
                 }
             }
         }
-        if (this.onFloor || this.isJump) {
+        if (this.isOnFloor || this.isJump) {
             this.vx =  2 + Math.floor(this.level*0.5) * this.speed;
             if (this.direction == 180) {
                 this.vx *= -1;

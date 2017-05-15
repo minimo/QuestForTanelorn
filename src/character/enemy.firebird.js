@@ -169,7 +169,7 @@ phina.define("qft.Enemy.FireBirdBomb", {
     },
 
     update: function() {
-        if (this.onFloor) {
+        if (this.isOnFloor) {
             this.parentScene.spawnEffect(this.x, this.y, {name: "explode_ground"});
             if (this.onScreen) app.playSE("bomb");
             this.remove();

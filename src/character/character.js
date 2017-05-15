@@ -31,7 +31,7 @@ phina.define("qft.Character", {
     throughFloor: null,
 
     //床上フラグ
-    onFloor: false,
+    isOnFloor: false,
 
     //はしご上フラグ
     onLadder: false,
@@ -191,7 +191,7 @@ phina.define("qft.Character", {
             if (!this.onScreen) return;
 
             this.x += this.vx;
-            if (this.onFloor) {
+            if (this.isOnFloor) {
                 this.vx *= this.floorFriction;
             } else {
                 this.vx *= this.friction;
@@ -337,7 +337,7 @@ phina.define("qft.Character", {
     collisionProcess: function() {
         var w = Math.floor(this.width/2)+6;
         var h = Math.floor(this.height/2)+6;
-        this.onFloor = false;
+        this.isOnFloor = false;
 
         //上側接触
         if (this._collision[0].hit && !this.isCatchLadder) {
@@ -356,7 +356,7 @@ phina.define("qft.Character", {
             this.x += ret.vx || 0;
             if (ret.vy > 0) this.y += ret.vy || 0;
             this.isJump = false;
-            this.onFloor = true;
+            this.isOnFloor = true;
             this.floorFriction = ret.friction == undefined? 0.5: ret.friction;
 
             this.throughFloor = null;
@@ -435,7 +435,7 @@ phina.define("qft.Character", {
                 that.vx = e.vx;
                 that.vy = 0;
                 that.isJump = false;
-                that.onFloor = true;
+                that.isOnFloor = true;
                 that.throughFloor = null;
                 ret[2] = e;
                 if (that.rebound > 0) {
