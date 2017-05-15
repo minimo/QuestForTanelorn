@@ -229,6 +229,11 @@ phina.define("qft.StageController", {
                 case "floor":
                     var floor = qft.MapObject.Floor(this.parentScene, e).addChildTo(mapLayer.objLayer).setPosition(x, y);
                     floor.addCollision(mapLayer.collisionLayer);
+                    if (e.properties.script) {
+                        var sc = "(function(app) {"+e.properties.script+"})";
+                        var f = eval(sc);
+                        floor.on('enterframe', f);
+                    }
                     break;
                 case "check":
                     qft.MapObject.CheckIcon(this.parentScene, e).addChildTo(mapLayer.objLayer).setPosition(x, y).setAnimation(e.name);

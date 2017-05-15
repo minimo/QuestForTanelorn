@@ -19,6 +19,10 @@ phina.define("qft.MapObject.Floor", {
     //重力加速度
     gravity: 0.0,
 
+    //移動フラグ
+    isActive: true,
+
+    //アニメーション進行可能フラグ
     isAdvanceAnimation: false,
 
     //地形無視
@@ -36,7 +40,7 @@ phina.define("qft.MapObject.Floor", {
 
         this.moveType = options.properties.moveType || "linear";
         this.moveAngle = options.properties.moveAngle || 0;
-        this.moveLength = options.properties.moveLength || 128;
+        this.moveLength = options.properties.moveLength || 0;
         this.moveRadius = options.properties.moveRadius || 64;
         this.moveSpeed = options.properties.moveSpeed || 60;
         this.moveWait = options.properties.moveWait || 60;
@@ -44,9 +48,22 @@ phina.define("qft.MapObject.Floor", {
         //始点と終点
         this.startX = options.x + (options.width || 16) / 2;
         this.startY = options.y + (options.height || 16) / 2;
-        var rad = this.moveAngle.toRadian();
-        this.endX = this.startX + Math.cos(rad) * this.moveLength;
-        this.endY = this.startY + Math.sin(rad) * this.moveLength;
+        if (this.moveLength > 0) {
+            //移動距離が設定されている場合
+            var rad = this.moveAngle.toRadian();
+            this.endX = this.startX + Math.cos(rad) * this.moveLength;
+            this.endY = this.startY + Math.sin(rad) * this.moveLength;
+        } else {
+            //終点座標が設定されている場合
+            this.endX = options.properties.endX || this.startX;
+            this.endY = options.properties.endY || this.startY;
+        }
+
+        //円運動の場合は中心を設定（無い場合は終点を中心とする）
+        if (this.moveType == "circle") {
+            this.centerX = options.properties.centerX || this.endX;
+            this.centerY = options.properties.centerY || this.endY;
+        }
 
         //移動パターン
         switch (this.moveType) {
@@ -97,8 +114,8 @@ phina.define("qft.MapObject.Floor", {
     update: function(e) {
         if (this.moveType == "circle") {
             var rad = this.radius.toRadian();
-            this.x = this.endX + Math.cos(rad) * this.moveRadius;
-            this.y = this.endY + Math.sin(rad) * this.moveRadius;
+            this.x = this.centerX + Math.cos(rad) * this.moveRadius;
+            this.y = this.centerY + Math.sin(rad) * this.moveRadius;
         }
 
         if (this.collision) {
@@ -107,6 +124,10 @@ phina.define("qft.MapObject.Floor", {
             this.collision.x = this.x;
             this.collision.y = this.y;
         }
+
+        //停止と再生
+        if (!this.isActive) this.tweener.pause();
+        if (this.isActive) this.tweener.play();
     },
 
     //フロア当たり判定の追加
