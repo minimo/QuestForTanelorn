@@ -243,7 +243,7 @@ phina.define("qft.StageController", {
                     qft.MapObject.Gate(this.parentScene, e).addChildTo(mapLayer.objLayer).setPosition(x, y);
                     break;
                 case "accessory":
-                    var layer = e.properties.foreground? mapLayer.foregroundLayer: mapLayer.objLayer;
+                    var layer = e.properties.foreground? mapLayer.foregroundLayer: mapLayer.backgroundLayer;
                     switch (e.name) {
                         case "lamp":
                             qft.MapObject.Lamp(this.parentScene, e).addChildTo(layer).setPosition(x, y);
