@@ -25,10 +25,10 @@ phina.define("qft.Stage5", {
         //初期処理
         this.add(1, function() {
             //ＢＧＭ再生
-            app.playBGM("bgm4");
+            app.playBGM("bgm5");
 
             //ステージ開始メッセージ投入
-            this.spawnMessage("STAGE 4", 24);
+            this.spawnMessage("STAGE 5", 24);
 
             //マップ表示設定
             this.limitWidth = true;

@@ -25,7 +25,7 @@ phina.define("qft.Stage6", {
         //初期処理
         this.add(1, function() {
             //ＢＧＭ再生
-            app.playBGM("bgm4");
+            app.playBGM("bgm6");
 
             //ステージ開始メッセージ投入
             this.spawnMessage("STAGE 6", 24);

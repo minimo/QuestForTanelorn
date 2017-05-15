@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="60" tilewidth="16" tileheight="16" nextobjectid="113">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="60" tilewidth="16" tileheight="16" nextobjectid="114">
  <tileset firstgid="1" name="A1" tilewidth="16" tileheight="16" tilecount="768" columns="32">
   <image source="TileA1.png" width="512" height="384"/>
  </tileset>
@@ -608,9 +608,9 @@
     <property name="level" type="int" value="1"/>
    </properties>
   </object>
-  <object id="111" name="key" type="itembox" x="3000" y="492" width="32" height="32">
+  <object id="113" name="lamp" type="accessory" x="2694" y="324" width="24" height="32">
    <properties>
-    <property name="color" value="gold"/>
+    <property name="level" type="int" value="1"/>
    </properties>
   </object>
  </objectgroup>
