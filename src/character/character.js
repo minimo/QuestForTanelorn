@@ -34,10 +34,10 @@ phina.define("qft.Character", {
     isOnFloor: false,
 
     //はしご上フラグ
-    onLadder: false,
+    isOnLadder: false,
 
     //階段上フラグ
-    onStairs: false,
+    isOnStairs: false,
 
     //はしご掴みフラグ
     isCatchLadder: false,
@@ -297,8 +297,8 @@ phina.define("qft.Character", {
         this._collision[3].hit = null;
 
         var that = this;
-        this.onLadder = false;
-        this.onStairs = false;
+        this.isOnLadder = false;
+        this.isOnStairs = false;
 
         //地形接触判定
         this.parentScene.collisionLayer.children.forEach(function(e) {
@@ -324,8 +324,8 @@ phina.define("qft.Character", {
             //梯子判定
             if (e.type == "ladder" || e.type == "stairs") {
                 if (that.ladderCollision && e.hitTestElement(that.ladderCollision)) {
-                    that.onLadder = true;
-                    that.onStairs = (e.type == "stairs");
+                    that.isOnLadder = true;
+                    that.isOnStairs = (e.type == "stairs");
                 }
                 return;
             }

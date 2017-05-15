@@ -49,7 +49,7 @@ phina.define("qft.Player", {
     isAttack: false,
 
     //ドア上フラグ
-    onDoor: false,
+    isOnDoor: false,
 
     //前フレームの情報
     before: {
@@ -60,6 +60,7 @@ phina.define("qft.Player", {
         jump: false,
         change: false,
         isStun: false,
+        isOnFloor: false,
     },
 
     //ステージ開始時ステータス
@@ -119,12 +120,12 @@ phina.define("qft.Player", {
     },
     update: function(app) {
         //オブジェクトレイヤー接触判定
-        this.onDoor = null;
+        this.isOnDoor = null;
         this.parentScene.objLayer.children.forEach(function(e) {
             //扉判定
             if (e instanceof qft.MapObject.Door || e instanceof qft.MapObject.Gate) {
                 if (e.hitTestElement(this)) {
-                    this.onDoor = e;
+                    this.isOnDoor = e;
                     return;
                 }
             }
@@ -193,14 +194,14 @@ phina.define("qft.Player", {
                     }
                     //ジャンプ
                     var chk = this.checkMapCollision2(this.x, this.y-16, 5, 3);
-                    if (!this.isJump && this.isOnFloor && !this.onLadder && !chk) {
+                    if (!this.isJump && this.isOnFloor && !this.isOnLadder && !chk) {
                         this.setAnimation("jump");
                         this.isJump = true;
                         this.vy = -11;
                         this.numJump = 1;
                     }
                     //はしごを昇る（階段は接地時のみ）
-                    if (this.onLadder && !this.onStairs || this.isOnFloor && this.onStairs) {
+                    if (this.isOnLadder && !this.isOnStairs || this.isOnFloor && this.isOnStairs) {
                         this.setAnimation("up");
                         this.vx = 0;
                         this.vy = 0;
@@ -209,11 +210,11 @@ phina.define("qft.Player", {
                     }
 
                     //扉に入る（接地時＆左右キーオフ時のみ）
-                    if (!ct.left && !ct.right && this.isOnFloor && this.onDoor && !this.onDoor.isLock && !this.onDoor.already) {
+                    if (!ct.left && !ct.right && this.isOnFloor && this.isOnDoor && !this.isOnDoor.isLock && !this.isOnDoor.already) {
                         this.vx = 0;
                         this.vy = 0;
-                        this.onDoor.flare('enterdoor');
-                        this.onDoor.already = false;
+                        this.isOnDoor.flare('enterdoor');
+                        this.isOnDoor.already = false;
                     }
                 }
                 //下キー押下
@@ -240,7 +241,7 @@ phina.define("qft.Player", {
 
         //はしごから外れたら梯子掴み状態キャンセル
         if (this.isCatchLadder) {
-            if (!this.onLadder && !ct.down || this.onLadder && !footLadder && !ct.up) {
+            if (!this.isOnLadder && !ct.down || this.isOnLadder && !footLadder && !ct.up) {
                 this.isCatchLadder = false;
             }
         }
@@ -253,7 +254,7 @@ phina.define("qft.Player", {
                 if (ct.up) {
                     this.setAnimation("up");
                 } else if (ct.down) {
-                    if (this.onStairs) {
+                    if (this.isOnStairs) {
                         this.setAnimation("down");
                     } else {
                         this.setAnimation("up");
@@ -262,7 +263,7 @@ phina.define("qft.Player", {
             }else {
                 this.setAnimation("jump");
             }
-            if (ct.attack && !this.before.attack && this.stopTime == 0 && !(this.isCatchLadder && this.onLadder)) {
+            if (ct.attack && !this.before.attack && this.stopTime == 0 && !(this.isCatchLadder && this.isOnLadder)) {
                 this.isCatchLadder = false;
                 this.setAnimation("attack");
                 this.weaponAttack();
@@ -325,6 +326,7 @@ phina.define("qft.Player", {
         this.before.jump = ct.up || ct.jump;
         this.before.change = ct.change;
         this.before.isStun = this.isStun;
+        this.before.inOnFloor = this.isOnFloor;
 
         //ダウンキー連続押下フレームカウント
         if (this.isOnFloor && !this.isCatchLadder && ct.down && !ct.right && !ct.left && !ct.up && !ct.attack) {
