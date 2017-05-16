@@ -159,6 +159,7 @@ phina.define("qft.Character", {
                 .setPosition(e.x, e.y);
             this.balloon.on('removed', e => {
                 that.balloon = null;
+                that.balloon.flare('balloonend');
             });
             this.lastBalloon = e.pattern;
             this.balloonTime = this.time + 120;
