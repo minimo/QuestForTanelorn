@@ -78,9 +78,11 @@ phina.define("qft.Enemy.Death", {
         });
 
         //被ダメージ時処理
-        this.one('damaged', e => {
+        this.on('damaged', e => {
             this.phase = 0;
         });
+
+        this.tweener2 = phina.accessory.Tweener().attachTo(this);
     },
 
     algorithm: function() {
@@ -104,65 +106,36 @@ phina.define("qft.Enemy.Death", {
             if (this.time % 60 == 0) this.isAttack = true;
         }
 
-/*
-        if (look) {
-            //プレイヤーが見てない時のみ移動
-            var move = false;
-            if (this.x > pl.x) {
-                if (pl.scaleX == -1) move = true;
-            } else {
-                if (pl.scaleX == 1) move = true;
+        if (dis < this.eyesight) {
+            if (this.phase == 1) {
+                this.tweener.pause();
+                this.tweener2.clear().to({alpha: 0.5}, 120, "easeInOutSine");
+                this.isMuteki = true;
+                this.isEnableAttackCollision = false;
+                this.flare('balloon', {pattern: "!"});
+
+                this.phase = 2;
+                this.one('balloonend', () => {
+                    this.phase = 3;
+                });
             }
-            if (move) {
-                if (this.isHide) {
-                    this.isHide = false;
-                    this.tweener.clear().wait(15).to({alpha: 1.0, speed: 1}, 30, "easeInOutSine");
-                    this.flare('balloon', {pattern: "!"});
-                }
-            } else {
-                if (!this.isHide) {
-                    this.isHide = true;
-                    this.isEnableAttackCollision = false;
-                    this.tweener.clear().wait(15).to({alpha: 0.4, speed: 0}, 20, "easeInOutSine");
-                }
-            }
-            var p1 = phina.geom.Vector2(this.x, this.y);
-            var p2 = phina.geom.Vector2(pl.x, pl.y);
-            var p = p2.sub(p1);
-            p.normalize();
-            this.vx = p.x * this.speed;
-            this.vy = p.y * this.speed;
-            
-            this.phase = 0;
-        } else {
-            //プレイヤーを発見してない場合は近距離をうろうろする
-            if (this.phase == 0) {
+            if (this.phase == 3) {
                 this.flare('balloon', {pattern: "..."});
-                this.vx = 0;
-                this.vy = 0;
+            }
+
+            //プレイヤーが視界範囲にいる場合はプレイヤー方向を向く
+            if (this.x < pl.x) this.scaleX = 1; else this.scaleX = -1;
+        } else {
+            //プレイヤーが見えなくなったので徘徊に戻る
+            if (this.phase == 3) {
+                this.tweener.play();
+                this.tweener2.clear().to({alpha: 1.0}, 60, "easeInOutSine");
+
+                this.isMuteki = false;
+                this.isEnableAttackCollision = true;
                 this.phase = 1;
-                this.tweener.clear()
-                    .to({alpha: 1.0}, 30, "easeInOutSine")
-                    .set({scaleX: 1})
-                    .by({x: 96}, 120,"easeInOutSine")
-                    .set({scaleX: -1})
-                    .by({x: -96}, 120,"easeInOutSine")
-                    .setLoop(true);
             }
         }
-
-        //半透明時は無敵だけど攻撃判定も無い
-        if (this.alpha == 0.4) {
-            this.isMuteki = true;
-            this.isAttackCollision = false;
-        } else {
-            this.isMuteki = false;
-            this.isAttackCollision = true;
-        }
-
-        //一定距離内に入ったら攻撃する
-        if (!this.isHide && dis < 128 && this.actionWait == 0) this.isAttack = true;
-*/
 
         //攻撃
         if (this.isAttack) {
