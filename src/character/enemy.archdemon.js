@@ -46,7 +46,7 @@ phina.define("qft.Enemy.ArchDemon", {
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("monster01", 24, 32).addChildTo(this);
-        this.sprite.setFrameTrimming(this.level * 72, 640, 72, 128);
+        this.sprite.setFrameTrimming(288, 640, 72, 128);
 
         this.setAnimation("walk");
         this.animationInterval = 6;
@@ -67,7 +67,7 @@ phina.define("qft.Enemy.ArchDemon", {
         var dis = this.getDistancePlayer();
         var look = this.isLookPlayer();
 
-        if (this.isOnFloor) {
+        if (!this.flying && this.isOnFloor) {
             //崖っぷちで折り返す
             if (this.checkMapCollision2(this.x+5, this.y+20, 5, 5) == null) {
                 this.direction = 180;
@@ -100,7 +100,7 @@ phina.define("qft.Enemy.ArchDemon", {
                 }
             }
             //飛行モード移行
-            if (!this.isJump && this.time % 300 == 0) {
+            if (!this.isJump && this.time % 120 == 0) {
                 this.flying = true;
                 this.flyingX = Math.floor(this.x);
                 this.vx = 0;
@@ -115,12 +115,16 @@ phina.define("qft.Enemy.ArchDemon", {
 
         //飛びます飛びます
         if (this.flying) {
-            this.vy = Math.sin(this.time.toRadian()*6);
+            this.vx = Math.cos(this.time.toRadian());
+            this.vy = Math.sin(this.time.toRadian())  *0.5;
+            if (this.vx > 0) this.direction = 0; else this.direction = 180;
+            if (look) {
+                this.isAttack = true;
+            }
         }
 
         //プレイヤーを発見したらバルーンを出したり消したり
         if (look) {
-            this.vx *= 3;
             this.flare('balloon', {pattern: "!"});
         } else {
             if (dis < 128) {
