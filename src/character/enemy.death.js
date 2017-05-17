@@ -28,7 +28,7 @@ phina.define("qft.Enemy.Death", {
     eyesight: 128,
 
     //視野角
-    viewAngle: 360,
+    viewAngle: 180,
 
     //地形無視
     ignoreCollision: true,
@@ -63,6 +63,7 @@ phina.define("qft.Enemy.Death", {
         this.direction = 0;
         this.isAttack = false;
         this.actionWait = 0;
+        this.forgotTime = 0;
 
         this.phase = 0;
         this.speed = 1;
@@ -90,6 +91,7 @@ phina.define("qft.Enemy.Death", {
         var dis = this.getDistancePlayer();
         var look = this.isLookPlayer();
 
+        //徘徊モード
         if (this.phase == 0) {
             this.phase = 1;
             this.tweener.clear()
@@ -100,13 +102,13 @@ phina.define("qft.Enemy.Death", {
                 .by({x: -96}, 120,"easeInOutSine")
                 .setLoop(true);
         }
-
         if (this.phase == 1) {
             //徘徊モードの場合は適当に攻撃
-            if (this.time % 60 == 0) this.isAttack = true;
+            if (this.time % 90 == 0) this.isAttack = true;
         }
 
-        if (dis < this.eyesight) {
+        if (look) {
+            this.forgotTime = 120;
             if (this.phase == 1) {
                 this.tweener.pause();
                 this.tweener2.clear().to({alpha: 0.5}, 120, "easeInOutSine");
@@ -122,10 +124,8 @@ phina.define("qft.Enemy.Death", {
             if (this.phase == 3) {
                 this.flare('balloon', {pattern: "..."});
             }
-
-            //プレイヤーが視界範囲にいる場合はプレイヤー方向を向く
-            if (this.x < pl.x) this.scaleX = 1; else this.scaleX = -1;
-        } else {
+        }
+        if (this.forgotTime == 0) {
             //プレイヤーが見えなくなったので徘徊に戻る
             if (this.phase == 3) {
                 this.tweener.play();
@@ -135,6 +135,9 @@ phina.define("qft.Enemy.Death", {
                 this.isEnableAttackCollision = true;
                 this.phase = 1;
             }
+        } else {
+            //追跡中の場合はプレイヤー方向を向く
+            if (this.x < pl.x) this.scaleX = 1; else this.scaleX = -1;
         }
 
         //攻撃
@@ -146,7 +149,9 @@ phina.define("qft.Enemy.Death", {
             this.actionWait = 120;
         }
 
+
         if (this.actionWait > 0) this.actionWait--;
+        if (this.forgotTime > 0) this.forgotTime--;
     },
 
     setupAnimation: function() {
