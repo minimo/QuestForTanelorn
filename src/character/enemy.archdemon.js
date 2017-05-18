@@ -99,8 +99,9 @@ phina.define("qft.Enemy.ArchDemon", {
                     this.direction = 0;
                 }
             }
+
             //飛行モード移行
-            if (!this.isJump && this.time % 120 == 0) {
+            if (!this.isJump && !this.flying && this.time % 120 == 0) {
                 this.flying = true;
                 this.flyingX = Math.floor(this.x);
                 this.vx = 0;
@@ -114,11 +115,11 @@ phina.define("qft.Enemy.ArchDemon", {
         }
 
         //飛びます飛びます
-        if (this.flying) {
+        if (this.flying && this.phase == 1) {
             this.vx = Math.cos(this.time.toRadian());
-            this.vy = Math.sin(this.time.toRadian())  *0.5;
+            this.vy = Math.sin((this.time*180).toRadian());
             if (this.vx > 0) this.direction = 0; else this.direction = 180;
-            if (look) {
+            if (look && this.time % 60 == 0) {
                 this.isAttack = true;
             }
         }
