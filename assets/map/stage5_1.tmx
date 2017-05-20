@@ -378,7 +378,7 @@
    <properties>
     <property name="enterOffset" type="int" value="-16"/>
     <property name="lock" type="bool" value="false"/>
-    <property name="nextID" type="int" value="35"/>
+    <property name="nextID" type="int" value="5"/>
     <property name="offset" type="int" value="48"/>
     <property name="toLayerNumber" type="int" value="1"/>
     <property name="visible" type="bool" value="false"/>

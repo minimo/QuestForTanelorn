@@ -21,6 +21,8 @@ phina.define("qft.Stage5", {
         //マップ情報読み込み
         var tmx = phina.asset.AssetManager.get('tmx', "stage5_1");
         this.mapLayer[0] = this.createMap(tmx);
+        var tmx = phina.asset.AssetManager.get('tmx', "stage5_2");
+        this.mapLayer[1] = this.createMap(tmx);
 
         //初期処理
         this.add(1, function() {
