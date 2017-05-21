@@ -49,6 +49,8 @@ phina.define("qft.Assets", {
                             "monster01":  "assets/image/monster01.png",
                             "monster02":  "assets/image/char_m_devil01.png",
                             "monster03":  "assets/image/char_m_magi01.png",
+                            "monster01x2":  "assets/image/monster01x2.png",
+                            "monster02x2":  "assets/image/char_m_devil01x2.png",
                             "bullet":     "assets/image/effect_bullet01.png",
                             "effect":     "assets/image/effect.png",
                             "effect2":    "assets/image/effect01a.png",
