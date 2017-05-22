@@ -25,7 +25,7 @@ phina.define("qft.Enemy.ArchDemon", {
     viewAngle: 180,
 
     //アニメーション間隔
-    animationInterval: 10,
+    animationInterval: 15,
 
     //得点
     point: 500,
@@ -44,12 +44,21 @@ phina.define("qft.Enemy.ArchDemon", {
     rareDropItem: ITEM_JEWELBOX,
 
     init: function(parentScene, options) {
-        options = (options || {}).$extend({width: 40, height: 30});
+        options = (options || {}).$extend({width: 35, height: 30});
+        if (options.size) {
+            var size = options.size || 1;
+            options.width = size * 35;
+            options.height = size * 30;
+        }
         this.superInit(parentScene, options);
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("monster01x2", 24*2, 32*2).addChildTo(this);
         this.sprite.setFrameTrimming(288*2, 640*2, 72*2, 128*2).setPosition(0, -10);
+        if (options.size) {
+            var size = options.size || 1;
+            this.sprite.setScale(size).setPosition(0, size * -12);
+        }
 
         this.setAnimation("walk");
         this.setupLifeGauge();
