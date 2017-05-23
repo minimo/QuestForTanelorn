@@ -28,7 +28,7 @@ phina.define("qft.Enemy.ArchDemon", {
     animationInterval: 15,
 
     //得点
-    point: 500,
+    point: 1000,
 
     //飛行モード
     flying: false,

@@ -153,7 +153,7 @@ phina.define("qft.Character", {
             if (this.time > this.balloonTime) this.lastBalloon = "";
             if (this.lastBalloon == e.pattern) return;
             if (this.balloon) this.balloon.remove();
-            e.$safe({x: 0, y: -16});
+            e.$safe({x: 0, y: -this.height/2-10});
             this.balloon = qft.Character.balloon({pattern: e.pattern, lifeSpan: e.lifeSpan, animationInterval: e.animationInterval})
                 .addChildTo(this)
                 .setPosition(e.x, e.y);
