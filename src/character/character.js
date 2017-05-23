@@ -192,7 +192,7 @@ phina.define("qft.Character", {
                 this.onScreen = false;
             }
             //画面外の場合は動作停止
-            if (!this.onScreen) return;
+//            if (!this.onScreen) return;
 
             this.x += this.vx;
             if (this.isOnFloor) {
