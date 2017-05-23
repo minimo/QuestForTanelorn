@@ -62,8 +62,8 @@ phina.define("qft.Enemy.Devil", {
         this.returnTime = this.options.returnTime || 120;
         this.attackInterval = this.options.attackInterval || 90;
 
-        //停止フラグ
-        this.isStill = true;
+        //行動フェーズ
+        this.phase = 0;
 
         this.on('damaged', e => {
             if (e.direction == 0) this.direction = 180; else this.direction = 0;
@@ -83,7 +83,7 @@ phina.define("qft.Enemy.Devil", {
             this.isStill = true;
         }
 
-        if (this.isStill) {
+        if (this.phase == 0) {
             this.setAnimation("stand");
         }
     },
