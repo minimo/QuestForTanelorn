@@ -25,18 +25,18 @@ phina.define("qft.Enemy.ArchKnight", {
     viewAngle: 90,
 
     //得点
-    point: 2000,
+    point: 5000,
 
     //アイテムドロップ率（％）
-    dropRate: 7,
+    dropRate: 10,
     dropItem: ITEM_JEWEL,
 
     //レアドロップ率（％）
-    rareDropRate: 2,
+    rareDropRate: 3,
     rareDropItem: ITEM_LONGSWORD,
 
     init: function(parentScene, options) {
-        options = (options || {}).$extend({width: 20, height: 20});
+        options = (options || {}).$extend({width: 20, height: 35});
         this.superInit(parentScene, options);
 
         //武器スプライト
@@ -44,8 +44,8 @@ phina.define("qft.Enemy.ArchKnight", {
             .addChildTo(this)
             .setFrameIndex(10 + Math.min(9, this.level))
             .setOrigin(1, 1)
-            .setPosition(-4, 2)
-            .setScale(-1, 1)
+            .setPosition(-6, 3)
+            .setScale(-1.5, 1.5)
             .setRotation(430);
         this.weapon.tweener.setUpdateType('fps');
         this.weapon.kind = "sword";
@@ -59,9 +59,9 @@ phina.define("qft.Enemy.ArchKnight", {
         }
 
         //表示用スプライト
-        this.sprite = phina.display.Sprite("monster02", 24, 32).addChildTo(this);
-        this.sprite.setFrameTrimming(216, 128, 72, 128);
-        this.sprite.setPosition(0, -5).setScale(1.3);
+        this.sprite = phina.display.Sprite("monster02x2", 24*2, 32*2).addChildTo(this);
+        this.sprite.setFrameTrimming(216*2, 128*2, 72*2, 128*2);
+        this.sprite.setPosition(0, -5);
 
         this.setAnimation("walk");
         this.animationInterval = 6;
@@ -118,10 +118,10 @@ phina.define("qft.Enemy.ArchKnight", {
             var isReturnCliff = false;
             if (this.vx > 0) {
                 if (this._collision[1].hit) isReturnWall = true;
-                if (this.checkMapCollision2(this.x+5, this.y+20, 5, 5) == null) isReturnCliff = true;
+                if (this.checkMapCollision2(this.x+5, this.y+40, 5, 5) == null) isReturnCliff = true;
             } else if (this.vx < 0) {
                 if (this._collision[3].hit) isReturnWall = true;
-                if (this.checkMapCollision2(this.x-5, this.y+20, 5, 5) == null) isReturnCliff = true;
+                if (this.checkMapCollision2(this.x-5, this.y+40, 5, 5) == null) isReturnCliff = true;
             }
             if (isReturnWall || isReturnCliff) {
                 if (this.forgotTime > 0) {
@@ -154,6 +154,7 @@ phina.define("qft.Enemy.ArchKnight", {
                             //着地点が無い場合は諦めて折り返す
                             this.forgotTime = 0;
                             this.stopTime = 30;
+                            this.turnWait = 15;
                             this.direction = (this.direction + 180) % 360;
                             this.vx *= -1;
                             this.flare('balloon', {pattern: "..."});
@@ -162,6 +163,7 @@ phina.define("qft.Enemy.ArchKnight", {
                 } else {
                     this.direction = (this.direction + 180) % 360;
                     this.vx *= -1;
+                    this.turnWait = 1;
                 }
             }
 
@@ -242,6 +244,7 @@ phina.define("qft.Enemy.ArchKnight", {
         this.frame["up"] =   [3, 4, 5, 4];
         this.frame["down"] = [3, 4, 5, 4];
         this.frame["attack"] = [3, "stop"];
+        this.frame["turn"] = [6, "walk"];
         this.index = 0;
     },
 });
