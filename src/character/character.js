@@ -177,7 +177,7 @@ phina.define("qft.Character", {
             this.stopTime = e.power * 10;
             this.balloon = qft.Character.balloon({pattern: "stun", lifeSpan: this.stopTime})
                 .addChildTo(this)
-                .setPosition(e.x, e.y);
+                .setPosition(0, -this.height/2-10);
             this.lastBalloon = e.pattern;
             this.balloonTime = this.time + 120;
         });
@@ -221,7 +221,7 @@ phina.define("qft.Character", {
             if (!this.isDead && this.y > this.parent.parent.map.height) this.dropDead();
 
             //アニメーション
-            if (this.sprite && this.isAdvanceAnimation && this.time % this.animationInterval == 0) {
+            if (this.sprite && !this.isStun && this.isAdvanceAnimation && this.time % this.animationInterval == 0) {
                 this.index = (this.index+1) % this.frame[this.nowAnimation].length;
                 //次フレーム番号が特殊指定の場合
                 var next = this.frame[this.nowAnimation][this.index];

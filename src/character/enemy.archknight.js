@@ -27,6 +27,9 @@ phina.define("qft.Enemy.ArchKnight", {
     //得点
     point: 5000,
 
+    //アニメーション間隔
+    animationInterval: 10,
+
     //アイテムドロップ率（％）
     dropRate: 10,
     dropItem: ITEM_JEWEL,
@@ -36,7 +39,7 @@ phina.define("qft.Enemy.ArchKnight", {
     rareDropItem: ITEM_LONGSWORD,
 
     init: function(parentScene, options) {
-        options = (options || {}).$extend({width: 20, height: 35});
+        options = (options || {}).$extend({width: 20, height: 40});
         this.superInit(parentScene, options);
 
         //武器スプライト
@@ -64,7 +67,6 @@ phina.define("qft.Enemy.ArchKnight", {
         this.sprite.setPosition(0, -5);
 
         this.setAnimation("walk");
-        this.animationInterval = 6;
         this.setupLifeGauge();
 
         this.direction = 0;
