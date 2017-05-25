@@ -48,6 +48,9 @@ phina.define("qft.Player", {
     //攻撃中フラグ
     isAttack: false,
 
+    //防御中フラグ
+    isDefence: false,
+
     //ドア上フラグ
     isOnDoor: false,
 
@@ -86,6 +89,13 @@ phina.define("qft.Player", {
         this.weapon.alpha = 0;
         this.weapon.tweener.setUpdateType('fps');
         this.weapon.type = "sword";
+
+        //盾
+        this.shield = phina.display.Sprite("item", 24, 24)
+            .addChildTo(this)
+            .setFrameIndex(7)
+            .setPosition(10, 6)
+            .setVisible(false);
 
         //攻撃判定用
         this.attackCollision = phina.display.RectangleShape({width: 14, height: 26});
@@ -140,6 +150,9 @@ phina.define("qft.Player", {
             }
             return;
         }
+
+        this.shield.setVisible(false);
+        this.isDefence = false;
 
         //プレイヤー操作
         var ct = app.controller;
@@ -233,6 +246,11 @@ phina.define("qft.Player", {
                             var floor = this.checkMapCollision2(this.x, this.y+16, 5, 5);
                             if (floor && floor[0].enableThrough) this.throughFloor = floor[0];
                         }
+                    }
+                    //盾を構える
+                    if (!this.isAttack) {
+                        this.shield.setVisible(true);
+                        this.isDefence = true;
                     }
                 }
             }
