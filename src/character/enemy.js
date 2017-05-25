@@ -115,7 +115,7 @@ phina.define("qft.Enemy", {
                 }
             }
 
-            this.algorithm();
+            if(this.stopTime == 0) this.algorithm();
         });
 
         this.on('dead', function() {
