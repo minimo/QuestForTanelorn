@@ -21,7 +21,7 @@ phina.define("qft.Player", {
     stunPower: 1,
 
     //防御力
-    deffence: 10,
+    defense: 10,
 
     //下押し連続フレーム数
     downFrame: 0,
@@ -49,7 +49,7 @@ phina.define("qft.Player", {
     isAttack: false,
 
     //防御中フラグ
-    isDefence: false,
+    isDefense: false,
 
     //ドア上フラグ
     isOnDoor: false,
@@ -95,6 +95,7 @@ phina.define("qft.Player", {
             .addChildTo(this)
             .setFrameIndex(7)
             .setPosition(10, 6)
+            .setScale(0.8)
             .setVisible(false);
 
         //攻撃判定用
@@ -152,14 +153,14 @@ phina.define("qft.Player", {
         }
 
         this.shield.setVisible(false);
-        this.isDefence = false;
+        this.isDefense = false;
 
         //プレイヤー操作
         var ct = app.controller;
         if (!this.isControl) ct = {};
         if (this.stopTime == 0) {
             //左移動
-            if (ct.left) {
+            if (ct.left && !ct.down) {
                 if (!this.isJump && !this.isAttack && !this.isCatchLadder) this.setAnimation("walk");
                 //はしご掴み状態で左に壁がある場合は不可
                 var c = this._collision[3];
@@ -169,7 +170,7 @@ phina.define("qft.Player", {
                 }
             }
             //右移動
-            if (ct.right) {
+            if (ct.right && !ct.down) {
                 if (!this.isJump && !this.isAttack && !this.isCatchLadder) this.setAnimation("walk");
                 //はしご掴み状態で右に壁がある場合は不可
                 var c = this._collision[1];
@@ -250,7 +251,8 @@ phina.define("qft.Player", {
                     //盾を構える
                     if (!this.isAttack) {
                         this.shield.setVisible(true);
-                        this.isDefence = true;
+                        this.isDefense = true;
+                        this.setAnimation("defense");
                     }
                 }
             }
@@ -267,7 +269,7 @@ phina.define("qft.Player", {
         //攻撃
         if (!this.isAttack) {
             if (this.isOnFloor) {
-                if (this.nowAnimation != "damage") this.setAnimation("walk");
+                if (this.nowAnimation != "damage" && !this.isDefense) this.setAnimation("walk");
             } else if (this.isCatchLadder) {
                 if (ct.up) {
                     this.setAnimation("up");
@@ -317,6 +319,7 @@ phina.define("qft.Player", {
             this.isAdvanceAnimation = true;
             this.animationInterval = 6;
             if (this.nowAnimation == "attack") this.animationInterval = 2;
+            if (this.nowAnimation == "defense") this.animationInterval = 1;
         } else {
             //歩行アニメーションの場合は移動している時のみ進める
             if (this.nowAnimation == "walk" && !ct.left && !ct.right) {
@@ -724,6 +727,7 @@ phina.define("qft.Player", {
         this.frame["up"] =   [ 9, 10, 11, 10];
         this.frame["down"] = [ 0,  1,  2,  1];
         this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
+        this.frame["defense"] = [ 41, 42, 43, 44, "stop"];
         this.frame["damage"] = [ 18, 19, 20];
         this.frame["drop"] = [18, 19, 20];
         this.frame["dead"] = [18, 19, 20, 33, 34, 35, "stop"];
@@ -786,7 +790,7 @@ phina.define("qft.Player", {
         this.startStatus = {
             hp: this.hp,
             power: this.power,
-            deffence: this.deffence,
+            defense: this.defense,
             equip: equip,
             item: items,
             numJumpMax: numJumpMax,
