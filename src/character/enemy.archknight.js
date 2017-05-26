@@ -99,9 +99,9 @@ phina.define("qft.Enemy.ArchKnight", {
 
         if (this.isOnFloor || this.isJump) {
             if (this.direction == 0) {
-                this.vx = 1;
+                this.vx = 0.5;
             } else {
-                this.vx = -1;
+                this.vx = -0.5;
             }
         }
 

@@ -183,6 +183,8 @@ phina.define("qft.Character", {
         });
 
         this.on('enterframe', function(e) {
+            if (this.time == 0) this.once();
+
             //画面内判定
             var ps = this.parentScene;
             if (ps.screenX-SC_W < this.x && this.x < ps.screenX + SC_W*2 && 
@@ -266,6 +268,10 @@ phina.define("qft.Character", {
             this.time++;
             this.beforeAnimation = this.nowAnimation;
         });
+    },
+
+    //一回目のenterframeで一度だけ呼ばれる
+    once: function() {
     },
 
     //画面外落ち
@@ -521,7 +527,7 @@ phina.define("qft.Character", {
     },
 
     //物理現象情報のみオブジェクトで取得
-    getPhisics: function() {
+    getPhysics: function() {
         return {
             vx: this.vx,
             vy: this.vy,

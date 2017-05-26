@@ -70,13 +70,15 @@ phina.define("qft.Enemy.Death", {
 
         this.isHide = false;
 
+        //行動パターン
+        this.pattern = options.pattern || "linear";
+        this.moveLength = options.length || 48;
+        this.degree = 0;
+        this.isVertical = false;
+
         //初期位置保存
         this.firstX = 0;
         this.firstY = 0;
-        this.one('enerframe', e => {
-            this.firstX = this.x;
-            this.firstY = this.y;
-        });
 
         //被ダメージ時処理
         this.on('damaged', e => {
@@ -93,16 +95,16 @@ phina.define("qft.Enemy.Death", {
 
         //徘徊モード
         if (this.phase == 0) {
-            this.phase = 1;
-            this.tweener.clear()
-                .to({alpha: 1.0}, 30, "easeInOutSine")
-                .set({scaleX: 1})
-                .by({x: 96}, 120,"easeInOutSine")
-                .set({scaleX: -1})
-                .by({x: -96}, 120,"easeInOutSine")
-                .setLoop(true);
-        }
-        if (this.phase == 1) {
+            var rad = this.degree.toRadian();
+            if (this.pattern == "linear") {
+                if (this.isVertical) {
+                    this.y = this.firstY + Math.cos(rad) * this.moveLength;
+                } else {
+                    this.x = this.firstX + Math.cos(rad) * this.moveLength;
+                }
+            }
+            this.degree += 2;
+
             //徘徊モードの場合は適当に攻撃
             if (this.time % 90 == 0) this.isAttack = true;
         }
@@ -162,6 +164,11 @@ phina.define("qft.Enemy.Death", {
         this.frame["down"] =   [0, 1, 0, 2];
         this.frame["attack"] = [3, 4, 5, 4];
         this.index = 0;
+    },
+
+    once: function() {
+        this.firstX = this.x;
+        this.firstY = this.y;
     },
 });
 
