@@ -231,7 +231,7 @@ phina.define("qft.MainScene", {
                 this.timeLimit = 0;
             }
             if (this.timeLimit == 0 && !this.player.isDead) {
-                this.player.dead();
+//                this.player.dead();
             }
         } else {
             //ステージクリア時処理
@@ -402,6 +402,11 @@ phina.define("qft.MainScene", {
         var tl = phina.display.Label({text: "TIME:", align: "right"}.$safe(labelParam)).addChildTo(this).setPosition(SC_W, 30);
         tl.update = function() {
             this.text = "TIME:"+Math.floor(that.timeLimit/30);
+            if (that.timeLimit == 0) {
+                this.fill = 'red';
+            } else {
+                this.fill = 'white';
+            }
         }
 
         //プレイヤー装備武器表示

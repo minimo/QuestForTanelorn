@@ -9,6 +9,7 @@
 phina.define("qft.StageController", {
     superClass: "phina.app.Object2D",
 
+    //ステージ番号
     stageNumber: 0,
 
     parentScene: null,
@@ -191,13 +192,11 @@ phina.define("qft.StageController", {
             switch (e.type) {
                 case "player":
                     if (e.name == "start") {
+                        mapLayer.startPosition = {x: x, y: y};
                         this.player.x = x;
                         this.player.y = y;
-                        if (e.properties.direction == 0) {
-                            this.player.sprite.scaleX = -1;
-                        } else {
-                            this.player.sprite.scaleX = 1;
-                        }
+                        this.player.scaleX = 1;
+                        if (e.properties.direction == 180) this.player.scaleX = -1;
                     }
                     break;
                 case "enemy":
