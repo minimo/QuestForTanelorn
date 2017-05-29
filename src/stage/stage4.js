@@ -15,6 +15,9 @@ phina.define("qft.Stage4", {
     //タイムリミット
     timeLimit: FPS*60*5,
 
+    //BGMアセット名
+    bgm: "bgm4",
+
     init: function(parentScene, tmx) {
         this.superInit(parentScene, tmx);
 
@@ -26,9 +29,6 @@ phina.define("qft.Stage4", {
 
         //初期処理
         this.add(1, function() {
-            //ＢＧＭ再生
-            app.playBGM("bgm4");
-
             //ステージ開始メッセージ投入
             this.spawnMessage("STAGE 4", 24);
 

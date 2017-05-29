@@ -15,6 +15,9 @@ phina.define("qft.Stage6", {
     //タイムリミット
     timeLimit: FPS*60*5,
 
+    //BGMアセット名
+    bgm: "bgm6",
+
     init: function(parentScene, tmx) {
         this.superInit(parentScene, tmx);
 
@@ -24,9 +27,6 @@ phina.define("qft.Stage6", {
 
         //初期処理
         this.add(1, function() {
-            //ＢＧＭ再生
-            app.playBGM("bgm6");
-
             //ステージ開始メッセージ投入
             this.spawnMessage("STAGE 6", 24);
 

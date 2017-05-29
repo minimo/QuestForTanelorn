@@ -466,6 +466,8 @@ phina.define("qft.MainScene", {
         this.player.isControl = true;
         this.player.isMuteki = false;
         this.player.alpha = 1.0;
+
+        this.stageController.playBGM();
     },
 
     warp: function(x, y, frame) {
@@ -539,6 +541,8 @@ phina.define("qft.MainScene", {
         this.totalScore = 0;
         this.totalKill = 0;
         this.continueCount++;
+
+        this.stageController.playBGM();
     },
 
     //ステージクリア

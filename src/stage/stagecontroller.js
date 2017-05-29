@@ -12,13 +12,20 @@ phina.define("qft.StageController", {
     //ステージ番号
     stageNumber: 0,
 
+    //タイムリミット
+    timeLimit: FPS*60*5,
+
+    //BGMアセット名
+    bgm: "bgm1",
+
+    //マップ表示設定
+    limitWidth: false,
+    limitHeight: true,
+
     parentScene: null,
     mapLayer: null,
     player: null,
     time: 0,
-
-    //タイムリミット
-    timeLimit: FPS*60*5,
 
     //経過時間トリガイベント
     seq: null,
@@ -98,6 +105,11 @@ phina.define("qft.StageController", {
     },
 
     stageClear: function() {
+    },
+
+    //ステージＢＧＭ再生
+    playBGM: function() {
+        app.playBGM(this.bgm);
     },
 
     //IDからオブジェクト検索
