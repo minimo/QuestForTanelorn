@@ -92,7 +92,7 @@ phina.define("qft.Player", {
 
         //盾
         this.shield = phina.display.Sprite("item", 24, 24)
-            .addChildTo(this)
+//            .addChildTo(this)
             .setFrameIndex(7)
             .setPosition(10, 6)
             .setScale(0.8)
@@ -152,8 +152,8 @@ phina.define("qft.Player", {
             return;
         }
 
-        this.shield.setVisible(false);
-        this.isDefense = false;
+//        this.shield.setVisible(false);
+//        this.isDefense = false;
 
         //プレイヤー操作
         var ct = app.controller;
@@ -250,9 +250,9 @@ phina.define("qft.Player", {
                     }
                     //盾を構える
                     if (!this.isAttack) {
-                        this.shield.setVisible(true);
-                        this.isDefense = true;
-                        this.setAnimation("defense");
+//                        this.shield.setVisible(true);
+//                        this.isDefense = true;
+//                        this.setAnimation("defense");
                     }
                 }
             }
