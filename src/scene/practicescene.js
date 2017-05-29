@@ -34,12 +34,12 @@ phina.define("qft.ConfigScene_Practice", {
 
         //メニューテキスト表示
         var that = this;
-        this.menu = ["1", "2", "3", "4", "5", "6", "P"];
+        this.menu = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "P"];
         this.menuText = [];
         for (var i = 0; i < this.menu.length; i++) {
             this.menuText[i] = phina.display.Label({text: this.menu[i], fontSize: 40}.$safe(labelParam))
                 .addChildTo(this.menuBase)
-                .setPosition(SC_W*0.5+(SC_W*0.1*i)-(SC_W*0.1*(this.menu.length-1)/2), SC_H*0.5)
+                .setPosition(SC_W*0.5+(SC_W*0.07*i)-(SC_W*0.07*(this.menu.length-1)/2), SC_H*0.5)
                 .setScale(0.7);
 
             //タッチ判定用
@@ -52,7 +52,7 @@ phina.define("qft.ConfigScene_Practice", {
             };
             var c = phina.display.RectangleShape(param2)
                 .addChildTo(this.menuBase)
-                .setPosition(SC_W*0.5+(SC_W*0.1*i)-(SC_W*0.1*(this.menu.length-1)/2), SC_H*0.5)
+                .setPosition(SC_W*0.5+(SC_W*0.07*i)-(SC_W*0.07*(this.menu.length-1)/2), SC_H*0.5)
                 .setInteractive(true);
             c.alpha = 0;
             c.select = i;
@@ -156,7 +156,7 @@ phina.define("qft.ConfigScene_Practice", {
                     if (this.select == 0) {
                         app.pushScene(qft.MainScene({startStage: 1, isPractice: true}));
                     } else {
-                        if (this.select == 6) {
+                        if (this.select == 9) {
                             app.pushScene(qft.MainScene({startStage: 999, isPractice: true}));
                         } else {
                             app.pushScene(qft.SceneFlow_Practice({stageNumber: this.select+1}));
