@@ -128,6 +128,10 @@ phina.define("qft.Player", {
 
         //ステージ開始時ステータス
         this.saveStatus();
+
+        //最後に床上にいた場所を保存
+        this.lastOnFloorX = 0;
+        this.lastOnFloorY = 0;
     },
     update: function(app) {
         //オブジェクトレイヤー接触判定
@@ -355,6 +359,11 @@ phina.define("qft.Player", {
         } else {
             this.downFrame = 0;
         }
+
+        if (this.isOnFloor) {
+            this.lastOnFloorX = this.x;
+            this.lastOnFloorY = this.y;
+        }
     },
 
     //プレイヤー情報リセット
@@ -402,6 +411,44 @@ phina.define("qft.Player", {
 
         //所持クリア条件キー
         this.keys = [];
+
+        //操作可能フラグ
+        this.isControl = true;
+
+        //多段ジャンプ最大回数
+        this.numJumpMax = 0;
+
+        return this;
+    },
+
+    //プレイヤー情報コンティニュー用リセット
+    continueReset: function() {
+        //移動情報
+        this.vx = 0;
+        this.vy = 0;
+
+        //ステータス
+        this.hp = 100;
+
+        //各種フラグ
+        this.isJump = false;
+        this.isDead = false;
+        this.isCatchLadder = false;
+        this.isDrop = false;
+        this.isOnFloor = false;
+        this.isAdvanceAnimation = true;
+        this.ignoreCollision = false;
+
+        //経過時間系
+        this.mutekiTime = 0;
+        this.stopTime = 0;
+        this.downFrame = 0;
+        this.time = 0;
+
+        //アニメーション
+        this.setAnimation("walk");
+        this.beforeAnimation = "";
+        this.animationInterval = 6;
 
         //操作可能フラグ
         this.isControl = true;

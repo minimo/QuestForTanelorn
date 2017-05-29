@@ -45,7 +45,7 @@ phina.define("qft.TitleScene", {
             fontSize: 30,
         };
         this.menu = ["Start", "Continue", "Config"];
-        this.menuComment = ["ゲームを開始します", "直前のゲームオーバーになったステージから開始します", "設定メニューを開きます"];
+        this.menuComment = ["ゲームを開始します", "前回ゲームオーバーになったステージの最初から開始します", "設定メニューを開きます"];
         this.menuText = [];
         for (var i = 0; i < this.menu.length; i++) {
             this.menuText[i] = phina.display.Label({text: this.menu[i]}.$safe(labelParam))

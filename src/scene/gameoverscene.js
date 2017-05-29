@@ -85,7 +85,7 @@ phina.define("qft.GameOverScene", {
                 this.yes.tweener.clear().to({scaleX: 1, scaleY: 1}, 500, "easeOutBounce");
                 this.no.tweener.clear().to({scaleX: 0.7, scaleY: 0.7}, 500, "easeOutBounce");
                 app.playSE("select");
-                this.text3.text = "ステージ開始時の状態に戻ってやり直します";
+                this.text3.text = "ゲームオーバー地点からコンティニューします（スコアはリセットされます）";
             } else if ((ct.right || this.pushno) && this.select == 0) {
                 this.select = 1;
                 this.pushno = false;
@@ -173,7 +173,7 @@ phina.define("qft.GameOverScene", {
             }
         }
 
-        this.text3 = phina.display.Label({text: "ステージ開始時の状態に戻ってやり直します", fontSize: 10}.$safe(labelParam))
+        this.text3 = phina.display.Label({text: "ゲームオーバー地点からコンティニューします（スコアはリセットされます）", fontSize: 10}.$safe(labelParam))
             .setPosition(SC_W*0.5, SC_H*0.75+10)
             .addChildTo(this);
         this.text3.alpha = 0;

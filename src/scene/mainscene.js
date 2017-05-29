@@ -29,10 +29,13 @@ phina.define("qft.MainScene", {
     //敵討伐数
     totalKill: 0,
 
+    //コンティニュー回数
+    continueCount: 0,
+
     //ステージクリア時情報
     clearResult: [],
 
-    //マップ外のスクリーン移動を許可するか
+    //スクリーンのマップ外への移動制限フラグ
     limitWidth: false,
     limitHeight: true,
 
@@ -520,20 +523,17 @@ phina.define("qft.MainScene", {
 
     //リスタート
     restart: function() {
-        this.player.reset();
-        this.player.restoreStatus();
-        this.playerWeapon.rotation = 0;
-        this.setupStage();
+        this.player.continueReset();
+        this.player.mutekiTime = 90;
+        this.player.addChildTo(this.mapLayer.playerLayer);
+
+        //プレイヤー座標を最後に床にいた場所にする
+        this.player.x = this.player.lastOnFloorX;
+        this.player.y = this.player.lastOnFloorY;
 
         this.totalScore = 0;
         this.totalKill = 0;
-
-        //スコアと討伐数を前ステージクリア時に戻す
-        if (!this.isPractice && this.stageNumber > 1) {
-            var result = this.clearResult[this.stageNumber - 1];
-            this.totalScore = result.score;
-            this.totalKill = result.kill;
-        }
+        this.continueCount++;
     },
 
     //ステージクリア
