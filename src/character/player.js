@@ -360,7 +360,7 @@ phina.define("qft.Player", {
             this.downFrame = 0;
         }
 
-        if (this.isOnFloor) {
+        if (this.isOnFloor && this._collision[2].hit.type != "floor") {
             this.lastOnFloorX = this.x;
             this.lastOnFloorY = this.y;
         }
