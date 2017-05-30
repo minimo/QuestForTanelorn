@@ -284,8 +284,8 @@ phina.define("qft.Player", {
                         this.setAnimation("up");
                     }
                 }
-            }else {
-                this.setAnimation("jump");
+            } else {
+                if (!this.isStun && !this.isDead) this.setAnimation("jump");
             }
             if (ct.attack && !this.before.attack && this.stopTime == 0 && !(this.isCatchLadder && this.isOnLadder)) {
                 this.isCatchLadder = false;
@@ -315,6 +315,12 @@ phina.define("qft.Player", {
         } else if (this.before.isStun) {
             //気絶復帰したらアニメーションを標準に
             this.setAnimation("stand");
+        }
+
+        //死亡状態
+        if (this.isDead) {
+            this.setAnimation("dead");
+            this.isCatchLadder = false;
         }
 
         //アニメーション変更を検知
