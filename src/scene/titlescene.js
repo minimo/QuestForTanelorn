@@ -149,7 +149,8 @@ phina.define("qft.TitleScene", {
                         this.fg.tweener.clear()
                             .fadeIn(3)
                             .call(function() {
-                                this.exit("continue");
+//                                this.exit("continue");
+                                app.pushScene(qft.SceneFlow.Resume({isPractice: false, isContinue: true}));
                             }.bind(this));
                         break;
                     case 2:

@@ -34,8 +34,9 @@ phina.define("qft.SceneFlow", {
                 nextLabel: "title",
             },{
                 label: "continue",
-                className: "qft.MainScene",
+                className: "qft.SceneFlow.Resume",
                 arguments: {
+                    isPractice: false,
                     isContinue: true,
                 },
                 nextLabel: "title",
@@ -56,11 +57,20 @@ phina.define("qft.SceneFlow", {
     }
 });
 
-phina.define("qft.SceneFlow_Practice", {
+phina.define("qft.SceneFlow.Resume", {
     superClass: "phina.game.ManagerScene",
 
     init: function(options) {
-        options = (options || {}).$safe({stageNumber: 2});
+        options = (options || {}).$safe({stageNumber: 2, isPractice: false, isContinue: false});
+        if (options.isContinue) {
+            var data = localStorage.getItem("stage");
+            var d = JSON.parse(data).$safe({
+                stageNumber: 1,
+                result: [],
+                playerStatus: {},
+            });
+            options.stageNumber = d.stageNumber;
+        }
         var startLabel = "start";
         var assets = qft.Assets.get({assetType: "stage"+options.stageNumber});
         this.superInit({
@@ -77,7 +87,8 @@ phina.define("qft.SceneFlow_Practice", {
                 className: "qft.MainScene",
                 arguments: {
                     startStage: options.stageNumber,
-                    isPractice: true,
+                    isPractice: options.isPractice,
+                    isContinue: options.isContinue,
                 },
             }],
         });

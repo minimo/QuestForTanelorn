@@ -159,7 +159,7 @@ phina.define("qft.ConfigScene_Practice", {
                         if (this.select == 9) {
                             app.pushScene(qft.MainScene({startStage: 999, isPractice: true}));
                         } else {
-                            app.pushScene(qft.SceneFlow_Practice({stageNumber: this.select+1}));
+                            app.pushScene(qft.SceneFlow.Resume({stageNumber: this.select+1, isPractice: true}));
                         }
                     }
                     app.stopBGM();
