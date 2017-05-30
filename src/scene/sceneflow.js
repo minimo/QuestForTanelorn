@@ -64,12 +64,16 @@ phina.define("qft.SceneFlow.Resume", {
         options = (options || {}).$safe({stageNumber: 2, isPractice: false, isContinue: false});
         if (options.isContinue) {
             var data = localStorage.getItem("stage");
-            var d = JSON.parse(data).$safe({
-                stageNumber: 1,
-                result: [],
-                playerStatus: {},
-            });
-            options.stageNumber = d.stageNumber;
+            if (data) {
+                var d = JSON.parse(data).$safe({
+                    stageNumber: 1,
+                    result: [],
+                    playerStatus: {},
+                });
+                options.stageNumber = d.stageNumber;
+            } else {
+                options.stageNumber = 1;
+            }
         }
         var startLabel = "start";
         var assets = qft.Assets.get({assetType: "stage"+options.stageNumber});
