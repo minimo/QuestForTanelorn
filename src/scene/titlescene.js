@@ -151,7 +151,12 @@ phina.define("qft.TitleScene", {
                             .call(function() {
                                 var data = localStorage.getItem("stage");
                                 if (data) {
-                                    app.pushScene(qft.SceneFlow.Resume({isPractice: false, isContinue: true}));
+                                    var d = JSON.parse(data).$safe({stageNumber: 1});
+                                    if (d.stageNumber == 1) {
+                                        this.exit("main");
+                                    } else {
+                                        app.pushScene(qft.SceneFlow.Resume({isPractice: false, isContinue: true}));
+                                    }
                                 } else {
                                     this.exit("main");
                                 }
