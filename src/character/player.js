@@ -360,6 +360,7 @@ phina.define("qft.Player", {
             this.downFrame = 0;
         }
 
+        //接地時座標保存
         if (this.isOnFloor && this._collision[2].hit.type != "movefloor") {
             this.lastOnFloorX = this.x;
             this.lastOnFloorY = this.y;

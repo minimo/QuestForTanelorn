@@ -538,6 +538,25 @@ phina.define("qft.MainScene", {
         this.player.x = this.player.lastOnFloorX;
         this.player.y = this.player.lastOnFloorY;
 
+        //復帰位置安全性確認
+        var x = this.player.x;
+        var y = this.player.y;
+        var c1 = this.player.checkMapCollision2(x, y + 5, 4, 32);   //真下
+        var c2 = this.player.checkMapCollision2(x+32, y + 5, 4, 32);//右下
+        var c3 = this.player.checkMapCollision2(x-32, y + 5, 4, 32);//左下
+        //真下に足場が無い場合は安全な場所にずらす
+        if (!c1) {
+            if (c2) {
+                this.player.x += 32;
+            } else if (c3){
+                this.player.x -= 32;
+            } else {
+                //安全に復帰出来ないので直近のスタート地点へ
+                this.player.x = this.mapstart.x;
+                this.player.y = this.mapstart.y;
+            }
+        }
+
         this.totalScore = 0;
         this.totalKill = 0;
         this.continueCount++;
