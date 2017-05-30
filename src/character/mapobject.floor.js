@@ -155,7 +155,7 @@ phina.define("qft.MapObject.Floor", {
         this.collision.vx = 0;
         this.collision.vy = 0;
         this.collision.ignore = false;
-        this.collision.type = "floor";
+        this.collision.type = "movefloor";
         this.collision.parentObject = this;
     }
 });
