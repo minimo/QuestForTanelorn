@@ -74,10 +74,10 @@ phina.define("qft.Application", {
             left: gp.getKey("left") || kb.getKey("left"),
             right: gp.getKey("right") || kb.getKey("right"),
 
-            jump: gp.getKey("up") || gp.getKey("B") || kb.getKey("up"),
             attack: gp.getKey("A") || kb.getKey("Z"),
-            menu: gp.getKey("start") || kb.getKey("escape") || kb.getKey("C"),
-            change: gp.getKey("X") || kb.getKey("X"),
+            jump:   gp.getKey("up") || gp.getKey("B") || kb.getKey("up") || kb.getKey("X"),
+            change: gp.getKey("X") || kb.getKey("C"),
+            menu:   gp.getKey("start") || kb.getKey("escape") || kb.getKey("C"),
 
             a: gp.getKey("A") || kb.getKey("Z"),
             b: gp.getKey("B") || kb.getKey("X"),
