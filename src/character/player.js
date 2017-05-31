@@ -203,6 +203,22 @@ phina.define("qft.Player", {
                     this.vy = 4;
                 }
             } else {
+                //ジャンプボタンのみ
+                if (ct.jump && !ct.up) {
+                    //ジャンプ二段目以降
+                    if (this.isJump && this.numJump < this.numJumpMax && this.vy > -5) {
+                        this.vy = -11;
+                        this.numJump++;
+                    }
+                    //ジャンプ
+                    var chk = this.checkMapCollision2(this.x, this.y-16, 5, 3);
+                    if (!this.isJump && this.isOnFloor && !chk) {
+                        this.setAnimation("jump");
+                        this.isJump = true;
+                        this.vy = -11;
+                        this.numJump = 1;
+                    }
+                }
                 //上キー押下
                 if (ct.up) {
                     //ジャンプ二段目以降
@@ -226,7 +242,6 @@ phina.define("qft.Player", {
                         this.isCatchLadder = true;
                         this.throughFloor = null;
                     }
-
                     //扉に入る（接地時＆左右キーオフ時のみ）
                     if (!ct.left && !ct.right && this.isOnFloor && this.isOnDoor && !this.isOnDoor.isLock && !this.isOnDoor.already) {
                         this.vx = 0;

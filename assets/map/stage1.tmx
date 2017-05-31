@@ -536,7 +536,8 @@
   <object id="153" type="message" x="16" y="980" width="32" height="32">
    <properties>
     <property name="text">操作方法
-カーソルキー左右で移動　上でジャンプ　Ｚキーで攻撃</property>
+カーソルキー左右で移動　上またはＸでジャンプ
+Ｚキーで攻撃　Ｃで武器切替</property>
    </properties>
   </object>
   <object id="154" type="message" x="4736" y="768" width="32" height="32">
