@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="420" height="70" tilewidth="16" tileheight="16" nextobjectid="250">
+<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="420" height="70" tilewidth="16" tileheight="16" nextobjectid="251">
  <tileset firstgid="1" name="A1" tilewidth="16" tileheight="16" tilecount="768" columns="32">
   <image source="TileA1.png" width="512" height="384"/>
  </tileset>
@@ -581,5 +581,10 @@
   <object id="245" name="up" type="check" x="1536" y="924" width="32" height="32"/>
   <object id="246" name="up" type="check" x="2928" y="548" width="32" height="32"/>
   <object id="247" name="up" type="check" x="2864" y="356" width="32" height="32"/>
+  <object id="250" type="message" x="704" y="944" width="32" height="32">
+   <properties>
+    <property name="text" value="試練の塔→"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>
