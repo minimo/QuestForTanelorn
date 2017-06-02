@@ -51,27 +51,15 @@ phina.define("phina.extension.VirtualPad", {
             backgroundColor: 'transparent',
         };
         this.mask = phina.display.RectangleShape(param)
-            .addChildTo(this)
+//            .addChildTo(this)
             .setOrigin(0, 0)
             .setPosition(options.x, options.y);
 
-        //十字キー中心点
-        var hw = this.width/2;
-        var hh = this.height/2;
-        var cp = phina.geom.Vector2(0, 0);
+        this.cross = phina.extension.VirtualPad.CrossKey()
+            .addChildTo(this)
+            .setPosition(100, 300);
 
-        var button = {
-            width: 20,
-            height: 20,
-            fill: "rgba(0,0,0,0.2)",
-            stroke: "rgba(0,0,0,0.2)",
-            backgroundColor: 'transparent',
-        };
-        this.up    = phina.display.RectangleShape({height: 30}.$safe(button)).setPosition(cp.x, cp.y - 30).addChildTo(this);
-        this.down  = phina.display.RectangleShape({height: 30}.$safe(button)).setPosition(cp.x, cp.y + 30).addChildTo(this);
-        this.left  = phina.display.RectangleShape({width: 30}.$safe(button)).setPosition(cp.x - 30, cp.y).addChildTo(this);
-        this.right = phina.display.RectangleShape({width: 30}.$safe(button)).setPosition(cp.x + 30, cp.y).addChildTo(this);
-
+        //タップ位置表示
         var fingerParam = {
             backgroundColor: 'transparent',
             fill: "rgba(0,0,0,0.2)",
@@ -107,5 +95,61 @@ phina.define("phina.extension.VirtualPad", {
                 this.finger[i].visible = false;
             }
         }
+    },
+});
+
+//バーチャルパッド十字キー
+phina.define("phina.extension.VirtualPad.CrossKey", {
+    superClass: "phina.display.DisplayElement",
+
+    active: true,
+
+    //挿下キー情報
+    keyData: {
+        up: false,
+        down: false,
+        left: false,
+        right: false,
+    },
+
+    init: function(options) {
+        this.superInit();
+        options = (options || {}).$safe(this.defaultOptions);
+        this.options = options;
+
+        //十字キー中心点
+        var hw = 0;
+        var hh = 0;
+        var cp = phina.geom.Vector2(0, 0);
+
+        var button = {
+            width: 20,
+            height: 20,
+            fill: "rgba(0,0,0,0.2)",
+            stroke: "rgba(0,0,0,0.2)",
+            backgroundColor: 'transparent',
+        };
+        //0:上 1:右 2:下 3:左
+        this.btn = [];
+        this.up    = this.btn[0] = phina.display.RectangleShape({width: 20, height: 50}.$safe(button)).setPosition(cp.x, cp.y - 30).addChildTo(this).setInteractive(true);
+        this.right = this.btn[1] = phina.display.RectangleShape({width: 50, height: 20}.$safe(button)).setPosition(cp.x + 30, cp.y).addChildTo(this).setInteractive(true);
+        this.down  = this.btn[2] = phina.display.RectangleShape({width: 20, height: 50}.$safe(button)).setPosition(cp.x, cp.y + 30).addChildTo(this).setInteractive(true);
+        this.left  = this.btn[3] = phina.display.RectangleShape({width: 50, height: 20}.$safe(button)).setPosition(cp.x - 30, cp.y).addChildTo(this).setInteractive(true);
+
+        for (var i = 0; i < 4; i++) {
+            this.btn[i].isOn = false;
+            this.btn[i].on('pointover', () => {
+                this.isOn = true;
+            });
+            this.btn[i].on('pointout', () => {
+                this.isOn = false;
+            });
+        }
+    },
+
+    update: function() {
+    },
+
+    updateInfo: function() {
     },
 });

@@ -95,7 +95,7 @@ phina.define("qft.MainScene", {
         this.fg.tweener.setUpdateType('fps').clear().fadeOut(30);
 
         //バーチャルパッドの可視化
-//        app.virtualPad.addChildTo(this);
+//        app.virtualPad.addChildTo(this).setPosition(0, 0);
 
         app.volumeBGM = 0.5;
         app.volumeSE = 0.2;
