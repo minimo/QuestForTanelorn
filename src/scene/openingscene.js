@@ -48,14 +48,18 @@ phina.define("qft.OpeningScene", {
         this.imageLayer = phina.display.DisplayElement().addChildTo(this);
 
         //フォアグラウンド
-        this.fg = phina.display.RectangleShape(param).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.5)
+        var that = this;
+        this.fg = phina.display.RectangleShape(param).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.5).setInteractive(true);
         this.fg.alpha = 0;
+        this.fg.onpointstart = function() {
+            if (that.alreadyLoad || that.loader && that.loader.loadcomplete) that.exit();
+        }
 
         //上下黒帯
         param.height = SC_H * 0.15;
         this.bg1 = phina.display.RectangleShape(param).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.07)
         this.bg2 = phina.display.RectangleShape(param).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.93)
-      
+
         //字幕
         var labelParam = {
             fill: "white",
@@ -114,7 +118,6 @@ phina.define("qft.OpeningScene", {
         if (this.alreadyLoad || this.loader && this.loader.loadcomplete) {
             var ct = app.controller;
             if (ct.ok || ct.cancel) this.exit();
-            if (app.mouse.getPointing()) this.exit();
         }
 
         if (this.seq == 0) {
