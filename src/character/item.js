@@ -102,9 +102,7 @@ phina.define("qft.Item", {
                 pl.getItem(this);
                 this.remove();
             }
-        } else {
-            if (this.throwAway) this.throwAway = false;
-        }
+        } else if (this.time > 30 && this.throwAway) this.throwAway = false;
 
         if (this.isEnemyDrop) {
             if (this.lifeSpan == 0) this.remove();

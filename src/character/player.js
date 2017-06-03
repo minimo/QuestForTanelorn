@@ -550,7 +550,7 @@ phina.define("qft.Player", {
                     };
                     var drop = this.parentScene.spawnItem(this.x, this.y, options);
                     drop.friction = 0.8;
-                    drop.vx = 5 * -this.scaleX;
+                    drop.vx = 0 * -this.scaleX;
                     drop.vy = -5;
                     drop.throwAway = true;
                     this.equip.weapons[dropIndex] = item.kind;
