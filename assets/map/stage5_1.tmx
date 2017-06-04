@@ -333,11 +333,12 @@
     <property name="moveSpeed" type="int" value="90"/>
    </properties>
   </object>
-  <object id="42" name="mapswitch" type="door" x="1926" y="368" width="32" height="96">
+  <object id="42" name="mapswitch" type="door" x="1928" y="367" width="32" height="96">
    <properties>
+    <property name="enterOffset" type="int" value="-16"/>
     <property name="lock" type="bool" value="false"/>
     <property name="nextID" type="int" value="5"/>
-    <property name="offset" type="int" value="16"/>
+    <property name="offset" type="int" value="48"/>
     <property name="toLayerNumber" type="int" value="1"/>
    </properties>
   </object>
