@@ -13,8 +13,10 @@ DEBUG_COLLISION = false;
 DEBUG_EYESIGHT = false;
 
 //定数
-SC_W = 480;
-SC_H = 320;
+SC_W = 576;
+SC_H = 324;
+// SC_W = 480;
+// SC_H = 320;
 
 FPS = 30;
 

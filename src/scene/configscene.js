@@ -28,7 +28,7 @@ phina.define("qft.ConfigScene", {
         this.scroll = phina.display.Sprite("menuframe")
             .addChildTo(this)
             .setPosition(SC_W*0.5, SC_H*0.5)
-            .setScale(0.7, 1);
+            .setScale(0.85, 1.1);
         this.scroll.alpha = 0;
         this.scroll.tweener.clear().fadeIn(500);
 
