@@ -130,12 +130,12 @@ phina.define("qft.Enemy.Knight", {
                         if (this.direction == 0) {
                             if (this.x < pl.x) {
                                 this.isJump = true;
-                                this.vy = -10;
+                                this.vy = -12;
                             }
                         } else {
                             if (this.x > pl.x) {
                                 this.isJump = true;
-                                this.vy = -10;
+                                this.vy = -12;
                             }
                         }
                     }
