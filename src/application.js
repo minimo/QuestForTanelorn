@@ -25,13 +25,7 @@ phina.define("qft.Application", {
         this.gamepad = this.gamepadManager.get(0);
 
         //バーチャルパッド
-        var param = {
-            width: SC_W,
-            height: SC_H * 0.3,
-            x: 0,
-            y: SC_H * 0.7,
-        }
-        this.virtualPad = phina.extension.VirtualPad(param);
+        this.virtualPad = phina.extension.VirtualPad({width: SC_W, height: SC_H * 0.3}).setPosition(0, 0);
 
         //パッド情報を更新
         this.on('enterframe', function() {
