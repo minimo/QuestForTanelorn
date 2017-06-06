@@ -186,7 +186,7 @@ phina.define("qft.OpeningScene", {
 
     //三番目表示（暫定）
     sequence3: function() {
-        var sprite1 = phina.display.Sprite("openingback2").addChildTo(this.imageLayer).setPosition(SC_W * 0.5, SC_H * 0.3);
+        var sprite1 = phina.display.Sprite("openingback2").addChildTo(this.imageLayer).setPosition(SC_W * 0.5, SC_H * 0.3).setScale(1.1);
         sprite1.alpha = 0;
         sprite1.tweener.clear()
             .call(function(){
@@ -211,7 +211,7 @@ phina.define("qft.OpeningScene", {
 
     //プレイヤー表示
     playerimage: function() {
-        var sprite1 = phina.display.Sprite("openingback").addChildTo(this.imageLayer).setPosition(SC_W * 0.5, SC_H * 0.35);
+        var sprite1 = phina.display.Sprite("openingback").addChildTo(this.imageLayer).setPosition(SC_W * 0.5, SC_H * 0.35).setScale(1.2);
         sprite1.alpha = 0;
         sprite1.tweener.clear()
             .call(function(){
