@@ -149,15 +149,15 @@ phina.define("phina.extension.VirtualPad.CrossKey", {
         };
         //0:上 1:右上 2:右 3:右下 4:下 5:左下 6:左 7:左上
         this.btn = [];
-        this.btn[0] = phina.display.RectangleShape({width: 40, height: 40}.$safe(button)).setPosition(cp.x     , cp.y - 30).addChildTo(this).setInteractive(true);
-        this.btn[2] = phina.display.RectangleShape({width: 40, height: 40}.$safe(button)).setPosition(cp.x + 30, cp.y     ).addChildTo(this).setInteractive(true);
-        this.btn[4] = phina.display.RectangleShape({width: 40, height: 40}.$safe(button)).setPosition(cp.x     , cp.y + 30).addChildTo(this).setInteractive(true);
-        this.btn[6] = phina.display.RectangleShape({width: 40, height: 40}.$safe(button)).setPosition(cp.x - 30, cp.y     ).addChildTo(this).setInteractive(true);
+        this.btn[0] = phina.display.RectangleShape({width: 60, height: 50}.$safe(button)).setPosition(cp.x     , cp.y - 40).addChildTo(this).setInteractive(true);
+        this.btn[2] = phina.display.RectangleShape({width: 50, height: 60}.$safe(button)).setPosition(cp.x + 40, cp.y     ).addChildTo(this).setInteractive(true);
+        this.btn[4] = phina.display.RectangleShape({width: 60, height: 50}.$safe(button)).setPosition(cp.x     , cp.y + 40).addChildTo(this).setInteractive(true);
+        this.btn[6] = phina.display.RectangleShape({width: 50, height: 60}.$safe(button)).setPosition(cp.x - 40, cp.y     ).addChildTo(this).setInteractive(true);
 
-        this.btn[1] = phina.display.RectangleShape({width: 30, height: 30}.$safe(button)).setPosition(cp.x + 30, cp.y - 30).addChildTo(this).setInteractive(true);
-        this.btn[3] = phina.display.RectangleShape({width: 30, height: 30}.$safe(button)).setPosition(cp.x + 30, cp.y + 30).addChildTo(this).setInteractive(true);
-        this.btn[5] = phina.display.RectangleShape({width: 30, height: 30}.$safe(button)).setPosition(cp.x - 30, cp.y + 30).addChildTo(this).setInteractive(true);
-        this.btn[7] = phina.display.RectangleShape({width: 30, height: 30}.$safe(button)).setPosition(cp.x - 30, cp.y - 30).addChildTo(this).setInteractive(true);
+        this.btn[1] = phina.display.RectangleShape({width: 30, height: 30}.$safe(button)).setPosition(cp.x + 40, cp.y - 40).addChildTo(this).setInteractive(true);
+        this.btn[3] = phina.display.RectangleShape({width: 30, height: 30}.$safe(button)).setPosition(cp.x + 40, cp.y + 40).addChildTo(this).setInteractive(true);
+        this.btn[5] = phina.display.RectangleShape({width: 30, height: 30}.$safe(button)).setPosition(cp.x - 40, cp.y + 40).addChildTo(this).setInteractive(true);
+        this.btn[7] = phina.display.RectangleShape({width: 30, height: 30}.$safe(button)).setPosition(cp.x - 40, cp.y - 40).addChildTo(this).setInteractive(true);
 
         for (var i = 0; i < this.btn.length; i++) {
             this.btn[i].isOn = false;
@@ -200,7 +200,7 @@ phina.define("phina.extension.VirtualPad.Button", {
         this.options = options;
 
         var param = {
-            radius: options.radius || 20,
+            radius: options.radius || 30,
             fill: "rgba(0,0,0,0.2)",
             stroke: "rgba(0,0,0,0.2)",
             backgroundColor: 'transparent',
