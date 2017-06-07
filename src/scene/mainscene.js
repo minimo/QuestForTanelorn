@@ -95,7 +95,9 @@ phina.define("qft.MainScene", {
         this.fg.tweener.setUpdateType('fps').clear().fadeOut(30);
 
         //バーチャルパッドの可視化
-//        app.virtualPad.addChildTo(this).setPosition(0, 0);
+        if (phina.isMobile() || DEBUG_MOBILE) {
+            app.virtualPad.addChildTo(this).setPosition(0, 0);
+        }
 
         app.volumeBGM = 0.5;
         app.volumeSE = 0.2;
@@ -411,6 +413,15 @@ phina.define("qft.MainScene", {
 
         //プレイヤー装備武器表示
         this.playerWeapon = qft.PlayerWeapon(this.player).addChildTo(this).setPosition(SC_W-30, SC_H-30);
+        var sw = phina.display.RectangleShape({width: 60, height: 60})
+            .addChildTo(this)
+            .setPosition(SC_W-30, SC_H-30)
+            .setInteractive(true)
+            .setAlpha(0.0);
+        sw.on('pointstart', e => {
+            var pl = that.player;
+            if (!pl.before.change && pl.equip.switchOk) pl.switchWeapon();
+        });
     },
 
     //マップ情報の初期化

@@ -25,13 +25,13 @@ phina.define("qft.Application", {
         this.gamepad = this.gamepadManager.get(0);
 
         //バーチャルパッド
-        this.virtualPad = phina.extension.VirtualPad({width: SC_W, height: SC_H * 0.3}).setPosition(0, 0);
+        this.virtualPad = phina.extension.VirtualPad({width: SC_W, height: SC_H}).setPosition(0, 0);
 
         //パッド情報を更新
         this.on('enterframe', function() {
             this.gamepadManager.update();
-            this.updateController();
             this.virtualPad.updateInfo();
+            this.updateController();
         });
         this.controller = {};
 
@@ -58,20 +58,21 @@ phina.define("qft.Application", {
 
         var gp = this.gamepad;
         var kb = this.keyboard;
+        var vp = this.virtualPad;
         var angle1 = gp.getKeyAngle();
         var angle2 = kb.getKeyAngle();
         this.controller = {
             angle: angle1 !== null? angle1: angle2,
 
-            up: gp.getKey("up") || kb.getKey("up"),
-            down: gp.getKey("down") || kb.getKey("down"),
-            left: gp.getKey("left") || kb.getKey("left"),
-            right: gp.getKey("right") || kb.getKey("right"),
+            up: gp.getKey("up") || kb.getKey("up") || vp.getKey("up"),
+            down: gp.getKey("down") || kb.getKey("down") || vp.getKey("down"),
+            left: gp.getKey("left") || kb.getKey("left") || vp.getKey("left"),
+            right: gp.getKey("right") || kb.getKey("right") || vp.getKey("right"),
 
-            attack: gp.getKey("A") || kb.getKey("Z"),
-            jump:   gp.getKey("up") || gp.getKey("B") || kb.getKey("up") || kb.getKey("X"),
-            change: gp.getKey("X") || kb.getKey("C"),
-            menu:   gp.getKey("start") || kb.getKey("escape"),
+            attack: gp.getKey("A") || kb.getKey("Z") || vp.getKey("Z"),
+            jump:   gp.getKey("up") || gp.getKey("B") || kb.getKey("up") || kb.getKey("X") || vp.getKey("up") || vp.getKey("X"),
+            change: gp.getKey("X") || kb.getKey("C")  || vp.getKey("C") ,
+            menu:   gp.getKey("start") || kb.getKey("escape") || vp.getKey("escape"),
 
             a: gp.getKey("A") || kb.getKey("Z"),
             b: gp.getKey("B") || kb.getKey("X"),

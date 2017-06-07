@@ -11,6 +11,7 @@
 DEBUG = false;
 DEBUG_COLLISION = false;
 DEBUG_EYESIGHT = false;
+DEBUG_MOBILE = false;
 
 //定数
 SC_W = 576;
@@ -57,7 +58,7 @@ window.onload = function() {
     app.replaceScene(qft.SceneFlow());
 
     //モバイル対応
-    if (phina.isMobile) {
+    if (phina.isMobile()) {
         app.domElement.addEventListener('touchend', function dummy() {
             var s = phina.asset.Sound();
             s.loadFromBuffer();
