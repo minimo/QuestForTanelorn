@@ -69,6 +69,7 @@ phina.define("qft.ConfigScene_Practice", {
                     that.select = this.select;
                     that.menuText[that.select].tweener.clear().to({scaleX: 1.0, scaleY: 1.0}, 500, "easeOutBounce");
                     that.vselect = 0;
+                    app.playSE("select");
                 }
             }
         }
@@ -98,6 +99,7 @@ phina.define("qft.ConfigScene_Practice", {
                 that.menuText[that.select].tweener.clear().to({scaleX: 0.7, scaleY: 0.7}, 500, "easeOutBounce");
                 that.exitText.tweener.clear().to({scaleX: 1.0, scaleY: 1.0}, 500, "easeOutBounce");
                 that.vselect = 1;
+                app.playSE("select");
             }
         }
 

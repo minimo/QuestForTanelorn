@@ -80,6 +80,7 @@ phina.define("qft.ConfigScene", {
                     that.menuText[that.select].tweener.clear().to({scaleX: 0.7, scaleY: 0.7}, 500, "easeOutBounce");
                     that.select = this.select;
                     that.menuText[that.select].tweener.clear().to({scaleX: 1.0, scaleY: 1.0}, 500, "easeOutBounce");
+                    app.playSE("select");
                 }
             }
         }
