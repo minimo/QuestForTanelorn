@@ -55,8 +55,12 @@ phina.define("phina.extension.VirtualPad", {
             .setOrigin(0, 0)
             .setPosition(options.x, options.y);
 
-        this.cross = phina.extension.VirtualPad.CrossKey()
+        this.analog = phina.extension.VirtualPad.AnalogStick()
             .addChildTo(this)
+            .setPosition(options.height * 0.2, options.height * 0.8);
+
+        this.cross = phina.extension.VirtualPad.CrossKey()
+//            .addChildTo(this)
             .setPosition(options.height * 0.2, options.height * 0.8);
 
         this.btn = [];
@@ -201,8 +205,8 @@ phina.define("phina.extension.VirtualPad.Button", {
 
         var param = {
             radius: options.radius || 30,
-            fill: "rgba(0,0,0,0.2)",
-            stroke: "rgba(0,0,0,0.2)",
+            fill: "rgba(0,0,0,0.3)",
+            stroke: "rgba(0,0,0,0.3)",
             backgroundColor: 'transparent',
         };
         this.btn = phina.display.CircleShape(param)
@@ -217,3 +221,34 @@ phina.define("phina.extension.VirtualPad.Button", {
     },
 });
 
+//バーチャルパッドアナログスティック
+phina.define("phina.extension.VirtualPad.AnalogStick", {
+    superClass: "phina.display.DisplayElement",
+
+    active: true,
+
+    init: function(options) {
+        this.superInit();
+        options = (options || {}).$safe(this.defaultOptions);
+        this.options = options;
+
+        //中心点
+        var hw = 0;
+        var hh = 0;
+        var cp = phina.geom.Vector2(0, 0);
+
+        var param = {
+            radius: options.radius || 60,
+            fill: "rgba(0,0,0,0.2)",
+            stroke: "rgba(0,0,0,0.2)",
+            backgroundColor: 'transparent',
+        };
+        this.outer = phina.display.CircleShape(param).addChildTo(this);
+        this.inner = phina.display.CircleShape({radius: 20, fill: "rgba(0,0,0,0.3)"}.$safe(param))
+            .addChildTo(this)
+            .setInteractive(true);
+    },
+
+    update: function() {
+    },
+});
