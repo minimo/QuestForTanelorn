@@ -308,7 +308,7 @@
    <properties>
     <property name="enterOffset" type="int" value="-16"/>
     <property name="lock" type="bool" value="false"/>
-    <property name="nextID" type="int" value="5"/>
+    <property name="nextID" type="int" value="17"/>
     <property name="offset" type="int" value="48"/>
     <property name="toLayerNumber" type="int" value="1"/>
     <property name="visible" type="bool" value="false"/>
@@ -402,14 +402,6 @@
    </properties>
   </object>
   <object id="65" name="down" type="check" x="2144" y="704" width="32" height="32"/>
-  <object id="66" type="floor" x="3424" y="704" width="112" height="48">
-   <properties>
-    <property name="index" type="int" value="0"/>
-    <property name="moveAngle" type="int" value="0"/>
-    <property name="moveLength" type="int" value="512"/>
-    <property name="moveSpeed" type="int" value="90"/>
-   </properties>
-  </object>
   <object id="67" name="jewelbox" type="itembox" x="5112" y="976" width="32" height="32"/>
   <object id="68" name="Death" type="enemy" x="1464" y="584" width="32" height="32"/>
  </objectgroup>
