@@ -206,7 +206,7 @@ phina.define("phina.extension.VirtualPad.Button", {
         var param = {
             radius: options.radius || 30,
             fill: "rgba(0,0,0,0.3)",
-            stroke: "rgba(0,0,0,0.3)",
+            stroke: "rgba(255, 255, 255, 0.3)",
             backgroundColor: 'transparent',
         };
         this.btn = phina.display.CircleShape(param)
@@ -223,14 +223,17 @@ phina.define("phina.extension.VirtualPad.Button", {
 
 //バーチャルパッドアナログスティック
 phina.define("phina.extension.VirtualPad.AnalogStick", {
-    superClass: "phina.display.DisplayElement",
+    superClass: "phina.display.CircleShape",
 
     active: true,
 
     init: function(options) {
-        this.superInit();
-        options = (options || {}).$safe(this.defaultOptions);
-        this.options = options;
+        this.superInit({
+            radius: 60,
+            fill: null,
+            stroke: "rgba(255, 255, 255, 0.3)",
+            backgroundColor: 'transparent',
+        });
 
         //中心点
         var hw = 0;
@@ -238,17 +241,44 @@ phina.define("phina.extension.VirtualPad.AnalogStick", {
         var cp = phina.geom.Vector2(0, 0);
 
         var param = {
-            radius: options.radius || 60,
-            fill: "rgba(0,0,0,0.2)",
-            stroke: "rgba(0,0,0,0.2)",
+            radius: 20,
+            fill: "rgba(0,0,0,0.3)",
+            stroke: "rgba(0,0,0,0.3)",
             backgroundColor: 'transparent',
         };
-        this.outer = phina.display.CircleShape(param).addChildTo(this);
-        this.inner = phina.display.CircleShape({radius: 20, fill: "rgba(0,0,0,0.3)"}.$safe(param))
+        this.inner = phina.display.CircleShape(param)
             .addChildTo(this)
             .setInteractive(true);
+        this.vector = phina.geom.Vector2(0, 0);
+        this.pt = null;
     },
 
     update: function() {
+        if (!app.pointer.getPointing()) {
+            this.vector.set(0, 0);
+        }
+        var pointers = app.pointers;
+        pointers.forEach(pointer => {
+            if (pointer.getPointingStart() && this.hitTest(pointer.x, pointer.y)) {
+                this.pt = pointer;
+            }
+        });
+        if (this.pt) {
+            if (this.pt.getPointing()) {
+                this.vector.set(this.pt.x - this.x, this.pt.y - this.y).normalize();
+            } else if (this.pt.getPointingEnd()) {
+                this.vector.set(0, 0);
+            }
+        }
+        this.inner.x = this.vector.x * this.radius * 0.6;
+        this.inner.y = this.vector.y * this.radius * 0.6;
+
+        //角度
+        if (this.vector.x == 0 && this.vector.y == 0) {
+            this.angle = null;
+        } else {
+            this.angle = Math.floor(Math.atan2(this.vector.y, this.vector.x).toDegree());
+            if (this.angle < 0) this.angle += 360;
+        }
     },
 });
