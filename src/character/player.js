@@ -161,6 +161,15 @@ phina.define("qft.Player", {
 
         //プレイヤー操作
         var ct = app.controller;
+        //バーチャルパッド情報取得
+        var vp = app.virtualPad;
+        if (vp.getKey("up")) ct.up = true;
+        if (vp.getKey("right")) ct.right = true;
+        if (vp.getKey("down")) ct.down = true;
+        if (vp.getKey("left")) ct.left = true;
+        if (vp.getKey("Z")) ct.attack = true;
+        if (vp.getKey("X")) ct.jump = true;
+
         if (!this.isControl) ct = {};
         if (this.stopTime == 0) {
             //左移動
