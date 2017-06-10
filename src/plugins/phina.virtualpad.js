@@ -106,7 +106,7 @@ phina.define("phina.extension.VirtualPad", {
     },
 
     getKey: function(code) {
-        var ov = 20;
+        var ov = 10;
         var angle = this.analog.angle;
         switch (code) {
             case "right":
