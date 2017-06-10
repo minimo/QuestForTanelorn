@@ -57,11 +57,7 @@ phina.define("phina.extension.VirtualPad", {
 
         this.analog = phina.extension.VirtualPad.AnalogStick()
             .addChildTo(this)
-            .setPosition(options.height * 0.2, options.height * 0.8);
-
-        this.cross = phina.extension.VirtualPad.CrossKey()
-//            .addChildTo(this)
-            .setPosition(options.height * 0.2, options.height * 0.8);
+            .setPosition(82, options.height - 82);
 
         this.btn = [];
         this.btn[0] = phina.extension.VirtualPad.Button().addChildTo(this).setPosition(options.width * 0.7, options.height * 0.9);
@@ -230,7 +226,7 @@ phina.define("phina.extension.VirtualPad.AnalogStick", {
 
     init: function(options) {
         this.superInit({
-            radius: 60,
+            radius: 80,
             fill: null,
             stroke: "rgba(255, 255, 255, 0.3)",
             backgroundColor: 'transparent',
