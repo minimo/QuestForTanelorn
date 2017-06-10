@@ -106,16 +106,17 @@ phina.define("phina.extension.VirtualPad", {
     },
 
     getKey: function(code) {
-        var cr = this.cross.keydata;
+        var ov = 20;
+        var angle = this.analog.angle;
         switch (code) {
-            case "up":
-                return cr.up;
-            case "down":
-                return cr.down;
             case "right":
-                return cr.right;
+                return angle && (angle >= 315 - ov || angle <= 45 + ov);
+            case "down":
+                return angle && (angle >= 45 - ov && angle <= 135 + ov);
             case "left":
-                return cr.left;
+                return angle && (angle >= 135 - ov && angle <= 215 + ov);
+            case "up":
+                return angle && (angle >= 215 - ov && angle <= 315 + ov);
             case "z":
             case "Z":
                 return this.btn[0].isOn;
