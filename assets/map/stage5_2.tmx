@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="200" height="70" tilewidth="16" tileheight="16" nextobjectid="18">
+<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="200" height="70" tilewidth="16" tileheight="16" nextobjectid="28">
  <tileset firstgid="1" name="A1" tilewidth="16" tileheight="16" tilecount="768" columns="32">
   <image source="TileA1.png" width="512" height="384"/>
  </tileset>
@@ -292,6 +292,56 @@
     <property name="offset" type="int" value="48"/>
     <property name="toLayerNumber" type="int" value="0"/>
     <property name="visible" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="18" name="candlelamp" type="accessory" x="264" y="208" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="19" name="candlelamp" type="accessory" x="408" y="208" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="20" name="candlelamp" type="accessory" x="592" y="204" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="21" name="candlelamp" type="accessory" x="832" y="204" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="22" name="candlelamp" type="accessory" x="1844" y="252" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="23" name="candlelamp" type="accessory" x="1716" y="252" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="24" name="candlelamp" type="accessory" x="1960" y="252" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="25" name="candlelamp" type="accessory" x="2064" y="252" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="26" name="candlelamp" type="accessory" x="1596" y="252" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="27" name="candlelamp" type="accessory" x="1468" y="252" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
    </properties>
   </object>
  </objectgroup>
