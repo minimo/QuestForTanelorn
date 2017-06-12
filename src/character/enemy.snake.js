@@ -41,7 +41,11 @@ phina.define("qft.Enemy.Snake", {
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("monster01", 24, 32).addChildTo(this);
-        this.sprite.setFrameTrimming(0, 384, 72, 128);
+        this.sprite.setFrameTrimming(Math.min(this.level, 4) * 72, 384, 72, 128)
+            .setScale(1 + this.level * 0.2)
+            .setPosition(0, this.level * -2)
+        this.hp += this.level * 10;
+        this.power += this.level * 5;
 
         this.setAnimation("walk");
         this.animationInterval = 10;
