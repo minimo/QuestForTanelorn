@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="400" height="70" tilewidth="16" tileheight="16" nextobjectid="106">
+<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="400" height="70" tilewidth="16" tileheight="16" nextobjectid="116">
  <tileset firstgid="1" name="A1" tilewidth="16" tileheight="16" tilecount="768" columns="32">
   <image source="TileA1.png" width="512" height="384"/>
  </tileset>
@@ -574,6 +574,36 @@
   <object id="105" name="lamp" type="accessory" x="3864" y="332" width="24" height="32">
    <properties>
     <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="106" name="WispHard" type="enemy" x="1708" y="944" width="32" height="32"/>
+  <object id="107" name="WispHard" type="enemy" x="1880" y="564" width="32" height="32"/>
+  <object id="108" name="WispHard" type="enemy" x="2552" y="588" width="32" height="32"/>
+  <object id="109" name="Wisp" type="enemy" x="1960" y="564" width="32" height="32"/>
+  <object id="110" name="Snake" type="enemy" x="2864" y="664" width="32" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="111" name="Death" type="enemy" x="4092" y="344" width="32" height="32"/>
+  <object id="112" name="lamp" type="accessory" x="4040" y="344" width="24" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="113" name="Slime" type="enemy" x="2236" y="668" width="32" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="114" name="Slime" type="enemy" x="3524" y="364" width="32" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="115" name="Snake" type="enemy" x="1192" y="952" width="32" height="32">
+   <properties>
+    <property name="level" type="int" value="2"/>
    </properties>
   </object>
  </objectgroup>
