@@ -1,6 +1,6 @@
 /*
- *  phina.assetloaderex.js
- *  2016/11/25
+ *  phina.virtualpad.js
+ *  2017/06/13
  *  @auther minimo  
  *  This Program is MIT license.
  *
