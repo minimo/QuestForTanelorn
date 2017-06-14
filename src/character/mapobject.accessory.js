@@ -14,7 +14,7 @@ phina.define("qft.MapObject.Accessory", {
     id: null,
 
     //識別フラグ
-    isAccessory: true,
+    isMapAccessory: true,
 
     //重力加速度
     gravity: 0.0,

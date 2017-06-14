@@ -90,6 +90,7 @@ phina.define("qft.Character", {
     isItemBox: false,
     isItem: false,
     isBlock: false,
+    isMapAccessory: false,
 
     //経過フレーム
     time: 0,
@@ -103,45 +104,8 @@ phina.define("qft.Character", {
         this.options = options || {};
         this.setupAnimation();
 
-        //当り判定用（0:上 1:右 2:下 3:左）
-        var w = Math.floor(this.width/4);
-        var h = Math.floor(this.height/4);
-        this._collision = [];
-        this._collision[0] = phina.display.RectangleShape({width: w, height: 2});
-        this._collision[1] = phina.display.RectangleShape({width: 2, height: h});
-        this._collision[2] = phina.display.RectangleShape({width: w, height: 2});
-        this._collision[3] = phina.display.RectangleShape({width: 2, height: h});
-        this.collisionResult = null;
-
-        //当たり判定チェック位置オフセット
-        this.offsetCollisionX = options.offsetCollisionX || 0;
-        this.offsetCollisionY = options.offsetCollisionY || 0;
-
-        //当たり判定情報再設定
-        this.setupCollision();
-
-        //当たり判定デバッグ用
-        if (DEBUG_COLLISION) {
-            this.one('enterframe', e => {
-                this._collision[0].addChildTo(this.parentScene.objLayer);
-                this._collision[1].addChildTo(this.parentScene.objLayer);
-                this._collision[2].addChildTo(this.parentScene.objLayer);
-                this._collision[3].addChildTo(this.parentScene.objLayer);
-                this._collision[0].alpha = 0.3;
-                this._collision[1].alpha = 0.3;
-                this._collision[2].alpha = 0.3;
-                this._collision[3].alpha = 0.3;
-                //ダメージ当たり判定表示
-                var c = phina.display.RectangleShape({width: this.width, height: this.height}).addChildTo(this);
-                c.alpha = 0.3;
-            });
-            this.one('removed', e => {
-                this._collision[0].remove();
-                this._collision[1].remove();
-                this._collision[2].remove();
-                this._collision[3].remove();
-            });
-        }
+        //当たり判定情報初期化
+        if (!this.isMapAccessory) this.initCollision(options);
 
         //吹き出し
         var that = this;
@@ -216,8 +180,10 @@ phina.define("qft.Character", {
             if (Math.abs(this.vy) < 0.01) this.vy = 0;
 
             //当たり判定
-            this.resetCollisionPosition();
-            this.checkMapCollision();
+            if (!this.isMapAccessory) {
+                this.resetCollisionPosition();
+                this.checkMapCollision();
+            }
 
             //画面外落ち
             if (!this.isDead && this.y > this.parent.parent.map.height) this.dropDead();
@@ -272,6 +238,49 @@ phina.define("qft.Character", {
 
     //一回目のenterframeで一度だけ呼ばれる
     once: function() {
+    },
+
+    //当たり判定情報初期化
+    initCollision: function(options) {
+        //当り判定用（0:上 1:右 2:下 3:左）
+        var w = Math.floor(this.width/4);
+        var h = Math.floor(this.height/4);
+        this._collision = [];
+        this._collision[0] = phina.display.RectangleShape({width: w, height: 2});
+        this._collision[1] = phina.display.RectangleShape({width: 2, height: h});
+        this._collision[2] = phina.display.RectangleShape({width: w, height: 2});
+        this._collision[3] = phina.display.RectangleShape({width: 2, height: h});
+        this.collisionResult = null;
+
+        //当たり判定チェック位置オフセット
+        this.offsetCollisionX = options.offsetCollisionX || 0;
+        this.offsetCollisionY = options.offsetCollisionY || 0;
+
+        //当たり判定情報再設定
+        this.setupCollision();
+
+        //当たり判定デバッグ用
+        if (DEBUG_COLLISION) {
+            this.one('enterframe', e => {
+                this._collision[0].addChildTo(this.parentScene.objLayer);
+                this._collision[1].addChildTo(this.parentScene.objLayer);
+                this._collision[2].addChildTo(this.parentScene.objLayer);
+                this._collision[3].addChildTo(this.parentScene.objLayer);
+                this._collision[0].alpha = 0.3;
+                this._collision[1].alpha = 0.3;
+                this._collision[2].alpha = 0.3;
+                this._collision[3].alpha = 0.3;
+                //ダメージ当たり判定表示
+                var c = phina.display.RectangleShape({width: this.width, height: this.height}).addChildTo(this);
+                c.alpha = 0.3;
+            });
+            this.one('removed', e => {
+                this._collision[0].remove();
+                this._collision[1].remove();
+                this._collision[2].remove();
+                this._collision[3].remove();
+                });
+        }
     },
 
     //画面外落ち
