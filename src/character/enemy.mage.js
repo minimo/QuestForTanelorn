@@ -25,7 +25,7 @@ phina.define("qft.Enemy.Mage", {
     viewAngle: 270,
 
     //得点
-    point: 100,
+    point: 500,
 
     //アイテムドロップ率（％）
     dropRate: 30,
@@ -43,8 +43,10 @@ phina.define("qft.Enemy.Mage", {
         var lv = Math.min(this.level, 4);
         this.sprite = phina.display.Sprite("monster03", 24, 32).addChildTo(this);
         this.sprite.setFrameTrimming((lv % 2) * 144, Math.floor(lv / 2) * 128, 72, 128);
+
         this.hp += this.level * 5;
         this.power += this.level * 5;
+        this.point += this.level * 100;
 
         this.setAnimation("walk");
         this.animationInterval = 10;

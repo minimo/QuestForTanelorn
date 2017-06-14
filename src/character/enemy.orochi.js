@@ -25,7 +25,7 @@ phina.define("qft.Enemy.Orochi", {
     viewAngle: 90,
 
     //得点
-    point: 100,
+    point: 700,
 
     //アイテムドロップ率（％）
     dropRate: 10,
@@ -44,8 +44,10 @@ phina.define("qft.Enemy.Orochi", {
         this.sprite.setFrameTrimming(Math.min(this.level, 4) * 72*2, 384*2, 72*2, 128*2)
             .setScale(1 + Math.min(this.level, 4) * 0.1)
             .setPosition(0, Math.min(this.level, 4) * -1)
+
         this.hp += this.level * 10;
         this.power += this.level * 5;
+        this.point += this.level * 150;
 
         this.setAnimation("walk");
         this.animationInterval = 15;

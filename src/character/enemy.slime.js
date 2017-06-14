@@ -48,11 +48,12 @@ phina.define("qft.Enemy.Slime", {
         this.sprite = phina.display.Sprite("monster01", 24, 32).addChildTo(this);
         this.sprite.setFrameTrimming(capLevel * 72, 256, 72, 128)
             .setScale(1 + capLevel * 0.2)
-            .setPosition(0, -4 + capLevel * -2);
+            .setPosition(0, -2 + capLevel * -3);
         this.width += capLevel * 5;
 
         this.hp += this.level * 10;
         this.power += this.level * 5;
+        this.point += this.level * 50;
 
         this.setAnimation("walk");
         this.animationInterval = 10;

@@ -25,7 +25,7 @@ phina.define("qft.Enemy.Snake", {
     viewAngle: 90,
 
     //得点
-    point: 100,
+    point: 150,
 
     //アイテムドロップ率（％）
     dropRate: 10,
@@ -49,6 +49,7 @@ phina.define("qft.Enemy.Snake", {
 
         this.hp += this.level * 10;
         this.power += this.level * 5;
+        this.point += this.level * 50;
 
         this.setAnimation("walk");
         this.animationInterval = 10;
