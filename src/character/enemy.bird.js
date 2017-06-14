@@ -56,8 +56,12 @@ phina.define("qft.Enemy.Bird", {
         this.superInit(parentScene, options);
 
         //表示用スプライト
+        var capLevel = Math.min(this.level, 4);
         this.sprite = phina.display.Sprite("monster01", 24, 32).addChildTo(this);
-        this.sprite.setFrameTrimming(0, 0, 72, 128);
+        this.sprite.setFrameTrimming(capLevel * 72, 0, 72, 128).setScale(1 + capLevel * 0.1);
+
+        this.hp += this.level * 10;
+        this.power += this.level * 5;
 
         this.setAnimation("walk");
         this.animationInterval = 6;
