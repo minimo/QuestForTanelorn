@@ -45,6 +45,7 @@ phina.define("qft.Enemy.Snake", {
         this.sprite.setFrameTrimming(capLevel * 72, 384, 72, 128)
             .setScale(1 + capLevel * 0.1)
             .setPosition(0, capLevel * -1)
+        this.width += capLevel * 5;
 
         this.hp += this.level * 10;
         this.power += this.level * 5;
