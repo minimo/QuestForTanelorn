@@ -644,7 +644,7 @@ phina.define("qft.Player", {
         //アイテム情報取得
         var spec = qft.ItemInfo.get(kind);
         this.attackCollision.$extend(spec);
-        this.attackCollision.power += level * (spec.levelBonus || 10);
+        this.attackCollision.power += level * (spec.levelBonus || 2);
 
         switch (kind) {
             case 0:
@@ -751,7 +751,7 @@ phina.define("qft.Player", {
                     .call(function() {
                         that.isAttack = false;
                     });
-                    var arrowPower = 5 + level * 5;
+                    var arrowPower = 5 + level * 2;
                     var arrow = qft.PlayerAttack(this.parentScene, {width: 15, height: 10, power: arrowPower, type: "arrow"})
                         .addChildTo(this.parentScene.playerLayer)
                         .setScale(this.scaleX, 1)
@@ -771,7 +771,7 @@ phina.define("qft.Player", {
                     .call(function() {
                         that.isAttack = false;
                     });
-                    var magicPower = 20 + level * 10;
+                    var magicPower = 20 + level * 2;
                     var magic = qft.PlayerAttack(this.parentScene, {width: 15, height: 10, index: 30, power: magicPower, type: "fireball"})
                         .addChildTo(this.parentScene.playerLayer)
                         .setScale(this.scaleX, 1)
