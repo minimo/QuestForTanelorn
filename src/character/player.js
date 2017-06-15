@@ -1069,14 +1069,27 @@ phina.define("qft.PlayerWeapon", {
             this.rotation = -that.rotation;
         }
         var param = {
-            width: 26,
-            height: 26,
+            width: 25,
+            height: 25,
             fill: "rgba(0,0,0,0.0)",
             stroke: "yellow",
             strokeWidth: 2,
             backgroundColor: 'transparent',
         };
+        //使用中武器
         phina.display.RectangleShape(param).addChildTo(this.base).setPosition(0, -18);
+        //捨てちゃう武器
+        this.dropFrame = phina.display.RectangleShape({stroke: "red"}.$safe(param))
+            .addChildTo(this.base)
+            .setPosition(14, 10)
+            .setVisible(false);
+        this.dropFrame.update = function() {
+            if (that.player.equip.weapons.length < 3) {
+                this.visible = false;
+            } else {
+                this.visible = true;
+            }
+        }
 
         //武器リスト（３つ）
         this.weapons = [];
