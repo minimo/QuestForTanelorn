@@ -130,6 +130,8 @@ phina.define("qft.ItemInfo", {
                         isWeapon: true,
                         isSlash: true,
                         power: 10,
+                        stunPower: 1,
+                        maxIndex: 0,
                         collision: {
                             width: 14,
                             height: 30
@@ -144,6 +146,7 @@ phina.define("qft.ItemInfo", {
                         isSlash: true,
                         power: 15,
                         stunPower: 5,
+                        maxIndex: 7,
                         collision: {
                             width: 24,
                             height: 25
@@ -159,6 +162,7 @@ phina.define("qft.ItemInfo", {
                         isBrow: true,
                         power: 20,
                         stunPower: 20,
+                        maxIndex: 4,
                         collision: {
                             width: 14,
                             height: 26
@@ -172,6 +176,8 @@ phina.define("qft.ItemInfo", {
                         isWeapon: true,
                         isSting: true,
                         power: 10,
+                        stunPower: 1,
+                        maxIndex: 4,
                         collision: {
                             width: 39,
                             height: 10
@@ -186,6 +192,7 @@ phina.define("qft.ItemInfo", {
                         isBrow: true,
                         power: 5,
                         stunPower: 5,
+                        maxIndex: 0,
                         collision: {
                             width: 20,
                             height: 10
@@ -201,6 +208,7 @@ phina.define("qft.ItemInfo", {
                         isFire: true,
                         power: 5,
                         stunPower: 10,
+                        maxIndex: 7,
                         collision: {
                             width: 20,
                             height: 10
@@ -216,6 +224,7 @@ phina.define("qft.ItemInfo", {
                         isHoly: true,
                         power: 10,
                         stunPower: 40,
+                        maxIndex: 0,
                         collision: {
                             width: 20,
                             height: 20

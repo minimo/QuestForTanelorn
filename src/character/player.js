@@ -687,7 +687,7 @@ phina.define("qft.Player", {
         }
 
         //武器画像設定
-        var index = kind * 10 + Math.min(level, 9);
+        var index = kind * 10 + Math.min(level, spec.maxIndex);
         this.weapon.setFrameIndex(index);
 
         return this;
@@ -1096,7 +1096,8 @@ phina.define("qft.PlayerWeapon", {
                 if (this.index < weapons.length) {
                     var kind = that.player.equip.weapons[this.index];
                     var level = that.player.equip.level[this.index];
-                    var index = kind * 10 + Math.min(level, 9);
+                    var spec = qft.ItemInfo.get(kind);
+                    var index = kind * 10 + Math.min(level, spec.maxIndex);
                     this.setFrameIndex(index);
                     this.visible = true;
                 } else {
