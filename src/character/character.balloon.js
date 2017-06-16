@@ -51,6 +51,16 @@ phina.define("qft.Character.balloon", {
             case "light":
                 this.setFrameTrimming(144, 64, 48, 32);
                 break;
+            case "newtype":
+                this.setFrameTrimming(144, 96, 72, 32);
+                break;
+            case "anger":
+            case "anger1":
+                this.setFrameTrimming(72, 96, 72, 32);
+                break;
+            case "anger2":
+                this.setFrameTrimming(144, 128, 72, 32);
+                break;
         }
     },
 });
