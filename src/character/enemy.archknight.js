@@ -39,7 +39,7 @@ phina.define("qft.Enemy.ArchKnight", {
     rareDropItem: ITEM_LONGSWORD,
 
     init: function(parentScene, options) {
-        options = (options || {}).$extend({width: 20, height: 40});
+        options = (options || {}).$extend({width: 25, height: 40});
         this.superInit(parentScene, options);
 
         //武器スプライト
@@ -103,6 +103,7 @@ phina.define("qft.Enemy.ArchKnight", {
             } else {
                 this.vx = -0.5;
             }
+            if (this.isJump) this.vx *= 4;
         }
 
         if (look) {
