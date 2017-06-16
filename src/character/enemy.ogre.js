@@ -29,7 +29,7 @@ phina.define("qft.Enemy.Ogre", {
 
     //アイテムドロップ率（％）
     dropRate: 7,
-    dropItem: ITEM_BUG,
+    dropItem: ITEM_BAG,
 
     //レアドロップ率（％）
     rareDropRate: 2,
@@ -40,9 +40,9 @@ phina.define("qft.Enemy.Ogre", {
         this.superInit(parentScene, options);
 
         //表示用スプライト
-        this.sprite = phina.display.Sprite("monster02x2", 24, 32).addChildTo(this);
-        this.sprite.setFrameTrimming(144*2, 0, 72*2, 128*2);
-        this.sprite.setPosition(0, -5).setScale(1.3);
+        this.sprite = phina.display.Sprite("monster02x2", 24*2, 32*2).addChildTo(this);
+        this.sprite.setFrameTrimming(216*2, 0, 72*2, 128*2);
+        this.sprite.setPosition(0, -5);
 
         this.hp += this.level * 10;
         this.power += this.level * 5;
@@ -92,7 +92,6 @@ phina.define("qft.Enemy.Ogre", {
         if (look) {
             this.forgotTime = 120;
             this.stopTime = 0;
-            this.flare('balloon', {pattern: "!"});
         } else {
             if (this.forgotTime == 0) this.flare('balloonerace');
         }
@@ -104,10 +103,10 @@ phina.define("qft.Enemy.Ogre", {
             var isReturnCliff = false;
             if (this.vx > 0) {
                 if (this._collision[1].hit) isReturnWall = true;
-                if (this.checkMapCollision2(this.x+5, this.y+20, 5, 5) == null) isReturnCliff = true;
+                if (this.checkMapCollision2(this.x+5, this.y+40, 5, 5) == null) isReturnCliff = true;
             } else if (this.vx < 0) {
                 if (this._collision[3].hit) isReturnWall = true;
-                if (this.checkMapCollision2(this.x-5, this.y+20, 5, 5) == null) isReturnCliff = true;
+                if (this.checkMapCollision2(this.x-5, this.y+40, 5, 5) == null) isReturnCliff = true;
             }
             if (isReturnWall || isReturnCliff) {
                 if (this.forgotTime > 0) {
@@ -116,12 +115,12 @@ phina.define("qft.Enemy.Ogre", {
                         if (this.direction == 0) {
                             if (this.x < pl.x) {
                                 this.isJump = true;
-                                this.vy = -12;
+                                this.vy = -10;
                             }
                         } else {
                             if (this.x > pl.x) {
                                 this.isJump = true;
-                                this.vy = -12;
+                                this.vy = -10;
                             }
                         }
                     }
@@ -140,6 +139,7 @@ phina.define("qft.Enemy.Ogre", {
                             //着地点が無い場合は諦めて折り返す
                             this.forgotTime = 0;
                             this.stopTime = 30;
+                            this.turnWait = 15;
                             this.direction = (this.direction + 180) % 360;
                             this.vx *= -1;
                             this.flare('balloon', {pattern: "..."});
@@ -148,6 +148,7 @@ phina.define("qft.Enemy.Ogre", {
                 } else {
                     this.direction = (this.direction + 180) % 360;
                     this.vx *= -1;
+                    this.turnWait = 1;
                 }
             }
 
@@ -173,7 +174,7 @@ phina.define("qft.Enemy.Ogre", {
 
     attack: function() {
         var that = this;
-        var atk = qft.EnemyAttack(this.parentScene, {width: 12, height: 24, power: 40 + this.level * 5})
+        var atk = qft.EnemyAttack(this.parentScene, {width: 1, height: 24, power: 40 + this.level * 5})
             .addChildTo(this.parentScene.enemyLayer)
             .setPosition(this.x + this.scaleX * 18, this.y)
             .setAlpha(0.0);
@@ -185,14 +186,13 @@ phina.define("qft.Enemy.Ogre", {
         }
 
         atk.isActive = false;
-        this.weapon.tweener.clear()
-            .to({rotation: 270}, 3)
-            .wait(3)
+        atk.tweener.clear()
+            .wait(6)
             .call(function() {
                 atk.isActive = true;
                 that.vx = 16 * that.scaleX;
             })
-            .to({rotation: 430}, 6)
+            .wait(6)
             .call(function() {
                 that.isAttack = false;
                 atk.remove();
