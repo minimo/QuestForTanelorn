@@ -236,6 +236,8 @@ phina.define("qft.ItemInfo", {
                         name: "SHIELD",
                         type: "equip",
                         isEquip: true,
+                        power: 10,
+                        point: 1000,
                     };
                 case "armor":
                 case ITEM_ARMOR:
@@ -243,6 +245,8 @@ phina.define("qft.ItemInfo", {
                         name: "ARMOR",
                         type: "equip",
                         isEquip: true,
+                        power: 30,
+                        point: 5000,
                     };
                 case "hat":
                 case ITEM_HAT:
@@ -250,6 +254,8 @@ phina.define("qft.ItemInfo", {
                         name: "HAT",
                         type: "equip",
                         isEquip: true,
+                        power: 10,
+                        point: 300,
                     };
                 case "boots":
                 case ITEM_BOOTS:
@@ -257,6 +263,8 @@ phina.define("qft.ItemInfo", {
                         name: "BOOTS",
                         type: "equip",
                         isEquip: true,
+                        power: 10,
+                        point: 500,
                     };
                 case "grove":
                 case ITEM_GROVE:
@@ -264,6 +272,8 @@ phina.define("qft.ItemInfo", {
                         name: "GROVE",
                         type: "equip",
                         isEquip: true,
+                        power: 10,
+                        point: 500,
                     };
                 case "ring":
                 case ITEM_RING:
@@ -271,6 +281,8 @@ phina.define("qft.ItemInfo", {
                         name: "RING",
                         type: "equip",
                         isEquip: true,
+                        power: 20,
+                        point: 3000,
                     };
                 case "scroll":
                 case ITEM_SCROLL:
@@ -374,7 +386,7 @@ phina.define("qft.ItemInfo", {
                         name: "MEAT",
                         type: "food",
                         isFood: true,
-                        power: 70,
+                        power: 60,
                     };
                 case "potion":
                 case ITEM_POTION:

@@ -368,7 +368,7 @@ phina.define("qft.MainScene", {
         //体力ゲージ
         phina.display.Label({text: "LIFE"}.$safe(labelParam)).addChildTo(this).setPosition(0, 10);
         var options = {
-            width:  256,
+            width:  200,
             height: 5,
             backgroundColor: 'transparent',
             fill: 'red',
@@ -377,11 +377,13 @@ phina.define("qft.MainScene", {
             gaugeColor: 'lime',
             cornerRadius: 0,
             value: this.player.hp,
-            maxValue: this.player.hp,
+            maxValue: this.player.hpMax,
         };
         this.lifeGauge = phina.ui.Gauge(options).addChildTo(this).setOrigin(0, 0.5).setPosition(40, 10);
         this.lifeGauge.update = function() {
             this.value = that.player.hp;
+            this.width = that.player.hpMax * 2;
+            this.maxValue = that.player.hpMax;
         };
 
         //スコア表示

@@ -11,6 +11,9 @@ phina.define("qft.Player", {
     //識別フラグ
     isPlayer: true,
 
+    //最大ヒットポイント
+    hpMax: 100,
+
     //ヒットポイント
     hp: 100,
 
@@ -576,7 +579,8 @@ phina.define("qft.Player", {
         }
         //装備品
         if (item.isEquip) {
-            this.items.push(item.kind);
+            if (this.hpMax < 200) this.hpMax += (item.power || 0);
+            this.parentScene.totalScore += (item.point || 0);
             app.playSE("getitem");
         }
         //食べ物
@@ -866,6 +870,7 @@ phina.define("qft.Player", {
         var numJumpMax = this.numJumpMax;
 
         this.startStatus = {
+            hpMax: this.hpMax,
             hp: this.hp,
             power: this.power,
             defense: this.defense,
