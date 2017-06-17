@@ -145,6 +145,9 @@ phina.define("qft.Enemy", {
         if (this.mutekiTime > 0) return false;
         if (this.isMuteki) return false;
 
+        //気絶キャンセル
+        this.isStun = false;
+
         var dir = 0;
         if (target instanceof qft.PlayerAttack) {
             if (target.scaleX == 1) dir = 0; else dir = 180;

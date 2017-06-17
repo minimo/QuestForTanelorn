@@ -500,6 +500,9 @@ phina.define("qft.Player", {
         if (this.isDead) return false;
         if (this.isMuteki) return false;
 
+        //気絶キャンセル
+        this.isStun = false;
+
         var dir = 0;
         if (this.x < target.x) dir = 180;
         this.knockback(target.power, dir);
