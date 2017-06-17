@@ -17,11 +17,18 @@ phina.define("qft.Character.balloon", {
 
     init: function(options) {
         this.superInit("balloon", 24, 32);
-        this.setAnimation(options.pattern);
+
+        this.pattern = options.pattern || "!";
+        this.setAnimation(this.pattern);
 
         this.lifeSpan = options.lifeSpan || 60;
         this.animationInterval = options.animationInterval || 6;
         this.time = 0;
+
+        //特殊パターン
+        if (this.pattern == "anger2") {
+            this.tweener.setUpdateType('fps').clear().by({y: -16, alpha: -1}, this.animationInterval, "easeInSine");
+        }
     },
 
     update : function() {

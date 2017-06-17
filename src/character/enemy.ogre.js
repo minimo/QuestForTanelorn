@@ -86,7 +86,7 @@ phina.define("qft.Enemy.Ogre", {
             } else {
                 this.vx = -0.5;
             }
-            if (this.isJump) this.vx *= 4;
+            if (this.isJump) this.vx *= 2;
         }
 
         if (look) {
@@ -155,7 +155,6 @@ phina.define("qft.Enemy.Ogre", {
             //攻撃
             if (look && !this.isJump && dis < 64 && this.stopTime == 0 && !this.isAttack) {
                 this.attack();
-                this.flare('balloon', {pattern: "anger2"});
             }
         }
 
@@ -190,7 +189,7 @@ phina.define("qft.Enemy.Ogre", {
             .wait(6)
             .call(function() {
                 atk.isActive = true;
-                that.vx = 16 * that.scaleX;
+                that.vx = 32 * that.scaleX;
             })
             .wait(6)
             .call(function() {
@@ -199,6 +198,8 @@ phina.define("qft.Enemy.Ogre", {
             });
         this.isAttack = true;
         this.stopTime = 30;
+
+        qft.Character.balloon({pattern: "anger2"}).addChildTo(this).setPosition(0, -this.height/2-10);
     },
 
     setupAnimation: function() {
