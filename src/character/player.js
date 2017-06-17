@@ -591,7 +591,7 @@ phina.define("qft.Player", {
         if (item.isFood) {
             this.hp += item.power;
             app.playSE("recovery");
-            if (this.hp > 100) this.hp = 100;
+            if (this.hp > this.hpMax) this.hp = this.hpMax;
             this.parentScene.totalScore += (item.point || 0);
         }
         //鍵

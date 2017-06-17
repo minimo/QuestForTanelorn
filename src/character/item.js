@@ -68,7 +68,7 @@ phina.define("qft.Item", {
         //アイテムスプライト
         if (this.isWeapon) {
             //武器の場合
-            var index = this.kind * 10 + Math.min(this.level, 9);
+            var index = this.kind * 10 + Math.min(this.level, this.maxIndex);
             this.sprite = phina.display.Sprite("weapons", 24, 24).addChildTo(this).setFrameIndex(index);
 
             if (this.level > 0) {
