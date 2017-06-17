@@ -365,7 +365,7 @@ phina.define("qft.Player", {
                 this.isAdvanceAnimation = true;
             }
             if (this.nowAnimation == "up" || this.nowAnimation == "down") {
-                if (ct.up || ct.down) {
+                if (ct.up || ct.down || ct.left || ct.right) {
                     this.isAdvanceAnimation = true;
                 } else {
                     this.isAdvanceAnimation = false;
