@@ -98,7 +98,7 @@ phina.define("qft.Assets", {
                             "bgm2": "assets/sound/DS-035m.mp3",
                         },
                         tmx: {
-                            "stage2": "assets/map/stage2.tmx",
+                            "stage2_1": "assets/map/stage2_1.tmx",
                         },
                     };
                 case "stage3":
