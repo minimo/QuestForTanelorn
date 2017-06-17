@@ -407,7 +407,7 @@ phina.define("qft.Player", {
         this.vy = 0;
 
         //ステータス
-        this.hp = 100;
+        this.hp = this.hpMax;
 
         //各種フラグ
         this.isJump = false;
@@ -462,7 +462,7 @@ phina.define("qft.Player", {
         this.vy = 0;
 
         //ステータス
-        this.hp = 100;
+        this.hp = this.hpMax;
 
         //各種フラグ
         this.isJump = false;
@@ -582,7 +582,8 @@ phina.define("qft.Player", {
         }
         //装備品
         if (item.isEquip) {
-            if (this.hpMax < 200) this.hpMax += (item.power || 0);
+            this.hpMax += (item.power || 0);
+            if (this.hpMax > 200) this.hpMax = 200;
             this.parentScene.totalScore += (item.point || 0);
             app.playSE("getitem");
         }
