@@ -236,7 +236,7 @@ phina.define("qft.ItemInfo", {
                         name: "SHIELD",
                         type: "equip",
                         isEquip: true,
-                        power: 10,
+                        power: 20,
                         point: 1000,
                     };
                 case "armor":
