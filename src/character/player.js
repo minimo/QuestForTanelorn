@@ -432,13 +432,13 @@ phina.define("qft.Player", {
         //所持装備
         this.equip = {
             using: 0,         //現在使用中（weaponsのindex）
-            weapons: [0],     //所持リスト（最大３）
+            weapons: [1],     //所持リスト（最大３）
             level: [0],       //武器レベル
             switchOk: true,   //変更可能フラグ
         };
 
         //武器セット
-        this.setWeapon(0);
+        this.setWeapon(this.equip.weapons[this.equip.using]);
 
         //所持アイテム
         this.items = [];
