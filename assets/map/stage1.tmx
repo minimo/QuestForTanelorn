@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="420" height="70" tilewidth="16" tileheight="16" nextobjectid="254">
+<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="420" height="70" tilewidth="16" tileheight="16" nextobjectid="255">
  <tileset firstgid="1" name="A1" tilewidth="16" tileheight="16" tilecount="768" columns="32">
   <image source="TileA1.png" width="512" height="384"/>
  </tileset>
@@ -501,15 +501,15 @@
     <property name="direction" type="int" value="0"/>
    </properties>
   </object>
-  <object id="19" name="Wisp" type="enemy" x="831" y="888" width="32" height="32"/>
+  <object id="19" name="Wisp" type="enemy" x="832" y="888" width="32" height="32"/>
   <object id="20" name="Slime" type="enemy" x="192" y="928" width="32" height="32"/>
   <object id="21" name="Slime" type="enemy" x="644" y="944" width="32" height="32"/>
-  <object id="30" name="Slime" type="enemy" x="1920" y="924" width="32" height="32"/>
+  <object id="30" name="Slime" type="enemy" x="1892" y="944" width="32" height="32"/>
   <object id="34" name="longsword" type="itembox" x="431" y="911" width="32" height="32"/>
   <object id="40" name="apple" type="itembox" x="1104" y="828" width="32" height="32"/>
   <object id="41" name="clear" type="door" x="6054" y="784" width="36" height="128"/>
   <object id="81" name="apple" type="itembox" x="2144" y="572" width="32" height="32"/>
-  <object id="107" name="Slime" type="enemy" x="2092" y="928" width="32" height="32"/>
+  <object id="107" name="Slime" type="enemy" x="2056" y="944" width="32" height="32"/>
   <object id="108" name="Slime" type="enemy" x="2240" y="572" width="32" height="32"/>
   <object id="109" name="Wisp" type="enemy" x="3359" y="784" width="32" height="32"/>
   <object id="110" name="Wisp" type="enemy" x="3399" y="868" width="32" height="32"/>
@@ -546,18 +546,18 @@
     <property name="text" value="試練の塔"/>
    </properties>
   </object>
-  <object id="160" name="Bird" type="enemy" x="628" y="816" width="32" height="32"/>
+  <object id="160" name="Bird" type="enemy" x="1044" y="776" width="32" height="32"/>
   <object id="162" name="key" type="itembox" x="4624" y="784" width="32" height="32">
    <properties>
     <property name="color" value="gold"/>
    </properties>
   </object>
   <object id="177" name="harb" type="itembox" x="4816" y="528" width="32" height="32"/>
-  <object id="180" name="Snake" type="enemy" x="4688" y="608" width="32" height="32"/>
+  <object id="180" name="Snake" type="enemy" x="4608" y="608" width="32" height="32"/>
   <object id="181" name="Slime" type="enemy" x="4672" y="432" width="32" height="32"/>
   <object id="193" name="up" type="check" x="1360" y="945" width="32" height="32"/>
   <object id="196" name="book" type="itembox" x="368" y="752" width="32" height="32"/>
-  <object id="201" name="Slime" type="enemy" x="4752" y="588" width="32" height="32"/>
+  <object id="201" name="Slime" type="enemy" x="4748" y="608" width="32" height="32"/>
   <object id="202" name="Slime" type="enemy" x="3180" y="596" width="32" height="32"/>
   <object id="203" name="Slime" type="enemy" x="3064" y="552" width="32" height="32"/>
   <object id="204" name="Slime" type="enemy" x="2700" y="944" width="32" height="32"/>
@@ -570,10 +570,9 @@
    </properties>
   </object>
   <object id="214" name="Snake" type="enemy" x="980" y="824" width="32" height="32"/>
-  <object id="215" name="Snake" type="enemy" x="1040" y="824" width="32" height="32"/>
   <object id="216" name="Bird" type="enemy" x="2092" y="500" width="32" height="32"/>
   <object id="217" name="Bird" type="enemy" x="2380" y="584" width="32" height="32"/>
-  <object id="218" name="Bird" type="enemy" x="4312" y="784" width="32" height="32"/>
+  <object id="218" name="Bird" type="enemy" x="4272" y="836" width="32" height="32"/>
   <object id="230" name="apple" type="itembox" x="2560" y="240" width="32" height="32"/>
   <object id="231" name="Slime" type="enemy" x="2608" y="232" width="32" height="32"/>
   <object id="236" name="coin" type="itembox" x="1128" y="1024" width="32" height="32"/>
@@ -589,5 +588,6 @@
   <object id="251" name="Slime" type="enemy" x="2500" y="716" width="32" height="32"/>
   <object id="252" name="Wisp" type="enemy" x="3472" y="616" width="32" height="32"/>
   <object id="253" name="grove" type="itembox" x="5828" y="876" width="32" height="32"/>
+  <object id="254" name="Wisp" type="enemy" x="4880" y="592" width="32" height="32"/>
  </objectgroup>
 </map>
