@@ -173,6 +173,11 @@ phina.define("qft.Player", {
         if (vp.getKey("Z")) ct.attack = true;
         if (vp.getKey("X")) ct.jump = true;
 
+        var kb = app.keyboard;
+        if (kb.getKey("S") && !this.isStun) {
+            this.damage({x: this.x, y: this.y, power: 10, stunPower: 100});
+        }
+
         if (!this.isControl) ct = {};
         if (this.stopTime == 0) {
             //左移動
@@ -725,7 +730,7 @@ phina.define("qft.Player", {
                         .setScale(this.scaleX, 1)
                         .setPosition(this.x, this.y);
                     dagger.tweener.setUpdateType('fps').clear()
-                        .by({x: 100 * this.scaleX}, 8)
+                        .by({x: 50 * this.scaleX}, 4)
                         .call(function() {
                             this.remove();
                         }.bind(dagger));
