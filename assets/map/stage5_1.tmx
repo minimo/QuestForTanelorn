@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="400" height="70" tilewidth="16" tileheight="16" nextobjectid="116">
+<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="400" height="70" tilewidth="16" tileheight="16" nextobjectid="118">
  <tileset firstgid="1" name="A1" tilewidth="16" tileheight="16" tilecount="768" columns="32">
   <image source="TileA1.png" width="512" height="384"/>
  </tileset>
@@ -602,6 +602,16 @@
    </properties>
   </object>
   <object id="115" name="Snake" type="enemy" x="1192" y="952" width="32" height="32">
+   <properties>
+    <property name="level" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="116" name="Mage" type="enemy" x="5004" y="768" width="32" height="32">
+   <properties>
+    <property name="level" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="117" name="Mage" type="enemy" x="184" y="1012" width="32" height="32">
    <properties>
     <property name="level" type="int" value="2"/>
    </properties>
