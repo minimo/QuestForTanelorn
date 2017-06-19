@@ -86,6 +86,9 @@ phina.define("qft.MainScene", {
         //コンティニュー時状態ロード
         if (this.isContinue) this.loadGame();
 
+        //ステージ開始位置
+        this.mapstart = phina.geom.Vector2(0, 0);
+
         //ステージ情報初期化
         this.setupStage();
 
@@ -479,6 +482,8 @@ phina.define("qft.MainScene", {
         this.player.isControl = true;
         this.player.isMuteki = false;
         this.player.alpha = 1.0;
+
+        this.mapstart = phina.geom.Vector2(this.player.x, this.player.y);
 
         this.stageController.playBGM();
     },
