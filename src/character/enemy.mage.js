@@ -43,6 +43,7 @@ phina.define("qft.Enemy.Mage", {
         var lv = Math.min(this.level, 4);
         this.sprite = phina.display.Sprite("monster03", 24, 32).addChildTo(this);
         this.sprite.setFrameTrimming((lv % 2) * 144, Math.floor(lv / 2) * 128, 72, 128);
+        this.sprite.setScale(1.2).setPosition(0, -2);
 
         this.hp += this.level * 5;
         this.power += this.level * 5;
