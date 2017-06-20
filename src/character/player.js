@@ -57,6 +57,9 @@ phina.define("qft.Player", {
     //ドア上フラグ
     isOnDoor: false,
 
+    //ダミー表示スプライト
+    dummy: null,
+
     //前フレームの情報
     before: {
         //操作系
@@ -136,6 +139,7 @@ phina.define("qft.Player", {
         this.lastOnFloorX = 0;
         this.lastOnFloorY = 0;
     },
+
     update: function(app) {
         //オブジェクトレイヤー接触判定
         this.isOnDoor = null;
@@ -175,7 +179,7 @@ phina.define("qft.Player", {
 
         var kb = app.keyboard;
         if (kb.getKey("S") && !this.isStun) {
-            this.damage({x: this.x, y: this.y, power: 10, stunPower: 100});
+            this.damage({x: this.x, y: this.y, power: 50, stunPower: 100});
         }
 
         if (!this.isControl) ct = {};
@@ -457,6 +461,12 @@ phina.define("qft.Player", {
         //多段ジャンプ最大回数
         this.numJumpMax = 0;
 
+        //ダミースプライト除去
+        if (this.dummy) {
+            this.dummy.remove();
+            this.dummy = null;
+        }
+
         return this;
     },
 
@@ -495,6 +505,12 @@ phina.define("qft.Player", {
         //多段ジャンプ最大回数
         this.numJumpMax = 0;
 
+        //ダミースプライト除去
+        if (this.dummy) {
+            this.dummy.remove();
+            this.dummy = null;
+        }
+
         return this;
     },
 
@@ -526,7 +542,7 @@ phina.define("qft.Player", {
             //気絶判定
             var dice = Math.randint(1, 100);
             if (dice <= target.stunPower) {
-                this.flare('stun', {power: target.power});
+                this.flare('stun', {power: 10});
                 this.setAnimation("stun");
             }
         }
@@ -536,16 +552,19 @@ phina.define("qft.Player", {
     //死亡時処理
     dead: function() {
         this.hp = 0;
-        this.setAnimation("dead");
         this.isDead = true;
         this.isCatchLadder = false;
         this.vx = 0;
         this.vy = -6;
         this.tweener.clear()
-            .wait(90)
+            .wait(60)
             .call(function(){
                 this.flare('dead');
             }.bind(this));
+
+        //ダミースプライト追加
+        this.visible = false;
+        this.dummy = qft.PlayerDummy("player1").addChildTo(this).setAnimation("dead");
     },
 
     //アイテム取得

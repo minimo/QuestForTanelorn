@@ -281,6 +281,7 @@ phina.define("qft.Character", {
                 this._collision[3].remove();
                 });
         }
+        return this;
     },
 
     //画面外落ち
@@ -417,6 +418,7 @@ phina.define("qft.Character", {
                 ret.collisionScript(this, 3);
             }
         }
+        return this;
     },
 
     //地形当たり判定（特定地点チェックのみ）衝突したものを配列で返す
@@ -492,7 +494,7 @@ phina.define("qft.Character", {
 
     //当たり判定用エレメントの再設定
     setupCollision: function() {
-        return;
+        return this;
     },
 
     //当たり判定用エレメントの位置再セット
