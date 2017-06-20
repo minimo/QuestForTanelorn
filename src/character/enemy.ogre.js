@@ -189,7 +189,7 @@ phina.define("qft.Enemy.Ogre", {
             .wait(6)
             .call(function() {
                 atk.isActive = true;
-                that.vx = 32 * that.scaleX;
+                that.vx = 24 * that.scaleX;
             })
             .wait(6)
             .call(function() {
