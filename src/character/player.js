@@ -173,6 +173,11 @@ phina.define("qft.Player", {
         if (vp.getKey("Z")) ct.attack = true;
         if (vp.getKey("X")) ct.jump = true;
 
+        var kb = app.keyboard;
+        if (kb.getKey("S") && !this.isStun) {
+            this.damage({x: this.x, y: this.y, power: 10, stunPower: 100});
+        }
+
         if (!this.isControl) ct = {};
         if (this.stopTime == 0) {
             //左移動
@@ -432,7 +437,7 @@ phina.define("qft.Player", {
         //所持装備
         this.equip = {
             using: 0,         //現在使用中（weaponsのindex）
-            weapons: [1],     //所持リスト（最大３）
+            weapons: [0],     //所持リスト（最大３）
             level: [0],       //武器レベル
             switchOk: true,   //変更可能フラグ
         };
@@ -942,6 +947,13 @@ phina.define("qft.PlayerAttack", {
                 this.isSlash = true;
                 this.isBrow = true;
                 this.stunPower = 50;
+                break;
+            case "dagger":
+                this.sprite = phina.display.Sprite("weapons", 24, 24).addChildTo(this).setFrameIndex(20);
+                this.sprite.rotation = 135;
+                this.frame = [0];
+                this.isSting = true;
+                this.stunPower = 1;
                 break;
         }
     },
