@@ -334,7 +334,7 @@ phina.define("qft.Player", {
 
         //気絶状態
         if (this.isStun) {
-            this.setAnimation("damage");
+            this.setAnimation("stun");
 
             //梯子掴みキャンセル
             this.isCatchLadder = false;
@@ -525,7 +525,10 @@ phina.define("qft.Player", {
 
             //気絶判定
             var dice = Math.randint(1, 100);
-            if (dice <= target.stunPower) this.flare('stun', {power: target.power});
+            if (dice <= target.stunPower) {
+                this.flare('stun', {power: target.power});
+                this.setAnimation("stun");
+            }
         }
         return true;
     },
@@ -823,6 +826,7 @@ phina.define("qft.Player", {
         this.frame["drop"] = [18, 19, 20];
         this.frame["dead"] = [18, 19, 20, 33, 34, 35, "stop"];
         this.frame["clear"] = [24, 25, 26];
+        this.frame["stun"] = [ 18, 19, 20];
         this.index = 0;
         return this;
     },

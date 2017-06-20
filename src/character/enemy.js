@@ -92,6 +92,14 @@ phina.define("qft.Enemy", {
             //ステージクリアの場合は当たり判定無し
             if (this.parentScene.isStageClear) return;
 
+            //気絶中はアニメーションしない
+            if (this.isStun) {
+                this.isAdvanceAnimation = false;
+            } else {
+                this.isAdvanceAnimation = true;
+            }
+
+            //被ダメージ当たり判定
             if (!this.isMuteki && this.mutekiTime == 0) {
                 //プレイヤー攻撃との当たり判定
                 if (pl.isAttack && this.hitTestElement(pl.attackCollision)) {

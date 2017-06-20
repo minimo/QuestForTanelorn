@@ -189,7 +189,7 @@ phina.define("qft.Character", {
             if (!this.isDead && this.y > this.parent.parent.map.height) this.dropDead();
 
             //アニメーション
-            if (this.sprite && !this.isStun && this.isAdvanceAnimation && this.time % this.animationInterval == 0) {
+            if (this.sprite && this.isAdvanceAnimation && this.time % this.animationInterval == 0) {
                 this.index = (this.index+1) % this.frame[this.nowAnimation].length;
                 //次フレーム番号が特殊指定の場合
                 var next = this.frame[this.nowAnimation][this.index];
