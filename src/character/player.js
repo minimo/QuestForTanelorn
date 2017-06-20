@@ -173,11 +173,6 @@ phina.define("qft.Player", {
         if (vp.getKey("Z")) ct.attack = true;
         if (vp.getKey("X")) ct.jump = true;
 
-        var kb = app.keyboard;
-        if (kb.getKey("S") && !this.isStun) {
-            this.damage({x: this.x, y: this.y, power: 10, stunPower: 100});
-        }
-
         if (!this.isControl) ct = {};
         if (this.stopTime == 0) {
             //左移動
@@ -437,7 +432,7 @@ phina.define("qft.Player", {
         //所持装備
         this.equip = {
             using: 0,         //現在使用中（weaponsのindex）
-            weapons: [0],     //所持リスト（最大３）
+            weapons: [1],     //所持リスト（最大３）
             level: [0],       //武器レベル
             switchOk: true,   //変更可能フラグ
         };
@@ -659,14 +654,12 @@ phina.define("qft.Player", {
         this.attackCollision.$extend(spec);
         this.attackCollision.power += level * (spec.levelBonus || 2);
 
-        this.weapon.setVisible(true);
         switch (kind) {
             case 0:
-                //スローイングダガー
+                //ショートソード
                 level = 0;
                 this.frame["attack"] = [ 41, 42, 43, 44, "stop"];
                 this.weapon.setPosition(-3, 3);
-                this.weapon.setVisible(false);
                 break;
             case 1:
                 //ロングソード
@@ -716,24 +709,14 @@ phina.define("qft.Player", {
         var that = this;
         switch (kind) {
             case 0:
-                //スローイングダガー
+                //ショートソード
                 this.weapon.tweener.clear()
                     .set({rotation: 200, alpha: 1.0})
-                    .to({rotation: 360}, 6)
+                    .to({rotation: 360}, 5)
                     .fadeOut(1)
                     .call(function() {
                         that.isAttack = false;
                     });
-                    var power = 5 + level * 1;
-                    var dagger = qft.PlayerAttack(this.parentScene, {width: 15, height: 10, power: power, type: "dagger"})
-                        .addChildTo(this.parentScene.playerLayer)
-                        .setScale(this.scaleX, 1)
-                        .setPosition(this.x, this.y);
-                    dagger.tweener.setUpdateType('fps').clear()
-                        .by({x: 50 * this.scaleX}, 4)
-                        .call(function() {
-                            this.remove();
-                        }.bind(dagger));
                 break;
             case 1:
                 //ロングソード
@@ -960,13 +943,6 @@ phina.define("qft.PlayerAttack", {
                 this.isBrow = true;
                 this.stunPower = 50;
                 break;
-            case "dagger":
-                this.sprite = phina.display.Sprite("weapons", 24, 24).addChildTo(this).setFrameIndex(20);
-                this.sprite.rotation = 135;
-                this.frame = [0];
-                this.isSting = true;
-                this.stunPower = 1;
-                break;
         }
     },
 
@@ -976,7 +952,6 @@ phina.define("qft.PlayerAttack", {
         if (this.time % 3 == 0) {
             this.sprite.setFrameIndex(this.frame[this.index]);
             this.index = (this.index + 1) % this.frame.length;
-
         }
 
         //地形接触判定
@@ -1016,8 +991,6 @@ phina.define("qft.PlayerAttack", {
                 app.playSE("arrowstick");
                 break;
             case "masakari":
-                break;
-            case "dagger":
                 break;
         }
 

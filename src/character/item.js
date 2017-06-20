@@ -122,19 +122,19 @@ phina.define("qft.ItemInfo", {
     _static: {
         get: function(kind) {
             switch (kind) {
-                case "dagger":
-                case ITEM_DAGGER:
+                case "shortsword":
+                case ITEM_SHORTSWORD:
                     return {
-                        name: "THROWING DAGGER",
-                        type: "dagger",
+                        name: "SHORT SWORD",
+                        type: "sword",
                         isWeapon: true,
-                        isSting: true,
-                        power: 5,
+                        isSlash: true,
+                        power: 10,
                         stunPower: 1,
                         maxIndex: 0,
                         collision: {
-                            width: 1,
-                            height: 1
+                            width: 14,
+                            height: 30
                         }
                     };
                 case "longsword":
