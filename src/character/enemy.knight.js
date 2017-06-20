@@ -105,7 +105,7 @@ phina.define("qft.Enemy.Knight", {
             } else {
                 this.vx = -1;
             }
-            if (this.isJump) this.vx *= 2;
+            if (this.isJump) this.vx *= 1;
         }
 
         if (look) {
