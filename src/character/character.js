@@ -115,7 +115,7 @@ phina.define("qft.Character", {
         this.on('balloon', e => {
             if (this.isStun) return;
             if (this.time > this.balloonTime) this.lastBalloon = "";
-            if (this.lastBalloon == e.pattern) return;
+            if (this.lastBalloonPattern == e.pattern) return;
             if (this.balloon) this.balloon.remove();
             e.$safe({x: 0, y: -this.height/2-10});
             this.balloon = qft.Character.balloon({pattern: e.pattern, lifeSpan: e.lifeSpan, animationInterval: e.animationInterval})
@@ -125,7 +125,7 @@ phina.define("qft.Character", {
                 that.balloon = null;
                 that.flare('balloonend');
             });
-            this.lastBalloon = e.pattern;
+            this.lastBalloonPattern = e.pattern;
             this.balloonTime = this.time + 120;
         });
         this.on('balloonerace', e => {
