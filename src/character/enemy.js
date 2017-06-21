@@ -24,6 +24,9 @@ phina.define("qft.Enemy", {
     //攻撃力
     power: 0,
 
+    //移動速度
+    speed: 1,
+
     //気絶確率
     stunPower: 1,
 
@@ -278,6 +281,136 @@ phina.define("qft.Enemy", {
     },
 
     hit: function() {
+    },
+
+    //往復アルゴリズム（陸上）
+    groundRoundtripAlgorithm: function(attack, dis, look) {
+        if (dis === undefined) dis = this.getDistancePlayer();
+        if (look === undefined) look = this.isLookPlayer();
+
+        if (this.isOnFloor) {
+            //崖っぷちで折り返す
+            if (this.checkMapCollision2(this.x+5, this.y+20, 5, 5) == null) {
+                this.direction = 180;
+            } else if (this.checkMapCollision2(this.x-5, this.y+20, 5, 5) == null) {
+                this.direction = 0;
+            }
+
+            //壁に当たったら折り返す
+            if (this._collision[1].hit) {
+                this.direction = 180;
+            } else if (this._collision[3].hit) {
+                this.direction = 0;
+            }
+
+            //プレイヤーが近くにいたらジャンプ攻撃
+            if (attack && look && !this.isJump && dis < 40) {
+                this.isJump = true;
+                this.vy = -6;
+                var pl = this.parentScene.player;
+                if (this.x > pl.x) {
+                    this.direction = 180;
+                } else {
+                    this.direction = 0;
+                }
+            }
+        }
+
+        if (this.isOnFloor || this.isJump) {
+            this.vx =  this.speed;
+            if (this.direction == 180) {
+                this.vx *= -1;
+            }
+        }
+    },
+
+    //追跡アルゴリズム
+    chaseAlgorithm: function(dis, look) {
+        if (dis === undefined) dis = this.getDistancePlayer();
+        if (look === undefined) look = this.isLookPlayer();
+
+        //プレイヤー発見
+        if (look) {
+            this.chaseTime = 120;
+            this.stopTime = 0;
+            this.flare('balloon', {pattern: "!"});
+        } else {
+            if (this.chaseTime == 0) this.flare('balloonerace');
+        }
+
+        //プレイヤー発見後一定時間追跡する
+        if (this.chaseTime > 0 && !this.isAttack) {
+            if (this.x > pl.x) {
+                this.direction = 180;
+            } else {
+                this.direction = 0;
+            }
+        }
+
+        //一定距離以上離れたら追跡解除
+        if (dis > 512) this.chaseTime = 0;
+
+        //追跡ルーチン
+        if (this.isOnFloor) {
+            //これ以上進めない場合は折り返す
+            var isReturnWall = false;
+            var isReturnCliff = false;
+            if (this.vx > 0) {
+                if (this._collision[1].hit) isReturnWall = true;
+                if (this.checkMapCollision2(this.x+5, this.y+20, 5, 5) == null) isReturnCliff = true;
+            } else if (this.vx < 0) {
+                if (this._collision[3].hit) isReturnWall = true;
+                if (this.checkMapCollision2(this.x-5, this.y+20, 5, 5) == null) isReturnCliff = true;
+            }
+            if (isReturnWall || isReturnCliff) {
+                if (this.chaseTime > 0) {
+                    //プレイヤー追跡中で段差がある場合は飛び越える
+                    if (isReturnWall) {
+                        if (this.direction == 0) {
+                            if (this.x < pl.x) {
+                                this.isJump = true;
+                                this.vy = -12;
+                            }
+                        } else {
+                            if (this.x > pl.x) {
+                                this.isJump = true;
+                                this.vy = -12;
+                            }
+                        }
+                    }
+                    //プレイヤー追跡中で崖がある場合は着地点があるか調べて飛び降りる
+                    if (isReturnCliff) {
+                        var jumpOk = false;
+                        if (this.direction == 0) {
+                            if (this.checkMapCollision2(this.x+5, this.y+20, 5, 96)) jumpOk = true;
+                        } else {
+                            if (this.checkMapCollision2(this.x-5, this.y+20, 5, 96)) jumpOk = true;
+                        }
+                        if (jumpOk) {
+                            this.isJump = true;
+                            this.vy = -5;
+                        } else {
+                            //着地点が無い場合は諦めて折り返す
+                            this.chaseTime = 0;
+                            this.stopTime = 30;
+                            this.direction = (this.direction + 180) % 360;
+                            this.vx *= -1;
+                            this.flare('balloon', {pattern: "..."});
+                         }
+                    }
+                } else {
+                    this.direction = (this.direction + 180) % 360;
+                    this.vx *= -1;
+                }
+            }
+        }
+
+        if (this.isOnFloor || this.isJump) {
+            this.vx =  this.speed;
+            if (this.direction == 180) {
+                this.vx *= -1;
+            }
+        }
     },
 });
 
