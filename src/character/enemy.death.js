@@ -63,7 +63,7 @@ phina.define("qft.Enemy.Death", {
         this.direction = 0;
         this.isAttack = false;
         this.actionWait = 0;
-        this.forgotTime = 0;
+        this.chaseTime = 0;
 
         this.phase = 0;
         this.speed = 1;
@@ -110,7 +110,7 @@ phina.define("qft.Enemy.Death", {
         }
 
         if (look) {
-            this.forgotTime = 120;
+            this.chaseTime = 120;
             if (this.phase == 1) {
                 this.tweener.pause();
                 this.tweener2.clear().to({alpha: 0.5}, 120, "easeInOutSine");
@@ -127,7 +127,7 @@ phina.define("qft.Enemy.Death", {
                 this.flare('balloon', {pattern: "..."});
             }
         }
-        if (this.forgotTime == 0) {
+        if (this.chaseTime == 0) {
             //プレイヤーが見えなくなったので徘徊に戻る
             if (this.phase == 3) {
                 this.tweener.play();
@@ -153,7 +153,7 @@ phina.define("qft.Enemy.Death", {
 
 
         if (this.actionWait > 0) this.actionWait--;
-        if (this.forgotTime > 0) this.forgotTime--;
+        if (this.chaseTime > 0) this.chaseTime--;
     },
 
     setupAnimation: function() {

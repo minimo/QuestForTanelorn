@@ -60,6 +60,11 @@ phina.define("qft.Enemy", {
     rareDropRate: 0,
     rareDropItem: ITEM_BAG,
 
+    //行動パターン用
+    chaseTime: 0,
+    turnTime: 0,
+    stopTime: 0,
+
     init: function(parentScene, options) {
         options = options || {};
         this.superInit(parentScene, options);

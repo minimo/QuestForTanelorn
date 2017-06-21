@@ -53,7 +53,7 @@ phina.define("qft.Enemy.Ogre", {
 
         this.direction = 0;
         this.stopTime = 0;
-        this.forgotTime = 0;
+        this.chaseTime = 0;
         this.isAttack = false;
 
         this.on('damaged', e => {
@@ -68,7 +68,7 @@ phina.define("qft.Enemy.Ogre", {
         var look = this.isLookPlayer();
 
         //プレイヤー発見後一定時間追跡する
-        if (this.forgotTime > 0 && !this.isAttack) {
+        if (this.chaseTime > 0 && !this.isAttack) {
             if (this.x > pl.x) {
                 this.direction = 180;
             } else {
@@ -77,24 +77,25 @@ phina.define("qft.Enemy.Ogre", {
         }
 
         //一定距離以上離れたら追跡解除
-        if (dis > 512) this.forgotTime = 0;
+        if (dis > 512) this.chaseTime = 0;
 
         if (this.isOnFloor || this.isJump) {
             if (this.direction == 0) {
-                this.vx = 0.5;
+                this.vx = 1;
             } else {
-                this.vx = -0.5;
+                this.vx = -1;
             }
-            if (this.isJump) this.vx *= 2;
+            if (this.chaseTime > 0) this.vx *= 1.5;
         }
 
         if (look) {
-            this.forgotTime = 120;
+            this.chaseTime = 120;
             this.stopTime = 0;
+            this.flare('balloon', {pattern: "!"});
         } else {
-            if (this.forgotTime == 0) this.flare('balloonerace');
+            if (this.chaseTime == 0) this.flare('balloonerace');
         }
-        if (this.forgotTime > 0) this.vx *= 3;
+        if (this.chaseTime > 0) this.vx *= 3;
 
         if (this.isOnFloor) {
             //これ以上進めない場合は折り返す
@@ -108,7 +109,7 @@ phina.define("qft.Enemy.Ogre", {
                 if (this.checkMapCollision2(this.x-5, this.y+40, 5, 5) == null) isReturnCliff = true;
             }
             if (isReturnWall || isReturnCliff) {
-                if (this.forgotTime > 0) {
+                if (this.chaseTime > 0) {
                     //プレイヤー追跡中で段差がある場合は飛び越える
                     if (isReturnWall) {
                         if (this.direction == 0) {
@@ -136,7 +137,7 @@ phina.define("qft.Enemy.Ogre", {
                             this.vy = -5;
                         } else {
                             //着地点が無い場合は諦めて折り返す
-                            this.forgotTime = 0;
+                            this.chaseTime = 0;
                             this.stopTime = 30;
                             this.turnWait = 15;
                             this.direction = (this.direction + 180) % 360;
@@ -160,9 +161,9 @@ phina.define("qft.Enemy.Ogre", {
         this.stopTime--;
         if (this.stopTime < 0) this.stopTime = 0;
 
-        this.forgotTime--;
-        if (this.forgotTime < 0) this.forgotTime = 0;
-        if (this.forgotTime == 30) this.flare('balloon', {pattern: "?"});
+        this.chaseTime--;
+        if (this.chaseTime < 0) this.chaseTime = 0;
+        if (this.chaseTime == 30) this.flare('balloon', {pattern: "?"});
     },
 
     setupAnimation: function() {
