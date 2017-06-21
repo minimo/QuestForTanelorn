@@ -10,7 +10,7 @@ phina.define("qft.Enemy.Ogre", {
     superClass: "qft.Enemy",
 
     //ヒットポイント
-    hp: 100,
+    hp: 60,
 
     //防御力
     deffence: 10,
@@ -40,9 +40,8 @@ phina.define("qft.Enemy.Ogre", {
         this.superInit(parentScene, options);
 
         //表示用スプライト
-        this.sprite = phina.display.Sprite("monster02x2", 24*2, 32*2).addChildTo(this);
-        this.sprite.setFrameTrimming(216*2, 0, 72*2, 128*2);
-        this.sprite.setPosition(0, -5);
+        this.sprite = phina.display.Sprite("monster02", 24, 32).addChildTo(this);
+        this.sprite.setFrameTrimming(216, 0, 72, 128).setScale(1.2).setPosition(0, -2);
 
         this.hp += this.level * 10;
         this.power += this.level * 5;
@@ -151,11 +150,6 @@ phina.define("qft.Enemy.Ogre", {
                     this.turnWait = 1;
                 }
             }
-
-            //攻撃
-            if (look && !this.isJump && dis < 64 && this.stopTime == 0 && !this.isAttack) {
-                this.attack();
-            }
         }
 
         //停止中処理
@@ -169,37 +163,6 @@ phina.define("qft.Enemy.Ogre", {
         this.forgotTime--;
         if (this.forgotTime < 0) this.forgotTime = 0;
         if (this.forgotTime == 30) this.flare('balloon', {pattern: "?"});
-    },
-
-    attack: function() {
-        var that = this;
-        var atk = qft.EnemyAttack(this.parentScene, {width: 1, height: 24, power: 40 + this.level * 5})
-            .addChildTo(this.parentScene.enemyLayer)
-            .setPosition(this.x + this.scaleX * 18, this.y)
-            .setAlpha(0.0);
-        if (DEBUG_COLLISION) atk.setAlpha(0.3);
-        atk.master = this;
-        atk.tweener.setUpdateType('fps');
-        atk.update = function() {
-            this.x = that.x + that.scaleX * 18;
-        }
-
-        atk.isActive = false;
-        atk.tweener.clear()
-            .wait(6)
-            .call(function() {
-                atk.isActive = true;
-                that.vx = 24 * that.scaleX;
-            })
-            .wait(6)
-            .call(function() {
-                that.isAttack = false;
-                atk.remove();
-            });
-        this.isAttack = true;
-        this.stopTime = 30;
-
-        qft.Character.balloon({pattern: "anger2"}).addChildTo(this).setPosition(0, -this.height/2-10);
     },
 
     setupAnimation: function() {
