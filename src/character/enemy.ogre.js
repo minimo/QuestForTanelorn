@@ -36,12 +36,13 @@ phina.define("qft.Enemy.Ogre", {
     rareDropItem: ITEM_JEWEL,
 
     init: function(parentScene, options) {
-        options = (options || {}).$extend({width: 25, height: 40});
+        options = (options || {}).$extend({width: 20, height: 20});
         this.superInit(parentScene, options);
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("monster02", 24, 32).addChildTo(this);
-        this.sprite.setFrameTrimming(216, 0, 72, 128).setScale(1.2).setPosition(0, -2);
+        this.sprite.setFrameTrimming(216, 0, 72, 128);
+        this.sprite.setPosition(0, -5).setScale(1.3);
 
         this.hp += this.level * 10;
         this.power += this.level * 5;
@@ -85,7 +86,6 @@ phina.define("qft.Enemy.Ogre", {
             } else {
                 this.vx = -1;
             }
-            if (this.chaseTime > 0) this.vx *= 1.5;
         }
 
         if (look) {

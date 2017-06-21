@@ -86,7 +86,7 @@ phina.define("qft.Enemy.Titan", {
             } else {
                 this.vx = -0.5;
             }
-            if (this.isJump) this.vx *= 2;
+            if (this.isJump) this.vx *= 1.5;
         }
 
         if (look) {

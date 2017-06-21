@@ -68,6 +68,7 @@ phina.define("qft.Enemy.Slime", {
     },
 
     algorithm: function() {
+        var dis = this.getDistancePlayer();
         var look = this.isLookPlayer();
 
         if (this.isOnFloor) {
@@ -87,7 +88,7 @@ phina.define("qft.Enemy.Slime", {
 
             if (this.level < 4) {
                 //プレイヤーが近くにいたらジャンプ攻撃
-                if (look && !this.isJump && this.getDistancePlayer() < 40) {
+                if (look && !this.isJump && dis < 40) {
                     this.isJump = true;
                     this.vy = -6;
                     var pl = this.parentScene.player;
@@ -99,7 +100,8 @@ phina.define("qft.Enemy.Slime", {
                 }
             } else {
                 //プレイヤーが近くにいたら攻撃
-                if (look && !this.isJump && this.getDistancePlayer() < 64 && this.time % 180 == 0) {
+                if (look && !this.isJump && dis < 64 && this.time % 180 == 0) {
+                    this.stopTime = 30;
                     for (var i = 0; i < this.level+4; i++) {
                         var b = this.parentScene.spawnEnemy(this.x, this.y, "WispBomb", {pattern: 2});
                         b.vy = -10;
@@ -113,7 +115,6 @@ phina.define("qft.Enemy.Slime", {
             if (this.direction == 180) {
                 this.vx *= -1;
             }
-            if (this.attack) this.vx *= 3;
         }
     },
 
