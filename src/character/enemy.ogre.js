@@ -53,8 +53,6 @@ phina.define("qft.Enemy.Ogre", {
         this.setupLifeGauge();
 
         this.direction = 0;
-        this.stopTime = 0;
-        this.chaseTime = 0;
         this.isAttack = false;
 
         this.on('damaged', e => {
@@ -69,11 +67,21 @@ phina.define("qft.Enemy.Ogre", {
         var look = this.isLookPlayer();
 
         //プレイヤー発見後一定時間追跡する
-        if (this.chaseTime > 0 && !this.isAttack) {
+        if (this.chaseTime > 0 && !this.isAttack && this.turnTime == 0) {
             if (this.x > pl.x) {
+                if (this.direction == 0) this.turnCount++;
                 this.direction = 180;
             } else {
+                if (this.direction == 180) this.turnCount++;
                 this.direction = 0;
+            }
+            this.turnTime = 15;
+            if (look) this.turnCount = 0;
+            //プレイヤーを見失った状態で三回振り返った場合は追跡終了
+            if (this.turnCount > 3) {
+                this.flare('balloon', {pattern: "?"});
+                this.stopTime = 30;
+                this.chaseTime = 0;
             }
         }
 
@@ -82,20 +90,21 @@ phina.define("qft.Enemy.Ogre", {
 
         if (this.isOnFloor || this.isJump) {
             if (this.direction == 0) {
-                this.vx = 1;
+                this.vx = 0.5;
             } else {
-                this.vx = -1;
+                this.vx = -0.5;
             }
+            if (this.chaseTime > 0) this.vx *= 3;
         }
 
         if (look) {
             this.chaseTime = 120;
+            this.turnCount = 0;
             this.stopTime = 0;
             this.flare('balloon', {pattern: "!"});
         } else {
             if (this.chaseTime == 0) this.flare('balloonerace');
         }
-        if (this.chaseTime > 0) this.vx *= 3;
 
         if (this.isOnFloor) {
             //これ以上進めない場合は折り返す
@@ -152,17 +161,6 @@ phina.define("qft.Enemy.Ogre", {
                 }
             }
         }
-
-        //停止中処理
-        if (this.stopTime > 0) {
-            this.vx = 0;
-        }
-
-        this.stopTime--;
-        if (this.stopTime < 0) this.stopTime = 0;
-
-        this.chaseTime--;
-        if (this.chaseTime < 0) this.chaseTime = 0;
         if (this.chaseTime == 30) this.flare('balloon', {pattern: "?"});
     },
 

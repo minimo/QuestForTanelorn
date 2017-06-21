@@ -64,9 +64,8 @@ phina.define("qft.Enemy.ArchDemon", {
         this.setupLifeGauge();
 
         this.phase = 0;
-        this.isAttack = false;
-        this.stopTime = 0;
         this.direction = 0;
+        this.isAttack = false;
 
         this.on('damaged', e => {
             if (e.direction == 0) this.direction = 180; else this.direction = 0;
@@ -94,12 +93,12 @@ phina.define("qft.Enemy.ArchDemon", {
             }
 
             //プレイヤーが近くにいたら攻撃
-            if (look && !this.isJump && dis > 64 && dis < this.eyesight && this.stopTime == 0) {
+            if (look && !this.isJump && dis > 64 && dis < this.eyesight) {
                 this.isAttack = true;
                 this.stopTime = 60;
             }
 
-            if (look && !this.isJump && dis < 64 && this.stopTime == 0) {
+            if (look && !this.isJump && dis < 64) {
                 //飛びかかる
                 this.isJump = true;
                 this.vy = -6;
@@ -151,14 +150,6 @@ phina.define("qft.Enemy.ArchDemon", {
             this.isAttack = false;
             var b = this.parentScene.spawnEnemy(this.x, this.y, "Bullet", {explode: true});
             b.rotation = this.getPlayerAngle();
-        }
-
-        this.stopTime--;
-        if (this.stopTime > 0) {
-            this.vx = 0;
-        }
-        if (this.stopTime < 0) {
-            this.stopTime = 0;
         }
     },
 

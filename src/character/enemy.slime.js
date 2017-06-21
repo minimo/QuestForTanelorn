@@ -60,7 +60,6 @@ phina.define("qft.Enemy.Slime", {
         this.setupLifeGauge();
 
         this.direction = 0;
-        this.speed = 1;
 
         this.on('damaged', e => {
             if (e.direction == 0) this.direction = 180; else this.direction = 0;

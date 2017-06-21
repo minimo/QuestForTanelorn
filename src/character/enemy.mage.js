@@ -53,9 +53,8 @@ phina.define("qft.Enemy.Mage", {
         this.animationInterval = 10;
         this.setupLifeGauge();
 
-        this.direction = 0;
-        this.speed = 1;
         this.phase = 0;
+        this.direction = 0;
         this.isAttack = false;
 
         this.on('damaged', e => {

@@ -67,6 +67,7 @@ phina.define("qft.Enemy", {
     chaseTime: 0,
     turnTime: 0,
     stopTime: 0,
+    turnCount: 0,
 
     init: function(parentScene, options) {
         options = options || {};
@@ -131,7 +132,11 @@ phina.define("qft.Enemy", {
                 }
             }
 
-            if(this.stopTime == 0) this.algorithm();
+            if (this.stopTime == 0) {
+                this.algorithm();
+                if (this.chaseTime > 0) this.chaseTime--;
+                if (this.turnTime > 0) this.turnTime--;
+            }
         });
 
         this.on('dead', function() {
@@ -285,6 +290,7 @@ phina.define("qft.Enemy", {
 
     //往復アルゴリズム（陸上）
     groundRoundtripAlgorithm: function(attack, dis, look) {
+        var pl = this.parentScene.player;
         if (dis === undefined) dis = this.getDistancePlayer();
         if (look === undefined) look = this.isLookPlayer();
 
@@ -326,6 +332,7 @@ phina.define("qft.Enemy", {
 
     //追跡アルゴリズム
     chaseAlgorithm: function(dis, look) {
+        var pl = this.parentScene.player;
         if (dis === undefined) dis = this.getDistancePlayer();
         if (look === undefined) look = this.isLookPlayer();
 
@@ -339,11 +346,21 @@ phina.define("qft.Enemy", {
         }
 
         //プレイヤー発見後一定時間追跡する
-        if (this.chaseTime > 0 && !this.isAttack) {
+        if (this.chaseTime > 0 && !this.isAttack && this.turnTime == 0) {
             if (this.x > pl.x) {
+                if (this.direction == 0) this.turnCount++;
                 this.direction = 180;
             } else {
+                if (this.direction == 180) this.turnCount++;
                 this.direction = 0;
+            }
+            this.turnTime = 15;
+            if (look) this.turnCount = 0;
+            //プレイヤーを見失った状態で三回振り返った場合は追跡終了
+            if (this.turnCount > 3) {
+                this.flare('balloon', {pattern: "?"});
+                this.stopTime = 30;
+                this.chaseTime = 0;
             }
         }
 
@@ -411,8 +428,6 @@ phina.define("qft.Enemy", {
                 this.vx *= -1;
             }
         }
-        this.chaseTime--;
-        if (this.chaseTime < 0) this.chaseTime = 0;
     },
 });
 
