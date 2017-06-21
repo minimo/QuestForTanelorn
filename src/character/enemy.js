@@ -411,6 +411,8 @@ phina.define("qft.Enemy", {
                 this.vx *= -1;
             }
         }
+        this.chaseTime--;
+        if (this.chaseTime < 0) this.chaseTime = 0;
     },
 });
 
