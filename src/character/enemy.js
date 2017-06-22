@@ -140,6 +140,18 @@ phina.define("qft.Enemy", {
         });
 
         this.on('dead', function() {
+            //確定ドロップアイテム
+            if (this.options.item) {
+                var i = this.parentScene.spawnItem(this.x, this.y, {kind: this.options.item});
+                i.vy = -5;
+                if (this.options.item == "key") {
+                    i.isEnemyDrop = false;
+                } else {
+                    i.isEnemyDrop = true;
+                }
+                this.remove();
+                return;
+            }
             //レアアイテムドロップ判定
             var dice = Math.randint(1, 100);
             if (dice <= this.rareDropRate) {
