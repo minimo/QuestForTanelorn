@@ -52,8 +52,6 @@ phina.define("qft.Stage5", {
     stageClear: function() {
         var pl = qft.PlayerDummy("player1").addChildTo(this.parentScene.mapLayer.playerLayer).setVisible(false);
         pl.setAnimation("clear");
-        pl.tweener.clear()
-            .by()
         this.player.tweener.clear()
             .wait(30)
             .set({alpha: 0})

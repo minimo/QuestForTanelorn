@@ -231,6 +231,9 @@ phina.define("qft.StageController", {
                         var sc = "(function(app) {"+e.properties.script+"})";
                         var f = eval(sc);
                         door.on('enterframe', f);
+                        door.stageController = this;
+                        door.player = this.parentScene.player;
+                        door.parentScene = this.parentScene;
                     }
                     break;
                 case "block":
@@ -244,6 +247,9 @@ phina.define("qft.StageController", {
                         var sc = "(function(app) {"+e.properties.script+"})";
                         var f = eval(sc);
                         floor.on('enterframe', f);
+                        floor.stageController = this;
+                        floor.player = this.parentScene.player;
+                        floor.parentScene = this.parentScene;
                     }
                     break;
                 case "check":
@@ -256,7 +262,15 @@ phina.define("qft.StageController", {
                     qft.MapObject.Event(this.parentScene, e).addChildTo(mapLayer.objLayer).setPosition(x, y);
                     break;
                 case "gate":
-                    qft.MapObject.Gate(this.parentScene, e).addChildTo(mapLayer.objLayer).setPosition(x, y);
+                    var gate = qft.MapObject.Gate(this.parentScene, e).addChildTo(mapLayer.objLayer).setPosition(x, y);
+                    if (e.properties.script) {
+                        var sc = "(function(app) {"+e.properties.script+"})";
+                        var f = eval(sc);
+                        gate.on('enterframe', f);
+                        gate.stageController = this;
+                        gate.player = this.parentScene.player;
+                        gate.parentScene = this.parentScene;
+                    }
                     break;
                 case "accessory":
                     var layer = e.properties.foreground? mapLayer.foregroundLayer: mapLayer.backgroundLayer;
