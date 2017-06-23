@@ -382,6 +382,7 @@
   </object>
   <object id="42" name="ArchKnight" type="enemy" x="1116" y="908" width="32" height="32">
    <properties>
+    <property name="dead" value="this.parentScene.fireStageEvent(&quot;key&quot;);"/>
     <property name="level" type="int" value="0"/>
    </properties>
   </object>
@@ -400,18 +401,13 @@ if (keys.length &gt; 0) this.isLock = false;
 </property>
    </properties>
   </object>
-  <object id="48" type="floor" x="1552" y="944" width="112" height="48">
+  <object id="48" type="floor" x="1728" y="944" width="112" height="48">
    <properties>
     <property name="index" type="int" value="0"/>
     <property name="lock" type="bool" value="false"/>
-    <property name="moveAngle" type="int" value="0"/>
+    <property name="moveAngle" type="int" value="180"/>
     <property name="moveLength" type="int" value="192"/>
     <property name="moveSpeed" type="int" value="90"/>
-   </properties>
-  </object>
-  <object id="49" name="key" type="item" x="1448" y="836" width="24" height="24">
-   <properties>
-    <property name="lock" type="bool" value="true"/>
    </properties>
   </object>
  </objectgroup>
