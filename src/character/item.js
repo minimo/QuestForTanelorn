@@ -92,29 +92,36 @@ phina.define("qft.Item", {
 
         //寿命
         this.lifeSpan = 150;
-    },
 
-    update: function() {
-        //プレイヤーとの当たり判定
-        var pl = this.parentScene.player;
-        if (this.hitTestElement(pl)) {
-            if (this.time > 10 && !this.throwAway) {
-                pl.getItem(this);
-                this.remove();
-            }
-        } else if (this.time > 30 && this.throwAway) this.throwAway = false;
-
-        if (this.isEnemyDrop) {
-            if (this.lifeSpan == 0) this.remove();
-            if (this.lifeSpan < 30) {
-                if (this.time % 2 == 0) this.visible = !this.visible;
-            } else if (this.lifeSpan < 60){
-                if (this.time % 5 == 0) this.visible = !this.visible;
-            } else if (this.lifeSpan < 90) {
-                if (this.time % 10 == 0) this.visible = !this.visible;
-            }
-            this.lifeSpan--;
+        //アクティブフラグ
+        if (this.options.active === undefined || this.options.active == true) {
+            this.isActive = true;
+        } else {
+            this.isActive = false;
         }
+
+        this.on('enterframe', e => {
+            //プレイヤーとの当たり判定
+            var pl = this.parentScene.player;
+            if (this.hitTestElement(pl)) {
+                if (this.time > 10 && !this.throwAway) {
+                    pl.getItem(this);
+                    this.remove();
+                }
+            } else if (this.time > 30 && this.throwAway) this.throwAway = false;
+
+            if (this.isEnemyDrop) {
+                if (this.lifeSpan == 0) this.remove();
+                if (this.lifeSpan < 30) {
+                    if (this.time % 2 == 0) this.visible = !this.visible;
+                } else if (this.lifeSpan < 60){
+                    if (this.time % 5 == 0) this.visible = !this.visible;
+                } else if (this.lifeSpan < 90) {
+                    if (this.time % 10 == 0) this.visible = !this.visible;
+                }
+                this.lifeSpan--;
+            }
+        });
     },
 });
 
