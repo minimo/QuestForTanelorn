@@ -488,6 +488,16 @@ phina.define("qft.MainScene", {
         this.stageController.playBGM();
     },
 
+    //ステージイベント発火
+    fireStageEvent: function(eventName) {
+        var event = this.stageController.event[eventName];
+        if (event) {
+            event.value.call();
+            return true;
+        }
+        return false;
+    },
+
     warp: function(x, y, frame) {
         frame = frame || 60;
         this.player.isControl = false;
