@@ -84,6 +84,9 @@ phina.define("qft.Character", {
     //スクリーン内フラグ
     onScreen: false,
 
+    //活動フラグ
+    isActive: true,
+
     //識別フラグ
     isPlayer: false,
     isEnemy: false,
@@ -159,6 +162,9 @@ phina.define("qft.Character", {
             }
             //画面外の場合は動作停止
 //            if (!this.onScreen) return;
+
+            //活動フラグ
+            if (!this.isActive) return;
 
             this.x += this.vx;
             if (this.isOnFloor) {
