@@ -39,9 +39,10 @@ phina.define("qft.Stage5", {
 
         //鍵出現
         this.addEvent("key", function() {
-            qft.Item(this, { properties: { kind: "key"}})
+            var key = qft.Item(this, { properties: { kind: "key"}})
                 .addChildTo(this.mapLayer.objLayer)
                 .setPosition(1448, 836);
+            key.vy = -5;
         });
     },
 
