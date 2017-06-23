@@ -213,7 +213,12 @@ phina.define("qft.StageController", {
                     break;
                 case "enemy":
                     if (qft.Enemy[e.name]) {
-                        qft.Enemy[e.name](this.parentScene, e.properties).addChildTo(mapLayer.enemyLayer).setPosition(x, y);
+                        var enemy = qft.Enemy[e.name](this.parentScene, e.properties).addChildTo(mapLayer.enemyLayer).setPosition(x, y);
+                        if (e.properties.dead) {
+                            var sc = "(function(app) {"+e.properties.dead+"})";
+                            var f = eval(sc);
+                            enemy.on('dead', f);
+                        }
                     } else {
                         console.warn("unknown enemy: "+e.name);
                     }
