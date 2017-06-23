@@ -60,6 +60,9 @@ phina.define("qft.Item", {
                 var name = "ITEM_"+options.name.toUpperCase();
                 this.kind = eval(name);
             }
+        } else if (typeof this.kind === "string") {
+            var name = "ITEM_"+this.kind.toUpperCase();
+            this.kind = eval(name);
         }
 
         //アイテムステータス取得
