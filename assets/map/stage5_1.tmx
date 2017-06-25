@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="400" height="70" tilewidth="16" tileheight="16" nextobjectid="160">
+<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="400" height="70" tilewidth="16" tileheight="16" nextobjectid="162">
  <tileset firstgid="1" name="A1" tilewidth="16" tileheight="16" tilecount="768" columns="32">
   <image source="TileA1.png" width="512" height="384"/>
  </tileset>
@@ -736,11 +736,6 @@
   <object id="150" name="ax" type="itembox" x="4832" y="172" width="32" height="32"/>
   <object id="151" name="jewel" type="itembox" x="6336" y="812" width="32" height="32"/>
   <object id="152" name="bow" type="itembox" x="6276" y="812" width="32" height="32"/>
-  <object id="154" name="start" type="player" x="6080" y="120" width="32" height="32">
-   <properties>
-    <property name="direction" type="int" value="0"/>
-   </properties>
-  </object>
   <object id="155" name="up" type="check" x="5540" y="776" width="32" height="32"/>
   <object id="156" name="down" type="check" x="5720" y="776" width="32" height="32"/>
   <object id="157" name="up" type="check" x="5896" y="776" width="32" height="32"/>
