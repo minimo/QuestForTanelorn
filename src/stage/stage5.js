@@ -51,11 +51,13 @@ phina.define("qft.Stage5", {
             this.parentScene.centerScreenPosition.tweener.clear()
                 .moveTo(kx, ky, 30, "easeInOutSine")
                 .wait(30)
-                .moveTo(this.parentScene.player.x, this.parentScene.player.y, 30, "easeInOutSine")
                 .call(function() {
                     this.parentScene.pauseScene = false;
-                    this.parentScene.centerPlayer = true;
                 }.bind(this))
+                .moveTo(this.parentScene.player.x, this.parentScene.player.y, 30, "easeInOutSine")
+                .call(function() {
+                    this.parentScene.centerPlayer = true;
+                }.bind(this));
         });
     },
 
