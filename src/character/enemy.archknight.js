@@ -167,7 +167,7 @@ phina.define("qft.Enemy.ArchKnight", {
                             this.stopTime = 30;
                             this.turnWait = 15;
                             this.direction = (this.direction + 180) % 360;
-                            this.vx *= -1;
+                            this.vx = 0;
                             this.flare('balloon', {pattern: "..."});
                          }
                     }
