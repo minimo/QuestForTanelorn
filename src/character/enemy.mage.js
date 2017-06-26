@@ -22,7 +22,7 @@ phina.define("qft.Enemy.Mage", {
     eyesight: 256,
 
     //視野角
-    viewAngle: 270,
+    viewAngle: 160,
 
     //得点
     point: 500,
