@@ -39,6 +39,9 @@ phina.define("qft.MainScene", {
     limitWidth: false,
     limitHeight: true,
 
+    //スクリーン中心座標
+    screenCenterPosition: null,
+
     //プレイヤースクリーン中央固定フラグ
     centerPlayer: true,
 
@@ -75,8 +78,11 @@ phina.define("qft.MainScene", {
         //プレイヤーキャラクタ
         this.player = qft.Player(this);
 
-       //スクリーン初期化
+        //スクリーン初期化
         this.setupScreen();
+
+        //スクリーン中心座標
+        this.centerScreenPosition = phina.geom.Vector2(0, 0);
 
         //ステージクリア時情報
         this.clearResult = [];
@@ -257,26 +263,33 @@ phina.define("qft.MainScene", {
         }
 
         //スクリーン表示位置をプレイヤー中心になる様に調整
+        var sx = 0;
+        var sy = 0;
         if (this.centerPlayer) {
-            var map = this.mapLayer.map;
-            this.mapLayer.x = SC_W*0.5-this.player.x;
-            this.mapLayer.y = SC_H*0.5-this.player.y;
-            if (this.limitHeight) {
-                if (this.mapLayer.y > 0) this.mapLayer.y = 0;
-                if (this.mapLayer.y < -(map.height-SC_H)) this.mapLayer.y = -(map.height-SC_H);
-            }
-            if (this.limitWidth) {
-                if (this.mapLayer.x > 0) this.mapLayer.x = 0;
-                if (this.mapLayer.x < -(map.width-SC_W)) this.mapLayer.x = -(map.width-SC_W);
-            }
-
-            //スクリーン座標
-            this.screenX = -this.mapLayer.x;
-            this.screenY = -this.mapLayer.y;
-
-            //バックグラウンドのX座標を全体の割合から計算
-            this.backgroundImage.x = -Math.floor(this.backgroundImage.width * (this.player.x / map.width)*0.01);
+            sx = this.player.x;
+            sy = this.player.y;
+        } else {
+            sx = this.centerScreenPosition.x;
+            sy = this.centerScreenPosition.y;
         }
+        var map = this.mapLayer.map;
+        this.mapLayer.x = SC_W * 0.5 - sx;
+        this.mapLayer.y = SC_H * 0.5 - sy;
+        if (this.limitHeight) {
+            if (this.mapLayer.y > 0) this.mapLayer.y = 0;
+            if (this.mapLayer.y < -(map.height-SC_H)) this.mapLayer.y = -(map.height-SC_H);
+        }
+        if (this.limitWidth) {
+            if (this.mapLayer.x > 0) this.mapLayer.x = 0;
+            if (this.mapLayer.x < -(map.width-SC_W)) this.mapLayer.x = -(map.width-SC_W);
+        }
+
+        //スクリーン座標
+        this.screenX = -this.mapLayer.x;
+        this.screenY = -this.mapLayer.y;
+
+        //バックグラウンドのX座標を全体の割合から計算
+        this.backgroundImage.x = -Math.floor(this.backgroundImage.width * (this.player.x / map.width)*0.01);
 
         this.time++;
     },
