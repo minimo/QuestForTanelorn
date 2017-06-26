@@ -43,6 +43,17 @@ phina.define("qft.Stage5", {
                 .addChildTo(this.parentScene.mapLayer.objLayer)
                 .setPosition(1448, 836);
             key.vy = -5;
+            this.parentScene.pauseScene = true;
+            this.parentScene.centerPlayer = false;
+            this.parentScene.centerScreenPosition.setPosition(this.parentScene.player.x, this.parentScene.player.y);
+            this.parentScene.centerScreenPosition.tweener.clear()
+                .moveTo(1448, 838, 30, "easeInOutSine")
+                .wait(30)
+                .moveTo(this.parentScene.player.x, this.parentScene.player.y, 30, "easeInOutSine")
+                .call(function() {
+                    this.parentScene.pauseScene = false;
+                    this.parentScene.centerPlayer = true;
+                }.bind(this))
         });
     },
 

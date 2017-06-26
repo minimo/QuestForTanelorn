@@ -85,7 +85,8 @@ phina.define("qft.MainScene", {
         this.setupScreen();
 
         //スクリーン中心座標
-        this.centerScreenPosition = phina.geom.Vector2(0, 0);
+        this.centerScreenPosition = phina.app.Object2D().addChildTo(this);
+        this.centerScreenPosition.tweener.setUpdateType('fps');
 
         //ステージクリア時情報
         this.clearResult = [];
