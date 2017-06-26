@@ -45,6 +45,9 @@ phina.define("qft.MainScene", {
     //プレイヤースクリーン中央固定フラグ
     centerPlayer: true,
 
+    //シーン内全オブジェクト強制停止
+    pauseScene: false,
+
     init: function(options) {
         this.superInit({width: SC_W, height: SC_H});
         options = (options || {}).$safe({
@@ -237,7 +240,7 @@ phina.define("qft.MainScene", {
                 }
             }
 
-            this.timeLimit--;
+            if (!this.pauseScene) this.timeLimit--;
             if (this.timeLimit < 0) {
                 this.timeLimit = 0;
             }

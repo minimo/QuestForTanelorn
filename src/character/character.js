@@ -150,6 +150,7 @@ phina.define("qft.Character", {
         });
 
         this.on('enterframe', function(e) {
+            if (this.parentScene.pauseScene) return;
             if (this.time == 0) this.once();
 
             //画面内判定

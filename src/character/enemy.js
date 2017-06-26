@@ -84,6 +84,7 @@ phina.define("qft.Enemy", {
         }
 
         this.on('enterframe', function() {
+            if (this.parentScene.pauseScene) return;
             //画面外の場合は動作停止
             if (!this.onScreen) return;
 

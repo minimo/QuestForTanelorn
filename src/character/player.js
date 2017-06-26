@@ -141,6 +141,8 @@ phina.define("qft.Player", {
     },
 
     update: function(app) {
+        if (this.parentScene.pauseScene) return;
+
         //オブジェクトレイヤー接触判定
         this.isOnDoor = null;
         this.parentScene.objLayer.children.forEach(function(e) {
@@ -176,11 +178,6 @@ phina.define("qft.Player", {
         if (vp.getKey("left")) ct.left = true;
         if (vp.getKey("Z")) ct.attack = true;
         if (vp.getKey("X")) ct.jump = true;
-
-        var kb = app.keyboard;
-        if (kb.getKey("S") && !this.isStun) {
-            this.damage({x: this.x, y: this.y, power: 50, stunPower: 100});
-        }
 
         if (!this.isControl) ct = {};
         if (this.stopTime == 0) {
