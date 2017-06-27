@@ -84,9 +84,31 @@ phina.define("qft.MainScene", {
         //スクリーン初期化
         this.setupScreen();
 
-        //スクリーン中心座標
-        this.centerScreenPosition = phina.app.Object2D().addChildTo(this);
-        this.centerScreenPosition.tweener.setUpdateType('fps');
+        //スクリーン中心座標管理用
+        var that = this;
+        this.camera = phina.app.Object2D().addChildTo(this);
+        this.camera.parentScene = this;
+        this.camera.tweener.setUpdateType('fps');
+        this.camera.moveFrom = phina.geom.Vector2(0, 0);
+        this.camera.moveTo = phina.geom.Vector2(0, 0);
+        this.camera.moveRatio = 0;
+        this.camera.moveLerp = false;
+        this.camera.moveToPlayer = false;
+        this.camera.update = function() {
+            if (that.centerPlayer) {
+                this.x = that.player.x;
+                this.y = that.player.y;
+            } else {
+                if (this.moveLerp) {
+                    if (this.moveToPlayer) {
+                        this.moveTo.x = that.player.x;
+                        this.moveTo.y = that.player.y;
+                    }
+                    var p = phina.geom.Vector2.lerp(this.moveFrom, this.moveTo, this.moveRatio);
+                    this.setPosition(p.x, p.y);
+                }
+            }
+        };
 
         //ステージクリア時情報
         this.clearResult = [];
@@ -266,19 +288,10 @@ phina.define("qft.MainScene", {
             }
         }
 
-        //スクリーン表示位置をプレイヤー中心になる様に調整
-        var sx = 0;
-        var sy = 0;
-        if (this.centerPlayer) {
-            sx = this.player.x;
-            sy = this.player.y;
-        } else {
-            sx = this.centerScreenPosition.x;
-            sy = this.centerScreenPosition.y;
-        }
+        //スクリーン表示位置
         var map = this.mapLayer.map;
-        this.mapLayer.x = SC_W * 0.5 - sx;
-        this.mapLayer.y = SC_H * 0.5 - sy;
+        this.mapLayer.x = SC_W * 0.5 - this.camera.x;
+        this.mapLayer.y = SC_H * 0.5 - this.camera.y;
         if (this.limitHeight) {
             if (this.mapLayer.y > 0) this.mapLayer.y = 0;
             if (this.mapLayer.y < -(map.height-SC_H)) this.mapLayer.y = -(map.height-SC_H);
