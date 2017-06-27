@@ -258,7 +258,7 @@ phina.define("qft.MainScene", {
             }
             //ステージクリア条件チェック
             if (this.mapLayer.clearGate) {
-                if (this.stageController.checkStageClearCondtion()) {
+                if (this.stageController.checkStageClearCondition()) {
                     this.mapLayer.clearGate.isLock = false;
                 }
             }
