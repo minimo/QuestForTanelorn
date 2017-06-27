@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="400" height="70" tilewidth="16" tileheight="16" nextobjectid="184">
+<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-down" width="400" height="70" tilewidth="16" tileheight="16" nextobjectid="184">
  <tileset firstgid="1" name="A1" tilewidth="16" tileheight="16" tilecount="768" columns="32">
   <image source="TileA1.png" width="512" height="384"/>
  </tileset>
@@ -826,10 +826,5 @@
   </object>
   <object id="181" name="Wisp" type="enemy" x="3684" y="320" width="32" height="32"/>
   <object id="182" name="Wisp" type="enemy" x="3860" y="324" width="32" height="32"/>
-  <object id="183" name="start" type="player" x="6064" y="132" width="32" height="32">
-   <properties>
-    <property name="direction" type="int" value="0"/>
-   </properties>
-  </object>
  </objectgroup>
 </map>
