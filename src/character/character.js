@@ -312,10 +312,29 @@ phina.define("qft.Character", {
         if (power == 0) return;
         if (direction === undefined) direction = (this.direction + 180) % 360;
 
+        var back = 32 + Math.floor(power / 10);
         var sx = Math.cos(direction.toRadian());
         var sy = Math.sin(direction.toRadian());
-        var back = 32 + Math.floor(power / 10);
-        this.tweener.clear().by({x: back*sx, y: back*sy}, 10, "easeOutElastic");
+
+        //ノックバック先に壁が無いかチェック
+        var chk = this.checkMapCollision2(this.x + sx * back, this.y + sy * back, 8, 8);
+        if (chk) {
+            //壁に当たる所までバックする
+            var c = chk[0];
+            switch (direction) {
+                case 0:
+                    back = (c.x - c.width / 2) - this.x;
+                    back *= 0.8;
+                    break;
+                case 180:
+                    back = this.x - (c.x + c.width / 2);
+                    back *= 0.8;
+                    break;
+                default:
+            }
+        }
+
+        this.tweener.clear().by({x: sx * back, y: sy * back}, 10, "easeOutElastic");
         this.vx = 0;
         this.vy = 0;
         return this;
