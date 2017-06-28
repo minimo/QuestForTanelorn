@@ -904,15 +904,30 @@ phina.define("qft.Player", {
             power: this.power,
             defense: this.defense,
             equip: equip,
-            item: items,
+            items: items,
             numJumpMax: numJumpMax,
         };
     },
 
     //ステータス復元
     restoreStatus: function() {
-        this.$extend(this.startStatus);
-        this.parentScene.playerWeapon.rotation = 0;
+        var ss = this.startStatus;
+        this.hpMax = ss.hpMax;
+        this.hp = ss.hp;
+        this.power = ss.power;
+        this.defense = ss.defense;
+        this.equip = {
+            using: 0,
+            weapons: ss.equip.weapons.concat(),
+            level: ss.equip.level.concat(),
+            switchOk: true,
+        }
+        if (ss.items) {
+            this.items = ss.items.concat();
+        } else {
+            this.item = [];
+        }
+        this.numJumpMax = ss.numJumpMax;
 
         var id = this.equip.weapons[this.equip.using];
         var lv = this.equip.level[this.equip.using];

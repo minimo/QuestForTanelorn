@@ -725,8 +725,8 @@ phina.define("qft.MainScene", {
                 playerStatus: {},
             });
             this.stageNumber = d.stageNumber;
-            this.totalScore = d.score;
-            this.totalKill = d.kill;
+            this.totalScore = 0;
+            this.totalKill = 0;
             this.clearResult = d.result;
 
             //プレイヤー情報復元
