@@ -49,6 +49,9 @@ phina.define("qft.Stage5", {
             this.parentScene.centerPlayer = false;
             this.parentScene.camera.setPosition(this.parentScene.player.x, this.parentScene.player.y);
             this.parentScene.camera.tweener.clear()
+                .call(function() {
+                    app.playSE("holy1");
+                })
                 .moveTo(kx, ky, 30, "easeInOutSine")
                 .wait(30)
                 .call(function() {

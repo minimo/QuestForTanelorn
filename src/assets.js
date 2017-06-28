@@ -80,6 +80,7 @@ phina.define("qft.Assets", {
                             "getitem":    "assets/sound/ata_a49.mp3",
                             "recovery":   "assets/sound/se_maoudamashii_magical01.mp3",
                             "tinkling":   "assets/sound/tinkling.mp3",
+                            "holy1":      "assets/sound/holy1.mp3",
                             "bgm1":       "assets/sound/DS-ba01m.mp3",
                         },
                         font: {
