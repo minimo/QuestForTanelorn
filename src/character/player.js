@@ -507,6 +507,7 @@ phina.define("qft.Player", {
             this.dummy.remove();
             this.dummy = null;
         }
+        this.sprite.visible = true;
 
         return this;
     },
@@ -560,7 +561,7 @@ phina.define("qft.Player", {
             }.bind(this));
 
         //ダミースプライト追加
-        this.visible = false;
+        this.sprite.visible = false;
         this.dummy = qft.PlayerDummy("player1").addChildTo(this).setAnimation("dead");
     },
 
