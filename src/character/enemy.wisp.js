@@ -213,6 +213,9 @@ phina.define("qft.Enemy.WispBomb", {
     //得点
     point: 0,
 
+    //無敵フラグ
+    isMuteki: true,
+
     init: function(parentScene, options) {
         this.superInit(parentScene, {width: 10, height: 10});
         options = options || {};

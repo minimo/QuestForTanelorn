@@ -53,7 +53,7 @@ phina.define("qft.Enemy.Slime", {
 
         this.hp += this.level * 10;
         this.power += this.level * 5;
-        this.point += this.level * 50;
+        this.point += this.level * 200;
 
         this.setAnimation("walk");
         this.animationInterval = 10;
@@ -63,6 +63,10 @@ phina.define("qft.Enemy.Slime", {
 
         this.on('damaged', e => {
             if (e.direction == 0) this.direction = 180; else this.direction = 0;
+            if (this.level > 3) {
+                this.attack();
+                this.flare('balloon', {pattern: "anger1", lifeSpan: 60, y: 0, force: true});
+            }
         });
     },
 
@@ -97,16 +101,6 @@ phina.define("qft.Enemy.Slime", {
                         this.direction = 0;
                     }
                 }
-            } else {
-                //プレイヤーが近くにいたら攻撃
-                if (look && !this.isJump && dis < 64 && this.time % 180 == 0) {
-                    this.stopTime = 30;
-                    for (var i = 0; i < this.level+4; i++) {
-                        var b = this.parentScene.spawnEnemy(this.x, this.y, "WispBomb", {pattern: 2});
-                        b.vy = -10;
-                        b.vx = (i*2) * this.scaleX;
-                    }
-                }
             }
         }
         if (this.isOnFloor || this.isJump) {
@@ -114,6 +108,17 @@ phina.define("qft.Enemy.Slime", {
             if (this.direction == 180) {
                 this.vx *= -1;
             }
+        }
+    },
+
+    attack: function() {
+        this.stopTime = 30;
+        var vx = 1;
+        if (this.direction == 180) vx = -1;
+        for (var i = 0; i < this.level; i++) {
+            var b = this.parentScene.spawnEnemy(this.x, this.y, "WispBomb", {pattern: 2});
+            b.vy = -8;
+            b.vx = i * 2 * vx;
         }
     },
 
