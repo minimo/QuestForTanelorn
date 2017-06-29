@@ -63,7 +63,7 @@ phina.define("qft.Character.balloon", {
                 break;
             case "anger":
             case "anger1":
-                this.setFrameTrimming(72, 96, 72, 32);
+                this.setFrameTrimming(72, 96, 24, 32);
                 break;
             case "anger2":
                 this.setFrameTrimming(144, 128, 72, 32);
