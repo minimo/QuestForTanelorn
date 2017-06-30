@@ -184,7 +184,7 @@ phina.define("qft.MainScene", {
         this._exitGame = false;
         this.on('exitgame', function(e) {
             this._exitGame = true;
-            this.saveGame();
+            if (!this.isPractice) this.saveGame();
         });
         this.on('exitgame_nosave', function(e) {
             this._exitGame = true;
