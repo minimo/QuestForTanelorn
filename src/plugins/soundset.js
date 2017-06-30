@@ -62,12 +62,12 @@ phina.define("phina.extension.SoundSet", {
             this.bgm.stop();
             this.bgmIsPlay = false;
         }
-        var media = this.find(name);
-        if (media) {
-            var vol = this.volumeSE * media._volume;
-            media.setVolume(vol);
-            media.play(loop, callback);
-            this.bgm = media;
+        var element = this.find(name);
+        if (element) {
+            var vol = this.volumeBGM * element._volume;
+            element.media.volume = vol;
+            element.play(loop, callback);
+            this.bgm = element;
             this.bgmIsPlay = true;
         } else {
             if (this.add(name)) this.playBGM(name);
@@ -132,11 +132,11 @@ phina.define("phina.extension.SoundSet", {
 
     //サウンドをサウンドエフェクトとして再生
     playSE: function(name, loop, callback) {
-        var media = this.find(name);
-        if (media) {
-            var vol = this.volumeSE * media._volume;
-            media.setVolume(vol);
-            media.play(loop, callback);
+        var element = this.find(name);
+        if (element) {
+            var vol = this.volumeSE * element._volume;
+            element.media.volume = vol;
+            element.play(loop, callback);
         } else {
             if (this.add(name)) this.playSE(name);
         }
@@ -245,7 +245,7 @@ phina.define("phina.extension.SoundElement", {
     //ボリューム設定
     setVolume: function(vol) {
         if (!this.media) return this;
-        if (vol === undefined) vol = 0;
+        if (vol === undefined) vol = 0.5;
         this._volume = vol;
         return this;
     },
