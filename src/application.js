@@ -124,6 +124,10 @@ phina.define("qft.Application", {
         this.soundset.setVolumeSE(vol);
     },
 
+    setVolume: function(asset, vol) {
+        this.soundset.setVolume(asset, vol);
+    },
+
     _accessor: {
         volumeBGM: {
             "get": function() { return this.sounds.volumeBGM; },

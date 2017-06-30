@@ -97,4 +97,10 @@ phina.define("qft.Stage5", {
                     .fadeOut(500);
             }.bind(this));
     },
+
+    //ステージＢＧＭ再生
+    playBGM: function() {
+        app.setVolume(this.bgm, 0.8);
+        app.playBGM(this.bgm);
+    },
 });
