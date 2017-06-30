@@ -64,7 +64,7 @@ phina.define("phina.extension.SoundSet", {
         }
         var media = this.find(name);
         if (media) {
-            var vol = this.volumeBGM;
+            var vol = this.volumeSE * media._volume;
             media.setVolume(vol);
             media.play(loop, callback);
             this.bgm = media;
@@ -115,8 +115,17 @@ phina.define("phina.extension.SoundSet", {
         this.volumeBGM = vol;
         if (this.bgm) {
             this.bgm.pause();
-            this.bgm.setVolume(this.volumeBGM);
+            this.bgm.setVolume(this.volumeBGM * this.bgm._volume);
             this.bgm.resume();
+        }
+        return this;
+    },
+
+    //アセットを指定してボリュームを設定
+    setVolume: function(name, vol) {
+        var media = this.find(name);
+        if (media) {
+            media.setVolume(vol);
         }
         return this;
     },
@@ -125,7 +134,7 @@ phina.define("phina.extension.SoundSet", {
     playSE: function(name, loop, callback) {
         var media = this.find(name);
         if (media) {
-            var vol = this.volumeSE;
+            var vol = this.volumeSE * media._volume;
             media.setVolume(vol);
             media.play(loop, callback);
         } else {
@@ -238,7 +247,6 @@ phina.define("phina.extension.SoundElement", {
         if (!this.media) return this;
         if (vol === undefined) vol = 0;
         this._volume = vol;
-        this.media.volume = this._volume;
         return this;
     },
 
