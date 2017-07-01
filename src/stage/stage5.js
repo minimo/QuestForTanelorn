@@ -100,7 +100,7 @@ phina.define("qft.Stage5", {
 
     //ステージＢＧＭ再生
     playBGM: function() {
-        app.setVolume(this.bgm, 0.8);
+        app.setVolume(this.bgm, 0.5);
         app.playBGM(this.bgm);
     },
 });
