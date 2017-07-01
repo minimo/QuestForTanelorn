@@ -52,6 +52,7 @@ phina.define("qft.Enemy.Slime", {
         this.width += capLevel * 5;
 
         this.hp += this.level * 10;
+        if (this.level > 3) this.hp += 30;
         this.power += this.level * 5;
         this.point += this.level * 200;
 
@@ -63,7 +64,7 @@ phina.define("qft.Enemy.Slime", {
 
         this.on('damaged', e => {
             if (e.direction == 0) this.direction = 180; else this.direction = 0;
-            if (this.level > 3) {
+            if (this.level > 3　&& this.stopTime == 0) {
                 this.attack();
                 this.flare('balloon', {pattern: "anger1", lifeSpan: 60, y: 0, force: true});
             }

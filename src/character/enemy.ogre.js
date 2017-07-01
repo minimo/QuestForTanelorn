@@ -94,11 +94,11 @@ phina.define("qft.Enemy.Ogre", {
             } else {
                 this.vx = -0.5;
             }
-            if (this.chaseTime > 0) this.vx *= 3;
+            if (this.chaseTime > 0) this.vx *= 4;
         }
 
         if (look) {
-            this.chaseTime = 120;
+            this.chaseTime = 150;
             this.turnCount = 0;
             this.stopTime = 0;
             this.flare('balloon', {pattern: "!"});

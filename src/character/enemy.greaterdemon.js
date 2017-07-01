@@ -54,7 +54,7 @@ phina.define("qft.Enemy.GreaterDemon", {
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("monster01x2", 24*2, 32*2).addChildTo(this);
-        this.sprite.setFrameTrimming(288*2, 640*2, 72*2, 128*2).setPosition(0, -10);
+        this.sprite.setFrameTrimming(72*2*2, 640*2, 72*2, 128*2).setPosition(0, -10);
         if (options.size) {
             var size = options.size || 1;
             this.sprite.setScale(size).setPosition(0, size * -12);
@@ -77,7 +77,7 @@ phina.define("qft.Enemy.GreaterDemon", {
         var dis = this.getDistancePlayer();
         var look = this.isLookPlayer();
 
-        if (!this.flying && this.isOnFloor) {
+        if (this.isOnFloor) {
             //崖っぷちで折り返す
             if (this.checkMapCollision2(this.x+5, this.y+20, 5, 5) == null) {
                 this.direction = 180;
@@ -94,27 +94,28 @@ phina.define("qft.Enemy.GreaterDemon", {
 
             //プレイヤーが近くにいたら攻撃
             if (look && !this.isJump && dis > 64 && dis < this.eyesight) {
-                this.isAttack = true;
-                this.stopTime = 60;
+                //火を吐く
+                var b = this.parentScene.spawnEnemy(this.x, this.y, "Bullet", {explode: true});
+                b.rotation = this.getPlayerAngle();
+                this.stopTime = 30;
             }
         }
-
-        //プレイヤーを発見したらバルーンを出したり消したり
+        if (this.isOnFloor || this.isJump) {
+            if (this.direction == 0) {
+                this.vx = 1;
+            } else {
+                this.vx = -1;
+            }
+        }
         if (look) {
+            this.vx *= 3;
             this.flare('balloon', {pattern: "!"});
         } else {
-            if (dis < 128) {
+            if (dis < 256) {
                 this.flare('balloon', {pattern: "?"});
             } else {
                 this.flare('balloonerace');
             }
-        }
-
-        //攻撃するよ
-        if (this.isAttack) {
-            this.isAttack = false;
-            var b = this.parentScene.spawnEnemy(this.x, this.y, "Bullet", {explode: true});
-            b.rotation = this.getPlayerAngle();
         }
     },
 
