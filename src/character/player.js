@@ -324,7 +324,6 @@ phina.define("qft.Player", {
                 this.isCatchLadder = false;
                 this.setAnimation("attack");
                 this.weaponAttack();
-                app.playSE("attack");
             }
 
             //武器の変更
@@ -735,6 +734,7 @@ phina.define("qft.Player", {
         switch (kind) {
             case 0:
                 //ショートソード
+                app.playSE("attack");
                 this.weapon.tweener.clear()
                     .set({rotation: 200, alpha: 1.0})
                     .to({rotation: 360}, 5)
@@ -745,6 +745,7 @@ phina.define("qft.Player", {
                 break;
             case 1:
                 //ロングソード
+                app.playSE("attack");
                 this.weapon.tweener.clear()
                     .set({rotation: 200, alpha: 1.0})
                     .to({rotation: 360}, 6)
@@ -755,6 +756,7 @@ phina.define("qft.Player", {
                 break;
             case 2:
                 //斧
+                app.playSE("attack");
                 this.weapon.tweener.clear()
                     .set({rotation: 400, alpha: 1.0})
                     .to({rotation: 270}, 8)
@@ -765,6 +767,7 @@ phina.define("qft.Player", {
                 break;
             case 3:
                 //槍
+                app.playSE("attack");
                 this.weapon.tweener.clear()
                     .set({rotation: -45, alpha: 1.0})
                     .by({x: -10}, 2)
@@ -776,6 +779,7 @@ phina.define("qft.Player", {
                 break;
             case 4:
                 //弓
+                app.playSE("attack");
                 this.weapon.tweener.clear()
                     .set({rotation: -45, alpha: 1.0})
                     .by({x: 7}, 3)
@@ -797,6 +801,7 @@ phina.define("qft.Player", {
                 break;
             case 5:
                 //魔法の杖
+                app.playSE("bomb");
                 this.weapon.tweener.clear()
                     .set({rotation: 200, alpha: 1.0})
                     .to({rotation: 360}, 8)
@@ -804,7 +809,7 @@ phina.define("qft.Player", {
                     .call(function() {
                         that.isAttack = false;
                     });
-                var magicPower = 20 + level * 2;
+                var magicPower = 15 + level * 2;
                 for (var i = 0; i < 8; i++) {
                     var magic = qft.PlayerAttack(this.parentScene, {width: 15, height: 10, index: 30, power: magicPower, type: "flame"})
                         .addChildTo(this.parentScene.playerLayer)
@@ -822,7 +827,6 @@ phina.define("qft.Player", {
                             this.setPosition(that.x + 32 * mx, that.y + 32 * my);
                         }.bind(magic))
                         .wait(8)
-//                        .by({x: mx * 16, y: my * 16 }, 8, "easeInSine")
                         .call(function() {
                             this.remove();
                         }.bind(magic));
@@ -830,6 +834,7 @@ phina.define("qft.Player", {
                 break;
             case 6:
                 //魔導書
+                app.playSE("attack");
                 this.weapon.tweener.clear()
                     .set({rotation: 400, alpha: 1.0})
                     .to({rotation: 270}, 8)
