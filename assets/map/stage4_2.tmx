@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-down" width="200" height="60" tilewidth="16" tileheight="16" nextobjectid="161">
+<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-down" width="200" height="60" tilewidth="16" tileheight="16" nextobjectid="162">
  <tileset firstgid="1" name="A1" tilewidth="16" tileheight="16" tilecount="768" columns="32">
   <image source="TileA1.png" width="512" height="384"/>
  </tileset>
@@ -347,8 +347,8 @@
     <property name="level" type="int" value="1"/>
    </properties>
   </object>
-  <object id="47" name="jewel" type="itembox" x="1732" y="204" width="32" height="32"/>
-  <object id="53" name="ax" type="itembox" x="1768" y="204" width="32" height="32"/>
+  <object id="47" name="jewel" type="itembox" x="1732" y="220" width="32" height="32"/>
+  <object id="53" name="ax" type="itembox" x="1768" y="220" width="32" height="32"/>
   <object id="54" name="mapswitch" type="door" x="1200" y="144" width="60" height="96">
    <properties>
     <property name="enterOffset" type="int" value="-16"/>
@@ -599,8 +599,8 @@
     <property name="level" type="int" value="0"/>
    </properties>
   </object>
-  <object id="132" name="armor" type="itembox" x="2404" y="224" width="32" height="32"/>
-  <object id="133" name="longsword" type="itembox" x="2340" y="224" width="32" height="32"/>
+  <object id="132" name="armor" type="itembox" x="2400" y="224" width="32" height="32"/>
+  <object id="133" name="longsword" type="itembox" x="2348" y="224" width="32" height="32"/>
   <object id="134" name="Slime" type="enemy" x="1872" y="220" width="32" height="32">
    <properties>
     <property name="level" type="int" value="1"/>
@@ -665,5 +665,6 @@
     <property name="level" type="int" value="1"/>
    </properties>
   </object>
+  <object id="161" name="rod" type="itembox" x="2296" y="224" width="32" height="32"/>
  </objectgroup>
 </map>

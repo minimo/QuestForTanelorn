@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-down" width="250" height="70" tilewidth="16" tileheight="16" nextobjectid="114">
+<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-down" width="250" height="70" tilewidth="16" tileheight="16" nextobjectid="117">
  <tileset firstgid="1" name="A1" tilewidth="16" tileheight="16" tilecount="768" columns="32">
   <image source="TileA1.png" width="512" height="384"/>
  </tileset>
@@ -288,7 +288,7 @@
     <property name="visible" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="6" name="coin" type="itembox" x="404" y="284" width="32" height="32">
+  <object id="6" name="coin" type="itembox" x="352" y="124" width="32" height="32">
    <properties>
     <property name="color" value="red"/>
    </properties>
@@ -663,6 +663,18 @@ if (keys.length &gt; 0) this.isLock = false;
   <object id="113" name="lamp" type="accessory" x="3512" y="668" width="24" height="32">
    <properties>
     <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="114" name="rod" type="itembox" x="912" y="280" width="32" height="32"/>
+  <object id="115" name="coin" type="itembox" x="1656" y="304" width="32" height="32">
+   <properties>
+    <property name="color" value="red"/>
+   </properties>
+  </object>
+  <object id="116" name="Knight" type="enemy" x="1556" y="296" width="32" height="32">
+   <properties>
+    <property name="level" type="int" value="2"/>
+    <property name="weapon" value="ax"/>
    </properties>
   </object>
  </objectgroup>

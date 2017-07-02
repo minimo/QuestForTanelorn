@@ -733,7 +733,7 @@
   </object>
   <object id="148" name="stone" type="itembox" x="5416" y="460" width="32" height="32"/>
   <object id="149" name="coin" type="itembox" x="5344" y="460" width="32" height="32"/>
-  <object id="150" name="ax" type="itembox" x="4832" y="172" width="32" height="32"/>
+  <object id="150" name="bug" type="itembox" x="4832" y="172" width="32" height="32"/>
   <object id="151" name="jewel" type="itembox" x="6336" y="812" width="32" height="32"/>
   <object id="152" name="bow" type="itembox" x="6276" y="812" width="32" height="32"/>
   <object id="155" name="up" type="check" x="5540" y="760" width="32" height="32"/>
