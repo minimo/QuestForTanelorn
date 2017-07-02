@@ -804,16 +804,29 @@ phina.define("qft.Player", {
                     .call(function() {
                         that.isAttack = false;
                     });
-                    var magicPower = 20 + level * 2;
-                    var magic = qft.PlayerAttack(this.parentScene, {width: 15, height: 10, index: 30, power: magicPower, type: "fireball"})
+                var magicPower = 20 + level * 2;
+                for (var i = 0; i < 8; i++) {
+                    var magic = qft.PlayerAttack(this.parentScene, {width: 15, height: 10, index: 30, power: magicPower, type: "flame"})
                         .addChildTo(this.parentScene.playerLayer)
-                        .setScale(this.scaleX, 1)
-                        .setPosition(this.x, this.y);
+                        .setScale(this.scaleX, 1);
+                    magic.rad = (90 - i * 20).toRadian();
+                    magic.isCollision = false;
+                    magic.visible = false;
                     magic.tweener.setUpdateType('fps').clear()
-                        .by({x: 100*this.scaleX}, 30, "easeInQuart")
+                        .wait(i)
+                        .call(function() {
+                            this.isCollision = true;
+                            this.visible = true;
+                            var mx = Math.cos(this.rad) * that.scaleX;
+                            var my = Math.sin(this.rad);
+                            this.setPosition(that.x + 32 * mx, that.y + 32 * my);
+                        }.bind(magic))
+                        .wait(8)
+//                        .by({x: mx * 16, y: my * 16 }, 8, "easeInSine")
                         .call(function() {
                             this.remove();
                         }.bind(magic));
+                }
                 break;
             case 6:
                 //魔導書
@@ -991,6 +1004,15 @@ phina.define("qft.PlayerAttack", {
                 this.isSting = true;
                 this.stunPower = 1;
                 break;
+            case "flame":
+                this.sprite = phina.display.Sprite("effect", 48, 48)
+                    .addChildTo(this)
+                    .setFrameTrimming(0, 192, 192, 96)
+                    .setScale(0.5);
+                this.frame = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+                this.isFire = true;
+                this.stunPower = 1;
+                break;
         }
     },
 
@@ -1001,6 +1023,7 @@ phina.define("qft.PlayerAttack", {
             this.sprite.setFrameIndex(this.frame[this.index]);
             this.index = (this.index + 1) % this.frame.length;
         }
+        if (this.type == "flame") return;
 
         //地形接触判定
         var that = this;
