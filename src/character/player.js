@@ -810,11 +810,11 @@ phina.define("qft.Player", {
                         that.isAttack = false;
                     });
                 var magicPower = 15 + level * 2;
-                for (var i = 0; i < 8; i++) {
+                for (var i = 0; i < 6; i++) {
                     var magic = qft.PlayerAttack(this.parentScene, {width: 15, height: 10, index: 30, power: magicPower, type: "flame"})
                         .addChildTo(this.parentScene.playerLayer)
                         .setScale(this.scaleX, 1);
-                    magic.rad = (90 - i * 20).toRadian();
+                    magic.rad = (90 - i * 30).toRadian();
                     magic.isCollision = false;
                     magic.visible = false;
                     magic.tweener.setUpdateType('fps').clear()
