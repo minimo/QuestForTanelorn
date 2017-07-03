@@ -494,6 +494,10 @@ phina.define("qft.EnemyAttack", {
                 pl.damage(this);
             }
         });
+
+        if (DEBUG_COLLISION) {
+            phina.display.RectangleShape({width: this.width, height: this.height}).addChildTo(this).setAlpha(0.5);
+        }
     },
 
     //判定同士がぶつかった場合の処理

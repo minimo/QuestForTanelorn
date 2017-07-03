@@ -1019,6 +1019,10 @@ phina.define("qft.PlayerAttack", {
                 this.stunPower = 1;
                 break;
         }
+
+        if (DEBUG_COLLISION) {
+            phina.display.RectangleShape({width: this.width, height: this.height}).addChildTo(this).setAlpha(0.5);
+        }
     },
 
     update: function(app) {
