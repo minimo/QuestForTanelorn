@@ -261,13 +261,14 @@ phina.define("qft.Enemy.ArchKnight", {
             this.x = that.x + that.scaleX * 18;
         }
 
-        atk.isActive = true;
+        this.isMuteki = true;
         this.weapon.tweener.clear()
             .set({rotation: 430})
             .to({rotation: 270}, 2)
             .to({rotation: 430}, 2)
             .call(function() {
                 that.isAttack = false;
+                that.isMuteki = false;
                 atk.remove();
             });
         this.isAttack = true;
