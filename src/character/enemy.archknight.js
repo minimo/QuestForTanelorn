@@ -189,7 +189,7 @@ phina.define("qft.Enemy.ArchKnight", {
                 //プレイヤーショットとの距離判定
                 this.parentScene.playerLayer.children.forEach(function(e) {
                     if (e instanceof qft.PlayerAttack && e.isCollision) {
-                        if (e.getDistance(that) < 64) that.guard();
+                        if (that.getDistance(e) < 64) that.guard();
                     }
                 }.bind(this));
             }
@@ -200,7 +200,7 @@ phina.define("qft.Enemy.ArchKnight", {
     attack: function() {
         var that = this;
         var width = 24, height = 24;
-        var atk = qft.EnemyAttack(this.parentScene, {width: 24, height: 24, power: 20 + this.level * 5})
+        var atk = qft.EnemyAttack(this.parentScene, {width: 24, height: 48, power: 20 + this.level * 5})
             .addChildTo(this.parentScene.enemyLayer)
             .setPosition(this.x + this.scaleX * 18, this.y)
             .setAlpha(0.0);
@@ -250,7 +250,7 @@ phina.define("qft.Enemy.ArchKnight", {
     guard: function() {
         var that = this;
         var width = 24, height = 24;
-        var atk = qft.EnemyAttack(this.parentScene, {width: 24, height: 24, power: 20 + this.level * 5})
+        var atk = qft.EnemyAttack(this.parentScene, {width: 24, height: 48, power: 20 + this.level * 5})
             .addChildTo(this.parentScene.enemyLayer)
             .setPosition(this.x + this.scaleX * 18, this.y)
             .setAlpha(0.0);
@@ -261,14 +261,11 @@ phina.define("qft.Enemy.ArchKnight", {
             this.x = that.x + that.scaleX * 18;
         }
 
-        atk.isActive = false;
+        atk.isActive = true;
         this.weapon.tweener.clear()
-            .to({rotation: 430}, 3)
-            .wait(3)
-            .call(function() {
-                atk.isActive = true;
-            })
-            .to({rotation: 270}, 6)
+            .set({rotation: 430})
+            .to({rotation: 270}, 2)
+            .to({rotation: 430}, 2)
             .call(function() {
                 that.isAttack = false;
                 atk.remove();
