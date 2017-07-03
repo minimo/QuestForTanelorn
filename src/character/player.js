@@ -1082,6 +1082,17 @@ phina.define("qft.PlayerAttack", {
             }.bind(this));
     },
 
+    //弾かれる
+    snap: function(e) {
+        //効果音
+        app.playSE("tinkling");
+        this.tweener.clear()
+            .by({y: -30, rotation: 700}, 30, "easeOutQuad")
+            .call(function() {
+                this.remove();
+            }.bind(this));
+    },
+
     //爆発
     explode: function(e) {
         this.parentScene.spawnEffect(this.x, this.y);

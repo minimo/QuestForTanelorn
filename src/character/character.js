@@ -563,6 +563,13 @@ phina.define("qft.Character", {
         return Math.sqrt(x*x+y*y);
     },
 
+    //オブジェクト間の直線距離
+    getDistance: function(element) {
+        var x = this.x - element.x;
+        var y = this.y - element.y;
+        return Math.sqrt(x*x+y*y);
+    },
+
     //物理現象情報のみオブジェクトで取得
     getPhysics: function() {
         return {

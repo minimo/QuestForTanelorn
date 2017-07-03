@@ -182,6 +182,17 @@ phina.define("qft.Enemy.ArchKnight", {
             if (look && !this.isJump && dis < 64 && !this.isAttack) {
                 this.attack();
             }
+
+            //プレイヤー飛び道具を弾く
+            if (look && !this.isAttack) {
+                var that = this;
+                //プレイヤーショットとの距離判定
+                this.parentScene.playerLayer.children.forEach(function(e) {
+                    if (e instanceof qft.PlayerAttack && e.isCollision) {
+                        if (e.getDistance(that) < 64) that.guard();
+                    }
+                }.bind(this));
+            }
         }
         if (this.chaseTime == 30) this.flare('balloon', {pattern: "?"});
     },
@@ -225,12 +236,43 @@ phina.define("qft.Enemy.ArchKnight", {
                 .wait(6)
                 .by({x: 20}, 6)
                 .by({x: -20}, 6)
-               .call(function() {
+                .call(function() {
                     that.isAttack = false;
                     atk.remove();
                 })
                 .set({rotation: 430, x: -2});
         }
+        this.isAttack = true;
+        this.stopTime = 30;
+    },
+
+    //飛び道具弾き
+    guard: function() {
+        var that = this;
+        var width = 24, height = 24;
+        var atk = qft.EnemyAttack(this.parentScene, {width: 24, height: 24, power: 20 + this.level * 5})
+            .addChildTo(this.parentScene.enemyLayer)
+            .setPosition(this.x + this.scaleX * 18, this.y)
+            .setAlpha(0.0);
+        if (DEBUG_COLLISION) atk.setAlpha(0.3);
+        atk.master = this;
+        atk.tweener.setUpdateType('fps');
+        atk.update = function() {
+            this.x = that.x + that.scaleX * 18;
+        }
+
+        atk.isActive = false;
+        this.weapon.tweener.clear()
+            .to({rotation: 430}, 3)
+            .wait(3)
+            .call(function() {
+                atk.isActive = true;
+            })
+            .to({rotation: 270}, 6)
+            .call(function() {
+                that.isAttack = false;
+                atk.remove();
+            });
         this.isAttack = true;
         this.stopTime = 30;
     },
