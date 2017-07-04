@@ -1091,7 +1091,7 @@ phina.define("qft.PlayerAttack", {
         //効果音
         app.playSE("tinkling");
         this.tweener.clear()
-            .by({y: -30, rotation: 700}, 30, "easeOutQuad")
+            .by({y: -92, rotation: 700}, 15, "easeOutQuad")
             .call(function() {
                 this.remove();
             }.bind(this));
