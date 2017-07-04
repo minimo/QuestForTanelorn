@@ -10,7 +10,7 @@ phina.define("qft.Enemy.Orochi", {
     superClass: "qft.Enemy",
 
     //ヒットポイント
-    hp: 20,
+    hp: 50,
 
     //防御力
     deffence: 10,
@@ -40,10 +40,12 @@ phina.define("qft.Enemy.Orochi", {
         this.superInit(parentScene, options);
 
         //表示用スプライト
-        this.sprite = phina.display.Sprite("monster01x2", 24, 32).addChildTo(this);
-        this.sprite.setFrameTrimming(Math.min(this.level, 4) * 72*2, 384*2, 72*2, 128*2)
-            .setScale(1 + Math.min(this.level, 4) * 0.1)
-            .setPosition(0, Math.min(this.level, 4) * -1)
+        var capLevel = Math.min(this.level, 4);
+        this.sprite = phina.display.Sprite("monster01x2", 24 * 2, 32 * 2).addChildTo(this);
+        this.sprite.setFrameTrimming(capLevel * 72 * 2, 384 * 2, 72 * 2, 128 * 2)
+            .setScale(1 + capLevel * 0.1)
+            .setPosition(0, capLevel * -1 - 4);
+        this.width += capLevel * 10;
 
         this.hp += this.level * 10;
         this.power += this.level * 5;
@@ -69,9 +71,9 @@ phina.define("qft.Enemy.Orochi", {
 
         if (this.isOnFloor) {
             //崖っぷちで折り返す
-            if (this.checkMapCollision2(this.x+5, this.y+20, 5, 5) == null) {
+            if (this.checkMapCollision2(this.x+10, this.y+40, 5, 5) == null) {
                 this.direction = 180;
-            } else if (this.checkMapCollision2(this.x-5, this.y+20, 5, 5) == null) {
+            } else if (this.checkMapCollision2(this.x-10, this.y+40, 5, 5) == null) {
                 this.direction = 0;
             }
 
@@ -96,14 +98,14 @@ phina.define("qft.Enemy.Orochi", {
         }
         if (this.isOnFloor || this.isJump) {
             if (this.direction == 0) {
-                this.vx = 0.5;
+                this.vx = 1;
             } else {
-                this.vx = -0.5;
+                this.vx = -1;
             }
         }
         if (look) {
-            this.vx *= 2;
-            this.flare('balloon', {pattern: "!", lifeSpan: 15, y: -16});
+            this.vx *= 4;
+            this.flare('balloon', {pattern: "!", lifeSpan: 15, y: 0});
         } else {
             this.flare('balloonerace');
         }
