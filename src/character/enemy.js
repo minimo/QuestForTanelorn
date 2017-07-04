@@ -45,6 +45,9 @@ phina.define("qft.Enemy", {
     //攻撃当たり判定有効フラグ
     isEnableAttackCollision: true,
 
+    //スーパーアーマー状態フラグ
+    isSuperArmor: false,
+
     //属性ダメージ倍率
     damageSlash: 1,
     damageSting: 1,
@@ -199,7 +202,7 @@ phina.define("qft.Enemy", {
         if (target.isHoly) power *= this.damageHoly;
         if (target.isDark) power *= this.damageDark;
         power = Math.floor(power);
-        this.knockback(power, dir);
+        if (!this.isSuperArmor) this.knockback(power, dir);
         this.mutekiTime = 10;
         this.hp -= power;
         if (this.hp <= 0) {
@@ -485,7 +488,7 @@ phina.define("qft.EnemyAttack", {
             this.parentScene.playerLayer.children.forEach(function(e) {
                 if (e instanceof qft.PlayerAttack && e.isCollision && this.hitTestElement(e)) {
                     e.snap(this);
-                    e.remove();
+                    e.isCollision = false;
                 }
             }.bind(this));
 

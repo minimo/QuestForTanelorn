@@ -215,14 +215,15 @@ phina.define("qft.Enemy.ArchKnight", {
             atk.isActive = false;
             this.weapon.tweener.clear()
                 .to({rotation: 270}, 3)
-                .wait(3)
                 .call(function() {
                     atk.isActive = true;
+                    that.isSuperArmor = true;
                     that.vx = 16 * that.scaleX;
                 })
                 .to({rotation: 430}, 6)
                 .call(function() {
                     that.isAttack = false;
+                    that.isSuperArmor = false;
                     atk.remove();
                 });
         } else if (this.weapon.kind == "spear") {
@@ -230,14 +231,21 @@ phina.define("qft.Enemy.ArchKnight", {
             atk.height = 8;
             atk.setPosition(this.x + this.scaleX * 1, this.y);
             atk.tweener.clear().by({x: 20 * this.scaleX}, 10).by({x: -20 * this.scaleX}, 10);
+            atk.isActive = false;
 
             this.weapon.tweener.clear()
                 .set({rotation: 45, x: -20})
-                .wait(6)
-                .by({x: 20}, 6)
-                .by({x: -20}, 6)
+                .wait(2)
+                .call(function() {
+                    atk.isActive = true;
+                    that.isSuperArmor = true;
+                    that.vx = 32 * that.scaleX;
+                })
+                .by({x: 20}, 3)
+                .by({x: -30}, 5)
                 .call(function() {
                     that.isAttack = false;
+                    that.isSuperArmor = false;
                     atk.remove();
                 })
                 .set({rotation: 430, x: -2});
