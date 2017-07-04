@@ -188,7 +188,7 @@ phina.define("qft.Enemy.ArchKnight", {
                 var that = this;
                 //プレイヤーショットとの距離判定
                 this.parentScene.playerLayer.children.forEach(function(e) {
-                    if (e instanceof qft.PlayerAttack && e.isCollision) {
+                    if (e instanceof qft.PlayerAttack && e.isCollision && e.type == "arrow") {
                         if (that.getDistance(e) < 64) that.guard();
                     }
                 }.bind(this));
@@ -265,6 +265,9 @@ phina.define("qft.Enemy.ArchKnight", {
         this.weapon.tweener.clear()
             .set({rotation: 430})
             .to({rotation: 300}, 3)
+            .call(function() {
+                that.vx = 4 * that.scaleX;
+            })
             .to({rotation: 430}, 3)
             .call(function() {
                 that.isAttack = false;
@@ -272,7 +275,7 @@ phina.define("qft.Enemy.ArchKnight", {
                 atk.remove();
             });
         this.isAttack = true;
-        this.stopTime = 30;
+        this.stopTime = Math.min(0, 6 - this.level);
     },
 
     setupAnimation: function() {

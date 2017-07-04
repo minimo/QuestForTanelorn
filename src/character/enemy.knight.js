@@ -186,6 +186,17 @@ phina.define("qft.Enemy.Knight", {
             if (look && !this.isJump && dis < 64 && !this.isAttack) {
                 this.attack();
             }
+
+            //プレイヤー飛び道具を弾く（レベル４以上）
+            if (this.level > 3 && look && !this.isAttack) {
+                var that = this;
+                //プレイヤーショットとの距離判定
+                this.parentScene.playerLayer.children.forEach(function(e) {
+                    if (e instanceof qft.PlayerAttack && e.isCollision && e.type == "arrow") {
+                        if (that.getDistance(e) < 64) that.guard();
+                    }
+                }.bind(this));
+            }
         }
 
         if (this.chaseTime == 30) this.flare('balloon', {pattern: "?"});
@@ -238,6 +249,35 @@ phina.define("qft.Enemy.Knight", {
         }
         this.isAttack = true;
         this.stopTime = 30;
+    },
+
+    //飛び道具弾き
+    guard: function() {
+        var that = this;
+        var width = 24, height = 24;
+        var atk = qft.EnemyAttack(this.parentScene, {width: 24, height: 24, power: 20 + this.level * 5})
+            .addChildTo(this.parentScene.enemyLayer)
+            .setPosition(this.x + this.scaleX * 18, this.y)
+            .setAlpha(0.0);
+        if (DEBUG_COLLISION) atk.setAlpha(0.3);
+        atk.master = this;
+        atk.tweener.setUpdateType('fps');
+        atk.update = function() {
+            this.x = that.x + that.scaleX * 18;
+        }
+
+        this.isMuteki = true;
+        this.weapon.tweener.clear()
+            .set({rotation: 430})
+            .to({rotation: 300}, 3)
+            .to({rotation: 430}, 3)
+            .call(function() {
+                that.isAttack = false;
+                that.isMuteki = false;
+                atk.remove();
+            });
+        this.isAttack = true;
+        this.stopTime = 6;
     },
 
     setupAnimation: function() {
