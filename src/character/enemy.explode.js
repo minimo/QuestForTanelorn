@@ -42,7 +42,7 @@ phina.define("qft.Enemy.Explode", {
             .setFrameTrimming(0, 192, 192, 96);
         this.animationInterval = 3;
 
-        this.power = options.pattern || this.power;
+        this.power = options.power || this.power;
 
         this.pattern = options.pattern || "pattern1";
         this.setAnimation(this.pattern);
