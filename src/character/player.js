@@ -553,10 +553,12 @@ phina.define("qft.Player", {
         this.isCatchLadder = false;
         this.vx = 0;
         this.vy = -6;
-        this.tweener.clear()
+        var tw = phina.accessory.Tweener().attachTo(this).setUpdateType('fps');
+        tw.clear()
             .wait(60)
             .call(function(){
                 this.flare('dead');
+                tw.remove();
             }.bind(this));
 
         //ダミースプライト追加
