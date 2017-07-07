@@ -143,26 +143,35 @@ phina.define("qft.Enemy.GreaterDemon", {
                 this.direction = 0;
             }
 
-            //プレイヤーが少し遠くにいたら攻撃
-            if (look && !this.isAttack && !this.isJump && dis > 64 && dis < this.eyesight) {
-                this.isAttack = true;
-                this.stopTime = 30;
-                this.sprite2.tweener.clear()
-                    .fadeIn(15)
-                    .call(() => {
-                        //火を吐く
-                        var b = this.parentScene.spawnEnemy(this.x, this.y, "Bullet", {explode: true});
-                        b.rotation = this.getPlayerAngle();
-                    })
-                    .wait(30)
-                    .call(() => {
-                        this.isAttack = false;
-                    })
-                    .fadeOut(15);
+            //プレイヤーへの攻撃
+            if (look && !this.isAttack && !this.isJump) {
+                if (dis > 64) this.flaming();
+                if (dis < 64) this.exploding();
             }
         }
 
         if (this.chaseTime == 30) this.flare('balloon', {pattern: "?"});
+    },
+
+    //火を吐く
+    flaming: function() {
+        this.isAttack = true;
+        this.stopTime = 30;
+        this.sprite2.tweener.clear()
+            .fadeIn(15)
+            .call(() => {
+                var b = this.parentScene.spawnEnemy(this.x, this.y, "Bullet", {explode: true});
+                b.rotation = this.getPlayerAngle();
+            })
+            .wait(30)
+            .call(() => {
+                this.isAttack = false;
+            })
+            .fadeOut(15);
+    },
+
+    //爆発
+    exploding: function() {
     },
 
     setupAnimation: function() {
