@@ -60,12 +60,26 @@ phina.define("qft.Enemy.GreaterDemon", {
             this.sprite.setScale(size).setPosition(0, size * -12);
         }
 
+        this.sprite2 = phina.display.Sprite("monster01x2", 24*2, 32*2).addChildTo(this).setAlpha(0);
+        this.sprite2.setFrameTrimming(288*2, 640*2, 72*2, 128*2).setPosition(0, -10);
+        this.sprite2.tweener.setUpdateType('fps');
+        if (options.size) {
+            var size = options.size || 1;
+            this.sprite2.setScale(size).setPosition(0, size * -12);
+        }
+        var that = this;
+        this.sprite2.update = function() {
+            this.frameIndex = that.sprite.frameIndex;
+        }
+
         this.setAnimation("walk");
         this.setupLifeGauge();
 
         this.phase = 0;
         this.direction = 0;
         this.isAttack = false;
+        this.chaseTime = 0;
+        this.turnTime = 0;
 
         this.on('damaged', e => {
             if (e.direction == 0) this.direction = 180; else this.direction = 0;
@@ -73,9 +87,46 @@ phina.define("qft.Enemy.GreaterDemon", {
     },
 
     algorithm: function() {
-        //プレイヤーとの距離
+        //プレイヤー情報
+        var pl = this.parentScene.player;
         var dis = this.getDistancePlayer();
         var look = this.isLookPlayer();
+
+        //進行方向決定
+        if (this.isOnFloor || this.isJump) {
+            if (this.direction == 0) {
+                this.vx = 1;
+            } else {
+                this.vx = -1;
+            }
+        }
+
+        //プレイヤー発見後一定時間追跡する
+        if (look) {
+            this.chaseTime = 120;
+            this.stopTime = 0;
+            this.vx *= 3;
+            this.flare('balloon', {pattern: "!"});
+        }
+        if (this.chaseTime > 0 && !this.isAttack && this.turnTime == 0) {
+            if (this.x > pl.x) {
+                if (this.direction == 0) this.turnCount++;
+                this.direction = 180;
+            } else {
+                if (this.direction == 180) this.turnCount++;
+                this.direction = 0;
+            }
+            this.turnTime = 15;
+            if (look) this.turnCount = 0;
+            //プレイヤーを見失った状態で三回振り返った場合は追跡終了
+            if (this.turnCount > 3) {
+                this.flare('balloon', {pattern: "?"});
+                this.stopTime = 30;
+                this.chaseTime = 0;
+            }
+        }
+        //一定距離以上離れたら追跡解除
+        if (dis > 512) this.chaseTime = 0;
 
         if (this.isOnFloor) {
             //崖っぷちで折り返す
@@ -92,31 +143,26 @@ phina.define("qft.Enemy.GreaterDemon", {
                 this.direction = 0;
             }
 
-            //プレイヤーが近くにいたら攻撃
-            if (look && !this.isJump && dis > 64 && dis < this.eyesight) {
-                //火を吐く
-                var b = this.parentScene.spawnEnemy(this.x, this.y, "Bullet", {explode: true});
-                b.rotation = this.getPlayerAngle();
+            //プレイヤーが少し遠くにいたら攻撃
+            if (look && !this.isAttack && !this.isJump && dis > 64 && dis < this.eyesight) {
+                this.isAttack = true;
                 this.stopTime = 30;
+                this.sprite2.tweener.clear()
+                    .fadeIn(15)
+                    .call(() => {
+                        //火を吐く
+                        var b = this.parentScene.spawnEnemy(this.x, this.y, "Bullet", {explode: true});
+                        b.rotation = this.getPlayerAngle();
+                    })
+                    .wait(30)
+                    .call(() => {
+                        this.isAttack = false;
+                    })
+                    .fadeOut(15);
             }
         }
-        if (this.isOnFloor || this.isJump) {
-            if (this.direction == 0) {
-                this.vx = 1;
-            } else {
-                this.vx = -1;
-            }
-        }
-        if (look) {
-            this.vx *= 3;
-            this.flare('balloon', {pattern: "!"});
-        } else {
-            if (dis < 256) {
-                this.flare('balloon', {pattern: "?"});
-            } else {
-                this.flare('balloonerace');
-            }
-        }
+
+        if (this.chaseTime == 30) this.flare('balloon', {pattern: "?"});
     },
 
     setupAnimation: function() {
