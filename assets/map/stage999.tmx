@@ -114,7 +114,7 @@
     <property name="direction" type="int" value="0"/>
    </properties>
   </object>
-  <object id="8" name="Titan" type="enemy" x="488" y="160" width="32" height="32"/>
+  <object id="8" name="Garuda" type="enemy" x="496" y="136" width="32" height="32"/>
   <object id="9" name="ArchKnight" type="enemy" x="796" y="204" width="32" height="32">
    <properties>
     <property name="level" type="int" value="0"/>
