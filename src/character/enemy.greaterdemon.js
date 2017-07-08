@@ -19,7 +19,7 @@ phina.define("qft.Enemy.GreaterDemon", {
     power: 30,
 
     //視力
-    eyesight: 128,
+    eyesight: 192,
 
     //視野角
     viewAngle: 180,
@@ -145,8 +145,11 @@ phina.define("qft.Enemy.GreaterDemon", {
 
             //プレイヤーへの攻撃
             if (look && !this.isAttack && !this.isJump) {
-                if (dis > 64) this.flaming();
-                if (dis < 64) this.exploding();
+                if (dis > 96) {
+                    this.flaming();
+                } else {
+                    this.exploding();
+                }
             }
         }
 
@@ -158,20 +161,32 @@ phina.define("qft.Enemy.GreaterDemon", {
         this.isAttack = true;
         this.stopTime = 30;
         this.sprite2.tweener.clear()
-            .fadeIn(15)
+            .fadeIn(10)
             .call(() => {
-                var b = this.parentScene.spawnEnemy(this.x, this.y, "Bullet", {explode: true});
-                b.rotation = this.getPlayerAngle();
+                this.parentScene.spawnEnemy(this.x, this.y, "Bullet", {explode: true, rotation: this.getPlayerAngle(), power: 30});
             })
             .wait(30)
             .call(() => {
                 this.isAttack = false;
             })
-            .fadeOut(15);
+            .fadeOut(10);
     },
 
     //爆発
     exploding: function() {
+        this.isAttack = true;
+        this.stopTime = 60;
+        this.sprite2.tweener.clear().fadeIn(15);
+
+        this.sprite2.tweener.call(() => {
+        })
+
+        this.sprite2.tweener
+            .wait(30)
+            .call(() => {
+                this.isAttack = false;
+            })
+            .fadeOut(15);
     },
 
     setupAnimation: function() {

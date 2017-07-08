@@ -57,29 +57,18 @@ phina.define("qft.Enemy.Garuda", {
 
         //表示用スプライト
         this.sprite = phina.display.Sprite("monster01x2", 48, 64).addChildTo(this);
-        this.sprite.setFrameTrimming(72 * 2, 0, 72 * 2, 128 * 2).setScale(2);
+        this.sprite.setFrameTrimming(0, 0, 72 * 2, 128 * 2).setScale(1.5).setPosition(0, 16);
 
         this.sprite2 = phina.display.Sprite("monster01x2", 48, 64).addChildTo(this);
-        this.sprite.setFrameTrimming(288 * 2, 0, 72 * 2, 128 * 2).setScale(2).setAlpha(0);
+        this.sprite2.setFrameTrimming(288 * 2, 0, 72 * 2, 128 * 2).setScale(1.5).setPosition(0, 16).setAlpha(0);
         var that = this;
         this.sprite2.update = function() {
             this.frameIndex = that.sprite.frameIndex;
         }
 
-        this.setAnimation("walk");
+        this.setAnimation("down");
         this.animationInterval = 6;
         this.setupLifeGauge();
-
-        this.isVertical = this.options.vertical || false;
-        this.direction = this.options.direction || this.isVertical? 90: 0;
-        this.speed = this.options.speed || 2;
-        this.returnTime = this.options.returnTime || 120;
-        this.bombInterval = this.options.bombInterval || 90;
-
-        this.on('damaged', e => {
-            if (this.isVertical) return;
-            if (e.direction == 0) this.direction = 180; else this.direction = 0;
-        });
     },
 
     algorithm: function() {

@@ -45,6 +45,8 @@ phina.define("qft.Enemy.Bullet", {
         options = (options || {}).$extend({width: 20, height: 20});
         this.superInit(parentScene, options);
 
+        this.power = options.power || this.power;
+        this.rotation = options.rotation || 0;
 
         //表示用スプライト
         switch (options.type) {
