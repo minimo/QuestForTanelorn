@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-down" width="200" height="80" tilewidth="16" tileheight="16" nextobjectid="206">
+<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="200" height="80" tilewidth="16" tileheight="16" nextobjectid="206">
  <tileset firstgid="1" name="A1" tilewidth="16" tileheight="16" tilecount="768" columns="32">
   <image source="TileA1.png" width="512" height="384"/>
  </tileset>
@@ -421,8 +421,16 @@
     <property name="level" type="int" value="1"/>
    </properties>
   </object>
-  <object id="162" name="Slime" type="enemy" x="780" y="955" width="32" height="32"/>
-  <object id="163" name="Wisp" type="enemy" x="1636" y="815" width="32" height="32"/>
+  <object id="162" name="Slime" type="enemy" x="780" y="955" width="32" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="163" name="Wisp" type="enemy" x="1636" y="815" width="32" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
   <object id="164" name="mapswitch" type="door" x="2967" y="783" width="32" height="96">
    <properties>
     <property name="enterOffset" type="int" value="-16"/>
@@ -482,7 +490,11 @@
     <property name="level" type="int" value="3"/>
    </properties>
   </object>
-  <object id="174" name="Slime" type="enemy" x="1808" y="1119" width="32" height="32"/>
+  <object id="174" name="Slime" type="enemy" x="1808" y="1119" width="32" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
   <object id="175" name="ax" type="itembox" x="1104" y="367" width="32" height="32"/>
   <object id="176" name="Slime" type="enemy" x="1220" y="883" width="32" height="32">
    <properties>
@@ -521,7 +533,11 @@
     <property name="nextID" type="int" value="195"/>
    </properties>
   </object>
-  <object id="184" name="Snake" type="enemy" x="2516" y="1080" width="32" height="32"/>
+  <object id="184" name="Snake" type="enemy" x="2516" y="1080" width="32" height="32">
+   <properties>
+    <property name="level" type="int" value="1"/>
+   </properties>
+  </object>
   <object id="185" type="message" x="2000" y="784" width="32" height="32">
    <properties>
     <property name="text" value="↑宝物庫　→砦"/>
