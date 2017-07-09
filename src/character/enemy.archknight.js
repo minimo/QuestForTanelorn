@@ -214,7 +214,7 @@ phina.define("qft.Enemy.ArchKnight", {
         if (this.weapon.kind == "sword" || this.weapon.kind == "ax") {
             atk.isActive = false;
             this.weapon.tweener.clear()
-                .to({rotation: 270}, 3)
+                .to({rotation: 270}, 2)
                 .call(function() {
                     atk.isActive = true;
                     that.isSuperArmor = true;
@@ -235,7 +235,7 @@ phina.define("qft.Enemy.ArchKnight", {
 
             this.weapon.tweener.clear()
                 .set({rotation: 45, x: -20})
-                .wait(2)
+                .wait(6)
                 .call(function() {
                     atk.isActive = true;
                     that.isSuperArmor = true;

@@ -45,6 +45,8 @@ phina.define("qft.Enemy.Demon", {
             .setScale(1.5)
             .setPosition(0, -8);
 
+        this.hp += this.level * 20;
+        this.power += this.level * 5;
         this.point += this.level * 200;
 
         this.setAnimation("walk");
@@ -81,8 +83,7 @@ phina.define("qft.Enemy.Demon", {
             //プレイヤーが近くにいたら攻撃
             if (look && !this.isJump && dis > 64 && dis < this.eyesight) {
                 //火を吐く
-                var b = this.parentScene.spawnEnemy(this.x, this.y, "Bullet", {explode: true});
-                b.rotation = this.getPlayerAngle();
+                this.parentScene.spawnEnemy(this.x, this.y, "Bullet", {explode: true, power: 10 + this.level * 5, rotation: this.getPlayerAngle()});
                 this.stopTime = 60;
             }
             if (look && !this.isJump && dis < 64) {
