@@ -55,6 +55,7 @@ phina.define("qft.Enemy.Wisp", {
 
         this.hp += this.level * 10;
         this.power += this.level * 5;
+        this.eyesight += this.level * 64,
         this.point += this.level * 50;
 
         this.setAnimation("stand");
@@ -63,21 +64,40 @@ phina.define("qft.Enemy.Wisp", {
 
         this.direction = 0;
         this.move = false;
+        this.attackCount = 0;
     },
 
     algorithm: function() {
+        var pl = this.parentScene.player;
+        var dis = this.getDistancePlayer();
+        var look = this.isLookPlayer();
+
         //プレイヤーが近くにいたら寄っていく
-        if (this.isLookPlayer()) {
-            var player = this.parentScene.player;
+        if (look) {
             var p1 = phina.geom.Vector2(this.x, this.y);
-            var p2 = phina.geom.Vector2(player.x, player.y);
+            var p2 = phina.geom.Vector2(pl.x, pl.y);
             var p = p2.sub(p1);
             p.normalize();
-            this.vx = p.x;
-            this.vy = p.y;
+            this.vx = p.x * (1 + this.level * 0.2);
+            this.vy = p.y * (1 + this.level * 0.2);
         } else {
             this.vx = 0;
             this.vy = 0;
+        }
+
+        //攻撃
+        if (this.level > 3 && dis < 128) {
+            this.attackCount--;
+            if (this.attackCount == 0) {
+                for (var i = 0; i < this.level; i++) {
+                    var b = this.parentScene.spawnEnemy(this.x, this.y, "WispBomb", {pattern: 1});
+                    b.vy = -10;
+                    b.vx = (i*2) * this.scaleX;
+                }
+                this.attackCount = 180 - this.level * 15;
+            }
+        } else {
+            this.attackCount = 60;
         }
     },
 
@@ -152,8 +172,12 @@ phina.define("qft.Enemy.WispHard", {
     },
 
     update: function() {
+        var pl = this.parentScene.player;
+        var dis = this.getDistancePlayer();
+        var look = this.isLookPlayer();
+
         //プレイヤーが近くにいたら寄っていく
-        if (this.getDistancePlayer() < 128) {
+        if (look) {
             var player = this.parentScene.player;
             var p1 = phina.geom.Vector2(this.x, this.y);
             var p2 = phina.geom.Vector2(player.x, player.y);
@@ -167,7 +191,7 @@ phina.define("qft.Enemy.WispHard", {
         }
 
         //攻撃
-        if (this.getDistancePlayer() < 160) {
+        if (dis < 160) {
             this.attackCount--;
             if (this.attackCount == 0) {
                 for (var i = 0; i < this.level+4; i++) {
