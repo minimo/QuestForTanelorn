@@ -45,6 +45,7 @@ phina.define("qft.Enemy.Bullet", {
         options = (options || {}).$extend({width: 20, height: 20});
         this.superInit(parentScene, options);
 
+        this.type = options.type;
         this.power = options.power || this.power;
         this.rotation = options.rotation || 0;
         this.velocity = options.velocity || this.velocity;
@@ -104,6 +105,8 @@ phina.define("qft.Enemy.Bullet", {
     },
 
     hit: function() {
+        if (this.type == "explode") return;
+
         this.remove();
         this.flare('dead');
     },

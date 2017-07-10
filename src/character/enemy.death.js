@@ -33,6 +33,9 @@ phina.define("qft.Enemy.Death", {
     //地形無視
     ignoreCollision: true,
 
+    //ノックバックキャンセル
+    isSuperArmor: true,
+
     //得点
     point: 300,
 
@@ -62,13 +65,10 @@ phina.define("qft.Enemy.Death", {
 
         this.direction = 0;
         this.isAttack = false;
-        this.actionWait = 0;
-        this.chaseTime = 0;
 
         this.phase = 0;
         this.speed = 1;
 
-        this.isHide = false;
 
         //行動パターン
         this.pattern = options.pattern || "linear";
@@ -93,54 +93,18 @@ phina.define("qft.Enemy.Death", {
         var dis = this.getDistancePlayer();
         var look = this.isLookPlayer();
 
-        //徘徊モード
-        if (this.phase == 0) {
-            var rad = this.degree.toRadian();
-            if (this.pattern == "linear") {
-                if (this.isVertical) {
-                    this.y = this.firstY + Math.cos(rad) * this.moveLength;
-                } else {
-                    this.x = this.firstX + Math.cos(rad) * this.moveLength;
-                }
-            }
-            this.degree += 2;
-
-            //徘徊モードの場合は適当に攻撃
-            if (this.time % 90 == 0) this.isAttack = true;
-        }
-
-        if (look) {
-            this.chaseTime = 120;
-            if (this.phase == 1) {
-                this.tweener.pause();
-                this.tweener2.clear().to({alpha: 0.5}, 120, "easeInOutSine");
-                this.isMuteki = true;
-                this.isEnableAttackCollision = false;
-                this.flare('balloon', {pattern: "!"});
-
-                this.phase = 2;
-                this.one('balloonend', () => {
-                    this.phase = 3;
-                });
-            }
-            if (this.phase == 3) {
-                this.flare('balloon', {pattern: "..."});
+        var rad = this.degree.toRadian();
+        if (this.pattern == "linear") {
+            if (this.isVertical) {
+                this.y = this.firstY + Math.cos(rad) * this.moveLength;
+            } else {
+                this.x = this.firstX + Math.cos(rad) * this.moveLength;
             }
         }
-        if (this.chaseTime == 0) {
-            //プレイヤーが見えなくなったので徘徊に戻る
-            if (this.phase == 3) {
-                this.tweener.play();
-                this.tweener2.clear().to({alpha: 1.0}, 60, "easeInOutSine");
+        this.degree += 2;
 
-                this.isMuteki = false;
-                this.isEnableAttackCollision = true;
-                this.phase = 1;
-            }
-        } else {
-            //追跡中の場合はプレイヤー方向を向く
-            if (this.x < pl.x) this.scaleX = 1; else this.scaleX = -1;
-        }
+        //徘徊モードの場合は適当に攻撃
+        if (this.time % 90 == 0) this.isAttack = true;
 
         //攻撃
         if (this.isAttack) {
@@ -150,10 +114,6 @@ phina.define("qft.Enemy.Death", {
             b.vx = 2 * this.scaleX;
             this.actionWait = 120;
         }
-
-
-        if (this.actionWait > 0) this.actionWait--;
-        if (this.chaseTime > 0) this.chaseTime--;
     },
 
     setupAnimation: function() {

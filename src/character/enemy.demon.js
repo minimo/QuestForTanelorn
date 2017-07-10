@@ -19,7 +19,7 @@ phina.define("qft.Enemy.Demon", {
     power: 30,
 
     //視力
-    eyesight: 128,
+    eyesight: 192,
 
     //視野角
     viewAngle: 90,
@@ -54,6 +54,7 @@ phina.define("qft.Enemy.Demon", {
         this.setupLifeGauge();
 
         this.direction = 0;
+        this.isAttack = false;
 
         this.on('damaged', e => {
             if (e.direction == 0) this.direction = 180; else this.direction = 0;
@@ -81,20 +82,20 @@ phina.define("qft.Enemy.Demon", {
             }
 
             //プレイヤーが近くにいたら攻撃
-            if (look && !this.isJump && dis > 64 && dis < this.eyesight) {
-                //火を吐く
-                this.parentScene.spawnEnemy(this.x, this.y, "Bullet", {explode: true, power: 10 + this.level * 5, rotation: this.getPlayerAngle()});
-                this.stopTime = 60;
-            }
-            if (look && !this.isJump && dis < 64) {
-                //飛びかかる
-                this.isJump = true;
-                this.vy = -6;
-                var pl = this.parentScene.player;
-                if (this.x > pl.x) {
-                    this.direction = 180;
+            if (look && !this.isJump && !this.isAttack) {
+                if (dis > 96) {
+                    //火を吐く
+                    this.fireball();
                 } else {
-                    this.direction = 0;
+                    //飛びかかる
+                    this.isJump = true;
+                    this.vy = -6;
+                    var pl = this.parentScene.player;
+                    if (this.x > pl.x) {
+                        this.direction = 180;
+                    } else {
+                        this.direction = 0;
+                    }
                 }
             }
         }
@@ -115,6 +116,21 @@ phina.define("qft.Enemy.Demon", {
                 this.flare('balloonerace');
             }
         }
+    },
+
+    //火球を吐く
+    fireball: function() {
+        this.isAttack = true;
+        this.stopTime = 30;
+        var tw = phina.accessory.Tweener().attachTo(this).setUpdateType('fps')
+            .call(() => {
+                this.parentScene.spawnEnemy(this.x, this.y, "Bullet", {explode: true, power: 10 + this.level * 5, rotation: this.getPlayerAngle()});
+            })
+            .wait(30)
+            .call(() => {
+                tw.remove();
+                this.isAttack = false;
+            });
     },
 
     setupAnimation: function() {
