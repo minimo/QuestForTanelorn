@@ -16,10 +16,10 @@ phina.define("qft.Enemy.GreaterDemon", {
     deffence: 10,
 
     //攻撃力
-    power: 30,
+    power: 20,
 
     //視力
-    eyesight: 192,
+    eyesight: 256,
 
     //視野角
     viewAngle: 180,
@@ -78,11 +78,13 @@ phina.define("qft.Enemy.GreaterDemon", {
         this.phase = 0;
         this.direction = 0;
         this.isAttack = false;
+        this.isAttackCancel = false;
         this.chaseTime = 0;
         this.turnTime = 0;
 
         this.on('damaged', e => {
             if (e.direction == 0) this.direction = 180; else this.direction = 0;
+            this.isAttackCancel = true;
         });
     },
 
@@ -145,7 +147,7 @@ phina.define("qft.Enemy.GreaterDemon", {
 
             //プレイヤーへの攻撃
             if (look && !this.isAttack && !this.isJump) {
-                if (dis > 96) {
+                if (dis > 128) {
                     this.flaming();
                 } else {
                     this.exploding();
@@ -165,7 +167,7 @@ phina.define("qft.Enemy.GreaterDemon", {
             .call(() => {
                 this.parentScene.spawnEnemy(this.x, this.y, "Bullet", {explode: true, rotation: this.getPlayerAngle(), power: 30});
             })
-            .wait(30)
+            .wait(45)
             .call(() => {
                 this.isAttack = false;
             })
@@ -174,19 +176,37 @@ phina.define("qft.Enemy.GreaterDemon", {
 
     //爆発
     exploding: function() {
+        app.playSE("bomb");
         this.isAttack = true;
         this.stopTime = 60;
-        this.sprite2.tweener.clear().fadeIn(15);
-
-        this.sprite2.tweener.call(() => {
-        })
-
-        this.sprite2.tweener
-            .wait(30)
+        this.sprite2.tweener.clear()
+            .fadeIn(15)
+            .call(() => {
+            })
+            .wait(45)
             .call(() => {
                 this.isAttack = false;
             })
             .fadeOut(15);
+
+        var rot = (this.scaleX == 1)? 0: 180;
+        var ct = 0;
+        var tw = phina.accessory.Tweener().attachTo(this)
+            .setUpdateType('fps')
+            .call(() => {
+                var rad = rot.toRadian();
+                var ex = Math.cos(rad) * 16;
+                var ey = Math.sin(rad) * 16;
+                this.parentScene.spawnEnemy(this.x + ex, this.y + ey, "Bullet", {type: "explode", power: 20, rotation: rot, velocity: 3});
+                rot += 22.5;
+                ct++;
+                if (ct == 16 || this.attackCancel) {
+                    tw.remove();
+                    this.isAttackCancel = false;
+                }
+            })
+            .wait(1)
+            .setLoop(true);
     },
 
     setupAnimation: function() {

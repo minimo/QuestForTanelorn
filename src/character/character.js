@@ -203,6 +203,9 @@ phina.define("qft.Character", {
                 if (next == "stop") {
                     //停止
                     this.index--;
+                } else if (next == "remove") {
+                    //リムーブ
+                    this.remove();
                 } else if (typeof next === "string") {
                     //指定アニメーションへ変更
                     this.setAnimation(next);

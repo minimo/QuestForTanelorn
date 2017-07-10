@@ -47,16 +47,17 @@ phina.define("qft.Enemy.Bullet", {
 
         this.power = options.power || this.power;
         this.rotation = options.rotation || 0;
+        this.velocity = options.velocity || this.velocity;
+        this.lifeSpan = options.lifeSpan || this.lifeSpan;
 
         //表示用スプライト
         switch (options.type) {
             case "explode":
-                this.sprite = phina.display.Sprite("effect", 48, 48)
-                    .addChildTo(this)
-                    .setFrameTrimming(0, 192, 192, 96);
+                this.sprite = phina.display.Sprite("effect", 48, 48).addChildTo(this).setFrameTrimming(0, 192, 192, 96);
                 this.animationInterval = 3;
                 this.explode = false;
                 this.ignoreCollision = true;
+                this.isMuteki = true;
                 this.pattern = "explode";
                 break;
             default:
@@ -98,7 +99,7 @@ phina.define("qft.Enemy.Bullet", {
         this.frame = [];
         this.frame["pattern1"] = [9, 10, 11, 10];
         this.frame["pattern2"] = [15, 16, 17, 16];
-        this.frame["explode"] = [0, 1, 2, 3, 4, 5, 6, 7, 8, "stop"];
+        this.frame["explode"] = [0, 1, 2, 3, 4, 5, 6, 7, "remove"];
         this.index = 0;
     },
 
