@@ -47,14 +47,14 @@ phina.define("qft.Effect", {
 
         this.on('enterframe', function() {
             if (this.time % this.interval == 0) {
-                if (this.sprite.frameIndex == this.maxIndex) {
+                this.sprite.frameIndex++;
+                if (this.sprite.frameIndex == 0) {
                     if (this.options.loop) {
                         this.sprite.frameIndex = 0;
                     } else {
                         this.remove();
                     }
                 }
-                this.sprite.frameIndex++;
             }
             this.time++;
         });
