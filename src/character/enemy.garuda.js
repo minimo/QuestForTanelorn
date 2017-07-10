@@ -30,6 +30,9 @@ phina.define("qft.Enemy.Garuda", {
     //横移動減衰率
     friction: 0,
 
+    //スーパーアーマー
+    isSuperArmor: true,
+
     //得点
     point: 3000,
 

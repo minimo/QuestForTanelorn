@@ -191,9 +191,9 @@ phina.define("qft.Enemy.GreaterDemon", {
         var tw = phina.accessory.Tweener().attachTo(this)
             .setUpdateType('fps')
             .call(() => {
-                var b = this.parentScene.spawnEnemy(this.x, this.y-8, "Bullet", {type: "explode", power: 10, rotation: this.getPlayerAngle(), velocity: 5});
+                var b = this.parentScene.spawnEnemy(this.x + 24 * this.scaleX, this.y-8, "Bullet", {type: "explode", power: 10, rotation: this.getPlayerAngle(), velocity: 5});
                 b.setScale(0.1);
-                b.tweener.clear().setUpdateType('fps').to({scaleX: 1,scaleY: 1}, 10);
+                b.tweener.clear().setUpdateType('fps').to({scaleX: 1, scaleY: 1}, 10);
                 ct++;
                 if (ct == 6 || this.attackCancel) {
                     tw.remove();

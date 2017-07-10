@@ -133,6 +133,36 @@ phina.define("qft.Enemy.Demon", {
             });
     },
 
+    //火を吐く
+    flaming: function() {
+        this.isAttack = true;
+        this.stopTime = 60;
+        this.sprite2.tweener.clear()
+            .fadeIn(15)
+            .wait(60)
+            .call(() => {
+                this.isAttack = false;
+            })
+            .fadeOut(15);
+
+        var rot = (this.scaleX == 1)? 0: 180;
+        var ct = 0;
+        var tw = phina.accessory.Tweener().attachTo(this)
+            .setUpdateType('fps')
+            .call(() => {
+                var b = this.parentScene.spawnEnemy(this.x + 24 * this.scaleX, this.y-8, "Bullet", {type: "explode", power: 10, rotation: this.getPlayerAngle(), velocity: 5});
+                b.setScale(0.1);
+                b.tweener.clear().setUpdateType('fps').to({scaleX: 1, scaleY: 1}, 10);
+                ct++;
+                if (ct == 6 || this.attackCancel) {
+                    tw.remove();
+                    this.isAttackCancel = false;
+                }
+            })
+            .wait(5)
+            .setLoop(true);
+    },
+
     setupAnimation: function() {
         this.spcialAnimation = false;
         this.frame = [];
