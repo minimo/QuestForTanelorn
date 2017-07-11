@@ -11,14 +11,14 @@ phina.define("qft.Effect", {
     //インデックス更新間隔
     interval: 2,
 
+    //現在インデックス
+    index: 0,
+
     //開始インデックス
     startIndex: 0,
 
     //最大インデックス
     maxIndex: 8,
-
-    //現在インデックス
-    index: 0,
 
     //アニメーション進行可能フラグ   
     isAdvanceAnimation: true,
@@ -46,34 +46,37 @@ phina.define("qft.Effect", {
         this.setup();
 
         this.on('enterframe', function() {
-            if (this.time % this.interval == 0) {
+            this.time++;
+            if (this.time % this.interval == 0 && this.isAdvanceAnimation) {
                 this.sprite.frameIndex++;
-                if (this.sprite.frameIndex == 0) {
+                if (this.sprite.frameIndex == 0 || this.sprite.frameIndex == this.maxIndex) {
                     if (this.options.loop) {
-                        this.sprite.frameIndex = 0;
+                        this.sprite.frameIndex = this.startIndex;
                     } else {
                         this.remove();
                     }
+                    this.flare('animationend');
                 }
             }
-            this.time++;
         });
     },
 
     setup: function() {
-        var options = this.options;
-        this.sprite = phina.display.Sprite(options.assetName, options.width, options.height)
-            .setPosition(options.position.x, options.position.y)
-            .setOrigin(options.origin.x, options.origin.y)
-            .setScale(options.scale.x, options.scale.y)
-            .setRotation(options.rotation)
+        var op = this.options;
+        this.sprite = phina.display.Sprite(op.assetName, op.width, op.height)
+            .setPosition(op.position.x, op.position.y)
+            .setOrigin(op.origin.x, op.origin.y)
+            .setScale(op.scale.x, op.scale.y)
+            .setRotation(op.rotation)
             .addChildTo(this);
-        if (options.trimming) {
-            var t = options.trimming;
+        if (op.trimming) {
+            var t = op.trimming;
             this.sprite.setFrameTrimming(t.x, t.y, t.width, t.height);
         }
-        this.maxIndex = options.maxIndex;
-        this.sprite.alpha = options.alpha;
+        this.startIndex = op.startIndex;
+        this.maxIndex = op.maxIndex;
+        this.sprite.alpha = op.alpha;
+        this.sprite.frameIndex = this.startIndex;
     },
 });
 
