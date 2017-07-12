@@ -1,6 +1,6 @@
 /*
  *  enemy.devil.js
- *  2016/12/31
+ *  2017/04/25
  *  @auther minimo  
  *  This Program is MIT license.
  */
@@ -14,6 +14,9 @@ phina.define("qft.Enemy.Devil", {
 
     //重力加速度
     gravity: 0,
+
+    //横移動減衰率
+    friction: 0.0,
 
     //防御力
     deffence: 10,
@@ -68,8 +71,6 @@ phina.define("qft.Enemy.Devil", {
         this.returnTime = this.options.returnTime || 120;
         this.attackInterval = this.options.attackInterval || 90;
 
-        this.level = 0;
-
         this.on('damaged', e => {
             if (e.direction == 0) this.direction = 180; else this.direction = 0;
         });
@@ -82,20 +83,25 @@ phina.define("qft.Enemy.Devil", {
         var look = this.isLookPlayer();
 
         //プレイヤーが近くにいたら寄っていく
-        if (look) {
+        if (look && dis > 32) {
             var p1 = phina.geom.Vector2(this.x, this.y);
             var p2 = phina.geom.Vector2(pl.x, pl.y);
             var p = p2.sub(p1);
             p.normalize();
             this.vx = p.x * (1 + this.level * 0.2);
             this.vy = p.y * (1 + this.level * 0.2);
-            this.flare('balloon', {pattern: "!"});
 
+            //プレイヤーの方向を向く
             var angle = this.getPlayerAngle();
             if (angle > 315 || angle < 45) this.setAnimation('horizon');
             if ( 45 < angle && angle < 135) this.setAnimation('down');
             if (135 < angle && angle < 225) this.setAnimation('horizon');
             if (225 < angle && angle < 315) this.setAnimation('down');
+
+            //一定以上近づいたら攻撃
+            if (dis < 96) this.isAttack = true;
+
+            this.flare('balloon', {pattern: "!"});
         } else {
             this.vx = 0;
             this.vy = 0;
@@ -114,7 +120,9 @@ phina.define("qft.Enemy.Devil", {
     },
 
     attack: function() {
-        this.stopTime = 60;
+        this.stopTime = 30;
+        this.isAttack = false;
+        this.parentScene.spawnEnemy(this.x, this.y, "Bullet", {explode: true, power: 10 + this.level * 5, rotation: this.getPlayerAngle()});
     },
 
     setupAnimation: function() {
