@@ -59,56 +59,29 @@ phina.define("qft.Enemy.BabyDemon", {
         var dis = this.getDistancePlayer();
         var look = this.isLookPlayer();
 
-        if (this.isOnFloor) {
-            //崖っぷちで折り返す
-            if (this.checkMapCollision2(this.x+5, this.y+20, 5, 5) == null) {
-                this.direction = 180;
-            } else if (this.checkMapCollision2(this.x-5, this.y+20, 5, 5) == null) {
-                this.direction = 0;
-            }
+        this.chaseAlgorithm(dis, look);
 
-            //壁に当たったら折り返す
-            if (this._collision[1].hit) {
+        //プレイヤーが近くにいたら攻撃
+        if (this.isOnFloor && look && !this.isJump && dis < 64) {
+            //飛びかかる
+            this.isJump = true;
+            this.vy = -6;
+            var pl = this.parentScene.player;
+            if (this.x > pl.x) {
                 this.direction = 180;
-            } else if (this._collision[3].hit) {
+            } else {
                 this.direction = 0;
-            }
-
-            //プレイヤーが近くにいたら攻撃
-            if (look && !this.isJump && dis > 64 && dis < this.eyesight) {
-                //火を吐く
-                var b = this.parentScene.spawnEnemy(this.x, this.y, "Bullet", {explode: true});
-                b.rotation = this.getPlayerAngle();
-                this.stopTime = 60;
-            }
-            if (look && !this.isJump && dis < 64) {
-                //飛びかかる
-                this.isJump = true;
-                this.vy = -6;
-                var pl = this.parentScene.player;
-                if (this.x > pl.x) {
-                    this.direction = 180;
-                } else {
-                    this.direction = 0;
-                }
             }
         }
         if (this.isOnFloor || this.isJump) {
             if (this.direction == 0) {
-                this.vx = 1;
+                this.vx = 1.5;
             } else {
-                this.vx = -1;
+                this.vx = -1.5;
             }
         }
         if (look) {
             this.vx *= 3;
-            this.flare('balloon', {pattern: "!"});
-        } else {
-            if (dis < 256) {
-                this.flare('balloon', {pattern: "?"});
-            } else {
-                this.flare('balloonerace');
-            }
         }
     },
 
