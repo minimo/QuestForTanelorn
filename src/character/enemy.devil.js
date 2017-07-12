@@ -12,6 +12,9 @@ phina.define("qft.Enemy.Devil", {
     //ヒットポイント
     hp: 30,
 
+    //重力加速度
+    gravity: 0,
+
     //防御力
     deffence: 10,
 
@@ -19,13 +22,16 @@ phina.define("qft.Enemy.Devil", {
     power: 10,
 
     //視力
-    eyesight: 128,
+    eyesight: 256,
 
     //視野角
-    viewAngle: 160,
+    viewAngle: 360,
+
+    //地形無視
+    ignoreCollision: true,
 
     //得点
-    point: 500,
+    point: 800,
 
     //属性ダメージ倍率
     damageArrow: 5,
@@ -38,11 +44,11 @@ phina.define("qft.Enemy.Devil", {
 
     //アイテムドロップ率（％）
     dropRate: 10,
-    dropItem: ITEM_COIN,
+    dropItem: ITEM_BAG,
 
     //レアドロップ率（％）
-    rareDropRate: 3,
-    rareDropItem: ITEM_BAG,
+    rareDropRate: 5,
+    rareDropItem: ITEM_STONE,
 
     init: function(parentScene, options) {
         options = (options || {}).$extend({width: 16, height: 18}).$safe(this.defaultOptions);
@@ -62,8 +68,7 @@ phina.define("qft.Enemy.Devil", {
         this.returnTime = this.options.returnTime || 120;
         this.attackInterval = this.options.attackInterval || 90;
 
-        //行動フェーズ
-        this.phase = 0;
+        this.level = 0;
 
         this.on('damaged', e => {
             if (e.direction == 0) this.direction = 180; else this.direction = 0;
@@ -71,21 +76,45 @@ phina.define("qft.Enemy.Devil", {
     },
 
     algorithm: function() {
-        //プレイヤーとの距離
+        //プレイヤー情報
+        var pl = this.parentScene.player;
         var dis = this.getDistancePlayer();
         var look = this.isLookPlayer();
 
+        //プレイヤーが近くにいたら寄っていく
         if (look) {
-            if (!this.isStill) this.flare('balloon', {pattern: "!"});
-            this.isStill = false;
+            var p1 = phina.geom.Vector2(this.x, this.y);
+            var p2 = phina.geom.Vector2(pl.x, pl.y);
+            var p = p2.sub(p1);
+            p.normalize();
+            this.vx = p.x * (1 + this.level * 0.2);
+            this.vy = p.y * (1 + this.level * 0.2);
+            this.flare('balloon', {pattern: "!"});
+
+            var angle = this.getPlayerAngle();
+            if (angle > 315 || angle < 45) this.setAnimation('horizon');
+            if ( 45 < angle && angle < 135) this.setAnimation('down');
+            if (135 < angle && angle < 225) this.setAnimation('horizon');
+            if (225 < angle && angle < 315) this.setAnimation('down');
         } else {
+            this.vx = 0;
+            this.vy = 0;
             this.flare('balloonerace');
-            this.isStill = true;
         }
 
-        if (this.phase == 0) {
-            this.setAnimation("stand");
+        if (this.vx > 0) {
+            this.scaleX = 1;
+        } else {
+            this.scaleX = -1;
         }
+
+        if (this.isAttack) {
+            this.attack();
+        }
+    },
+
+    attack: function() {
+        this.stopTime = 60;
     },
 
     setupAnimation: function() {
@@ -93,7 +122,8 @@ phina.define("qft.Enemy.Devil", {
         this.frame = [];
         this.frame["stand"] = [6, 7, 8, 7];
         this.frame["up"] = [0, 1, 2, 1];
-        this.frame["walk"] = [3, 4, 5, 4];
+        this.frame["down"] = [5, 6, 7, 6];
+        this.frame["horizon"] = [3, 4, 5, 4];
         this.index = 0;
     },
 });

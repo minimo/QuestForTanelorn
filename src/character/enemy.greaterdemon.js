@@ -10,7 +10,7 @@ phina.define("qft.Enemy.GreaterDemon", {
     superClass: "qft.Enemy",
 
     //ヒットポイント
-    hp: 100,
+    hp: 120,
 
     //防御力
     deffence: 10,
@@ -28,7 +28,7 @@ phina.define("qft.Enemy.GreaterDemon", {
     animationInterval: 15,
 
     //得点
-    point: 500,
+    point: 5000,
 
     //飛行モード
     flying: false,
@@ -134,15 +134,19 @@ phina.define("qft.Enemy.GreaterDemon", {
             //崖っぷちで折り返す
             if (this.checkMapCollision2(this.x+5, this.y+20, 5, 5) == null) {
                 this.direction = 180;
+                this.chaseTime = 0;
             } else if (this.checkMapCollision2(this.x-5, this.y+20, 5, 5) == null) {
                 this.direction = 0;
+                this.chaseTime = 0;
             }
 
             //壁に当たったら折り返す
             if (this._collision[1].hit) {
                 this.direction = 180;
+                this.chaseTime = 0;
             } else if (this._collision[3].hit) {
                 this.direction = 0;
+                this.chaseTime = 0;
             }
 
             //プレイヤーへの攻撃

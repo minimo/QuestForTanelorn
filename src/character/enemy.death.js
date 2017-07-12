@@ -96,9 +96,9 @@ phina.define("qft.Enemy.Death", {
         var rad = this.degree.toRadian();
         if (this.pattern == "linear") {
             if (this.isVertical) {
-                this.y = this.firstY + Math.cos(rad) * this.moveLength;
+                this.vy = Math.cos(rad) * 2;
             } else {
-                this.x = this.firstX + Math.cos(rad) * this.moveLength;
+                this.vx = Math.cos(rad) * 2;
             }
         }
         this.degree += 2;

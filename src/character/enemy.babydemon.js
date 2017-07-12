@@ -10,13 +10,13 @@ phina.define("qft.Enemy.BabyDemon", {
     superClass: "qft.Enemy",
 
     //ヒットポイント
-    hp: 100,
+    hp: 50,
 
     //防御力
     deffence: 10,
 
     //攻撃力
-    power: 30,
+    power: 10,
 
     //視力
     eyesight: 128,
