@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-down" width="200" height="60" tilewidth="16" tileheight="16" nextobjectid="162">
+<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="200" height="60" tilewidth="16" tileheight="16" nextobjectid="164">
  <tileset firstgid="1" name="A1" tilewidth="16" tileheight="16" tilecount="768" columns="32">
   <image source="TileA1.png" width="512" height="384"/>
  </tileset>
@@ -274,9 +274,6 @@
    </properties>
   </object>
   <object id="9" name="meat" type="itembox" x="400" y="224" width="32" height="32"/>
-  <object id="10" name="Snake" type="enemy" x="524" y="216" width="32" height="32"/>
-  <object id="11" name="Snake" type="enemy" x="644" y="220" width="32" height="32"/>
-  <object id="12" name="Snake" type="enemy" x="260" y="212" width="32" height="32"/>
   <object id="13" name="mapswitch" type="door" x="784" y="144" width="32" height="96">
    <properties>
     <property name="enterOffset" type="int" value="-16"/>
@@ -666,5 +663,17 @@
    </properties>
   </object>
   <object id="161" name="rod" type="itembox" x="2296" y="224" width="32" height="32"/>
+  <object id="162" name="BabyDemon" type="enemy" x="660" y="224" width="32" height="32">
+   <properties>
+    <property name="level" type="int" value="0"/>
+    <property name="weapon" value="spear"/>
+   </properties>
+  </object>
+  <object id="163" name="BabyDemon" type="enemy" x="300" y="224" width="32" height="32">
+   <properties>
+    <property name="level" type="int" value="0"/>
+    <property name="weapon" value="spear"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

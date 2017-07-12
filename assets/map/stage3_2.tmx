@@ -396,14 +396,13 @@
     <property name="level" type="int" value="1"/>
    </properties>
   </object>
-  <object id="22" name="Wisp" type="enemy" x="304" y="972" width="32" height="32">
+  <object id="22" name="Wisp" type="enemy" x="464" y="1080" width="32" height="32">
    <properties>
     <property name="level" type="int" value="1"/>
    </properties>
   </object>
   <object id="24" name="Wisp" type="enemy" x="280" y="632" width="32" height="32"/>
   <object id="25" name="WispHard" type="enemy" x="64" y="1172" width="32" height="32"/>
-  <object id="26" name="WispHard" type="enemy" x="452" y="1100" width="32" height="32"/>
   <object id="35" name="WispHard" type="enemy" x="208" y="52" width="32" height="32"/>
   <object id="36" name="WispHard" type="enemy" x="364" y="60" width="32" height="32"/>
   <object id="37" name="Knight" type="enemy" x="112" y="380" width="32" height="32">
