@@ -125,11 +125,6 @@ phina.define("qft.Enemy.Death", {
         this.frame["attack"] = [3, 4, 5, 4];
         this.index = 0;
     },
-
-    once: function() {
-        this.firstX = this.x;
-        this.firstY = this.y;
-    },
 });
 
 //炎

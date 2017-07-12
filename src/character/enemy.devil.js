@@ -105,6 +105,7 @@ phina.define("qft.Enemy.Devil", {
         } else {
             this.vx = 0;
             this.vy = 0;
+            this.setAnimation("stand");
             this.flare('balloonerace');
         }
 

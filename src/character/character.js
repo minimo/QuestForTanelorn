@@ -12,6 +12,10 @@ phina.define("qft.Character", {
     vx: 0,
     vy: 0,
 
+    //初期座標
+    firstX: 0,
+    firstY: 0,
+
     //重力加速度
     gravity: 0.9,
 
@@ -151,7 +155,13 @@ phina.define("qft.Character", {
 
         this.on('enterframe', function(e) {
             if (this.parentScene.pauseScene) return;
-            if (this.time == 0) this.once();
+
+            //初期座標の記録
+            if (this.time == 0) {
+                this.firstX = this.x;
+                this.firstY = this.y;
+                this.firstFrame();
+            }
 
             //画面内判定
             var ps = this.parentScene;
@@ -247,7 +257,7 @@ phina.define("qft.Character", {
     },
 
     //一回目のenterframeで一度だけ呼ばれる
-    once: function() {
+    firstFrame: function() {
     },
 
     //当たり判定情報初期化
