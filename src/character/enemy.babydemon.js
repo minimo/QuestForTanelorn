@@ -75,13 +75,13 @@ phina.define("qft.Enemy.BabyDemon", {
         }
         if (this.isOnFloor || this.isJump) {
             if (this.direction == 0) {
-                this.vx = 1.5;
+                this.vx = 1;
             } else {
-                this.vx = -1.5;
+                this.vx = -1;
             }
         }
-        if (look) {
-            this.vx *= 3;
+        if (look || this.chaseTime > 0) {
+            this.vx *= 4;
         }
     },
 
