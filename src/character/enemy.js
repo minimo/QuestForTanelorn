@@ -390,7 +390,6 @@ phina.define("qft.Enemy", {
         } else {
             if (this.chaseTime == 0) this.flare('balloonerace');
         }
-        if (this.chaseTime > 0) this.vx *= 3;
 
         if (this.isOnFloor) {
             //これ以上進めない場合は折り返す
@@ -423,13 +422,14 @@ phina.define("qft.Enemy", {
                     if (isReturnCliff) {
                         var jumpOk = false;
                         if (this.direction == 0) {
-                            if (this.checkMapCollision2(this.x+32, this.y+20, 5, 96)) jumpOk = true;
+                            if (this.checkMapCollision2(this.x+32, this.y+32, 16, 96)) {jumpOk = true; this.vy = -7;}
+                            if (this.checkMapCollision2(this.x+32, this.y-32, 16, 96)) {jumpOk = true; this.vy = -10;}
                         } else {
-                            if (this.checkMapCollision2(this.x-32, this.y+20, 5, 96)) jumpOk = true;
+                            if (this.checkMapCollision2(this.x-32, this.y+32, 16, 96)) {jumpOk = true; this.vy = -7;}
+                            if (this.checkMapCollision2(this.x-32, this.y-32, 16, 96)) {jumpOk = true; this.vy = -10;}
                         }
                         if (jumpOk) {
                             this.isJump = true;
-                            this.vy = -7;
                         } else {
                             //着地点が無い場合は諦めて折り返す
                             this.chaseTime = 0;
