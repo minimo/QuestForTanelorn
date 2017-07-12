@@ -352,15 +352,6 @@ phina.define("qft.Enemy", {
         if (dis === undefined) dis = this.getDistancePlayer();
         if (look === undefined) look = this.isLookPlayer();
 
-        //プレイヤー発見
-        if (look) {
-            this.chaseTime = 120;
-            this.stopTime = 0;
-            this.flare('balloon', {pattern: "!"});
-        } else {
-            if (this.chaseTime == 0) this.flare('balloonerace');
-        }
-
         //プレイヤー発見後一定時間追跡する
         if (this.chaseTime > 0 && !this.isAttack && this.turnTime == 0) {
             if (this.x > pl.x) {
@@ -383,7 +374,24 @@ phina.define("qft.Enemy", {
         //一定距離以上離れたら追跡解除
         if (dis > 512) this.chaseTime = 0;
 
-        //追跡ルーチン
+        if (this.isOnFloor || this.isJump) {
+            if (this.direction == 0) {
+                this.vx = 1;
+            } else {
+                this.vx = -1;
+            }
+            if (this.isJump) this.vx *= 1;
+        }
+
+        if (look) {
+            this.chaseTime = 120;
+            this.stopTime = 0;
+            this.flare('balloon', {pattern: "!"});
+        } else {
+            if (this.chaseTime == 0) this.flare('balloonerace');
+        }
+        if (this.chaseTime > 0) this.vx *= 3;
+
         if (this.isOnFloor) {
             //これ以上進めない場合は折り返す
             var isReturnWall = false;
@@ -415,19 +423,20 @@ phina.define("qft.Enemy", {
                     if (isReturnCliff) {
                         var jumpOk = false;
                         if (this.direction == 0) {
-                            if (this.checkMapCollision2(this.x+5, this.y+20, 5, 96)) jumpOk = true;
+                            if (this.checkMapCollision2(this.x+32, this.y+20, 5, 96)) jumpOk = true;
                         } else {
-                            if (this.checkMapCollision2(this.x-5, this.y+20, 5, 96)) jumpOk = true;
+                            if (this.checkMapCollision2(this.x-32, this.y+20, 5, 96)) jumpOk = true;
                         }
                         if (jumpOk) {
                             this.isJump = true;
-                            this.vy = -5;
+                            this.vy = -7;
                         } else {
                             //着地点が無い場合は諦めて折り返す
                             this.chaseTime = 0;
-                            this.stopTime = 30;
+                            this.stopTime = 45;
+                            this.turnWait = 15;
                             this.direction = (this.direction + 180) % 360;
-                            this.vx *= -1;
+                            this.vx = 0;
                             this.flare('balloon', {pattern: "..."});
                          }
                     }
@@ -437,13 +446,7 @@ phina.define("qft.Enemy", {
                 }
             }
         }
-
-        if (this.isOnFloor || this.isJump) {
-            this.vx =  this.speed;
-            if (this.direction == 180) {
-                this.vx *= -1;
-            }
-        }
+        if (this.chaseTime == 30) this.flare('balloon', {pattern: "?"});
     },
 });
 
