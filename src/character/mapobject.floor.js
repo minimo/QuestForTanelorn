@@ -31,6 +31,9 @@ phina.define("qft.MapObject.Floor", {
     //地形無視
     ignoreCollision: true,
 
+    //移動パス
+    movePath: null,
+
     init: function(parentScene, options) {
         this.options = (options || {}).$safe({
             width: 32,
@@ -68,6 +71,10 @@ phina.define("qft.MapObject.Floor", {
             this.centerY = options.properties.centerY || this.endY;
         }
 
+        //移動パス設定の場合
+        if (this.moveType == "path") {
+        }
+
         //移動パターン
         switch (this.moveType) {
             //直線運動
@@ -100,7 +107,11 @@ phina.define("qft.MapObject.Floor", {
                         .setLoop(true);
                     break;
                 }
+            //設定されたパスに沿って移動
+            case "path":
+                break;
         }
+
         //スプライト
         this.index = options.properties.index || 0;
         var sw = Math.floor(this.width / 16);
@@ -157,5 +168,5 @@ phina.define("qft.MapObject.Floor", {
         this.collision.ignore = false;
         this.collision.type = "movefloor";
         this.collision.parentObject = this;
-    }
+    },
 });
