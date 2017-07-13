@@ -116,10 +116,9 @@
   </object>
   <object id="8" name="Garuda" type="enemy" x="496" y="136" width="32" height="32"/>
   <object id="9" name="BabyDemon" type="enemy" x="796" y="204" width="32" height="32">
-   <properties>
-    <property name="level" type="int" value="0"/>
-    <property name="weapon" value="spear"/>
-   </properties>
+    <properties>
+      <property name="territory" type="int" value="64"/>
+    </properties>
   </object>
   <object id="10" name="Death" type="enemy" x="1284" y="144" width="32" height="32"/>
   <object id="12" name="GreaterDemon" type="enemy" x="248" y="196" width="32" height="32"/>
