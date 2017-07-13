@@ -78,6 +78,7 @@ phina.define("qft.Enemy", {
         this.setupAnimation();
         this.options = options;
         this.level = options.level || 0;
+        this.territory = options.territory;
 
         //デバッグ時視界の可視化
         if (DEBUG_EYESIGHT) {
@@ -304,7 +305,7 @@ phina.define("qft.Enemy", {
     hit: function() {
     },
 
-    //往復アルゴリズム（陸上）
+    //汎用往復アルゴリズム（陸上）
     groundRoundtripAlgorithm: function(attack, dis, look) {
         var pl = this.parentScene.player;
         if (dis === undefined) dis = this.getDistancePlayer();
@@ -325,15 +326,16 @@ phina.define("qft.Enemy", {
                 this.direction = 0;
             }
 
-            //プレイヤーが近くにいたらジャンプ攻撃
-            if (attack && look && !this.isJump && dis < 40) {
-                this.isJump = true;
-                this.vy = -6;
-                var pl = this.parentScene.player;
-                if (this.x > pl.x) {
-                    this.direction = 180;
-                } else {
-                    this.direction = 0;
+            //テリトリー指定
+            if (!look && this.territory) {
+                //水平方向のみチェック
+                var tx = this.x - this.firstX;
+                if (Math.abs(tx) > this.territory) {
+                    if (tx > 0) {
+                        this.direction = 180;
+                    } else {
+                        this.direction = 0;
+                    }
                 }
             }
         }
@@ -346,7 +348,7 @@ phina.define("qft.Enemy", {
         }
     },
 
-    //追跡アルゴリズム
+    //汎用追跡アルゴリズム
     chaseAlgorithm: function(dis, look) {
         var pl = this.parentScene.player;
         if (dis === undefined) dis = this.getDistancePlayer();
@@ -368,11 +370,17 @@ phina.define("qft.Enemy", {
                 this.flare('balloon', {pattern: "?"});
                 this.stopTime = 30;
                 this.chaseTime = 0;
+                this.firstX = this.x;
+                this.firstY = this.y;
             }
         }
 
         //一定距離以上離れたら追跡解除
-        if (dis > 512) this.chaseTime = 0;
+        if (dis > 512) {
+            this.chaseTime = 0;
+            this.firstX = this.x;
+            this.firstY = this.y;
+        }
 
         if (this.isOnFloor || this.isJump) {
             if (this.direction == 0) {
@@ -392,6 +400,19 @@ phina.define("qft.Enemy", {
         }
 
         if (this.isOnFloor) {
+            //テリトリー指定
+            if (this.chaseTime == 0 && this.territory) {
+                //水平方向のみチェック
+                var tx = this.x - this.firstX;
+                if (Math.abs(tx) > this.territory) {
+                    if (tx > 0) {
+                        this.direction = 180;
+                    } else {
+                        this.direction = 0;
+                    }
+                }
+            }
+
             //これ以上進めない場合は折り返す
             var isReturnWall = false;
             var isReturnCliff = false;
@@ -418,6 +439,7 @@ phina.define("qft.Enemy", {
                             }
                         }
                     }
+
                     //プレイヤー追跡中で崖がある場合は着地点があるか調べて飛び降りる
                     if (isReturnCliff) {
                         var jumpOk = false;
@@ -438,6 +460,8 @@ phina.define("qft.Enemy", {
                             this.direction = (this.direction + 180) % 360;
                             this.vx = 0;
                             this.flare('balloon', {pattern: "..."});
+                            this.firstX = this.x;
+                            this.firstY = this.y;
                          }
                     }
                 } else {
@@ -446,7 +470,13 @@ phina.define("qft.Enemy", {
                 }
             }
         }
-        if (this.chaseTime == 30) this.flare('balloon', {pattern: "?"});
+
+        if (this.chaseTime == 30) {
+            this.flare('balloon', {pattern: "?"});
+            this.firstX = this.x;
+            this.firstY = this.y;
+        }
+        
     },
 });
 

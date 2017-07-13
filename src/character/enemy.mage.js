@@ -96,19 +96,29 @@ phina.define("qft.Enemy.Mage", {
                     this.phase = 1;
                 } else {
                     //プレイヤーが遠くにいる場合は攻撃
-                    if (this.time % 15 == 0) this.isAttack = true;
+                    this.isAttack = true;
                 }
             }
 
             //発狂モード
             if (this.phase == 3) {
-                if (this.time % 5 == 0) this.isAttack = true;
+                this.isAttack = true;
             }
 
             if (this.isAttack) {
+                var lv = Math.min(this.level, 4);
+                this.sprite.setFrameTrimming((lv % 2) * 144 + 72, Math.floor(lv / 2) * 128, 72, 128);
                 this.isAttack = false;
-                var b = this.parentScene.spawnEnemy(this.x, this.y, "Bullet", {explode: true});
-                b.rotation = this.getPlayerAngle() + Math.randint(-40, 40);
+
+                if (this.phase < 3) {
+                    this.stopTime = 30;
+                    this.fireball();
+                } else {
+                    this.stopTime = 8;
+                    this.fireball();
+                }
+
+                //プレイヤー方向を向く
                 if (this.x < player.x) {
                     this.diretion = 0;
                     this.scaleX = 1;
@@ -116,8 +126,6 @@ phina.define("qft.Enemy.Mage", {
                     this.direction = 180;
                     this.scaleX = -1;
                 }
-                var lv = Math.min(this.level, 4);
-                this.sprite.setFrameTrimming((lv % 2) * 144 + 72, Math.floor(lv / 2) * 128, 72, 128);
             }
 
             //これ以上進めない場合は折り返す
@@ -162,5 +170,33 @@ phina.define("qft.Enemy.Mage", {
         this.frame["down"] = [3, 4, 5, 4];
         this.frame["attack"] = [3, "stop"];
         this.index = 0;
+    },
+
+    //ファイアボール
+    fireball: function() {
+        this.parentScene.spawnEnemy(this.x, this.y, "Bullet", {explode: true, rotation: this.getPlayerAngle() + Math.randint(-40, 40)});
+    },
+
+    //爆発
+    explode: function() {
+        app.playSE("bomb");
+        this.isAttack = false;
+        var rot = (this.scaleX == 1)? 0: 180;
+        var ct = 0;
+        var tw = phina.accessory.Tweener().attachTo(this)
+            .setUpdateType('fps')
+            .call(() => {
+                var rad = rot.toRadian();
+                var ex = Math.cos(rad) * 16;
+                var ey = Math.sin(rad) * 16;
+                this.parentScene.spawnEnemy(this.x + ex, this.y + ey, "Bullet", {type: "explode", power: 10, rotation: rot, velocity: 3});
+                rot += 22.5;
+                ct++;
+                if (ct == 32 || this.attackCancel) {
+                    tw.remove();
+                }
+            })
+            .wait(1)
+            .setLoop(true);
     },
 });

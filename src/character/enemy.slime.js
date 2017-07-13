@@ -90,6 +90,19 @@ phina.define("qft.Enemy.Slime", {
                 this.direction = 0;
             }
 
+            //テリトリー指定
+            if (this.territory) {
+                //水平方向のみチェック
+                var tx = this.x - this.firstX;
+                if (Math.abs(tx) > this.territory) {
+                    if (tx > 0) {
+                        this.direction = 180;
+                    } else {
+                        this.direction = 0;
+                    }
+                }
+            }
+
             if (this.level < 4) {
                 //プレイヤーが近くにいたらジャンプ攻撃
                 if (look && !this.isJump && dis < 40) {

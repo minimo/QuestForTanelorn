@@ -63,6 +63,7 @@ phina.define("qft.Enemy.BabyDemon", {
         var dis = this.getDistancePlayer();
         var look = this.isLookPlayer();
 
+        //汎用追跡アルゴリズム
         this.chaseAlgorithm(dis, look);
 
         //プレイヤーが近くにいたら攻撃

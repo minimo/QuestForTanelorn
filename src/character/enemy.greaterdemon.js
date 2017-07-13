@@ -152,7 +152,7 @@ phina.define("qft.Enemy.GreaterDemon", {
             //プレイヤーへの攻撃
             if (look && !this.isAttack && !this.isJump) {
                 if (dis > 128) {
-                    this.flaming();
+                    this.firebreath();
                 } else {
                     this.exploding();
                 }
@@ -178,8 +178,8 @@ phina.define("qft.Enemy.GreaterDemon", {
             .fadeOut(10);
     },
 
-    //火を吐く
-    flaming: function() {
+    //炎を吐く
+    firebreath: function() {
         this.isAttack = true;
         this.stopTime = 60;
         this.sprite2.tweener.clear()
