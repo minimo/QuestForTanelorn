@@ -45,9 +45,9 @@ phina.define("qft.Enemy.Demon", {
             .setScale(1.5)
             .setPosition(0, -8);
 
-        this.hp += this.level * 20;
-        this.power += this.level * 5;
-        this.point += this.level * 200;
+        this.hp += this.level * 10;
+        this.power += this.level * 3;
+        this.point += this.level * 300;
 
         this.setAnimation("walk");
         this.animationInterval = 6;

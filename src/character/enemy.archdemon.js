@@ -28,7 +28,7 @@ phina.define("qft.Enemy.ArchDemon", {
     animationInterval: 15,
 
     //得点
-    point: 1000,
+    point: 5000,
 
     //飛行モード
     flying: false,
@@ -59,6 +59,10 @@ phina.define("qft.Enemy.ArchDemon", {
             var size = options.size || 1;
             this.sprite.setScale(size).setPosition(0, size * -12);
         }
+
+        this.hp += this.level * 5;
+        this.power += this.level * 5;
+        this.point += this.level * 1000;
 
         this.setAnimation("walk");
         this.setupLifeGauge();

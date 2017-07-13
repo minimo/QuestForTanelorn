@@ -53,10 +53,10 @@ phina.define("qft.Enemy.Wisp", {
         this.sprite = phina.display.Sprite("monster01", 24, 32).addChildTo(this);
         this.sprite.setFrameTrimming(Math.min(this.level, 4) * 72, 512, 72, 128);
 
-        this.hp += this.level * 10;
-        this.power += this.level * 5;
+        this.hp += this.level * 5;
+        this.power += this.level * 2;
         this.eyesight += this.level * 64,
-        this.point += this.level * 50;
+        this.point += this.level * 200;
 
         this.setAnimation("stand");
         this.animationInterval = 10;

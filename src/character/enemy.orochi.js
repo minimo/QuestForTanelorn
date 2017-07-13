@@ -49,7 +49,7 @@ phina.define("qft.Enemy.Orochi", {
 
         this.hp += this.level * 10;
         this.power += this.level * 5;
-        this.point += this.level * 150;
+        this.point += this.level * 300;
 
         this.setAnimation("walk");
         this.animationInterval = 15;

@@ -31,7 +31,7 @@ phina.define("qft.Enemy.FireBird", {
     friction: 0,
 
     //得点
-    point: 200,
+    point: 300,
 
     //属性ダメージ倍率
     damageArrow: 5,

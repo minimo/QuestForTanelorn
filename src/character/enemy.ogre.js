@@ -16,7 +16,7 @@ phina.define("qft.Enemy.Ogre", {
     deffence: 10,
 
     //攻撃力
-    power: 10,
+    power: 20,
 
     //視力
     eyesight: 128,
@@ -25,7 +25,7 @@ phina.define("qft.Enemy.Ogre", {
     viewAngle: 90,
 
     //得点
-    point: 3000,
+    point: 1000,
 
     //アイテムドロップ率（％）
     dropRate: 7,
@@ -44,9 +44,9 @@ phina.define("qft.Enemy.Ogre", {
         this.sprite.setFrameTrimming(216, 0, 72, 128);
         this.sprite.setPosition(0, -5).setScale(1.3);
 
-        this.hp += this.level * 10;
-        this.power += this.level * 5;
-        this.point += this.level * 500;
+        this.hp += this.level * 5;
+        this.power += this.level * 3;
+        this.point += this.level * 300;
 
         this.setAnimation("walk");
         this.animationInterval = 10;

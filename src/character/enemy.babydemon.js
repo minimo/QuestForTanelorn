@@ -10,7 +10,7 @@ phina.define("qft.Enemy.BabyDemon", {
     superClass: "qft.Enemy",
 
     //ヒットポイント
-    hp: 50,
+    hp: 40,
 
     //防御力
     deffence: 10,
@@ -42,6 +42,10 @@ phina.define("qft.Enemy.BabyDemon", {
         //表示用スプライト
         this.sprite = phina.display.Sprite("monster02", 24, 32).addChildTo(this);
         this.sprite.setFrameTrimming(0, 0, 72, 128);
+
+        this.hp += this.level * 5;
+        this.power += this.level * 2;
+        this.point += this.level * 100;
 
         this.setAnimation("walk");
         this.animationInterval = 6;

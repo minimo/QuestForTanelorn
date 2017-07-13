@@ -47,9 +47,9 @@ phina.define("qft.Enemy.Snake", {
             .setPosition(0, capLevel * -1)
         this.width += capLevel * 5;
 
-        this.hp += this.level * 10;
-        this.power += this.level * 5;
-        this.point += this.level * 50;
+        this.hp += this.level * 5;
+        this.power += this.level * 2;
+        this.point += this.level * 100;
 
         this.setAnimation("walk");
         this.animationInterval = 10;

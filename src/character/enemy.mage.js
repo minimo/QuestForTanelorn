@@ -46,8 +46,8 @@ phina.define("qft.Enemy.Mage", {
         this.sprite.setScale(1.2).setPosition(0, -2);
 
         this.hp += this.level * 5;
-        this.power += this.level * 5;
-        this.point += this.level * 100;
+        this.power += this.level * 2;
+        this.point += this.level * 200;
 
         this.setAnimation("walk");
         this.animationInterval = 10;

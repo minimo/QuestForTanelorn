@@ -67,7 +67,7 @@ phina.define("qft.Enemy.Knight", {
         this.sprite.setPosition(0, -5).setScale(1.3);
 
         this.hp += this.level * 10;
-        this.power += this.level * 5;
+        this.power += this.level * 10;
         this.point += this.level * 500;
 
         this.setAnimation("walk");

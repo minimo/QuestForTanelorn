@@ -66,6 +66,10 @@ phina.define("qft.Enemy.ArchKnight", {
         this.sprite.setFrameTrimming(216*2, 128*2, 72*2, 128*2);
         this.sprite.setPosition(0, -5);
 
+        this.hp += this.level * 5;
+        this.power += this.level * 5;
+        this.point += this.level * 1000;
+
         this.setAnimation("walk");
         this.setupLifeGauge();
 

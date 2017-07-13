@@ -61,6 +61,10 @@ phina.define("qft.Enemy.Devil", {
         this.sprite = phina.display.Sprite("monster02", 24, 32).addChildTo(this);
         this.sprite.setFrameTrimming(72, 0, 72, 128);
 
+        this.hp += this.level * 10;
+        this.power += this.level * 5;
+        this.point += this.level * 100;
+
         this.setAnimation("stand");
         this.animationInterval = 6;
         this.setupLifeGauge();

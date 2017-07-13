@@ -37,7 +37,7 @@ phina.define("qft.Enemy.Death", {
     isSuperArmor: true,
 
     //得点
-    point: 300,
+    point: 500,
 
     //アイテムドロップ率（％）
     dropRate: 10,
@@ -59,6 +59,10 @@ phina.define("qft.Enemy.Death", {
         this.sprite = phina.display.Sprite("monster02", 24, 32).addChildTo(this);
         this.sprite.setFrameTrimming(0, 128, 72, 128);
 
+        this.hp += this.level * 5;
+        this.power += this.level * 1;
+        this.point += this.level * 100;
+
         this.setAnimation("move");
         this.animationInterval = 10;
         this.setupLifeGauge();
@@ -69,16 +73,11 @@ phina.define("qft.Enemy.Death", {
         this.phase = 0;
         this.speed = 1;
 
-
         //行動パターン
         this.pattern = options.pattern || "linear";
         this.moveLength = options.length || 48;
         this.degree = 0;
         this.isVertical = false;
-
-        //初期位置保存
-        this.firstX = 0;
-        this.firstY = 0;
 
         //被ダメージ時処理
         this.on('damaged', e => {

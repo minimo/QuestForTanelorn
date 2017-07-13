@@ -25,7 +25,7 @@ phina.define("qft.Enemy.ArchMage", {
     viewAngle: 360,
 
     //得点
-    point: 100,
+    point: 800,
 
     //重力加速度
     gravity: 0,
@@ -46,8 +46,10 @@ phina.define("qft.Enemy.ArchMage", {
         var lv = Math.min(this.level, 4);
         this.sprite = phina.display.Sprite("monster03", 24, 32).addChildTo(this);
         this.sprite.setFrameTrimming((lv % 2) * 144 + 72, Math.floor(lv / 2) * 128, 72, 128);
+
         this.hp += this.level * 5;
-        this.power += this.level * 5;
+        this.power += this.level * 2;
+        this.point += this.level * 100;
 
         this.setAnimation("walk");
         this.animationInterval = 10;
