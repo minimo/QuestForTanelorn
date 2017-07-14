@@ -34,6 +34,9 @@ phina.define("qft.MapObject.Floor", {
     //移動パス
     movePath: null,
 
+    //移動パス現在時間(0-1)
+    pathTime: 0,
+
     init: function(parentScene, options) {
         this.options = (options || {}).$safe({
             width: 32,
@@ -71,20 +74,16 @@ phina.define("qft.MapObject.Floor", {
             this.centerY = options.properties.centerY || this.endY;
         }
 
-        //移動パス設定の場合
-        if (this.moveType == "path") {
-        }
-
         //移動パターン
         switch (this.moveType) {
             //直線運動
             case "linear":
                 this.tweener.clear()
                     .moveTo(this.endX, this.endY, this.moveSpeed, "easeInOutSine")
-                    .call(function() {this.flare('linearend');}.bind(this))
+                    .call(function() {this.flare('moveend');}.bind(this))
                     .wait(this.moveWait)
                     .moveTo(this.startX, this.startY, this.moveSpeed, "easeInOutSine")
-                    .call(function() {this.flare('linearstart');}.bind(this))
+                    .call(function() {this.flare('movestart');}.bind(this))
                     .wait(this.moveWait)
                     .setLoop(true);
                 break;
@@ -95,14 +94,14 @@ phina.define("qft.MapObject.Floor", {
                     //反時計回り
                     this.tweener.clear()
                         .to({angle: -360}, this.moveSpeed)
-                        .call(function() {this.flare('criclrend');}.bind(this))
+                        .call(function() {this.flare('moveend');}.bind(this))
                         .set({angle: 0})
                         .setLoop(true);
                 } else {
                     //時計回り
                     this.tweener.clear()
                         .to({angle: 360}, this.moveSpeed)
-                        .call(function() {this.flare('circleend');}.bind(this))
+                        .call(function() {this.flare('moveend');}.bind(this))
                         .set({angle: 0})
                         .setLoop(true);
                     break;
@@ -134,7 +133,12 @@ phina.define("qft.MapObject.Floor", {
             var rad = this.radius.toRadian();
             this.x = this.centerX + Math.cos(rad) * this.moveRadius;
             this.y = this.centerY + Math.sin(rad) * this.moveRadius;
+        } else if (this.moveType == 'path') {
         }
+
+        //停止と再生
+        if (!this.isActive) this.tweener.pause();
+        if (this.isActive) this.tweener.play();
 
         if (this.collision) {
             this.collision.vx = this.x - this.collision.x;
@@ -142,10 +146,6 @@ phina.define("qft.MapObject.Floor", {
             this.collision.x = this.x;
             this.collision.y = this.y;
         }
-
-        //停止と再生
-        if (!this.isActive) this.tweener.pause();
-        if (this.isActive) this.tweener.play();
 
         //プレイヤーが上に乗っているか判定
         if (this.parentScene.player.floorObject) {
@@ -168,5 +168,43 @@ phina.define("qft.MapObject.Floor", {
         this.collision.ignore = false;
         this.collision.type = "movefloor";
         this.collision.parentObject = this;
+    },
+
+    //移動パスの設定
+    setPath: function(startX, startY, path) {
+        this.x = startX;
+        this.y = startY;
+        this.path = path;
+
+        //往路距離計算
+        var sum = 0;
+        for (var i = 0; i < path.length - 1; i++) {
+            var p1 = path[i];
+            var p2 = path[i+1];
+            p2.magnitude = Math.sqrt((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y));
+            sum += p2.magnitude;
+        }
+        var unit = this.moveSpeed / sum;
+
+        //復路距離計算
+        for (var i = path.length - 1; i > 0; i--) {
+            var p1 = path[i];
+            var p2 = path[i-1];
+            p2.magnitude_ret = Math.sqrt((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y));
+        }
+
+        this.tweener.clear().wait(60);
+        for (var i = 1; i < path.length; i++) {
+            var p = path[i];
+            var time = Math.floor(p.magnitude * unit);
+            this.tweener.moveTo(startX + p.x, startY + p.y, time);
+        }
+        this.tweener.wait(60);
+        for (var i = path.length - 2; i >= 0; i--) {
+            var p = path[i];
+            var time = Math.floor(p.magnitude_ret * unit);
+            this.tweener.moveTo(startX + p.x, startY + p.y, time);
+        }
+        this.tweener.setLoop(true);
     },
 });

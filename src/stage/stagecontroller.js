@@ -256,6 +256,18 @@ phina.define("qft.StageController", {
                         floor.player = this.parentScene.player;
                         floor.parentScene = this.parentScene;
                     }
+                    //移動パスの取得
+                    var path = null;
+                    if (e.properties.moveType == 'path' && e.properties.path) {
+                        var id = e.properties.path;
+                        for (var i = 0; i < events.length; i++) {
+                            if (events[i].id == id) {
+                                path = events[i];
+                                break;
+                            }
+                        }
+                        if (path) floor.setPath(path.x, path.y, path.polyline);
+                    }
                     break;
                 case "check":
                     qft.MapObject.CheckIcon(this.parentScene, e).addChildTo(mapLayer.objLayer).setPosition(x, y).setAnimation(e.name);
@@ -301,6 +313,8 @@ phina.define("qft.StageController", {
                         default:
                             console.warn("unknown map accessory: "+e.name);
                     }
+                    break;
+                case "path":
                     break;
                 default:
                     console.warn("unknown map object type: "+e.type);
