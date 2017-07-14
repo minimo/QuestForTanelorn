@@ -827,7 +827,7 @@
   <object id="157" name="up" type="check" x="5896" y="764" width="32" height="32"/>
   <object id="158" name="up" type="check" x="3320" y="660" width="32" height="32"/>
   <object id="159" name="down" type="check" x="3176" y="660" width="32" height="32"/>
-  <object id="162" name="herb" type="itembox" x="5040" y="976" width="32" height="32"/>
+  <object id="162" name="harb" type="itembox" x="5040" y="976" width="32" height="32"/>
   <object id="163" name="lamp" type="accessory" x="6060" y="74" width="24" height="32">
    <properties>
     <property name="level" type="int" value="1"/>
