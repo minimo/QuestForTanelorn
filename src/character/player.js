@@ -609,7 +609,9 @@ phina.define("qft.Player", {
         //装備品
         if (item.isEquip) {
             this.hpMax += (item.power || 0);
+            this.hp += (item.power || 0);
             if (this.hpMax > 200) this.hpMax = 200;
+            if (this.hp > this.hpMax) this.hp = this.hpMax;
             this.parentScene.totalScore += (item.point || 0);
             app.playSE("getitem");
         }
