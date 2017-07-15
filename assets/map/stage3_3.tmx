@@ -540,7 +540,11 @@
     <property name="text" value="火の鳥の巣"/>
    </properties>
   </object>
-  <object id="278" name="hat" type="itembox" x="4412" y="380" width="32" height="32"/>
+  <object id="278" name="hat" type="itembox" x="4412" y="380" width="32" height="32">
+   <properties>
+    <property name="color" value="blue"/>
+   </properties>
+  </object>
   <object id="279" name="rod" type="itembox" x="4287" y="751" width="32" height="32"/>
   <object id="280" name="Demon" type="enemy" x="2276" y="716" width="32" height="32">
    <properties>
