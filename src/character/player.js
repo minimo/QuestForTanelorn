@@ -523,7 +523,7 @@ phina.define("qft.Player", {
 
         var dir = 0;
         if (this.x < target.x) dir = 180;
-        this.knockback(target.power, dir);
+        if (!this.isCatchLadder) this.knockback(target.power, dir);
 
         this.hp -= target.power;
         this.isCatchLadder = false;
