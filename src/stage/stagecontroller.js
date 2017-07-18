@@ -317,7 +317,7 @@ phina.define("qft.StageController", {
                 case "path":
                     break;
                 default:
-                    console.warn("unknown map object type: "+e.type+" name: "+e.name);
+                    console.warn("unknown map object id:[" + e.id + "] type:[" + e.type + "] name:[" + e.name + "]");
             }
         }.bind(this));
         return mapLayer;
