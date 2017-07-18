@@ -10,7 +10,7 @@ phina.define("qft.Enemy.ArchMage", {
     superClass: "qft.Enemy",
 
     //ヒットポイント
-    hp: 20,
+    hp: 50,
 
     //防御力
     deffence: 10,
@@ -78,6 +78,19 @@ phina.define("qft.Enemy.ArchMage", {
             this.direction = 0;
         }
 
+        //テリトリー指定
+        if (this.territory) {
+            //水平方向のみチェック
+            var tx = this.x - this.firstX;
+            if (Math.abs(tx) > this.territory) {
+                if (tx > 0) {
+                    this.direction = 180;
+                } else {
+                    this.direction = 0;
+                }
+            }
+        }
+
         //通常フェーズでプレイヤーを発見したら警戒フェーズに移る
         if (this.phase == 0 && look) {
             this.flare('balloon', {pattern: "!"});
@@ -122,7 +135,7 @@ phina.define("qft.Enemy.ArchMage", {
         }
         if (this.phase == 3) {
             this.flare('balloonerace');
-            if (this.time % 60 == 0) this.isAttack = true;
+            if (this.time % 15 == 0) this.isAttack = true;
         }
 
         if (this.isAttack) {
