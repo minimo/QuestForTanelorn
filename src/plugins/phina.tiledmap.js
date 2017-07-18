@@ -1,17 +1,35 @@
 /*
  *  phina.tiledmap.js
- *  2016/9/10
+ *  2016/09/10
  *  @auther minimo  
  *  This Program is MIT license.
  *
  */
 
+/**
+ * @class phina.asset.TiledMap
+ * @extends phina.asset.Asset
+ * # TiledMapEditorで作成したtmxファイルを読み込みクラス
+ */
 phina.define("phina.asset.TiledMap", {
     superClass: "phina.asset.Asset",
 
+    /**
+     * @property image
+     * 作成されたマップ画像
+     */
     image: null,
 
+    /**
+     * @property tilesets
+     * タイルセット情報
+     */
     tilesets: null,
+
+    /**
+     * @property layers
+     * レイヤー情報が格納されている配列
+     */
     layers: null,
 
     init: function() {
@@ -48,7 +66,12 @@ phina.define("phina.asset.TiledMap", {
         xml.send(null);
     },
 
-    //指定マップレイヤーを配列として取得
+    /**
+     * @method getMapData
+     * 指定したマップレイヤーを配列として取得します。
+     *
+     * @param {String} layerName 対象レイヤー名
+     */
     getMapData: function(layerName) {
         //レイヤー検索
         var data = null;
@@ -61,7 +84,14 @@ phina.define("phina.asset.TiledMap", {
         return null;
     },
 
-    //オブジェクトグループを取得（指定が無い場合、全レイヤーを配列にして返す）
+    /**
+     * @method getObjectGroup
+     * オブジェクトグループを取得します
+     *
+     * グループ指定が無い場合、全レイヤーを配列にして返します。
+     *
+     * @param {String} grounpName 対象オブジェクトグループ名
+     */
     getObjectGroup: function(groupName) {
         groupName = groupName || null;
         var ls = [];
@@ -79,7 +109,15 @@ phina.define("phina.asset.TiledMap", {
         return ls;
     },
 
-    //マップイメージ作成
+    /**
+     * @method getMapImage
+     * マップイメージの作成
+     *
+     * 複数のマップレイヤーを指定出来ます。
+     * 描画順序はTiledMapEditor側での指定順では無く、引数の順序となります（第一引数が一番下となる）
+     *
+     * @param {String}  対象レイヤー名
+     */
     getImage: function(...args) {
         var numLayer = 0;
         for (var i = 0; i < this.layers.length; i++) {
@@ -143,7 +181,13 @@ phina.define("phina.asset.TiledMap", {
         return texture;
     },
 
-    //オブジェクトレイヤーをクローンして返す
+    /**
+     * @method _cloneObjectLayer
+     * 引数として渡されたオブジェクトレイヤーをクローンして返します。
+     *
+     * 内部で使用している関数です。
+     * @private
+     */
     _cloneObjectLayer: function(srcLayer) {
         var result = {}.$safe(srcLayer);
         result.objects = [];
@@ -161,6 +205,13 @@ phina.define("phina.asset.TiledMap", {
         return result;
     },
 
+    /**
+     * @method _parse
+     * 取得したTiledMapEditのデータをパースします。
+     *
+     * 内部で使用している関数です。
+     * @private
+     */
     _parse: function(data) {
         //タイル属性情報取得
         var map = data.getElementsByTagName('map')[0];
@@ -206,7 +257,13 @@ phina.define("phina.asset.TiledMap", {
         this._checkImage();
     },
 
-    //アセットに無いイメージデータを読み込み
+    /**
+     * @method _checkImage
+     * アセットに無いイメージデータをチェックして読み込みを行います。
+     *
+     * 内部で使用している関数です。
+     * @private
+     */
     _checkImage: function() {
         var that = this;
         var imageSource = [];
@@ -277,7 +334,13 @@ phina.define("phina.asset.TiledMap", {
         }
     },
 
-    //キャンバスの指定した座標にマップチップのイメージをコピーする
+    /**
+     * @method _setMapChip
+     * キャンバスの指定した座標にマップチップのイメージをコピーします。
+     *
+     * 内部で使用している関数です。
+     * @private
+     */
     _setMapChip: function(canvas, index, x, y, opacity) {
         //タイルセットからマップチップを取得
         var chip = this.tilesets.chips[index];
@@ -296,7 +359,13 @@ phina.define("phina.asset.TiledMap", {
             chip.tilewidth, chip.tileheight);
     },
 
-    //XMLプロパティをJSONに変換
+    /**
+     * @method _propertiesToJSON
+     * XMLプロパティをJSONに変換します。
+     *
+     * 内部で使用している関数です。
+     * @private
+     */
     _propertiesToJSON: function(elm) {
         var properties = elm.getElementsByTagName("properties")[0];
         var obj = {};
@@ -325,7 +394,13 @@ phina.define("phina.asset.TiledMap", {
         return obj;
     },
 
-    //XML属性をJSONに変換
+    /**
+     * @method _propertiesToJSON
+     * XML属性情報をJSONに変換します。
+     *
+     * 内部で使用している関数です。
+     * @private
+     */
     _attrToJSON: function(source) {
         var obj = {};
         for (var i = 0; i < source.attributes.length; i++) {
@@ -336,7 +411,13 @@ phina.define("phina.asset.TiledMap", {
         return obj;
     },
 
-    //XML属性をJSONに変換（Stringで返す）
+    /**
+     * @method _propertiesToJSON_str
+     * XMLプロパティをJSONに変換し、文字列で返します。
+     *
+     * 内部で使用している関数です。
+     * @private
+     */
     _attrToJSON_str: function(source) {
         var obj = {};
         for (var i = 0; i < source.attributes.length; i++) {
@@ -346,7 +427,13 @@ phina.define("phina.asset.TiledMap", {
         return obj;
     },
 
-    //タイルセットのパース
+    /**
+     * @method _parseTilesets
+     * タイルセットのパースを行います。
+     *
+     * 内部で使用している関数です。
+     * @private
+     */
     _parseTilesets: function(xml) {
         var each = Array.prototype.forEach;
         var self = this;
@@ -373,7 +460,13 @@ phina.define("phina.asset.TiledMap", {
         return data;
     },
 
-    //レイヤー情報のパース
+    /**
+     * @method _parseLayers
+     * レイヤー情報のパースを行います。
+     *
+     * 内部で使用している関数です。
+     * @private
+     */
     _parseLayers: function(xml) {
         var each = Array.prototype.forEach;
         var data = [];
@@ -486,7 +579,13 @@ phina.define("phina.asset.TiledMap", {
         return data;
     },
 
-    //CSVパース
+    /**
+     * @method _perseCSV
+     * CSVのパースを行います。
+     *
+     * 内部で使用している関数です。
+     * @private
+     */
     _parseCSV: function(data) {
         var dataList = data.split(',');
         var layer = [];
@@ -500,7 +599,10 @@ phina.define("phina.asset.TiledMap", {
     },
 
     /**
-     * BASE64パース
+     * @method _perseCSV
+     * BASE64のパースを行います。
+     *
+     * 内部で使用している関数です。
      * http://thekannon-server.appspot.com/herpity-derpity.appspot.com/pastebin.com/75Kks0WH
      * @private
      */
