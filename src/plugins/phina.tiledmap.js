@@ -422,9 +422,13 @@ phina.define("phina.asset.TiledMap", {
                         color: layer.getAttribute("color") || null,
                         draworder: layer.getAttribute("draworder") || null,
                     };
+                    l.properties = this._propertiesToJSON(layer);
+
+                    //レイヤー内解析
                     each.call(layer.childNodes, function(elm) {
                         if (elm.nodeType == 3) return;
                         var d = this._attrToJSON(elm);
+                        if (d.id === undefined) return;
                         d.properties = this._propertiesToJSON(elm);
                         //子要素の解析
                         if (elm.childNodes.length) {
@@ -458,7 +462,6 @@ phina.define("phina.asset.TiledMap", {
                         }
                         l.objects.push(d);
                     }.bind(this));
-                    l.properties = this._propertiesToJSON(layer);
 
                     data.push(l);
                     break;
