@@ -130,16 +130,16 @@ phina.define("qft.Enemy.ArchMage", {
         //攻撃
         if (this.phase == 2) {
             this.flare('balloonerace');
-            if (this.time % 60 == 0) {
-                for (var i = 0; i < this.dagger.length; i++) {
-                    this.dagger[i].isAttack = true;
-                }
+            this.stopTime = 60;
+            for (var i = 0; i < this.dagger.length; i++) {
+                this.dagger[i].isAttack = true;
             }
             if (distance < 92) this.phase = 3;
         }
         if (this.phase == 3) {
+            this.stopTime = 30;
             this.flare('balloonerace');
-            if (this.time % 15 == 0) this.isAttack = true;
+            this.isAttack = true;
         }
 
         if (this.isAttack) {
