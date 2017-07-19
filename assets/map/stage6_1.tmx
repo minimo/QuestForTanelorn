@@ -1440,12 +1440,6 @@
     <property name="territory" type="int" value="128"/>
    </properties>
   </object>
-  <object id="103" name="ArchMage" type="enemy" x="556" y="4504" width="32" height="32">
-   <properties>
-    <property name="level" type="int" value="0"/>
-    <property name="territory" type="int" value="128"/>
-   </properties>
-  </object>
   <object id="105" name="rod" type="itembox" x="1516" y="1856" width="32" height="32"/>
   <object id="106" name="up" type="check" x="873" y="1856" width="32" height="32"/>
   <object id="107" name="Mage" type="enemy" x="544" y="1844" width="32" height="32">
