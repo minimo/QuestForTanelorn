@@ -46,6 +46,8 @@ phina.define("qft.Enemy.MagicDagger", {
         this.setAnimation("pattern1");
 
         this.power = options.power || this.power;
+        this.power += this.level * 2;
+
         this.parentUnit = options.parent || null;
         this.offsetX = options.offsetX || Math.randint(-16, 16);
         this.offsetY = options.offsetY || Math.randint(-16, 16);
@@ -127,10 +129,15 @@ phina.define("qft.Enemy.MagicDagger", {
         }
 
         if (this.phase == 12) {
-            var deg = this.time.toRadian() * 6 + this.order * 90;
+            var deg = this.time.toRadian() * 6 + this.order * 60;
             this.x = this.parentUnit.x + Math.cos(deg) * 16;
             this.y = this.parentUnit.y + Math.sin(deg) * 16;
-            this.rotation -= 3;
+            this.rotation -= 6;
+
+            if (this.isAttack) {
+//                this.phase = 13;
+                this.isAttack = false;
+            }
         }
 
         if (this.parentUnit) {
@@ -150,13 +157,15 @@ phina.define("qft.Enemy.MagicDagger", {
 
     damage: function(target) {
         this.isDamaged = true;
+        if (this.phase < 10) this.phase = 6; else this.phase = 16;
 
         //効果音
         app.playSE("tinkling");
         this.tweener.clear()
             .by({y: -64, rotation: 700}, 15, "easeOutQuad")
             .call(function() {
-                this.phase = 10;
+                if (this.phase < 10) this.phase = 0; else this.phase = 10;
+                this.isDamaged = false;
             }.bind(this));
     },
 });
