@@ -43,7 +43,7 @@ phina.define("qft.Enemy.ArchMage", {
         this.superInit(parentScene, options);
 
         //表示用スプライト
-        var lv = Math.min(this.level, 4);
+        var lv = Math.min(this.level, 3);
         this.sprite = phina.display.Sprite("monster03", 24, 32).addChildTo(this);
         this.sprite.setFrameTrimming((lv % 2) * 144 + 72, Math.floor(lv / 2) * 128, 72, 128);
 
@@ -99,10 +99,15 @@ phina.define("qft.Enemy.ArchMage", {
         }
 
         //プレイヤーが離れたら通常フェーズ
-        if (distance > 192 || !look) {
-            this.flare('balloonerace');
-            this.phase = 0;
-            this.speed = 1;
+        if (this.phase != 0) {
+            if (distance > 192 || !look) {
+                this.flare('balloonerace');
+                this.phase = 0;
+                this.speed = 1;
+                for (var i = 0; i < this.dagger.length; i++) {
+                    this.dagger[i].phase = 0;
+                }
+            }
         }
 
         //通常
@@ -130,16 +135,19 @@ phina.define("qft.Enemy.ArchMage", {
         //攻撃
         if (this.phase == 2) {
             this.flare('balloonerace');
-            this.stopTime = 60;
             for (var i = 0; i < this.dagger.length; i++) {
                 this.dagger[i].isAttack = true;
             }
             if (distance < 92) this.phase = 3;
         }
         if (this.phase == 3) {
-            this.stopTime = 30;
+            this.phase++;
             this.flare('balloonerace');
-            this.isAttack = true;
+            for (var i = 0; i < this.dagger.length; i++) {
+                this.dagger[i].phase = 10;
+            }
+        }
+        if (this.phase == 4 && this.time % 60 == 0) {
         }
 
         if (this.isAttack) {
@@ -172,9 +180,9 @@ phina.define("qft.Enemy.ArchMage", {
     firstFrame: function() {
         //マジックダガー装備
         this.dagger = [];
-        this.dagger[0] = this.parentScene.spawnEnemy(this.x, this.y, "MagicDagger", {parent: this, offsetX:  16, offsetY: -16});
-        this.dagger[1] = this.parentScene.spawnEnemy(this.x, this.y, "MagicDagger", {parent: this, offsetX: -16, offsetY: -16});
-        if (this.level > 2) this.dagger[2] = this.parentScene.spawnEnemy(this.x, this.y, "MagicDagger", {parent: this, offsetX: -32, offsetY: -8});
-        if (this.level > 3) this.dagger[3] = this.parentScene.spawnEnemy(this.x, this.y, "MagicDagger", {parent: this, offsetX:  32, offsetY: -8});
+        this.dagger[0] = this.parentScene.spawnEnemy(this.x, this.y, "MagicDagger", {parent: this, offsetX:  16, offsetY: -16, order: 0, level: this.level});
+        this.dagger[1] = this.parentScene.spawnEnemy(this.x, this.y, "MagicDagger", {parent: this, offsetX: -16, offsetY: -16, order: 1, level: this.level});
+        if (this.level > 2) this.dagger[2] = this.parentScene.spawnEnemy(this.x, this.y, "MagicDagger", {parent: this, offsetX: -32, offsetY: -8, order: 2, level: this.level});
+        if (this.level > 3) this.dagger[3] = this.parentScene.spawnEnemy(this.x, this.y, "MagicDagger", {parent: this, offsetX:  32, offsetY: -8, order: 3, level: this.level});
     },
 });

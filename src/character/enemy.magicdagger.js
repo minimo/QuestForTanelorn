@@ -49,6 +49,7 @@ phina.define("qft.Enemy.MagicDagger", {
         this.parentUnit = options.parent || null;
         this.offsetX = options.offsetX || Math.randint(-16, 16);
         this.offsetY = options.offsetY || Math.randint(-16, 16);
+        this.order = options.order || 0;
 
         this.isAttack = false;
         this.isAttack_before = false;
@@ -64,36 +65,72 @@ phina.define("qft.Enemy.MagicDagger", {
 
         //待機
         if (this.phase == 0) {
+            this.phase++;
+            var x = this.parentUnit.x + this.offsetX;
+            var y = this.parentUnit.y + this.offsetY;
+            y += Math.cos(this.time.toRadian() * 6) * 5;
+            this.tweener.clear()
+                .moveTo(x, y, 5)
+                .call(() => {
+                    this.phase++;
+                });
+        }
+
+        if (this.phase == 2) {
             this.x = this.parentUnit.x + this.offsetX;
             this.y = this.parentUnit.y + this.offsetY;
             this.y += Math.cos(this.time.toRadian() * 6) * 5;
-            this.rotation += 3;
+            this.rotation -= 3;
 
             if (this.isAttack) {
-                this.phase = 1;
+                this.phase = 3;
                 this.isAttack = false;
             }
         }
 
         //プレイヤーに向かう
-        if (this.phase == 1) {
+        if (this.phase == 3) {
             this.phase++;
             this.rotation = this.getPlayerAngle() + 135;
             this.tweener.clear()
                 .moveTo(pl.x, pl.y, 20)
                 .call(() => {
-                    this.phase = 10;
+                    this.phase++;
                 });
         }
 
         //攻撃終了
-        if (this.phase == 10) {
+        if (this.phase == 5) {
             this.phase++;
+            this.isEnableAttackCollision = false;
+            var x = this.parentUnit.x + this.offsetX;
+            var y = this.parentUnit.y + this.offsetY;
             this.tweener.clear()
-                .moveTo(this.parentUnit.x + this.offsetX, this.parentUnit.y + this.offsetY, 20)
+                .moveTo(x, y, 20)
                 .call(() => {
                     this.phase = 0;
+                    this.isEnableAttackCollision = true;
                 });
+        }
+
+        //警戒待機
+        if (this.phase == 10) {
+            this.phase++;
+            var deg = this.time.toRadian() * 6 + this.order * 60;
+            var x = this.parentUnit.x + Math.cos(deg) * 16;
+            var y = this.parentUnit.y + Math.sin(deg) * 16;
+            this.tweener.clear()
+                .moveTo(x, y, 5)
+                .call(() => {
+                    this.phase++;
+                });
+        }
+
+        if (this.phase == 12) {
+            var deg = this.time.toRadian() * 6 + this.order * 90;
+            this.x = this.parentUnit.x + Math.cos(deg) * 16;
+            this.y = this.parentUnit.y + Math.sin(deg) * 16;
+            this.rotation -= 3;
         }
 
         if (this.parentUnit) {
