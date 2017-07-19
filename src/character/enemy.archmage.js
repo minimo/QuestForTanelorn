@@ -19,7 +19,7 @@ phina.define("qft.Enemy.ArchMage", {
     power: 10,
 
     //視力
-    eyesight: 192,
+    eyesight: 256,
 
     //視野角
     viewAngle: 360,
@@ -124,13 +124,17 @@ phina.define("qft.Enemy.ArchMage", {
         //警戒
         if (this.phase == 1) {
             if (this.balloon == null) this.flare('balloon', {pattern: "...", animationInterval : 15});
-            if (distance < 128) this.phase = 2;
+            if (distance < 192) this.phase = 2;
         }
 
         //攻撃
         if (this.phase == 2) {
             this.flare('balloonerace');
-            if (this.time % 30 == 0) this.isAttack = true;
+            if (this.time % 60 == 0) {
+                for (var i = 0; i < this.dagger.length; i++) {
+                    this.dagger[i].isAttack = true;
+                }
+            }
             if (distance < 92) this.phase = 3;
         }
         if (this.phase == 3) {
@@ -163,5 +167,14 @@ phina.define("qft.Enemy.ArchMage", {
         this.frame["down"] = [3, 4, 5, 4];
         this.frame["attack"] = [3, "stop"];
         this.index = 0;
+    },
+
+    firstFrame: function() {
+        //マジックダガー装備
+        this.dagger = [];
+        this.dagger[0] = this.parentScene.spawnEnemy(this.x, this.y, "MagicDagger", {parent: this, offsetX:  16, offsetY: -16});
+        this.dagger[1] = this.parentScene.spawnEnemy(this.x, this.y, "MagicDagger", {parent: this, offsetX: -16, offsetY: -16});
+        if (this.level > 2) this.dagger[2] = this.parentScene.spawnEnemy(this.x, this.y, "MagicDagger", {parent: this, offsetX: -32, offsetY: -8});
+        if (this.level > 3) this.dagger[3] = this.parentScene.spawnEnemy(this.x, this.y, "MagicDagger", {parent: this, offsetX:  32, offsetY: -8});
     },
 });
