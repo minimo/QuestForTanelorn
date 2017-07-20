@@ -583,6 +583,22 @@ phina.define("qft.Character", {
         return Math.sqrt(x*x+y*y);
     },
 
+    //自分と他エレメントを結ぶ直線の角度（弧度法）
+    getAngle: function(element) {
+        var p1 = phina.geom.Vector2(this.x, this.y);
+        var p2 = phina.geom.Vector2(element.x, element.y);
+        var p = p2.sub(p1);
+        return p.toDegree();
+    },
+
+    //自分と他エレメントを結ぶ直線の角度（ラジアン）
+    getAngleRadian: function(element) {
+        var p1 = phina.geom.Vector2(this.x, this.y);
+        var p2 = phina.geom.Vector2(element.x, element.y);
+        var p = p2.sub(p1);
+        return p.toAngle();
+    },
+
     //物理現象情報のみオブジェクトで取得
     getPhysics: function() {
         return {
