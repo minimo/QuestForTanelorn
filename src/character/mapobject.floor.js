@@ -171,40 +171,68 @@ phina.define("qft.MapObject.Floor", {
     },
 
     //移動パスの設定
-    setPath: function(startX, startY, path) {
+    setPath: function(startX, startY, path, loop) {
         this.x = startX;
         this.y = startY;
         this.path = path;
+        this.loop = loop;
 
-        //往路距離計算
-        var sum = 0;
-        for (var i = 0; i < path.length - 1; i++) {
-            var p1 = path[i];
-            var p2 = path[i+1];
+
+        if (loop) {
+            //距離計算
+            var sum = 0;
+            for (var i = 0; i < path.length - 1; i++) {
+                var p1 = path[i];
+                var p2 = path[i+1];
+                p2.magnitude = Math.sqrt((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y));
+                sum += p2.magnitude;
+            }
+            //終点から始点までの距離を加算
+            var p1 = path[path.length - 1];
+            var p2 = path[0];
             p2.magnitude = Math.sqrt((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y));
             sum += p2.magnitude;
-        }
-        var unit = this.moveSpeed / sum;
+            var unit = this.moveSpeed / sum;
 
-        //復路距離計算
-        for (var i = path.length - 1; i > 0; i--) {
-            var p1 = path[i];
-            var p2 = path[i-1];
-            p2.magnitude_ret = Math.sqrt((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y));
-        }
+            this.tweener.clear().wait(60);
+            for (var i = 1; i < path.length; i++) {
+                var p = path[i];
+                var time = Math.floor(p.magnitude * unit);
+                this.tweener.moveTo(startX + p.x, startY + p.y, time);
+            }
+            this.tweener.moveTo(startX + path[0].x, startY + path[0].y, time);
+            this.tweener.setLoop(true);
+        } else {
+            //往路距離計算
+            var sum = 0;
+            for (var i = 0; i < path.length - 1; i++) {
+                var p1 = path[i];
+                var p2 = path[i+1];
+                p2.magnitude = Math.sqrt((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y));
+                sum += p2.magnitude;
+            }
+            var unit = this.moveSpeed / sum;
 
-        this.tweener.clear().wait(60);
-        for (var i = 1; i < path.length; i++) {
-            var p = path[i];
-            var time = Math.floor(p.magnitude * unit);
-            this.tweener.moveTo(startX + p.x, startY + p.y, time);
+            //復路距離計算
+            for (var i = path.length - 1; i > 0; i--) {
+                var p1 = path[i];
+                var p2 = path[i-1];
+                p2.magnitude_ret = Math.sqrt((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y));
+            }
+
+            this.tweener.clear().wait(60);
+            for (var i = 1; i < path.length; i++) {
+                var p = path[i];
+                var time = Math.floor(p.magnitude * unit);
+                this.tweener.moveTo(startX + p.x, startY + p.y, time);
+            }
+            this.tweener.wait(60);
+            for (var i = path.length - 2; i >= 0; i--) {
+                var p = path[i];
+                var time = Math.floor(p.magnitude_ret * unit);
+                this.tweener.moveTo(startX + p.x, startY + p.y, time);
+            }
+            this.tweener.setLoop(true);
         }
-        this.tweener.wait(60);
-        for (var i = path.length - 2; i >= 0; i--) {
-            var p = path[i];
-            var time = Math.floor(p.magnitude_ret * unit);
-            this.tweener.moveTo(startX + p.x, startY + p.y, time);
-        }
-        this.tweener.setLoop(true);
     },
 });

@@ -266,7 +266,9 @@ phina.define("qft.StageController", {
                                 break;
                             }
                         }
-                        if (path) floor.setPath(path.x, path.y, path.polyline);
+                        if (path) {
+                            floor.setPath(path.x, path.y, path.polyline, e.properties.loop);
+                        }
                     }
                     break;
                 case "check":
