@@ -147,7 +147,8 @@ phina.define("qft.Enemy.ArchMage", {
                 this.dagger[i].phase = 10;
             }
         }
-        if (this.phase == 4 && this.time % 60 == 0) {
+        if (this.phase == 4 && this.time % 90 == 0) {
+            this.isAttack = true;
         }
 
         if (this.isAttack) {
@@ -156,7 +157,7 @@ phina.define("qft.Enemy.ArchMage", {
                 var b = this.parentScene.spawnEnemy(this.x, this.y, "Bullet", {explode: true});
                 b.rotation = this.getPlayerAngle() + Math.randint(-30, 30);
             }
-            if (this.phase == 3) {
+            if (this.phase == 4) {
                 for (var i = 0; i < 4; i++) {
                     var b = this.parentScene.spawnEnemy(this.x, this.y, "Bullet", {explode: true});
                     b.rotation = this.getPlayerAngle() + Math.randint(-60, 60);

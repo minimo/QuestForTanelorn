@@ -65,7 +65,7 @@ phina.define("qft.Enemy.MagicDagger", {
         var dis = this.getDistancePlayer();
         var look = this.isLookPlayer();
 
-        //待機
+        //待機開始
         if (this.phase == 0) {
             this.phase++;
             var x = this.parentUnit.x + this.offsetX;
@@ -78,6 +78,7 @@ phina.define("qft.Enemy.MagicDagger", {
                 });
         }
 
+        //待機中
         if (this.phase == 2) {
             this.x = this.parentUnit.x + this.offsetX;
             this.y = this.parentUnit.y + this.offsetY;
@@ -90,7 +91,7 @@ phina.define("qft.Enemy.MagicDagger", {
             }
         }
 
-        //プレイヤーに向かう
+        //プレイヤー攻撃開始
         if (this.phase == 3) {
             this.phase++;
             this.rotation = this.getPlayerAngle() + 135;
@@ -115,7 +116,7 @@ phina.define("qft.Enemy.MagicDagger", {
                 });
         }
 
-        //警戒待機
+        //警戒待機開始
         if (this.phase == 10) {
             this.phase++;
             var deg = this.time.toRadian() * 6 + this.order * 60;
@@ -128,6 +129,7 @@ phina.define("qft.Enemy.MagicDagger", {
                 });
         }
 
+        //警戒待機中
         if (this.phase == 12) {
             var deg = this.time.toRadian() * 6 + this.order * 60;
             this.x = this.parentUnit.x + Math.cos(deg) * 16;
@@ -135,15 +137,65 @@ phina.define("qft.Enemy.MagicDagger", {
             this.rotation -= 6;
 
             if (this.isAttack) {
-//                this.phase = 13;
+                this.phase = 13;
                 this.isAttack = false;
             }
         }
 
+        //近接攻撃開始
+        if (this.phase == 13) {
+            this.phase++;
+            this.rotation = this.getPlayerAngle() + 135;
+            this.tweener.clear()
+                .moveTo(pl.x, pl.y, 20)
+                .call(() => {
+                    this.phase++;
+                });
+        }
+
+        //近接攻撃
+        if (this.phase == 14) {
+            var deg = this.time.toRadian() * 20 + this.order * 60;
+            this.x = this.parentUnit.x + Math.cos(deg) * 24;
+            this.y = this.parentUnit.y + Math.sin(deg) * 24;
+            this.rotation -= 6;
+        }
+
+        //攻撃終了
+        if (this.phase == 15) {
+            this.phase++;
+            this.isEnableAttackCollision = false;
+            var x = this.parentUnit.x + this.offsetX;
+            var y = this.parentUnit.y + this.offsetY;
+            this.tweener.clear()
+                .moveTo(x, y, 5)
+                .call(() => {
+                    this.phase = 10;
+                    this.isEnableAttackCollision = true;
+                });
+        }
+
+        //親ユニット同期
         if (this.parentUnit) {
             this.direction = this.parentUnit.direction;
             if (this.parentUnit.hp == 0) this.remove();
         }
+
+        //飛び道具迎撃
+        this.parentScene.playerLayer.children.forEach(function(e) {
+            if (e instanceof qft.PlayerAttack && e.isCollision) {
+                if (e.type != "arrow" && e.type != "masakari") return;
+                var dis = this.getDistance(e);
+                if (dis < 64) {
+                    this.phase = 20;
+                    this.tweener.clear()
+                        .moveTo(e.x, e.y, 3)
+                        .call(() => {
+                            this.phase = 10;
+                        });
+                }
+            }
+        }.bind(this));
 
         this.isAttack_before = this.isAttack;
     },
