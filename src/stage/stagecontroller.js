@@ -219,6 +219,21 @@ phina.define("qft.StageController", {
                             var f = eval(sc);
                             enemy.on('dead', f);
                         }
+                        //移動パス設定
+                        if (e.properties.path) {
+                            var path = null;
+                            var id = e.properties.path;
+                            for (var i = 0; i < events.length; i++) {
+                                if (events[i].id == id) {
+                                    path = events[i];
+                                    break;
+                                }
+                            }
+                            if (path) {
+                                enemy.path = path;
+                                enemy.loop = e.properties.loop || false;
+                            }
+                        }
                     } else {
                         console.warn("unknown enemy: "+e.name);
                     }
