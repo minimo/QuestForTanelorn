@@ -49,7 +49,7 @@ phina.define("qft.Enemy.ArchMage", {
 
         this.hp += this.level * 5;
         this.power += this.level * 2;
-        this.point += this.level * 100;
+        this.point += this.level * 300;
 
         this.setAnimation("walk");
         this.animationInterval = 10;
@@ -71,7 +71,6 @@ phina.define("qft.Enemy.ArchMage", {
         var distance = this.getDistancePlayer();
 
         //これ以上進めない場合は折り返す
-        var cantescape = false;
         if (this._collision[1].hit) {
             this.direction = 180;
         } else if (this._collision[3].hit) {
