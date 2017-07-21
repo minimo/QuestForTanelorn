@@ -609,4 +609,53 @@ phina.define("qft.Character", {
             rebound: this.rebound,
         };
     },
+
+    //移動パスの設定
+    setPath: function(path, loop) {
+        this.path = [];
+        this.loop = loop;
+
+        //パス情報の作成
+        var sum = 0;
+        var ptb = null;
+        for (var i = 0; i < path.polyline.length; i++) {
+            var pt = phina.geom.Vector2(path.x + path.polyline[i].x, path.y + path.polyline[i].y);
+            if (i > 0) {
+                sum += Math.floor(ptb.distance(pt));
+            }
+            pt.time = sum;
+            this.path.push(pt);
+            ptb = pt;
+        }
+
+        //ループ有り指定の場合、始点の座標を終点に加える
+        if (loop) {
+            var end = phina.geom.Vector2(path.x + path.polyline[path.polyline.length - 1].x, path.y + path.polyline[path.polyline.length - 1].y);
+            var start = phina.geom.Vector2(path.x + path.polyline[0].x, path.y + path.polyline[0].y);
+            sum += Math.floor(start.distance(end));
+            start.time = sum;
+            this.path.push(start);
+        }
+        this.path.maxTime = sum;
+
+        return this;
+    },
+
+    //パス座標の取得
+    getPathPosition: function(time) {
+        if (!this.path || time < 0) return null;
+        time %= this.path.maxTime;
+
+        var len = this.path.length;
+        for (var i = 0; i < len; i++) {
+            var p = this.path[i];
+            if (time == p.time) return p;
+            if (time < p.time) {
+                var p2 = this.path[i - 1];
+                var t = (time - p2.time) / (p.time - p2.time);
+                return phina.geom.Vector2.lerp(p2, p, t);
+            }
+        }
+        return null;
+    },
 });

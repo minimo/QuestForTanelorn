@@ -69,12 +69,19 @@ phina.define("qft.Enemy.Garuda", {
             this.frameIndex = that.sprite.frameIndex;
         }
 
-        this.setAnimation("down");
+        this.setAnimation("walk");
         this.animationInterval = 6;
         this.setupLifeGauge();
+
+        this.moveTime = 0;
     },
 
     algorithm: function() {
+        if (this.path) {
+            var p = this.getPathPosition(this.moveTime);
+            this.setPosition(p.x, p.y);
+        }
+        this.moveTime += 2;
     },
 
     setupAnimation: function() {

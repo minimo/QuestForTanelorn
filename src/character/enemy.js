@@ -36,7 +36,7 @@ phina.define("qft.Enemy", {
     //視野角
     viewAngle: 90,
 
-    //進行方向（0:右 180:左）
+    //進行方向（0:右 180:左 270:上 90:下）
     direction: 0,
 
     //ポイント
@@ -306,7 +306,7 @@ phina.define("qft.Enemy", {
     },
 
     //汎用往復アルゴリズム（陸上）
-    groundRoundtripAlgorithm: function(attack, dis, look) {
+    roundtripAlgorithm_ground: function(attack, dis, look) {
         var pl = this.parentScene.player;
         if (dis === undefined) dis = this.getDistancePlayer();
         if (look === undefined) look = this.isLookPlayer();
@@ -344,6 +344,48 @@ phina.define("qft.Enemy", {
             this.vx =  this.speed;
             if (this.direction == 180) {
                 this.vx *= -1;
+            }
+        }
+    },
+
+    //汎用往復アルゴリズム（空中）
+    roundtripAlgorithm_flying: function(attack, dis, look) {
+        var pl = this.parentScene.player;
+        if (dis === undefined) dis = this.getDistancePlayer();
+        if (look === undefined) look = this.isLookPlayer();
+
+        var chk1 = 1;
+        var chk2 = 3;
+        if (this.vertical) {
+            chk1 = 0;
+            chk2 = 2;
+        }
+        //壁に当たったら折り返す
+        var turn = false;
+        if (this._collision[chk1].hit || this._collision[chk2].hit) turn = true;
+
+        //テリトリー指定
+        if (!look && this.territory) {
+            if (this.vertical) {
+                //垂直方向チェック
+                var ty = this.y - this.firstY;
+                if (Math.abs(ty) > this.territory) {
+                    if (ty > 0) {
+                        this.direction = 270;
+                    } else {
+                        this.direction = 90;
+                    }
+                }
+            } else {
+                //水平方向チェック
+                var tx = this.x - this.firstX;
+                if (Math.abs(tx) > this.territory) {
+                    if (tx > 0) {
+                        this.direction = 180;
+                    } else {
+                        this.direction = 0;
+                    }
+                }
             }
         }
     },

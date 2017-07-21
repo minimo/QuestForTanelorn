@@ -229,10 +229,7 @@ phina.define("qft.StageController", {
                                     break;
                                 }
                             }
-                            if (path) {
-                                enemy.path = path;
-                                enemy.loop = e.properties.loop || false;
-                            }
+                            if (path) enemy.setPath(path, e.properties.loop || false);
                         }
                     } else {
                         console.warn("unknown enemy: "+e.name);
@@ -271,7 +268,7 @@ phina.define("qft.StageController", {
                         floor.player = this.parentScene.player;
                         floor.parentScene = this.parentScene;
                     }
-                    //移動パスの取得
+                    //移動パス設定
                     var path = null;
                     if (e.properties.moveType == 'path' && e.properties.path) {
                         var id = e.properties.path;

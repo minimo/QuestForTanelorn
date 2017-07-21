@@ -177,7 +177,6 @@ phina.define("qft.MapObject.Floor", {
         this.path = path;
         this.loop = loop;
 
-
         if (loop) {
             //距離計算
             var sum = 0;
