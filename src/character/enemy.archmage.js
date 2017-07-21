@@ -60,6 +60,9 @@ phina.define("qft.Enemy.ArchMage", {
         this.phase = 0;
         this.isAttack = false;
 
+        //接近戦経過時間
+        this.nearCount = 0;
+
         this.on('damaged', e => {
             if (e.direction == 0) this.direction = 180; else this.direction = 0;
         });

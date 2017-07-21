@@ -96,7 +96,7 @@ phina.define("qft.Enemy.MagicDagger", {
             this.phase++;
             this.rotation = this.getPlayerAngle() + 135;
             this.tweener.clear()
-                .moveTo(pl.x, pl.y, 20)
+                .moveTo(pl.x, pl.y, 20, "easeInQuad")
                 .call(() => {
                     this.phase++;
                 });
@@ -109,7 +109,8 @@ phina.define("qft.Enemy.MagicDagger", {
             var x = this.parentUnit.x + this.offsetX;
             var y = this.parentUnit.y + this.offsetY;
             this.tweener.clear()
-                .moveTo(x, y, 20)
+                .moveTo(x, y, 15, "easeInOutQuad")
+                .wait(5)
                 .call(() => {
                     this.phase = 0;
                     this.isEnableAttackCollision = true;
@@ -213,7 +214,7 @@ phina.define("qft.Enemy.MagicDagger", {
 
     damage: function(target) {
         this.isDamaged = true;
-        if (this.phase < 10) this.phase = 6; else this.phase = 16;
+        if (this.phase < 10) this.phase = 6; else this.phase = 17;
 
         //効果音
         app.playSE("tinkling");
