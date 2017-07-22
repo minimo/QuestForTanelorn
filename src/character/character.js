@@ -91,6 +91,10 @@ phina.define("qft.Character", {
     //活動フラグ
     isActive: true,
 
+    //影表示
+    isShadow: false,
+    shadowY: 0,
+
     //識別フラグ
     isPlayer: false,
     isEnemy: false,
@@ -156,7 +160,7 @@ phina.define("qft.Character", {
         this.on('enterframe', function(e) {
             if (this.parentScene.pauseScene) return;
 
-            //初期座標の記録
+            //初期座標の記録と初回フレーム処理
             if (this.time == 0) {
                 this.firstX = this.x;
                 this.firstY = this.y;
@@ -251,13 +255,37 @@ phina.define("qft.Character", {
                 this.floorObject = null;
             }
 
+            //影処理
+            if (this.shadowSprite) {
+                this.shadowSprite.x = this.x;
+                this.shadowSprite.y = this.shadowY;
+            }
+
             this.time++;
             this.beforeAnimation = this.nowAnimation;
+        });
+
+        this.on('added', () => {
+            this.one('enterframe', () => {
+                if (this.isShadow) this.setupShadow();
+            });
+        });
+
+        this.on('removed', () => {
+            if(this.shadowSprite) this.shadowSprite.remove();
         });
     },
 
     //一回目のenterframeで一度だけ呼ばれる
     firstFrame: function() {
+    },
+
+    //影表示セットアップ
+    setupShadow: function() {
+        var that = this;
+        this.shadowSprite = phina.display.Sprite("shadow", 24, 8)
+            .addChildTo(this.parentScene.shadowLayer)
+            .setAlpha(0.5);
     },
 
     //当たり判定情報初期化
@@ -362,36 +390,55 @@ phina.define("qft.Character", {
         this._collision[2].hit = null;
         this._collision[3].hit = null;
 
-        var that = this;
         this.isOnLadder = false;
         this.isOnStairs = false;
 
+        if (this.shadowSprite) {
+            //キャラクターの下方向にレイを飛ばして直下の地面座標を取る
+            this.shadowY = 99999;
+            var p1 = phina.geom.Vector2(this.x, this.y);
+            var p2 = phina.geom.Vector2(this.x, this.y + 128);
+            this.shadowSprite.visible = false;
+        }
+
         //地形接触判定
-        this.parentScene.collisionLayer.children.forEach(function(e) {
-            if (that.isDrop) return;
-            if (e.ignore || e == that.throughFloor) return;
+        this.parentScene.collisionLayer.children.forEach(e => {
+            if (this.isDrop) return;
+            if (e.ignore || e == this.throughFloor) return;
             if (e.type == "ladder" || e.type == "stairs") return;
 
             //上側
-            if (that.vy < 0  && e.hitTestElement(that._collision[0])) that._collision[0].hit = e;
+            if (this.vy < 0  && e.hitTestElement(this._collision[0])) this._collision[0].hit = e;
             //下側
-            if (that.vy >= 0 && e.hitTestElement(that._collision[2])) that._collision[2].hit = e;
+            if (this.vy >= 0 && e.hitTestElement(this._collision[2])) this._collision[2].hit = e;
             //右側
-            if (that.vx > 0  && e.hitTestElement(that._collision[1])) that._collision[1].hit = e;
+            if (this.vx > 0  && e.hitTestElement(this._collision[1])) this._collision[1].hit = e;
             //左側
-            if (that.vx < 0  && e.hitTestElement(that._collision[3])) that._collision[3].hit = e;
+            if (this.vx < 0  && e.hitTestElement(this._collision[3])) this._collision[3].hit = e;
+
+            if (this.shadowSprite) {
+                var x = e.x - e.width / 2;
+                var y = e.y - e.height / 2;
+                var p3 = phina.geom.Vector2(x, y);
+                var p4 = phina.geom.Vector2(x + e.width, y);                    
+                if (phina.geom.Collision.testLineLine(p1, p2, p3, p4) && y < this.shadowY) {
+                    this.shadowSprite.setPosition(this.x, y);
+                    this.shadowSprite.visible = true;
+                    this.shadowY = y;
+                }
+            }
         });
 
         //当たり判定結果反映
         this.collisionProcess();
 
         //はしごのみ判定
-        this.parentScene.collisionLayer.children.forEach(function(e) {
+        this.parentScene.collisionLayer.children.forEach(e => {
             //梯子判定
             if (e.type == "ladder" || e.type == "stairs") {
-                if (that.ladderCollision && e.hitTestElement(that.ladderCollision)) {
-                    that.isOnLadder = true;
-                    that.isOnStairs = (e.type == "stairs");
+                if (this.ladderCollision && e.hitTestElement(this.ladderCollision)) {
+                    this.isOnLadder = true;
+                    this.isOnStairs = (e.type == "stairs");
                 }
                 return;
             }

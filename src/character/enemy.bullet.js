@@ -41,6 +41,9 @@ phina.define("qft.Enemy.Bullet", {
     //爆発フラグ
     explode: false,
 
+    //影表示フラグ
+    isShadow: false,
+
     init: function(parentScene, options) {
         options = (options || {}).$extend({width: 20, height: 20});
         this.superInit(parentScene, options);

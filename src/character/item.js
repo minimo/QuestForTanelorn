@@ -40,6 +40,9 @@ phina.define("qft.Item", {
     //アニメーション進行可能フラグ   
     isAdvanceAnimation: false,
 
+    //影表示フラグ
+    isShadow: true,
+
     init: function(parentScene, options) {
         this.superInit(parentScene, {width: 16, height: 16});
 

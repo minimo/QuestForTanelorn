@@ -136,6 +136,9 @@ phina.define("qft.StageController", {
         //バックグラウンドレイヤ
         mapLayer.backgroundLayer = phina.display.DisplayElement().addChildTo(mapLayer);
 
+        //影表示レイヤ
+        mapLayer.shadowLayer = phina.display.DisplayElement().addChildTo(mapLayer);
+
         //オブジェクト管理レイヤ
         mapLayer.objLayer = phina.display.DisplayElement().addChildTo(mapLayer);
 

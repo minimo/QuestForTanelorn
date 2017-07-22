@@ -60,6 +60,9 @@ phina.define("qft.Player", {
     //ダミー表示スプライト
     dummy: null,
 
+    //影表示フラグ
+    isShadow: true,
+
     //前フレームの情報
     before: {
         //操作系

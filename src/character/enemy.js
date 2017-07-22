@@ -48,6 +48,9 @@ phina.define("qft.Enemy", {
     //スーパーアーマー状態フラグ
     isSuperArmor: false,
 
+    //影表示フラグ
+    isShadow: true,
+
     //属性ダメージ倍率
     damageSlash: 1,
     damageSting: 1,

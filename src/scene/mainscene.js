@@ -561,6 +561,7 @@ phina.define("qft.MainScene", {
         if (this.objLayer) this.objLayer.removeChildren();
         if (this.mapImageLayer) this.mapImageLayer.removeChildren();
         if (this.effectLayer) this.effectLayer.removeChildren();
+        if (this.shadowLayer) this.shadowLayer.removeChildren();
     },
 
     //マップレイヤの切替
@@ -578,6 +579,7 @@ phina.define("qft.MainScene", {
         this.objLayer = layer.objLayer;
         this.mapImageLayer = layer.mapImageLayer;
         this.effectLayer = layer.effectLayer;
+        this.shadowLayer = layer.shadowLayer;
 
         this.player.remove();
         this.player.addChildTo(layer.playerLayer);
