@@ -977,7 +977,7 @@
     <property name="territory" type="int" value="256"/>
    </properties>
   </object>
-  <object id="197" x="4088" y="848">
+  <object id="197" type="path" x="4088" y="848">
    <polyline points="0,0 -72,216 -232,216"/>
   </object>
  </objectgroup>
