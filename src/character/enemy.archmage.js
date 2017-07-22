@@ -166,6 +166,24 @@ phina.define("qft.Enemy.ArchMage", {
                 }
             }
         }
+
+        if (distance < 96) {
+            this.nearCount++;
+            if (this.nearCount > 90) {
+                this.teleport();
+                this.nearCount = 0;
+            }
+        } else {
+            this.nearCount -= 10;
+            if (this.nearCount < 0) this.nearCount = 0;
+        }
+    },
+
+    //テレポート
+    teleport: function() {
+        for (var i = 0; i < this.dagger.length; i++) {
+            this.dagger[i].phase = 10;
+        }
     },
 
     setupAnimation: function() {
