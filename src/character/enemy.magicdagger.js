@@ -35,6 +35,9 @@ phina.define("qft.Enemy.MagicDagger", {
     //地形無視
     ignoreCollision: true,
 
+    //影表示フラグ
+    isShadow: false,
+
     //得点
     point: 0,
 
