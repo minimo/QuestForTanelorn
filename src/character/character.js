@@ -282,12 +282,17 @@ phina.define("qft.Character", {
 
     //影表示セットアップ
     setupShadow: function() {
+        var that = this;
         var sc = this.width / 24;
         if (sc < 1) sc += 0.2;
         this.shadowSprite = phina.display.Sprite("shadow", 24, 8)
             .addChildTo(this.parentScene.shadowLayer)
             .setAlpha(0.5)
             .setScale(sc, 1.0);
+        this.shadowSprite.update = function() {
+            this.alpha = 0.5;
+            if (that.alpha < 0.5) this.alpha = that.alpha;
+        }
     },
 
     //当たり判定情報初期化
@@ -395,7 +400,7 @@ phina.define("qft.Character", {
         this.isOnLadder = false;
         this.isOnStairs = false;
 
-        if (this.shadowSprite) {
+        if (this.onScreen && this.shadowSprite) {
             this.shadowY = 99999;
             var p1 = phina.geom.Vector2(this.x, this.y);
             var p2 = phina.geom.Vector2(this.x, this.y + 128);
@@ -417,13 +422,13 @@ phina.define("qft.Character", {
             //左側
             if (this.vx < 0  && e.hitTestElement(this._collision[3])) this._collision[3].hit = e;
 
-            if (this.shadowSprite) {
+            if (this.onScreen && this.shadowSprite) {
                 //キャラクターの下方向にレイを飛ばして直下の地面座標を取る
                 var x = e.x - e.width / 2;
                 var y = e.y - e.height / 2;
                 var p3 = phina.geom.Vector2(x, y);
-                var p4 = phina.geom.Vector2(x + e.width, y);                    
-                if (phina.geom.Collision.testLineLine(p1, p2, p3, p4) && y < this.shadowY) {
+                var p4 = phina.geom.Vector2(x + e.width, y);
+                if (y < this.shadowY && phina.geom.Collision.testLineLine(p1, p2, p3, p4)) {
                     this.shadowSprite.setPosition(this.x, y);
                     this.shadowSprite.visible = true;
                     this.shadowY = y;
