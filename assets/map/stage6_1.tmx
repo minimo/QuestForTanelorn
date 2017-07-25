@@ -1456,7 +1456,7 @@
   <object id="108" type="path" x="888" y="1936">
    <polyline points="0,0 0,-222.085 -376,-464"/>
   </object>
-  <object id="111" name="bug" type="itembox" x="1548" y="3056" width="32" height="32"/>
+  <object id="111" name="bag" type="itembox" x="1548" y="3056" width="32" height="32"/>
   <object id="112" name="jewel" type="itembox" x="1480" y="1872" width="32" height="32"/>
  </objectgroup>
 </map>
