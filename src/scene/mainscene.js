@@ -493,6 +493,14 @@ phina.define("qft.MainScene", {
                 this.stageController = qft.Stage6(this);
                 this.switchMap(this.stageController.mapLayer[0]);
                 break;
+            case 7:
+                this.stageController = qft.Stage7(this);
+                this.switchMap(this.stageController.mapLayer[0]);
+                break;
+            case 8:
+                this.stageController = qft.Stage8(this);
+                this.switchMap(this.stageController.mapLayer[0]);
+                break;
             case 9:
                 this.stageController = qft.Stage9(this);
                 this.switchMap(this.stageController.mapLayer[0]);

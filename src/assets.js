@@ -143,6 +143,24 @@ phina.define("qft.Assets", {
                             "stage6_1": "assets/map/stage6_1.tmx",
                         },
                     };
+                case "stage7":
+                    return {
+                        sound: {
+                            "bgm7": "assets/sound/DS-064m.mp3",
+                        },
+                        tmx: {
+                            "stage7_1": "assets/map/stage7_1.tmx",
+                        },
+                    };
+                case "stage8":
+                    return {
+                        sound: {
+                            "bgm8": "assets/sound/DS-064m.mp3",
+                        },
+                        tmx: {
+                            "stage8_1": "assets/map/stage8_1.tmx",
+                        },
+                    };
                 case "stage9":
                     return {
                         sound: {
