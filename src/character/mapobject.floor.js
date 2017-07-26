@@ -52,7 +52,7 @@ phina.define("qft.MapObject.Floor", {
         this.moveLength = options.properties.moveLength || 0;
         this.moveRadius = options.properties.moveRadius || 64;
         this.moveSpeed = options.properties.moveSpeed || 60;
-        this.moveWait = options.properties.moveWait || 60;
+        this.moveWait = (options.properties.moveWait !== undefined)? options.properties.moveWait: 60;
 
         //始点と終点
         this.startX = options.x + (options.width || 16) / 2;
