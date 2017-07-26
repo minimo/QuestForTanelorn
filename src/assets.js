@@ -143,6 +143,15 @@ phina.define("qft.Assets", {
                             "stage6_1": "assets/map/stage6_1.tmx",
                         },
                     };
+                case "stage9":
+                    return {
+                        sound: {
+                            "bgm9": "assets/sound/DS-064m.mp3",
+                        },
+                        tmx: {
+                            "stage9_1": "assets/map/stage9_1.tmx",
+                        },
+                    };
                 default:
                     throw "invalid assetType: " + options.assetType;
             }
