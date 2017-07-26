@@ -24,6 +24,9 @@ phina.define("qft.Enemy.Flame", {
     //寿命
     lifeSpan: 120,
 
+    //影表示フラグ
+    isShadow: false,
+
     init: function(parentScene, options) {
         options = (options || {}).$extend({width: 16, height: 20});
         this.superInit(parentScene, options);

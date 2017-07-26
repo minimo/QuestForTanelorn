@@ -41,7 +41,7 @@ phina.define("qft.Item", {
     isAdvanceAnimation: false,
 
     //影表示フラグ
-    isShadow: true,
+    isShadow: false,
 
     init: function(parentScene, options) {
         this.superInit(parentScene, {width: 16, height: 16});
