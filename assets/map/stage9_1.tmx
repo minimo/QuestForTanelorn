@@ -1436,6 +1436,7 @@
    <properties>
     <property name="index" type="int" value="6"/>
     <property name="moveSpeed" type="int" value="120"/>
+    <property name="moveType" value="path"/>
     <property name="path" type="int" value="108"/>
    </properties>
   </object>
