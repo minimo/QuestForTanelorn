@@ -148,11 +148,14 @@ phina.define("qft.MapObject.Floor", {
         }
 
         //プレイヤーが上に乗っているか判定
-        if (this.parentScene.player.floorObject) {
-            if (this.parentScene.player.floorObject.parentObject === this)
-                this.isOnPlayer = true;
-        } else {
-            this.isOnPlayer = false;
+        var pl = this.parentScene.player;
+        this.isOnPlayer = false;
+        if (pl.floorObject && pl.floorObject.parentObject === this) {
+            this.isOnPlayer = true;
+            //床が下降している時のみ
+            if (!pl.isJump && this.collision.vy > 0) {
+                pl.y = this.y - this.height * 0.5;
+            }
         }
     },
 
