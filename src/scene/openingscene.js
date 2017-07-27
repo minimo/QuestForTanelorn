@@ -143,11 +143,14 @@ phina.define("qft.OpeningScene", {
 
     //世界地図
     worldmap: function() {
-        var sprite1 = phina.display.Sprite("openingmap").addChildTo(this.imageLayer).setPosition(SC_W * 0.5, -SC_H * 0.3).setScale(0.8);
-        sprite1.alpha = 0;
+        var sprite1 = phina.display.Sprite("openingmap")
+            .addChildTo(this.imageLayer)
+            .setPosition(SC_W * 0.5, -SC_H * 0.25)
+            .setScale(0.8)
+            .setAlpha(0.0);
         sprite1.tweener.clear()
-            .by({alpha: 1.0, y: 250}, 7000)
-            .by({alpha: -1.0, y: 250}, 7000)
+            .by({alpha: 1.0, y: 200}, 7000)
+            .by({alpha: -1.0, y: 200}, 7000)
             .call(function(){
                 sprite1.remove();
                 this.seq++;
