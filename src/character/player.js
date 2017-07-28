@@ -63,6 +63,12 @@ phina.define("qft.Player", {
     //影表示フラグ
     isShadow: true,
 
+    //オートパイロット
+    isAuto: false,
+
+    //オートパイロット時操作配列
+    autoCommand: null,
+
     //前フレームの情報
     before: {
         //操作系
@@ -141,6 +147,9 @@ phina.define("qft.Player", {
         //最後に床上にいた場所を保存
         this.lastOnFloorX = 0;
         this.lastOnFloorY = 0;
+
+        //オートパイロット時操作配列
+        this.autoCommand = [];
     },
 
     update: function(app) {
@@ -181,6 +190,15 @@ phina.define("qft.Player", {
         if (vp.getKey("left")) ct.left = true;
         if (vp.getKey("Z")) ct.attack = true;
         if (vp.getKey("X")) ct.jump = true;
+
+        //オートパイロット
+        if (this.isAuto) {
+            ct = {};
+            if (this.autoCommand && this.autoCommand.length > 0) {
+                var cmd = this.autoCommand.shift();
+                ct.$extend(cmd);
+            }
+        }
 
         if (!this.isControl) ct = {};
         if (this.stopTime == 0) {
