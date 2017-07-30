@@ -638,7 +638,10 @@ phina.define("qft.Player", {
         }
         //食べ物
         if (item.isFood) {
-            this.hp += item.power;
+            //ステージ進度によって回復量が増加
+            var power = item.power;
+            if (this.parentScene.stageNumber > 4) power *= 1.5;
+            this.hp += power;
             app.playSE("recovery");
             if (this.hp > this.hpMax) this.hp = this.hpMax;
             this.parentScene.totalScore += (item.point || 0);
