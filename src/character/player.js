@@ -1157,6 +1157,16 @@ phina.define("qft.PlayerDummy", {
         this.bx = 0;
         this.by = 0;
         this.time = 0;
+
+        //影の追加
+        var that = this;
+        var sc = 16 / 24;
+        if (sc < 1) sc += 0.2;
+        this.shadowSprite = phina.display.Sprite("shadow", 24, 8)
+            .addChildTo(this)
+            .setAlpha(0.5)
+            .setScale(sc, 1.0)
+            .setPosition(0, 16);
     },
 
     update: function() {
