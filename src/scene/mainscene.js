@@ -305,8 +305,12 @@ phina.define("qft.MainScene", {
         this.screenX = -this.mapLayer.x;
         this.screenY = -this.mapLayer.y;
 
-        //バックグラウンドのX座標を全体の割合から計算
-        this.backgroundImage.x = -Math.floor(this.backgroundImage.width * (this.player.x / map.width)*0.01);
+        if (this.stageController.isBackgroundMove) {
+            //バックグラウンドのX座標を全体の割合から計算
+            this.backgroundImage.x = -Math.floor(this.backgroundImage.width * (this.player.x / map.width)*0.05);
+        } else {
+            this.backgroundImage.x = this.stageController.backgroundX;
+        }
 
         this.time++;
     },

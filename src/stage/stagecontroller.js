@@ -34,6 +34,10 @@ phina.define("qft.StageController", {
     //マップトリガイベント
     event: null,
 
+    //バックグラウンド設定
+    isBackgroundMove: true,
+    backgroundX: -320,
+
     init: function(parentScene) {
         this.superInit();
 
