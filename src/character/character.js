@@ -436,6 +436,8 @@ phina.define("qft.Character", {
             }
         });
 
+        if (this.isCatchLadder) this.shadowSprite.visible = false;
+
         //当たり判定結果反映
         this.collisionProcess();
 
