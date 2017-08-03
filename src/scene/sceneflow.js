@@ -6,6 +6,7 @@
  *
  */
 
+//メインシーンフロー
 phina.define("qft.SceneFlow", {
     superClass: "phina.game.ManagerScene",
 
@@ -57,6 +58,7 @@ phina.define("qft.SceneFlow", {
     }
 });
 
+//復帰用
 phina.define("qft.SceneFlow.Resume", {
     superClass: "phina.game.ManagerScene",
 

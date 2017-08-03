@@ -13,7 +13,7 @@ phina.define("qft.EndingScene", {
         this.superInit({width: SC_W, height: SC_H});
         this.parentScene = parentScene;
 
-        //ƒoƒbƒNƒOƒ‰ƒEƒ“ƒh
+        //ãƒãƒƒã‚¯ã‚°ãƒ©ã‚¦ãƒ³ãƒ‰
         var param = {
             width:SC_W,
             height:SC_H,
