@@ -6,7 +6,7 @@
  *
  */
 
-//ƒgƒDƒ‹[ƒGƒ“ƒfƒBƒ“ƒO
+//ãƒˆã‚¥ãƒ«ãƒ¼ã‚¨ãƒ³ãƒ‡ã‚£ãƒ³ã‚°
 phina.define("qft.EndingScene.true", {
     superClass: "phina.display.DisplayScene",
     
@@ -15,15 +15,15 @@ phina.define("qft.EndingScene.true", {
         this.parentScene = parentScene;
 
         this.text = [
-            "”‘½‚Ì‹ê“ï‚ğæ‚è‰z‚¦",
-            "‚ ‚È‚½‚Í‹‚ÉŠy‰€‚Ö‚Ì“ü‚èŒû‚Ö‚Æ“’B‚µ‚½",
-            "”à‚ÌŒü‚±‚¤‚É‚ÍŠK’i‚ª‚ ‚è",
-            "‚»‚ÌŠK’i‚Í—y‚©“Vã‚Ö‚Æ‘±‚¢‚Ä‚¢‚é",
-            "ŠK’i‚ğ¸‚è‚Ü‚·‚©H",
+            "æ•°å¤šã®è‹¦é›£ã‚’ä¹—ã‚Šè¶Šãˆ",
+            "ã‚ãªãŸã¯é‚ã«æ¥½åœ’ã¸ã®å…¥ã‚Šå£ã¸ã¨åˆ°é”ã—ãŸ",
+            "æ‰‰ã®å‘ã“ã†ã«ã¯éšæ®µãŒã‚ã‚Š",
+            "ãã®éšæ®µã¯é¥ã‹å¤©ä¸Šã¸ã¨ç¶šã„ã¦ã„ã‚‹",
+            "éšæ®µã‚’æ˜‡ã‚Šã¾ã™ã‹ï¼Ÿ",
             "",
         ];
 
-        //ƒoƒbƒNƒOƒ‰ƒEƒ“ƒh
+        //ãƒãƒƒã‚¯ã‚°ãƒ©ã‚¦ãƒ³ãƒ‰
         var param = {
             width:SC_W,
             height:SC_H,
@@ -38,10 +38,10 @@ phina.define("qft.EndingScene.true", {
             .set({alpha: 0})
             .to({alpha: 0.5}, 1000);
 
-        //ƒCƒ[ƒW•\¦—pƒŒƒCƒ„
+        //ã‚¤ãƒ¡ãƒ¼ã‚¸è¡¨ç¤ºç”¨ãƒ¬ã‚¤ãƒ¤
         this.imageLayer = phina.display.DisplayElement().addChildTo(this);
 
-        //ã‰º•‘Ñ
+        //ä¸Šä¸‹é»’å¸¯
         param.height = SC_H * 0.15;
         this.bar1 = phina.display.RectangleShape(param).addChildTo(this).setOrigin(0, 0).setPosition(0, -SC_H*0.15)
         this.bar2 = phina.display.RectangleShape(param).addChildTo(this).setOrigin(0, 0).setPosition(0, SC_H)
@@ -49,7 +49,7 @@ phina.define("qft.EndingScene.true", {
         this.time = 0;
 
         this.one('enterframe', () => {
-            //‚a‚f‚lÄ¶
+            //ï¼¢ï¼§ï¼­å†ç”Ÿ
             app.playBGM("endingbgm");
         };
     },
