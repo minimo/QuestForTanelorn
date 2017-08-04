@@ -9,7 +9,7 @@ phina.define("qft.Enemy.IntelligentSword", {
     superClass: "qft.Enemy",
 
     //ヒットポイント
-    hp: 50,
+    hp: 20,
 
     //重力加速度
     gravity: 0,
@@ -21,13 +21,24 @@ phina.define("qft.Enemy.IntelligentSword", {
     deffence: 10,
 
     //攻撃力
-    power: 10,
+    power: 20,
 
-    //地形無視
-    ignoreCollision: true,
+    //視力
+    eyesight: 256,
+
+    //視野角
+    viewAngle: 360,
 
     //得点
-    point: 0,
+    point: 2000,
+
+    //アイテムドロップ率（％）
+    dropRate: 10,
+    dropItem: ITEM_LONGSWORD,
+
+    //レアドロップ率（％）
+    rareDropRate: 1,
+    rareDropItem: ITEM_LONGSWORD,
 
     init: function(parentScene, options) {
         options = (options || {}).$extend({width: 16, height: 16});
@@ -38,15 +49,31 @@ phina.define("qft.Enemy.IntelligentSword", {
         this.rotation = options.rotation || 0;
         this.velocity = options.velocity || this.velocity;
 
-        var index = 10 + Math.min(this.level, this.maxIndex);
-        this.sprite = phina.display.Sprite("weapons", 24, 24).addChildTo(this).setFrameIndex(index);
-        this.setAnimation("pattern1");
+        this.sprite = phina.display.Sprite("weapons", 24, 24)
+            .addChildTo(this)
+            .setFrameIndex(10 + Math.min(9, this.level))
+            .setRotation(135);
+        this.sprite.tweener.clear()
+            .to({y: -10}, 3000, "easeInOutSine")
+            .to({y: 20}, 3000, "easeInOutSine")
+            .setLoop(true);
 
-        this.on('dead', function() {
-        });
+        this.setAnimation("pattern1");
     },
 
     algorithm: function() {
+        //プレイヤーとの距離
+        var dis = this.getDistancePlayer();
+        var look = this.isLookPlayer();
+
+        if (dis < 128) {
+        }
+
+        if (look) {
+            this.flare('balloon', {pattern: "!", lifeSpan: 15, y: 0});
+        } else {
+            this.flare('balloonerace');
+        }
     },
 
     setupAnimation: function() {
