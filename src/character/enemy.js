@@ -309,7 +309,7 @@ phina.define("qft.Enemy", {
     },
 
     //汎用往復アルゴリズム（陸上）
-    roundtripAlgorithm_ground: function(attack, dis, look) {
+    roundtripAlgorithm_ground: function(dis, look) {
         var pl = this.parentScene.player;
         if (dis === undefined) dis = this.getDistancePlayer();
         if (look === undefined) look = this.isLookPlayer();
@@ -352,7 +352,7 @@ phina.define("qft.Enemy", {
     },
 
     //汎用往復アルゴリズム（空中）
-    roundtripAlgorithm_flying: function(attack, dis, look) {
+    roundtripAlgorithm_flying: function(dis, look) {
         var pl = this.parentScene.player;
         if (dis === undefined) dis = this.getDistancePlayer();
         if (look === undefined) look = this.isLookPlayer();
