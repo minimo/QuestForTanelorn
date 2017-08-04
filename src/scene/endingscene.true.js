@@ -51,7 +51,7 @@ phina.define("qft.EndingScene.true", {
         this.one('enterframe', () => {
             //ＢＧＭ再生
             app.playBGM("endingbgm");
-        };
+        });
     },
 
     update: function(app) {
