@@ -24,13 +24,16 @@ phina.define("qft.Enemy.IntelligentSword", {
     power: 20,
 
     //視力
-    eyesight: 256,
+    eyesight: 128,
 
     //視野角
     viewAngle: 360,
 
     //得点
     point: 2000,
+
+    //アニメーションフラグ
+    isAnimation: false,
 
     //アイテムドロップ率（％）
     dropRate: 10,
@@ -41,7 +44,7 @@ phina.define("qft.Enemy.IntelligentSword", {
     rareDropItem: ITEM_LONGSWORD,
 
     init: function(parentScene, options) {
-        options = (options || {}).$extend({width: 16, height: 16});
+        options = (options || {}).$extend({width: 16, height: 24});
         this.superInit(parentScene, options);
 
         this.type = options.type;
@@ -52,21 +55,27 @@ phina.define("qft.Enemy.IntelligentSword", {
         this.sprite = phina.display.Sprite("weapons", 24, 24)
             .addChildTo(this)
             .setFrameIndex(10 + Math.min(9, this.level))
-            .setRotation(135);
+            .setRotation(215);
         this.sprite.tweener.clear()
-            .to({y: -10}, 3000, "easeInOutSine")
-            .to({y: 20}, 3000, "easeInOutSine")
+            .to({y: -2}, 1000, "easeInOutSine")
+            .to({y: 4}, 1000, "easeInOutSine")
             .setLoop(true);
-
-        this.setAnimation("pattern1");
     },
 
     algorithm: function() {
         //プレイヤーとの距離
+        var pl = this.parentScene.player;
         var dis = this.getDistancePlayer();
         var look = this.isLookPlayer();
 
-        if (dis < 128) {
+        if (look && dis < 64) {
+            if (this.x < pl.x) {
+                this.scaleX = 1;
+            } else {
+                this.scaleX = -1;
+            }
+            var ang = this.getAngle(pl);
+            this.sprite.rotation = ang;
         }
 
         if (look) {
