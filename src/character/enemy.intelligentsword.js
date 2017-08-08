@@ -47,11 +47,6 @@ phina.define("qft.Enemy.IntelligentSword", {
         options = (options || {}).$extend({width: 16, height: 24});
         this.superInit(parentScene, options);
 
-        this.type = options.type;
-        this.power = options.power || this.power;
-        this.rotation = options.rotation || 0;
-        this.velocity = options.velocity || this.velocity;
-
         this.sprite = phina.display.Sprite("weapons", 24, 24)
             .addChildTo(this)
             .setFrameIndex(10 + Math.min(9, this.level))
@@ -60,6 +55,15 @@ phina.define("qft.Enemy.IntelligentSword", {
             .to({y: -2}, 1000, "easeInOutSine")
             .to({y: 4}, 1000, "easeInOutSine")
             .setLoop(true);
+
+        this.type = options.type;
+        this.power = options.power || this.power;
+        this.rotation = options.rotation || 0;
+        this.velocity = options.velocity || this.velocity;
+
+        this.phase = 0;
+
+        this.setupLifeGauge();
     },
 
     algorithm: function() {
@@ -68,14 +72,15 @@ phina.define("qft.Enemy.IntelligentSword", {
         var dis = this.getDistancePlayer();
         var look = this.isLookPlayer();
 
-        if (look && dis < 64) {
-            if (this.x < pl.x) {
-                this.scaleX = 1;
-            } else {
-                this.scaleX = -1;
+        if (this.phase == 0) {
+            if (look && dis < 64) {
+                this.phase++;
             }
+        }
+
+        if (this.phase == 2) {
             var ang = this.getAngle(pl);
-            this.sprite.rotation = ang;
+            this.rotation = ang + 30;
         }
 
         if (look) {
