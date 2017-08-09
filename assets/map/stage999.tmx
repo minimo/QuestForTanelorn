@@ -123,7 +123,7 @@
   <object id="12" name="ArchDemon" type="enemy" x="700" y="184" width="32" height="32"/>
   <object id="13" name="rod" type="itembox" x="148" y="204" width="32" height="32"/>
   <object id="14" name="bow" type="itembox" x="80" y="200" width="32" height="32"/>
-  <object id="21" name="IntelligentSword" type="enemy" x="328" y="192" width="32" height="32">
+  <object id="21" name="Wizard" type="enemy" x="328" y="192" width="32" height="32">
    <properties>
     <property name="level" type="int" value="0"/>
     <property name="territory" type="int" value="128"/>
