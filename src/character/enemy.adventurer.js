@@ -25,10 +25,10 @@ phina.define("qft.Enemy.Adventurer", {
     viewAngle: 90,
 
     //得点
-    point: 5000,
+    point: 10000,
 
     //アニメーション間隔
-    animationInterval: 10,
+    animationInterval: 6,
 
     //アイテムドロップ率（％）
     dropRate: 10,
@@ -36,30 +36,21 @@ phina.define("qft.Enemy.Adventurer", {
 
     //レアドロップ率（％）
     rareDropRate: 3,
-    rareDropItem: ITEM_LONGSWORD,
+    rareDropItem: ITEM_JEWELBOX,
 
     init: function(parentScene, options) {
         options = (options || {}).$extend({width: 25, height: 24});
         this.superInit(parentScene, options);
 
-        //武器スプライト
+        //武器用スプライト
         this.weapon = phina.display.Sprite("weapons", 24, 24)
-            .addChildTo(this)
+            .addChildTo(this.back)
             .setFrameIndex(10 + Math.min(9, this.level))
             .setOrigin(1, 1)
-            .setPosition(-6, 3)
-            .setScale(-1.5, 1.5)
-            .setRotation(430);
+            .setPosition(3, 3);
+        this.weapon.alpha = 0;
         this.weapon.tweener.setUpdateType('fps');
         this.weapon.kind = "sword";
-        if (options.weapon == "ax") {
-            this.weapon.setFrameIndex(20 + Math.min(9, this.level));
-            this.weapon.kind = "ax";
-        }
-        if (options.weapon == "spear") {
-            this.weapon.setFrameIndex(30 + Math.min(9, this.level));
-            this.weapon.kind = "spear";
-        }
 
         //表示用スプライト
         if (this.black) {
@@ -78,12 +69,51 @@ phina.define("qft.Enemy.Adventurer", {
         this.direction = 0;
         this.isAttack = false;
 
+        //行動フェーズ
+        this.phase = "wait";
+
         this.on('damaged', e => {
             if (e.direction == 0) this.direction = 180; else this.direction = 0;
         });
     },
 
     algorithm: function() {
+        var player = this.parentScene.player;
+        var look = this.isLookPlayer();
+        var distance = this.getDistancePlayer();
+
+        //待機状態
+        if (this.phase == "wait") {
+            if (look) {
+                this.flare('balloon', {pattern: "!", lifeSpan: 15});
+                this.phase = "approach";
+                this.isAdvanceAnimation = true;
+            } else {
+                this.isAdvanceAnimation = false;
+            }
+        }
+
+        //プレイヤー発見後接近
+        if (this.phase == "approach") {
+            if (this.x < player.x) {
+                this.vx = -1;
+            } else {
+                this.vx = 1;
+            }
+            if (!look) {
+                this.phase = "lost";
+                this.chaseTime = 150;
+            }
+        }
+
+        //プレイヤー見失い
+        if (this.phase == "lost") {
+            this.chaseTime--;
+            if (this.chaseTime == 0) {
+                this.flare('balloon', {pattern: "..."});
+                this.phase = "wait";
+            }
+        }
     },
 
     //攻撃
