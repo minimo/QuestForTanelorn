@@ -96,6 +96,48 @@ phina.define("qft.Application", {
 
     _onLoadAssets: function() {
         this.soundset.readAsset();
+
+        //特殊効果用ビットマップ作成
+        [
+            "player1",
+            "player2",
+        ].forEach(function(name) {
+            if (!phina.asset.AssetManager.get("image", name)) return;
+
+            //ダメージ用
+            if (!phina.asset.AssetManager.get("image", name+"White")) {
+                var tex = phina.asset.AssetManager.get("image", name).clone();
+                tex.filter( function(pixel, index, x, y, bitmap) {
+                    var data = bitmap.data;
+                    data[index+0] = (pixel[0] == 0? 0: 128); //r
+                    data[index+1] = (pixel[1] == 0? 0: 128); //g
+                    data[index+2] = (pixel[2] == 0? 0: 128); //b
+                });
+                phina.asset.AssetManager.set("image", name+"White", tex);
+            }
+            //瀕死用
+            if (!phina.asset.AssetManager.get("image", name+"Red")) {
+                var tex = phina.asset.AssetManager.get("image", name).clone();
+                tex.filter( function(pixel, index, x, y, bitmap) {
+                    var data = bitmap.data;
+                    data[index+0] = pixel[0];
+                    data[index+1] = 0;
+                    data[index+2] = 0;
+                });
+                phina.asset.AssetManager.set("image", name+"Red", tex);
+            }
+            //影用
+            if (!phina.asset.AssetManager.get("image", name+"Black")) {
+                var tex = phina.asset.AssetManager.get("image", name).clone();
+                tex.filter( function(pixel, index, x, y, bitmap) {
+                    var data = bitmap.data;
+                    data[index+0] = 0;
+                    data[index+1] = 0;
+                    data[index+2] = 0;
+                });
+                phina.asset.AssetManager.set("image", name+"Black", tex);
+            }
+        });
     },
 
     playBGM: function(asset, loop, callback) {
