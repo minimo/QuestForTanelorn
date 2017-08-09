@@ -44,7 +44,7 @@ phina.define("qft.Enemy.Adventurer", {
 
         //武器用スプライト
         this.weapon = phina.display.Sprite("weapons", 24, 24)
-            .addChildTo(this.back)
+            .addChildTo(this)
             .setFrameIndex(10 + Math.min(9, this.level))
             .setOrigin(1, 1)
             .setPosition(3, 3);
