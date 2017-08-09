@@ -25,7 +25,7 @@ phina.define("qft.Enemy.Wizard", {
     viewAngle: 360,
 
     //得点
-    point: 800,
+    point: 3000,
 
     //重力加速度
     gravity: 0,
@@ -43,9 +43,9 @@ phina.define("qft.Enemy.Wizard", {
         this.superInit(parentScene, options);
 
         //表示用スプライト
-        var lv = Math.min(this.level, 3);
-        this.sprite = phina.display.Sprite("monster03", 24, 32).addChildTo(this);
-        this.sprite.setFrameTrimming((lv % 2) * 144 + 72, Math.floor(lv / 2) * 128, 72, 128);
+        this.sprite = phina.display.Sprite("monster03", 24, 32).addChildTo(this)
+            .setFrameTrimming(0, 0, 72, 128)
+            .setScale(1.2);
 
         this.hp += this.level * 5;
         this.power += this.level * 2;
@@ -57,8 +57,10 @@ phina.define("qft.Enemy.Wizard", {
 
         this.direction = 0;
         this.speed = 1;
-        this.phase = 0;
         this.isAttack = false;
+
+        //行動フェーズ
+        this.phase = "wait";
 
         //接近戦経過時間
         this.nearCount = 0;
@@ -73,117 +75,55 @@ phina.define("qft.Enemy.Wizard", {
         var look = this.isLookPlayer();
         var distance = this.getDistancePlayer();
 
-        //これ以上進めない場合は折り返す
-        if (this._collision[1].hit) {
-            this.direction = 180;
-        } else if (this._collision[3].hit) {
-            this.direction = 0;
-        }                   
-
-        //テリトリー指定
-        if (this.territory) {
-            //水平方向のみチェック
-            var tx = this.x - this.firstX;
-            if (Math.abs(tx) > this.territory) {
-                if (tx > 0) {
-                    this.direction = 180;
-                } else {
-                    this.direction = 0;
-                }
+        //待機中
+        if (this.phase == "wait") {
+            if (look) {
+                this.flare('balloon', {pattern: "!", lifeSpan: 15});
+                this.phase = "approach";
             }
         }
 
-        //通常フェーズでプレイヤーを発見したら警戒フェーズに移る
-        if (this.phase == 0 && look) {
-            this.flare('balloon', {pattern: "!"});
-            this.phase = 1;
-            this.speed = 0;
+        //プレイヤー発見後接近
+        if (this.phase == "approach") {
         }
 
-        //プレイヤーが離れたら通常フェーズ
-        if (this.phase != 0) {
-            if (distance > 192 || !look) {
-                this.flare('balloonerace');
-                this.phase = 0;
-                this.speed = 1;
-                for (var i = 0; i < this.dagger.length; i++) {
-                    this.dagger[i].phase = 0;
-                }
-            }
-        }
-
-        //通常
-        if (this.phase == 0) {
-            this.vx = this.speed;
-            if (this.direction == 180) {
-                this.vx *= -1;
-            }
+        if (dis < 128) {
+            this.nearCount++
         } else {
-            if (this.x < player.x) {
-                this.scaleX = 1;
-                this.direction = 0;
-            } else {
-                this.scaleX = -1;
-                this.direction = 180;
-            }
-        }
-
-        //警戒
-        if (this.phase == 1) {
-            if (this.balloon == null) this.flare('balloon', {pattern: "...", animationInterval : 15});
-            if (distance < 192) this.phase = 2;
-        }
-
-        //攻撃
-        if (this.phase == 2) {
-            this.flare('balloonerace');
-            for (var i = 0; i < this.dagger.length; i++) {
-                this.dagger[i].isAttack = true;
-            }
-            if (distance < 92) this.phase = 3;
-        }
-        if (this.phase == 3) {
-            this.phase++;
-            this.flare('balloonerace');
-            for (var i = 0; i < this.dagger.length; i++) {
-                this.dagger[i].phase = 10;
-            }
-        }
-        if (this.phase == 4 && this.time % 90 == 0) {
-            this.isAttack = true;
-        }
-
-        if (this.isAttack) {
-            this.isAttack = false;
-            if (this.phase == 2) {
-                var b = this.parentScene.spawnEnemy(this.x, this.y, "Bullet", {explode: true});
-                b.rotation = this.getPlayerAngle() + Math.randint(-30, 30);
-            }
-            if (this.phase == 4) {
-                for (var i = 0; i < 4; i++) {
-                    var b = this.parentScene.spawnEnemy(this.x, this.y, "Bullet", {explode: true});
-                    b.rotation = this.getPlayerAngle() + Math.randint(-60, 60);
-                }
-            }
-        }
-
-        if (distance < 96) {
-            this.nearCount++;
-            if (this.nearCount > 90) {
-                this.teleport();
-                this.nearCount = 0;
-            }
-        } else {
-            this.nearCount -= 10;
-            if (this.nearCount < 0) this.nearCount = 0;
+            this.nearCount = 0;
         }
     },
 
-    //テレポート
-    teleport: function() {
-        for (var i = 0; i < this.dagger.length; i++) {
-            this.dagger[i].phase = 10;
+    //テレポート開始
+    teleportIn: function() {
+        this.sprite.tweener.fadeOut(30);
+        for (var i = 0; i < 7; i++) {
+            var sp = phina.display.Sprite("monster03", 24, 32)
+                .addChildTo(this)
+                .setFrameTrimming(0, 0, 72, 128);
+            sp.tweener.setUpdateType('fps').clear()
+                .by({x: -64 + i * 16, alpha: -1}, 30,"easeOutSine");
         }
+    },
+
+    //テレポート終了
+    teleportOut: function() {
+        this.sprite.tweener.fadeIn(30);
+        for (var i = 0; i < 7; i++) {
+            var sp = phina.display.Sprite("monster03", 24, 32)
+                .addChildTo(this)
+                .setFrameTrimming(0, 0, 72, 128);
+            sp.tweener.setUpdateType('fps').clear()
+                .by({x: -64 + i * 16, alpha: -1}, 30,"easeOutSine");
+        }
+    },
+
+    //分身
+    cloneMySelf: function() {
+    },
+
+    //火炎魔法
+    flame: function() {
     },
 
     setupAnimation: function() {
@@ -199,5 +139,70 @@ phina.define("qft.Enemy.Wizard", {
     },
 
     firstFrame: function() {
+    },
+});
+
+//ウィザード分身
+phina.define("qft.Enemy.WizardClone", {
+    superClass: "qft.Enemy",
+
+    //ヒットポイント
+    hp: 10,
+
+    //防御力
+    deffence: 10,
+
+    //攻撃力
+    power: 10,
+
+    //得点
+    point: 0,
+
+    //重力加速度
+    gravity: 0,
+
+    //アイテムドロップ率（％）
+    dropRate: 0,
+
+    //レアドロップ率（％）
+    rareDropRate: 0,
+
+    init: function(parentScene, options) {
+        options = (options || {}).$extend({width: 16, height: 16});
+        this.superInit(parentScene, options);
+
+        //表示用スプライト
+        var lv = Math.min(this.level, 3);
+        this.sprite = phina.display.Sprite("monster03", 24, 32).addChildTo(this);
+        this.sprite.setFrameTrimming((lv % 2) * 144 + 72, Math.floor(lv / 2) * 128, 72, 128);
+        this.sprite.setScale(1.2);
+
+        this.setAnimation("walk");
+        this.animationInterval = 10;
+
+        this.direction = 0;
+        this.speed = 1;
+        this.phase = 0;
+        this.isAttack = false;
+        this.isTeleport = false;
+    },
+
+    algorithm: function() {
+        var player = this.parentScene.player;
+        var look = this.isLookPlayer();
+        var distance = this.getDistancePlayer();
+
+    },
+
+    setupAnimation: function() {
+        this.spcialAnimation = false;
+        this.frame = [];
+        this.frame["stand"] = [0, 1, 2, 1];
+        this.frame["jump"] = [3, "stop"];
+        this.frame["walk"] = [3, 4, 5, 4];
+        this.frame["up"] =   [3, 4, 5, 4];
+        this.frame["down"] = [3, 4, 5, 4];
+        this.frame["attack"] = [3, "stop"];
+        this.index = 0;
     },
 });
