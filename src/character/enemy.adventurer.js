@@ -39,7 +39,7 @@ phina.define("qft.Enemy.Adventurer", {
     rareDropItem: ITEM_JEWELBOX,
 
     init: function(parentScene, options) {
-        options = (options || {}).$extend({width: 25, height: 24});
+        options = (options || {}).$extend({width: 24, height: 20});
         this.superInit(parentScene, options);
 
         //武器用スプライト
@@ -58,6 +58,7 @@ phina.define("qft.Enemy.Adventurer", {
         } else {
             this.sprite = phina.display.Sprite("player1", 32, 32).addChildTo(this);
         }
+        this.sprite.scaleX = -1;
 
         this.hp += this.level * 5;
         this.power += this.level * 5;
@@ -87,18 +88,15 @@ phina.define("qft.Enemy.Adventurer", {
             if (look) {
                 this.flare('balloon', {pattern: "!", lifeSpan: 15});
                 this.phase = "approach";
-                this.isAdvanceAnimation = true;
-            } else {
-                this.isAdvanceAnimation = false;
             }
         }
 
         //プレイヤー発見後接近
         if (this.phase == "approach") {
             if (this.x < player.x) {
-                this.vx = -1;
-            } else {
                 this.vx = 1;
+            } else {
+                this.vx = -1;
             }
             if (!look) {
                 this.phase = "lost";
@@ -113,6 +111,12 @@ phina.define("qft.Enemy.Adventurer", {
                 this.flare('balloon', {pattern: "..."});
                 this.phase = "wait";
             }
+        }
+
+        if (this.vx == 0) {
+            this.isAdvanceAnimation = false;
+        } else {
+            this.isAdvanceAnimation = true;
         }
     },
 

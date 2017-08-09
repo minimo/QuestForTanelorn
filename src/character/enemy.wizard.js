@@ -87,7 +87,7 @@ phina.define("qft.Enemy.Wizard", {
         if (this.phase == "approach") {
         }
 
-        if (dis < 128) {
+        if (distance < 128) {
             this.nearCount++
         } else {
             this.nearCount = 0;
