@@ -22,7 +22,7 @@ phina.define("qft.Enemy.Adventurer", {
     eyesight: 192,
 
     //視野角
-    viewAngle: 90,
+    viewAngle: 360,
 
     //得点
     point: 10000,
@@ -47,10 +47,12 @@ phina.define("qft.Enemy.Adventurer", {
             .addChildTo(this)
             .setFrameIndex(10 + Math.min(9, this.level))
             .setOrigin(1, 1)
-            .setPosition(3, 3);
+            .setPosition(-3, 3);
         this.weapon.alpha = 0;
         this.weapon.tweener.setUpdateType('fps');
         this.weapon.kind = "sword";
+        this.weapon.scaleX = -1;
+        this.weapon.scaleY = -1;
 
         //表示用スプライト
         if (this.black) {
@@ -85,6 +87,17 @@ phina.define("qft.Enemy.Adventurer", {
 
         //待機状態
         if (this.phase == "wait") {
+            this.isAdvanceAnimation = false;
+            if (look) {
+                this.flare('balloon', {pattern: "!", lifeSpan: 15});
+                this.phase = "approach";
+            }
+        } else {
+            this.isAdvanceAnimation = true;
+        }
+
+        //徘徊
+        if (this.phase == "wander") {
             if (look) {
                 this.flare('balloon', {pattern: "!", lifeSpan: 15});
                 this.phase = "approach";
@@ -94,34 +107,54 @@ phina.define("qft.Enemy.Adventurer", {
         //プレイヤー発見後接近
         if (this.phase == "approach") {
             if (this.x < player.x) {
-                this.vx = 1;
+                this.vx = 3;
             } else {
-                this.vx = -1;
+                this.vx = -3;
             }
             if (!look) {
                 this.phase = "lost";
                 this.chaseTime = 150;
             }
+            if (distance < 64) this.phase = "attack";
         }
 
         //プレイヤー見失い
         if (this.phase == "lost") {
             this.chaseTime--;
-            if (this.chaseTime == 0) {
+            if (this.x < player.x) {
+                this.vx = 3;
+            } else {
+                this.vx = -3;
+            }
+            if (this.chaseTime < 0) {
+                this.chaseTime = 0;
                 this.flare('balloon', {pattern: "..."});
                 this.phase = "wait";
             }
         }
 
-        if (this.vx == 0) {
-            this.isAdvanceAnimation = false;
-        } else {
-            this.isAdvanceAnimation = true;
+        //攻撃
+        if (this.phase == "attack") {
+            this.attack();
         }
     },
 
     //攻撃
     attack: function() {
+        this.animationInterval = 2;
+        this.setAnimation("attack");
+        this.phase = "attacking";
+
+        app.playSE("attack");
+        this.weapon.tweener.clear()
+            .set({rotation: 200, alpha: 1.0})
+            .to({rotation: 360}, 6)
+            .fadeOut(1)
+            .call(() => {
+                this.animationInterval = 6;
+                this.setAnimation("walk");
+                this.phase = "approach";
+            });
     },
 
     //飛び道具弾き
