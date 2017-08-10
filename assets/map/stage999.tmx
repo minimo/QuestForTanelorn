@@ -120,10 +120,10 @@
     <property name="path" type="int" value="23"/>
    </properties>
   </object>
-  <object id="12" name="ArchDemon" type="enemy" x="700" y="184" width="32" height="32"/>
-  <object id="13" name="rod" type="itembox" x="148" y="204" width="32" height="32"/>
-  <object id="14" name="bow" type="itembox" x="80" y="200" width="32" height="32"/>
-  <object id="21" name="Wizard" type="enemy" x="328" y="192" width="32" height="32">
+  <object id="12" name="Wizard" type="enemy" x="752" y="160" width="32" height="32"/>
+  <object id="13" name="rod" type="itembox" x="144" y="208" width="32" height="32"/>
+  <object id="14" name="bow" type="itembox" x="80" y="208" width="32" height="32"/>
+  <object id="21" name="Adventurer" type="enemy" x="320" y="208" width="32" height="32">
    <properties>
     <property name="level" type="int" value="0"/>
     <property name="territory" type="int" value="128"/>
