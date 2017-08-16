@@ -335,6 +335,9 @@ phina.define("qft.StageController", {
                             console.warn("unknown map accessory: "+e.name);
                     }
                     break;
+                case "npc":
+                    qft.MapObject.npc(this.parentScene, e).addChildTo(mapLayer.objLayer).setPosition(x, y);
+                    break;
                 case "path":
                     break;
                 default:

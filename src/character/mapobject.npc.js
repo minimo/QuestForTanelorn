@@ -6,45 +6,104 @@
  */
 
 //冒険者
-phina.define("qft.Mapobject.npc", {
+phina.define("qft.MapObject.npc", {
     superClass: "qft.Character",
 
+    //移動速度
+    speed: 2,
+
     //アニメーション間隔
-    animationInterval: 6,
+    animationInterval: 8,
+
+    //影表示フラグ
+    isShadow: true,
+
+    //移動フラグ
+    isMove: true,
 
     init: function(parentScene, options) {
         options = (options || {}).$extend({width: 24, height: 20});
         this.superInit(parentScene, options);
 
-        this.sprite = phina.display.Sprite("player1", 32, 32).addChildTo(this);
+        this.sprite = phina.display.Sprite("actor" + (options.properties.actor || "40"), 32, 32).addChildTo(this);
         this.sprite.scaleX = -1;
+
+        this.speed = options.properties.speed || this.speed;
+        this.isMove = (options.properties.isMove === undefined? true: options.properties.isMove);
+        this.territory = options.properties.territory || null;
+        this.direction = options.properties.direction || 0;
 
         this.setAnimation("walk");
     },
 
-    algorithm: function() {
+    update: function() {
+        if (this.isMove) {
+            this.moveAlgorithm();
+        } else {
+            switch (this.direction) {
+                case 0:
+                    this.setAnimation("walk");
+                    this.scaleX = 1;
+                    break;
+                case 90:
+                    this.setAnimation("down");
+                    break;
+                case 180:
+                    this.setAnimation("walk");
+                    this.scaleX = -1;
+                    break;
+                case 270:
+                    this.setAnimation("up");
+                    break;
+            }
+        }
+
+        //プレイヤー攻撃との当たり判定
+        var pl = this.parentScene.player;
+        if (pl.isAttack && this.hitTestElement(pl.attackCollision)) {
+            //話しかけた事になる
+        }
     },
 
-    //攻撃
-    attack: function() {
-        this.animationInterval = 2;
-        this.setAnimation("attack");
-        this.phase = "attacking";
+    moveAlgorithm: function() {
+        if (this.isOnFloor) {
+            //崖っぷちで折り返す
+            if (this.checkMapCollision2(this.x+5, this.y+20, 5, 5) == null) {
+                this.direction = 180;
+            } else if (this.checkMapCollision2(this.x-5, this.y+20, 5, 5) == null) {
+                this.direction = 0;
+            }
 
-        app.playSE("attack");
-        this.weapon.tweener.clear()
-            .set({rotation: 200, alpha: 1.0})
-            .to({rotation: 360}, 6)
-            .fadeOut(1)
-            .call(() => {
-                this.animationInterval = 6;
-                this.setAnimation("walk");
-                this.phase = "approach";
-            });
-    },
+            //壁に当たったら折り返す
+            if (this._collision[1].hit) {
+                this.direction = 180;
+            } else if (this._collision[3].hit) {
+                this.direction = 0;
+            }
 
-    //飛び道具弾き
-    guard: function() {
+            //テリトリー指定
+            if (this.territory) {
+                //水平方向のみチェック
+                var tx = this.x - this.firstX;
+                if (Math.abs(tx) > this.territory) {
+                    if (tx > 0) {
+                        this.direction = 180;
+                    } else {
+                        this.direction = 0;
+                    }
+                }
+            }
+        }
+
+        if (this.isOnFloor) {
+            this.vx =  this.speed;
+            if (this.direction == 180) {
+                this.vx *= -1;
+                this.scaleX = -1;
+            } else {
+                this.scaleX = 1;
+            }
+        }
     },
 
     setupAnimation: function() {
