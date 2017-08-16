@@ -73,7 +73,10 @@ phina.define("qft.MainScene", {
         this.bg.tweener.setUpdateType('fps');
 
         //背景
-        this.backgroundImage = phina.display.Sprite("background").addChildTo(this).setPosition(0, SC_H*0.5).setOrigin(0, 0.5);
+        this.backgroundImage = phina.display.Sprite("background")
+            .addChildTo(this).setPosition(0, SC_H*0.5)
+            .setOrigin(0, 0.5)
+            .setScale(1.0, 1.1);
 
         //管理用基準レイヤ
         this.baseLayer = phina.display.DisplayElement().addChildTo(this);
