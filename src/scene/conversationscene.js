@@ -52,13 +52,17 @@ phina.define("qft.ConversationScene", {
             align:'start',
             baseline:'top',
             width: SC_W * 0.9,
-            height: SC_H * 0.25,
+            height: SC_H * 0.3,
             scrollX: 0,
             scrollY: 0,
         };
-        this.textLabel1 = phina.ui.LabelArea({text: text, fontSize: 20}.$safe(labelParam))
-            .addChildTo(this.bg)
-            .setPosition(0, 0)
+        this.textLabel1 = phina.ui.LabelArea({text: "", fontSize: 20}.$safe(labelParam)).addChildTo(this.bg);
+        var that = this;
+        var c = 0;
+        this.textLabel1.update = function() {
+            this.text = that.text.substring(0, c);
+            c++;
+        };
 
         this.isExit = false;
         this.time = 0;        
