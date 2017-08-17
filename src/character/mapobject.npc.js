@@ -34,6 +34,8 @@ phina.define("qft.MapObject.npc", {
         this.direction = options.properties.direction || 0;
 
         this.setAnimation("walk");
+
+        this.waitTime = 0;
     },
 
     update: function() {
@@ -60,9 +62,15 @@ phina.define("qft.MapObject.npc", {
 
         //プレイヤー攻撃との当たり判定
         var pl = this.parentScene.player;
-        if (pl.isAttack && this.hitTestElement(pl.attackCollision)) {
+        if (this.waitTime == 0 && pl.isAttack && this.hitTestElement(pl.attackCollision)) {
             //話しかけた事になる
+            var scene = qft.ConversationScene(this, "test");
+            app.pushScene(scene);
+            this.waitTime = 30;
         }
+
+        this.waitTime--;
+        if (this.waitTime < 0) this.waitTime = 0;
     },
 
     moveAlgorithm: function() {
