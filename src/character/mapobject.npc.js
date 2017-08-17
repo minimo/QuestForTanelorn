@@ -64,7 +64,7 @@ phina.define("qft.MapObject.npc", {
         var pl = this.parentScene.player;
         if (this.waitTime == 0 && pl.isAttack && this.hitTestElement(pl.attackCollision)) {
             //話しかけた事になる
-            var scene = qft.ConversationScene(this, "test");
+            var scene = qft.ConversationScene(this, "テストメッセージ");
             app.pushScene(scene);
             this.waitTime = 30;
         }

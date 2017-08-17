@@ -29,6 +29,17 @@ phina.define("qft.ConversationScene", {
             .addChildTo(this)
             .setPosition(SC_W * 0.5, frameY)
 
+        //テキスト処理
+        if (text === undefined) text = "TEST MESSAGE";
+        if (text instanceof Array) {
+            this.text = "";
+            text.forEach((t) => {
+                this.text += (t + "\n");
+            });
+        } else {
+            this.text = text;
+        }
+
         var labelParam = {
             fill: "white",
             stroke: "black",
@@ -38,17 +49,16 @@ phina.define("qft.ConversationScene", {
             fontSize: 70,
 
             verticalAlign: 'top',
-            align: 'left',
-            baseline: 'top',
+            align:'start',
+            baseline:'top',
             width: SC_W * 0.9,
             height: SC_H * 0.25,
             scrollX: 0,
             scrollY: 0,
         };
-        this.textLabel1 = phina.ui.LabelArea({text: "TEST MESSAGE", fontSize: 20}.$safe(labelParam))
-            .addChildTo(this)
-            .setPosition(SC_W * 0.5, SC_H * 0.4)
-            .setOrigin(0.5, 0);
+        this.textLabel1 = phina.ui.LabelArea({text: text, fontSize: 20}.$safe(labelParam))
+            .addChildTo(this.bg)
+            .setPosition(0, 0)
 
         this.isExit = false;
         this.time = 0;        
