@@ -36,8 +36,14 @@ phina.define("qft.Assets", {
                 case "common":
                     return {
                         image: {
+                            "actor4":    "assets/image/actor4.png",
                             "actor19":    "assets/image/actor19.png",
                             "actor40":    "assets/image/actor40.png",
+                            "actor55":    "assets/image/actor55.png",
+                            "actor64":    "assets/image/actor64_a.png",
+                            "actor108":    "assets/image/actor108.png",
+                            "actor111":    "assets/image/actor111.png",
+                            "actor112":    "assets/image/actor112.png",
                             "weapons":    "assets/image/weapons.png",
                             "item":       "assets/image/item.png",
                             "itembox":    "assets/image/takarabako.png",
