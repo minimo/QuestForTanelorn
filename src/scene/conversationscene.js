@@ -56,35 +56,39 @@ phina.define("qft.ConversationScene", {
             scrollX: 0,
             scrollY: 0,
         };
-        this.textLabel1 = phina.ui.LabelArea({text: "", fontSize: 20}.$safe(labelParam)).addChildTo(this.bg);
-        this.textLabel1.waitTime = 0;
-        var that = this;
-        var c = 0;
-        this.textLabel1.update = function() {
-            if (this.waitTime == 0) {
-                this.text = that.text.substring(0, c);
-                if (that.text.substring(c, c+1) == "\n") this.waitTime = 10;
-                c++;
-                if (c > that.text.length) that.isFinish = true;
-            }
-            if (this.waitTime > 0) this.waitTime--;
-        };
+        this.textLabel = phina.ui.LabelArea({text: "", fontSize: 20}.$safe(labelParam)).addChildTo(this.bg);
 
         this.isExit = false;
         this.isFinish = false;
+        this.waitTime = 0;
+        this.col = 0;
         this.time = 0;
     },
 
     update: function() {
+        if (this.waitTime == 0) {
+            this.textLabel.text = this.text.substring(0, this.col);
+            if (this.text.substring(this.col, this.col+1) == "\n") this.waitTime = 10;
+            this.col++;
+            if (this.col > this.text.length) this.isFinish = true;
+        }
+        if (this.waitTime > 0) this.waitTime--;
+
         var ct = app.controller;
-        if (this.time > 10 && !this.isExit) {
-            if (ct.attack) {
+        if (this.isFinish) {
+            if (!this.isExit && this.time > 10 && ct.before.attack && !ct.attack) {
                 this.isExit = true;
                 this.tweener.clear()
                     .wait(100)
                     .call(function() {
                         app.popScene();
                     });
+            }
+        } else {
+            if (ct.attack) {
+                this.col = this.text.length;
+                this.isFinish = true;
+                this.time = 0;
             }
         }
         this.time++;
