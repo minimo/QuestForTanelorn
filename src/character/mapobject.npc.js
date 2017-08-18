@@ -46,34 +46,44 @@ phina.define("qft.MapObject.npc", {
     },
 
     update: function() {
-        if (this.isMove) {
-            this.moveAlgorithm();
-        } else {
-            switch (this.direction) {
-                case 0:
-                    this.setAnimation("walk");
-                    this.scaleX = 1;
-                    break;
-                case 90:
-                    this.setAnimation("down");
-                    break;
-                case 180:
-                    this.setAnimation("walk");
-                    this.scaleX = -1;
-                    break;
-                case 270:
-                    this.setAnimation("up");
-                    break;
+        if (this.waitTime == 0) {
+            if (this.isMove) {
+                this.moveAlgorithm();
+            } else {
+                switch (this.direction) {
+                    case 0:
+                        this.setAnimation("walk");
+                        this.scaleX = 1;
+                        break;
+                    case 90:
+                        this.setAnimation("down");
+                        break;
+                    case 180:
+                        this.setAnimation("walk");
+                        this.scaleX = -1;
+                        break;
+                    case 270:
+                        this.setAnimation("up");
+                        break;
+                }
             }
-        }
 
-        //プレイヤー攻撃との当たり判定
-        var pl = this.parentScene.player;
-        if (this.waitTime == 0 && pl.isAttack && this.hitTestElement(pl.attackCollision)) {
-            //話しかけた事になる
-            var scene = qft.ConversationScene(this.parentScene, this.text);
-            app.pushScene(scene);
-            this.waitTime = 30;
+            //プレイヤー攻撃との当たり判定
+            var pl = this.parentScene.player;
+            if (pl.isAttack && this.hitTestElement(pl.attackCollision)) {
+                //話しかけた事になる
+                var scene = qft.ConversationScene(this.parentScene, this.text);
+                app.pushScene(scene);
+                this.waitTime = 15;
+
+                //向きの調整
+                this.setAnimation("walk");
+                if (this.x < pl.x) {
+                    this.scaleX = 1;
+                } else {
+                    this.scaleX = -1;
+                }
+            }
         }
 
         this.waitTime--;
