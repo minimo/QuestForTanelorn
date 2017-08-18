@@ -72,8 +72,12 @@ phina.define("qft.MapObject.npc", {
             var pl = this.parentScene.player;
             if (pl.isAttack && this.hitTestElement(pl.attackCollision)) {
                 //話しかけた事になる
-                var scene = qft.ConversationScene(this.parentScene, this.text);
-                app.pushScene(scene);
+                this.tweener.clear()
+                    .wait(5)
+                    .call(()=> {
+                        var scene = qft.ConversationScene(this.parentScene, this.text);
+                        app.pushScene(scene);
+                    });
                 this.waitTime = 15;
 
                 //向きの調整
