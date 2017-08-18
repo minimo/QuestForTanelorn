@@ -336,7 +336,7 @@ phina.define("qft.StageController", {
                     }
                     break;
                 case "npc":
-                    qft.MapObject.npc(this.parentScene, e).addChildTo(mapLayer.objLayer).setPosition(x, y);
+                    qft.MapObject.npc(this.parentScene, e).addChildTo(mapLayer.enemyLayer).setPosition(x, y);
                     break;
                 case "path":
                     break;
