@@ -57,15 +57,22 @@ phina.define("qft.ConversationScene", {
             scrollY: 0,
         };
         this.textLabel1 = phina.ui.LabelArea({text: "", fontSize: 20}.$safe(labelParam)).addChildTo(this.bg);
+        this.textLabel1.waitTime = 0;
         var that = this;
         var c = 0;
         this.textLabel1.update = function() {
-            this.text = that.text.substring(0, c);
-            c++;
+            if (this.waitTime == 0) {
+                this.text = that.text.substring(0, c);
+                if (that.text.substring(c, c+1) == "\n") this.waitTime = 10;
+                c++;
+                if (c > that.text.length) that.isFinish = true;
+            }
+            if (this.waitTime > 0) this.waitTime--;
         };
 
         this.isExit = false;
-        this.time = 0;        
+        this.isFinish = false;
+        this.time = 0;
     },
 
     update: function() {
