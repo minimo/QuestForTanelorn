@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="250" height="100" tilewidth="16" tileheight="16" nextobjectid="110">
+<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="250" height="100" tilewidth="16" tileheight="16" nextobjectid="111">
  <tileset firstgid="1" name="A1" tilewidth="16" tileheight="16" tilecount="768" columns="32">
   <image source="TileA1.png" width="512" height="384"/>
  </tileset>
@@ -643,7 +643,7 @@
     <property name="color" value="red"/>
    </properties>
   </object>
-  <object id="29" name="Slime" type="enemy" x="1496" y="1420" width="32" height="32">
+  <object id="29" name="Slime" type="enemy" x="1504" y="1424" width="32" height="32">
    <properties>
     <property name="level" type="int" value="2"/>
    </properties>
@@ -714,7 +714,7 @@
    </properties>
   </object>
   <object id="54" name="up" type="check" x="2416" y="1056" width="32" height="32"/>
-  <object id="60" name="meat" type="itembox" x="1568" y="1420" width="32" height="32">
+  <object id="60" name="meat" type="itembox" x="1568" y="1424" width="32" height="32">
    <properties>
     <property name="color" value="red"/>
    </properties>
@@ -724,7 +724,7 @@
     <property name="level" type="int" value="2"/>
    </properties>
   </object>
-  <object id="64" name="Slime" type="enemy" x="1904" y="1072" width="32" height="32">
+  <object id="64" name="Slime" type="enemy" x="1936" y="944" width="32" height="32">
    <properties>
     <property name="level" type="int" value="3"/>
    </properties>
@@ -769,9 +769,9 @@
     <property name="level" type="int" value="3"/>
    </properties>
   </object>
-  <object id="74" name="BabyDemon" type="enemy" x="1888" y="944" width="32" height="32">
+  <object id="74" name="BabyDemon" type="enemy" x="1984" y="1072" width="32" height="32">
    <properties>
-    <property name="level" type="int" value="3"/>
+    <property name="level" type="int" value="2"/>
    </properties>
   </object>
   <object id="77" name="Bird" type="enemy" x="3012" y="1088" width="32" height="32">
@@ -919,6 +919,11 @@
     <property name="moveLength" type="int" value="256"/>
     <property name="moveSpeed" type="int" value="150"/>
     <property name="moveWait" type="int" value="30"/>
+   </properties>
+  </object>
+  <object id="110" name="apple" type="itembox" x="1648" y="1424" width="32" height="32">
+   <properties>
+    <property name="color" value="red"/>
    </properties>
   </object>
  </objectgroup>
