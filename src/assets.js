@@ -41,6 +41,7 @@ phina.define("qft.Assets", {
                             "actor40":    "assets/image/actor40.png",
                             "actor55":    "assets/image/actor55.png",
                             "actor64":    "assets/image/actor64_a.png",
+                            "actor642":    "assets/image/actor64_b.png",
                             "actor108":    "assets/image/actor108.png",
                             "actor111":    "assets/image/actor111.png",
                             "actor112":    "assets/image/actor112.png",
