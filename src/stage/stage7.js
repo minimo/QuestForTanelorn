@@ -28,6 +28,9 @@ phina.define("qft.Stage7", {
         var tmx = phina.asset.AssetManager.get('tmx', "stage7_2");
         this.mapLayer[1] = this.createMap(tmx);
 
+        var tmx = phina.asset.AssetManager.get('tmx', "stage7_3");
+        this.mapLayer[2] = this.createMap(tmx);
+
         //初期処理
         this.add(1, function() {
             //ステージ開始メッセージ投入
