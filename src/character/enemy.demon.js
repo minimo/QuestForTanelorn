@@ -68,9 +68,9 @@ phina.define("qft.Enemy.Demon", {
 
         if (this.isOnFloor) {
             //崖っぷちで折り返す
-            if (this.checkMapCollision2(this.x+5, this.y+20, 5, 5) == null) {
+            if (this.checkMapCollision2(this.x+5, this.y+20, 5, 16) == null) {
                 this.direction = 180;
-            } else if (this.checkMapCollision2(this.x-5, this.y+20, 5, 5) == null) {
+            } else if (this.checkMapCollision2(this.x-5, this.y+20, 5, 16) == null) {
                 this.direction = 0;
             }
 
