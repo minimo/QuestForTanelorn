@@ -99,6 +99,16 @@ phina.define("qft.StageController", {
         }
     },
 
+    //イベント発火
+    fireEvent: function(eventName) {
+        var event = this.event[eventName];
+        if (event) {
+            event.value.call();
+            return true;
+        }
+        return false;
+    },
+
     clear: function() {
         this.seq = [];
         this.index = 0;
