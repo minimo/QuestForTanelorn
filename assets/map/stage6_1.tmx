@@ -709,11 +709,6 @@
     <property name="level" type="int" value="1"/>
    </properties>
   </object>
-  <object id="52" name="start" type="player" x="2768" y="892" width="32" height="32">
-   <properties>
-    <property name="direction" type="int" value="0"/>
-   </properties>
-  </object>
   <object id="54" name="up" type="check" x="2416" y="1056" width="32" height="32"/>
   <object id="60" name="stone" type="itembox" x="1568" y="1424" width="32" height="32">
    <properties>

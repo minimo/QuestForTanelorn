@@ -88,7 +88,7 @@ phina.define("qft.Stage6", {
     //ステージクリア条件判定
     checkStageClearCondition: function() {
         var keys = this.player.keys;
-        if (keys.length < 2) return false;
+        if (keys.length < 3) return false;
         return true;
     },
 
