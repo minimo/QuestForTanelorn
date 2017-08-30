@@ -5,12 +5,12 @@
  *  This Program is MIT license.
  */
 
-//ステージ１
+//ステージ9
 phina.define("qft.Stage9", {
     superClass: "qft.StageController",
 
     //ステージ番号
-    stageNumber: 6,
+    stageNumber: 9,
 
     //タイムリミット
     timeLimit: FPS*60*5,

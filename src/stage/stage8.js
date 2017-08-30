@@ -10,7 +10,7 @@ phina.define("qft.Stage8", {
     superClass: "qft.StageController",
 
     //ステージ番号
-    stageNumber: 6,
+    stageNumber: 8,
 
     //タイムリミット
     timeLimit: FPS*60*5,
