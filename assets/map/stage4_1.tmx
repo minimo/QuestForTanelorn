@@ -641,12 +641,12 @@
    </properties>
   </object>
   <object id="134" name="Snake" type="enemy" x="972" y="516" width="32" height="32"/>
-  <object id="135" name="Snake" type="enemy" x="2860" y="464" width="32" height="32">
+  <object id="135" name="Devil" type="enemy" x="3064" y="428" width="32" height="32">
    <properties>
-    <property name="level" type="int" value="2"/>
+    <property name="level" type="int" value="0"/>
    </properties>
   </object>
-  <object id="137" name="Slime" type="enemy" x="3008" y="460" width="32" height="32">
+  <object id="137" name="Slime" type="enemy" x="2840" y="460" width="32" height="32">
    <properties>
     <property name="level" type="int" value="2"/>
    </properties>
