@@ -13,7 +13,7 @@ phina.define("qft.Stage8", {
     stageNumber: 8,
 
     //タイムリミット
-    timeLimit: FPS*60*5,
+    timeLimit: FPS*60*8,
 
     //BGMアセット名
     bgm: "bgm8",
