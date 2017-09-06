@@ -1091,7 +1091,7 @@ if (keys.length &gt; 1) this.isLock = false;
 </property>
    </properties>
   </object>
-  <object id="71" name="Ogre" type="enemy" x="256" y="1120" width="32" height="32">
+  <object id="71" name="Titan" type="enemy" x="256" y="1120" width="32" height="32">
    <properties>
     <property name="dead" value="this.parentScene.fireStageEvent(&quot;bossdead_1&quot;);"/>
     <property name="level" type="int" value="1"/>
