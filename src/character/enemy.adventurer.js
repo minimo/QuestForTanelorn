@@ -74,7 +74,7 @@ phina.define("qft.Enemy.Adventurer", {
         this.attackInterval = 30;
 
         //行動フェーズ
-        this.phase = "wait";
+        this.phase = "wander";
 
         this.on('damaged', e => {
             if (e.direction == 0) this.direction = 180; else this.direction = 0;
@@ -102,6 +102,8 @@ phina.define("qft.Enemy.Adventurer", {
             if (look) {
                 this.flare('balloon', {pattern: "!", lifeSpan: 15});
                 this.phase = "approach";
+            } else {
+                this.roundtripAlgorithm_ground(distance, look);
             }
         }
 
@@ -138,6 +140,12 @@ phina.define("qft.Enemy.Adventurer", {
         if (this.phase == "attack") {
             this.attack();
             this.attackInterval = 30;
+        } else if (this.phase != "attacking") {
+            if (this.isOnFloor) {
+                this.setAnimation("walk");
+            } else {
+                this.setAnimation("jump");
+            }
         }
 
         this.attackInterval--;
@@ -150,6 +158,19 @@ phina.define("qft.Enemy.Adventurer", {
         this.setAnimation("attack");
         this.phase = "attacking";
 
+        //攻撃判定
+        var that = this;
+        var atk = qft.EnemyAttack(this.parentScene, {width: 24, height: 24, power: 20 + this.level * 5})
+            .addChildTo(this.parentScene.enemyLayer)
+            .setPosition(this.x + this.scaleX * 18, this.y)
+            .setAlpha(0.0);
+        if (DEBUG_COLLISION) atk.setAlpha(0.3);
+        atk.master = this;
+        atk.tweener.setUpdateType('fps');
+        atk.update = function() {
+            this.x = that.x + that.scaleX * 18;
+        }
+
         app.playSE("attack");
         this.weapon.tweener.clear()
             .set({rotation: 200, alpha: 1.0})
@@ -159,6 +180,7 @@ phina.define("qft.Enemy.Adventurer", {
                 this.animationInterval = 6;
                 this.setAnimation("walk");
                 this.phase = "approach";
+                atk.remove();
             });
     },
 

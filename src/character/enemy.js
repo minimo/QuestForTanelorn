@@ -521,7 +521,6 @@ phina.define("qft.Enemy", {
             this.firstX = this.x;
             this.firstY = this.y;
         }
-        
     },
 });
 
