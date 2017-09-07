@@ -71,6 +71,7 @@ phina.define("qft.Enemy.Adventurer", {
 
         this.direction = 0;
         this.isAttack = false;
+        this.attackInterval = 30;
 
         //行動フェーズ
         this.phase = "wait";
@@ -115,7 +116,7 @@ phina.define("qft.Enemy.Adventurer", {
                 this.phase = "lost";
                 this.chaseTime = 150;
             }
-            if (distance < 64) this.phase = "attack";
+            if (distance < 52 && this.attackInterval == 0) this.phase = "attack";
         }
 
         //プレイヤー見失い
@@ -136,7 +137,11 @@ phina.define("qft.Enemy.Adventurer", {
         //攻撃
         if (this.phase == "attack") {
             this.attack();
+            this.attackInterval = 30;
         }
+
+        this.attackInterval--;
+        if (this.attackInterval < 0) this.attackInterval = 0;
     },
 
     //攻撃
