@@ -39,6 +39,7 @@ phina.define("qft.MapObject.Door", {
 
         this.id = options.id;
         this.isLock = options.properties.lock || false;
+        this.isFade = options.properties.fade || false;
         this.name = options.name;
         this.enterOffset = options.properties.enterOffset || 0;
         this.sprite.visible = options.properties.visible == undefined? true: options.properties.visible;
@@ -80,7 +81,7 @@ phina.define("qft.MapObject.Door", {
                     var layer = this.parentScene.stageController.mapLayer[this.toLayerNumber];
                     var next = this.parentScene.stageController.findObject(this.nextID, this.toLayerNumber);
                     if (!next) return;
-                    this.enterPlayer();
+                    if (!this.isFade) this.enterPlayer();
                     this.tweener.clear()
                         .wait(60)
                         .call(function(){
