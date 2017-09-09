@@ -170,6 +170,7 @@ phina.define("qft.Assets", {
                         },
                         tmx: {
                             "stage8_1": "assets/map/stage8_1.tmx",
+                            "stage8_2": "assets/map/stage8_2.tmx",
                         },
                     };
                 case "stage9":
