@@ -38,6 +38,11 @@ phina.define("qft.StageController", {
     isBackgroundMove: true,
     backgroundX: -320,
 
+    //特殊ステージフラグ
+    isOpening: false,
+    isTutorial: false,
+    isEnding: false,
+
     init: function(parentScene) {
         this.superInit();
 
