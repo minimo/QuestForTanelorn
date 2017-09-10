@@ -1468,7 +1468,7 @@
   </object>
   <object id="111" name="bag" type="itembox" x="1548" y="3056" width="32" height="32"/>
   <object id="112" name="jewel" type="itembox" x="1480" y="1872" width="32" height="32"/>
-  <object id="114" name="start" type="player" x="688" y="1820" width="32" height="32">
+  <object id="114" name="start" type="player" x="1500" y="624" width="32" height="32">
    <properties>
     <property name="direction" type="int" value="0"/>
    </properties>
@@ -1485,12 +1485,13 @@
     <property name="territory" type="int" value="128"/>
    </properties>
   </object>
-  <object id="128" name="mapswitch" type="door" x="1424" y="592" width="32" height="95">
+  <object id="128" name="mapswitch" type="gate" x="1424" y="624" width="32" height="63">
    <properties>
     <property name="fade" type="bool" value="true"/>
     <property name="lock" type="bool" value="false"/>
-    <property name="nextID" type="int" value="81"/>
+    <property name="nextID" type="int" value="5"/>
     <property name="toLayerNumber" type="int" value="1"/>
+    <property name="visible" type="bool" value="false"/>
    </properties>
   </object>
  </objectgroup>
