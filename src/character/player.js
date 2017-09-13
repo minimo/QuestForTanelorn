@@ -79,6 +79,8 @@ phina.define("qft.Player", {
         change: false,
         isStun: false,
         isOnFloor: false,
+        x: 0,
+        y: 0,
     },
 
     //ステージ開始時ステータス
@@ -400,7 +402,7 @@ phina.define("qft.Player", {
         }
 
         //攻撃判定追従
-        this.attackCollision.x = this.x + this.scaleX*12;
+        this.attackCollision.x = this.x + this.scaleX * 12;
         this.attackCollision.y = this.y;
 
         //コントローラ他情報保存
@@ -411,6 +413,8 @@ phina.define("qft.Player", {
         this.before.change = ct.change;
         this.before.isStun = this.isStun;
         this.before.inOnFloor = this.isOnFloor;
+        this.before.x = this.x;
+        this.before.y = this.y;
 
         //ダウンキー連続押下フレームカウント
         if (this.isOnFloor && !this.isCatchLadder && ct.down && !ct.right && !ct.left && !ct.up && !ct.attack) {

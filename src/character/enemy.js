@@ -522,6 +522,51 @@ phina.define("qft.Enemy", {
             this.firstY = this.y;
         }
     },
+
+    //評価関数
+    evaluate: function(dis, look) {
+        var pl = this.parentScene.player;
+        if (dis === undefined) dis = this.getDistancePlayer();
+        if (look === undefined) look = this.isLookPlayer();
+
+        //脅威度
+        var threat = 0;
+
+        //プレイヤーとの距離により脅威度を加算
+        if (dis < 256) threat += 10
+        if (dis < 128) threat += 20
+
+        //プレイヤー視認可能状態
+        if (look) threat += 30;
+
+        //プレイヤー行動状態
+        var playerAction = "";
+        if (pl.x == pl.before.x && pl.y == pl.before.y) {
+            //プレイヤーは移動していない
+        } else {
+            //プレイヤー進行方向（右:0 左:180）
+            var pldir = 0;
+            if (pl.x < pl.before.x) pldir = 180;
+            if (this.x < pl.x) {
+                if (prdir == 0) {
+                    //プレイヤーは近づいている
+                } else {
+                    //プレイヤーは離れている
+                }
+            } else {
+                if (prdir == 180) {
+                    //プレイヤーは近づいている
+                } else {
+                    //プレイヤーは離れている
+                }
+            }
+        }
+
+        return {
+            threat: threat,
+            playerAction: playerAction,
+        };
+    },
 });
 
 //敵攻撃判定
