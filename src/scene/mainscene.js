@@ -169,7 +169,11 @@ phina.define("qft.MainScene", {
                 this.player.saveStatus();
             } else {
                 //エンディング
-               app.pushScene(qft.EndingScene(this));
+                if (this.isTrueEnding) {
+                   app.pushScene(qft.EndingScene.true(this));
+                } else {
+                   app.pushScene(qft.EndingScene(this));
+                }
             }
         });
 
@@ -652,7 +656,9 @@ phina.define("qft.MainScene", {
         };
 
         //クリアメッセージ投入
-        this.spawnMessage("STAGE "+this.stageNumber+" CLEAR!", 24);
+        var text = "STAGE " + this.stageNumber + " CLEAR!";
+        if (this.stageNumber == this.stageNumberMax) text = "FINAL STAGE CLEAR!";
+        this.spawnMessage(text, 24);
         this.player.isControl = false;
         this.stageController.stageClear();
         this.isStageClear = true;

@@ -16,11 +16,10 @@ phina.define("qft.EndingScene.true", {
 
         this.text = [
             "数多の苦難を乗り越え",
-            "あなたは遂に楽園への入り口へと到達した",
+            "あなたは遂に楽園「永遠の都」への入り口へと到達した",
             "扉の向こうには階段があり",
             "その階段は遥か天上へと続いている",
             "階段を昇りますか？",
-            "",
         ];
 
         //バックグラウンド
@@ -43,8 +42,10 @@ phina.define("qft.EndingScene.true", {
 
         //上下黒帯
         param.height = SC_H * 0.15;
-        this.bar1 = phina.display.RectangleShape(param).addChildTo(this).setOrigin(0, 0).setPosition(0, -SC_H*0.15)
-        this.bar2 = phina.display.RectangleShape(param).addChildTo(this).setOrigin(0, 0).setPosition(0, SC_H)
+        this.bar1 = phina.display.RectangleShape(param).addChildTo(this).setOrigin(0, 1).setPosition(0, -1);
+        this.bar2 = phina.display.RectangleShape(param).addChildTo(this).setOrigin(0, 0).setPosition(0, SC_H + 1);
+        this.bar1.tweener.clear().setUpdateType('fps').moveBy(0, SC_H * 0.15, 30, "easeOutSine");
+        this.bar2.tweener.clear().setUpdateType('fps').moveBy(0, -SC_H * 0.15, 30, "easeOutSine");
 
         this.time = 0;
 
@@ -58,6 +59,7 @@ phina.define("qft.EndingScene.true", {
         var ct = app.controller;
         if (this.time > 120) {
             if (ct.ok || ct.cancel) {
+                app.playBGM("openingbgm");
                 this.parentScene.flare('exitgame');
                 this.exit();
             }
