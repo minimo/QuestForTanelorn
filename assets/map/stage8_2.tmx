@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="50" height="70" tilewidth="16" tileheight="16" nextobjectid="12">
+<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="50" height="70" tilewidth="16" tileheight="16" nextobjectid="17">
  <tileset firstgid="1" name="A1" tilewidth="16" tileheight="16" tilecount="768" columns="32">
   <image source="TileA1.png" width="512" height="384"/>
  </tileset>
@@ -428,6 +428,10 @@
     <property name="nextID" type="int" value="9"/>
    </properties>
   </object>
-  <object id="11" name="clear" type="door" x="544" y="176" width="32" height="128"/>
+  <object id="11" name="clear" type="door" x="544" y="176" width="32" height="128">
+   <properties>
+    <property name="visible" type="bool" value="false"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>
