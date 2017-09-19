@@ -461,7 +461,7 @@
   <object id="9" x="544" y="1040" width="1372" height="240"/>
  </objectgroup>
  <objectgroup name="event">
-  <object id="1" name="start" type="player" x="64" y="1152" width="32" height="32">
+  <object id="1" name="start" type="player" x="64" y="1120" width="32" height="32">
    <properties>
     <property name="direction" type="int" value="0"/>
    </properties>
