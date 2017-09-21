@@ -185,7 +185,7 @@ phina.define("qft.Assets", {
                 case "stage10":
                     return {
                         sound: {
-                            "ending": "assets/sound/DS-064m.mp3",
+                            "ending": "assets/sound/DS-071m.mp3",
                         },
                         tmx: {
                             "stage10": "assets/map/stage10.tmx",
