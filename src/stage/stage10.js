@@ -6,7 +6,7 @@
  */
 
 //エンディングシーン
-phina.define("qft.Stage9", {
+phina.define("qft.Stage10", {
     superClass: "qft.StageController",
 
     //ステージ番号
@@ -33,9 +33,12 @@ phina.define("qft.Stage9", {
             //マップ表示設定
             this.limitWidth = true;
             this.limitHeight = true;
+
+            this.player.autoKey.right = true;
         });
 
-        this.add(60, function() {
+        this.add(300, function() {
+            this.player.autoKey.right = false;
         });
     },
 
