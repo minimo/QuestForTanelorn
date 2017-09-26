@@ -655,9 +655,13 @@ phina.define("qft.MainScene", {
             fontWeight: ''
         };
 
+        //エンディング判定
+        var isEnding = false;
+        if (this.stageNumber == this.stageNumberMax) isEnding = true;
+
         //クリアメッセージ投入
         var text = "STAGE " + this.stageNumber + " CLEAR!";
-        if (this.stageNumber == this.stageNumberMax) text = "FINAL STAGE CLEAR!";
+        if (isEnding) text = "STAGE ALL CLEAR!";
         this.spawnMessage(text, 24);
         this.player.isControl = false;
         this.stageController.stageClear();
@@ -687,7 +691,10 @@ phina.define("qft.MainScene", {
             var assets = qft.Assets.get({assetType: "stage"+(this.stageNumber+1)});
             var ar = phina.extension.AssetLoaderEx().load(assets, function(){app.soundset.readAsset();});
         } else {
-            var ar = {loadcomplete: true};
+            if (isEnding) {
+                var assets = qft.Assets.get({assetType: "stage10"});
+                var ar = phina.extension.AssetLoaderEx().load(assets, function(){app.soundset.readAsset();});
+            }
         }
 
         //ロード進捗表示
@@ -700,6 +707,7 @@ phina.define("qft.MainScene", {
             if (ar.loadprogress) this.text = "Loading... "+Math.floor(ar.loadprogress * 100)+"%";
             if (bgmFinish && that.timeLimit == 0 && ar.loadcomplete) {
                 this.text = "Push button to next stage.";
+                if (isEnding) this.text = "Push button to next.";
                 var ct = app.controller;
                 if (ct.ok || ct.cancel) {
                     if (that.isPractice) {
