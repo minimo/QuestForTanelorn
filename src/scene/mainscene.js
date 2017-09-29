@@ -447,8 +447,8 @@ phina.define("qft.MainScene", {
         }
 
         //制限時間表示
-        var tl = phina.display.Label({text: "TIME:", align: "right"}.$safe(labelParam)).addChildTo(this).setPosition(SC_W, 30);
-        tl.update = function() {
+        this.timeLabel = phina.display.Label({text: "TIME:", align: "right"}.$safe(labelParam)).addChildTo(this).setPosition(SC_W, 30);
+        this.timeLabel.update = function() {
             this.text = "TIME:"+Math.floor(that.timeLimit/30);
             if (that.timeLimit == 0) {
                 this.fill = 'red';
