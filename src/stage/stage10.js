@@ -30,6 +30,9 @@ phina.define("qft.Stage10", {
 
         //初期処理
         this.add(1, function() {
+            //開始メッセージ投入
+            this.spawnEventMessage(1, "You Reached Tanelorn...");
+
             //マップ表示設定
             this.limitWidth = true;
             this.limitHeight = true;

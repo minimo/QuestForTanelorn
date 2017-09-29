@@ -23,6 +23,12 @@ phina.define("qft.MainScene", {
     //ステージクリアフラグ
     isStageClear: false,
 
+    //エンディング進行中フラグ
+    isEnding: false,
+
+    //真エンディングフラグ
+    isTrueEnding: false,
+
     //スコア
     totalScore: 0,
 
@@ -163,16 +169,18 @@ phina.define("qft.MainScene", {
 
         //次ステージへ移行
         this.on('nextstage', function(e) {
-            if (this.stageNumber < this.stageNumberMax) {
+            if (!this.allClear) {
                 this.stageNumber++;
                 this.setupStage();
                 this.player.saveStatus();
             } else {
-                //エンディング
+                //エンディング分岐
                 if (this.isTrueEnding) {
-                   app.pushScene(qft.EndingScene.true(this));
+                    this.stageNumber = 10;
+                    this.setupStage();
                 } else {
-                   app.pushScene(qft.EndingScene(this));
+                    //仮エンディング
+                    app.pushScene(qft.EndingScene(this));
                 }
             }
         });
@@ -410,7 +418,7 @@ phina.define("qft.MainScene", {
         };
 
         //体力ゲージ
-        phina.display.Label({text: "LIFE"}.$safe(labelParam)).addChildTo(this).setPosition(0, 10);
+        this.lifeGaugeLabel = phina.display.Label({text: "LIFE"}.$safe(labelParam)).addChildTo(this).setPosition(0, 10);
         var options = {
             width:  200,
             height: 5,
@@ -515,6 +523,17 @@ phina.define("qft.MainScene", {
             case 9:
                 this.stageController = qft.Stage9(this);
                 this.switchMap(this.stageController.mapLayer[0]);
+                break;
+            case 10:
+                this.stageController = qft.Stage10(this);
+                this.switchMap(this.stageController.mapLayer[0]);
+                this.isEnding = true;
+                //システム表示のＯＦＦ
+                this.lifeGaugeLabel.visible = false;
+                this.lifeGauge.visible = false;
+                this.scoreLabel.visible = false;
+                this.timeLabel.visible = false;
+                this.playerWeapon.visible = false;
                 break;
             case 999:
                 this.stageController = qft.Stage999(this);
@@ -655,13 +674,13 @@ phina.define("qft.MainScene", {
             fontWeight: ''
         };
 
-        //エンディング判定
-        var isEnding = false;
-        if (this.stageNumber == this.stageNumberMax) isEnding = true;
+        //オールクリア判定
+        this.allClear = false;
+        if (this.stageNumber == this.stageNumberMax) this.allClear = true;
 
         //クリアメッセージ投入
         var text = "STAGE " + this.stageNumber + " CLEAR!";
-        if (isEnding) text = "STAGE ALL CLEAR!";
+        if (this.allClear) text = "STAGE ALL CLEAR!";
         this.spawnMessage(text, 24);
         this.player.isControl = false;
         this.stageController.stageClear();
@@ -691,7 +710,8 @@ phina.define("qft.MainScene", {
             var assets = qft.Assets.get({assetType: "stage"+(this.stageNumber+1)});
             var ar = phina.extension.AssetLoaderEx().load(assets, function(){app.soundset.readAsset();});
         } else {
-            if (isEnding) {
+            //オールクリア時はエンディング用ステージへ
+            if (this.allClear) {
                 var assets = qft.Assets.get({assetType: "stage10"});
                 var ar = phina.extension.AssetLoaderEx().load(assets, function(){app.soundset.readAsset();});
             }
@@ -707,7 +727,7 @@ phina.define("qft.MainScene", {
             if (ar.loadprogress) this.text = "Loading... "+Math.floor(ar.loadprogress * 100)+"%";
             if (bgmFinish && that.timeLimit == 0 && ar.loadcomplete) {
                 this.text = "Push button to next stage.";
-                if (isEnding) this.text = "Push button to next.";
+                if (that.allClear) this.text = "Push button to next...";
                 var ct = app.controller;
                 if (ct.ok || ct.cancel) {
                     if (that.isPractice) {
