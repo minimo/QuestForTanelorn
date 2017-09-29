@@ -1,5 +1,5 @@
 /*
- *  endingcene.true.js
+ *  endingcene.trueending.js
  *  2017/05/01
  *  @auther minimo  
  *  This Program is MIT license.
@@ -7,7 +7,7 @@
  */
 
 //トゥルーエンディング
-phina.define("qft.EndingScene.true", {
+phina.define("qft.EndingScene.TrueEnding", {
     superClass: "phina.display.DisplayScene",
     
     init: function(parentScene) {
