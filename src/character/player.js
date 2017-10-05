@@ -26,6 +26,9 @@ phina.define("qft.Player", {
     //防御力
     defense: 10,
 
+    //移動速度
+    speed: 5,
+
     //下押し連続フレーム数
     downFrame: 0,
 
@@ -209,7 +212,7 @@ phina.define("qft.Player", {
                 var c = this._collision[3];
                 if (!(this.isCatchLadder && this.checkMapCollision2(c.x+6, c.y, c.width, c.height))) {
                     this.scaleX = -1;
-                    this.vx = -5;
+                    this.vx = -this.speed;
                 }
             }
             //右移動
@@ -219,7 +222,7 @@ phina.define("qft.Player", {
                 var c = this._collision[1];
                 if (!(this.isCatchLadder && this.checkMapCollision2(c.x-6, c.y, c.width, c.height))) {
                     this.scaleX = 1;
-                    this.vx = 5;
+                    this.vx = this.speed;
                 }
             }
 
