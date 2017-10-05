@@ -676,7 +676,7 @@ phina.define("qft.MainScene", {
 
         //オールクリア判定
         this.allClear = false;
-        if (this.stageNumber == this.stageNumberMax) this.allClear = true;
+        if (!this.isPractice && this.stageNumber >= this.stageNumberMax) this.allClear = true;
 
         //クリアメッセージ投入
         var text = "STAGE " + this.stageNumber + " CLEAR!";
@@ -696,24 +696,27 @@ phina.define("qft.MainScene", {
             bgmFinish = true;
         });
 
-        //クリア時点情報保存
-        var data = {
-            stage: this.stageNumber,
-            score: this.totalScore,
-            kill: this.totalKill,
-            time: this.stageController.timeLimit - this.timeLimit,
-        };
-        this.clearResult[this.stageNumber] = data;
+        var ar = {loadcomplete: true};
+        if (!this.isPractice) {
+            //クリア時点情報保存
+            var data = {
+                stage: this.stageNumber,
+                score: this.totalScore,
+                kill: this.totalKill,
+                time: this.stageController.timeLimit - this.timeLimit,
+            };
+            this.clearResult[this.stageNumber] = data;
 
-        //次ステージのアセット読み込み
-        if (this.stageNumber < this.stageNumberMax) {
-            var assets = qft.Assets.get({assetType: "stage"+(this.stageNumber+1)});
-            var ar = phina.extension.AssetLoaderEx().load(assets, function(){app.soundset.readAsset();});
-        } else {
-            //オールクリア時はエンディング用ステージへ
-            if (this.allClear) {
-                var assets = qft.Assets.get({assetType: "stage10"});
+            //次ステージのアセット読み込み
+            if (this.stageNumber < this.stageNumberMax) {
+                var assets = qft.Assets.get({assetType: "stage"+(this.stageNumber+1)});
                 var ar = phina.extension.AssetLoaderEx().load(assets, function(){app.soundset.readAsset();});
+            } else {
+                //オールクリア時はエンディング用ステージへ
+                if (this.allClear) {
+                    var assets = qft.Assets.get({assetType: "stage10"});
+                    var ar = phina.extension.AssetLoaderEx().load(assets, function(){app.soundset.readAsset();});
+                }
             }
         }
 
