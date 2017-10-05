@@ -37,10 +37,11 @@ phina.define("qft.Stage10", {
             this.limitWidth = true;
             this.limitHeight = true;
 
+            this.player.isAuto = true;
             this.player.autoKey.right = true;
         });
 
-        this.add(300, function() {
+        this.add(240, function() {
             this.player.autoKey.right = false;
         });
     },
