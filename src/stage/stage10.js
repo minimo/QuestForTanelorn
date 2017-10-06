@@ -37,13 +37,48 @@ phina.define("qft.Stage10", {
             this.limitWidth = true;
             this.limitHeight = true;
 
-            this.player.speed = 3;
+            this.player.speed = 2;
             this.player.isAuto = true;
             this.player.autoKey.right = true;
         });
 
-        this.add(240, function() {
+        this.add(590, function() {
             this.player.autoKey.right = false;
+        });
+        this.add(60, function() {
+            this.player.autoKey.right = true;
+        });
+        this.add(30, function() {
+            this.player.autoKey.right = false;
+        });
+        this.add(30, function() {
+            this.player.autoKey.right = true;
+        });
+        this.add(20, function() {
+            this.player.autoKey.right = false;
+        });
+
+        this.add(60, function() {
+            this.player.tweener.clear().set({alpha: 0}).moveBy(0, -600, 480);
+            this.player.gravity = 0;
+            var pl = qft.PlayerDummy("player1").addChildTo(this.mapLayer.playerLayer);
+            pl.setPosition(this.player.x, this.player.y);
+            pl.setAnimation("up");
+            pl.tweener.setUpdateType('fps').clear()
+                .moveBy(0, -600, 480)
+                .call(() => {
+                    pl.setAnimation("down");
+                })
+                .wait(10)
+                .call(() => {
+                    pl.setAnimation("clear");
+                })
+                .wait(30)
+                .call(() => {
+                    pl.setAnimation("up");
+                })
+                .wait(15)
+                .moveBy(0, -600, 480);
         });
     },
 
