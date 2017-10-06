@@ -9078,15 +9078,16 @@ phina.namespace(function() {
         obj._touchFlags[p.id] = false;
         obj.flare('pointend', e);
 
-        if (obj._overFlags[p.id]) {
+        if (phina.isMobile() && obj._overFlags[p.id]) {
           obj._overFlags[p.id] = false;
           obj.flare('pointout', e);
+          this._holds.erase(obj);
         }
       }
     },
   });
 
-  
+
 });
 
 phina.namespace(function() {
@@ -10938,7 +10939,12 @@ phina.namespace(function() {
       }
     },
 
-    gotoAndPlay: function(name) {
+    gotoAndPlay: function(name, keep) {
+      keep = (keep !== undefined) ? keep : true;
+      if (keep && name === this.currentAnimationName
+               && this.currentFrameIndex < this.currentAnimation.frames.length) {
+        return this;
+      }
       this.frame = 0;
       this.currentFrameIndex = 0;
       this.currentAnimation = this.ss.getAnimation(name);
@@ -12303,13 +12309,16 @@ phina.namespace(function() {
       this.watchDraw = true;
       this._dirtyDraw = true;
 
-      this.on('enterframe', function() {
+      var checkRender = function() {
         // render
         if (this.watchDraw && this._dirtyDraw === true) {
           this.render(this.canvas);
           this._dirtyDraw = false;
         }
-      });
+      };
+
+      this.on('enterframe', checkRender);
+      this.on('added', checkRender);
     },
 
     calcCanvasWidth: function() {
