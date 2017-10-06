@@ -61,6 +61,7 @@ phina.define("qft.Stage10", {
         this.add(60, function() {
             this.player.tweener.clear().set({alpha: 0}).moveBy(0, -600, 480);
             this.player.gravity = 0;
+
             var pl = qft.PlayerDummy("player1").addChildTo(this.mapLayer.playerLayer);
             pl.setPosition(this.player.x, this.player.y);
             pl.setAnimation("up");
@@ -77,7 +78,19 @@ phina.define("qft.Stage10", {
                 .call(() => {
                     pl.setAnimation("up");
                 })
-                .wait(15)
+                .wait(30)
+                .call(() => {
+                    this.fgWhite.tweener.clear()
+                        .wait(60)
+                        .fadeIn(60)
+                        .call(() => {
+                            this.flare("ending");
+                        });
+                    this.fg.tweener.clear()
+                        .wait(150)
+                        .fadeIn(60);
+
+                })
                 .moveBy(0, -600, 480);
         });
     },

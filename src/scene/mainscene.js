@@ -133,6 +133,12 @@ phina.define("qft.MainScene", {
         //ステージ情報初期化
         this.setupStage();
 
+        this.fgWhite = phina.display.RectangleShape(param.$extend({fill: 'white'}))
+            .addChildTo(this)
+            .setPosition(SC_W*0.5, SC_H*0.5);
+        this.fgWhite.alpha = 0;
+        this.fgWhite.tweener.setUpdateType('fps').clear();
+
         this.fg = phina.display.RectangleShape(param)
             .addChildTo(this)
             .setPosition(SC_W*0.5, SC_H*0.5);
@@ -183,6 +189,11 @@ phina.define("qft.MainScene", {
                     app.pushScene(qft.EndingScene(this));
                 }
             }
+        });
+
+        //エンディングへ移行
+        this.on('ending', function(e) {
+            app.pushScene(qft.EndingScene(this));
         });
 
         //ゲームオーバー
