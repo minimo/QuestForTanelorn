@@ -42,9 +42,20 @@ phina.define("qft.Stage10", {
             this.player.autoKey.right = true;
         });
 
-        this.add(590, function() {
+        //石碑まで
+        this.add(255, function() {
             this.player.autoKey.right = false;
+            this.player.setAnimation("up");
         });
+        this.add(120, function() {
+            this.player.autoKey.right = true;
+        });
+
+        //入り口まで
+        this.add(360, function() {
+            this.player.autoKey.right =　false;
+        });
+
         this.add(60, function() {
             this.player.autoKey.right = true;
         });
@@ -59,14 +70,14 @@ phina.define("qft.Stage10", {
         });
 
         this.add(60, function() {
-            this.player.tweener.clear().set({alpha: 0}).moveBy(0, -600, 480);
+            this.player.tweener.clear().set({alpha: 0}).moveBy(0, -600, 600);
             this.player.gravity = 0;
 
             var pl = qft.PlayerDummy("player1").addChildTo(this.mapLayer.playerLayer);
             pl.setPosition(this.player.x, this.player.y);
             pl.setAnimation("up");
             pl.tweener.setUpdateType('fps').clear()
-                .moveBy(0, -600, 480)
+                .moveBy(0, -600, 600)
                 .call(() => {
                     pl.setAnimation("down");
                 })
@@ -81,8 +92,8 @@ phina.define("qft.Stage10", {
                 .wait(30)
                 .call(() => {
                     this.fgWhite.tweener.clear()
-                        .wait(60)
-                        .fadeIn(60)
+                        .wait(120)
+                        .fadeIn(120)
                         .call(() => {
                             this.flare("ending");
                         });
@@ -91,7 +102,7 @@ phina.define("qft.Stage10", {
                         .fadeIn(60);
 
                 })
-                .moveBy(0, -600, 480);
+                .moveBy(0, -600, 600);
         });
     },
 
