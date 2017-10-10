@@ -31,7 +31,7 @@ phina.define("qft.Stage10", {
         //初期処理
         this.add(1, function() {
             //開始メッセージ投入
-            this.spawnEventMessage(1, "You reached Tanelorn...");
+            this.spawnEventMessage(1, "Congraturations!!");
 
             //マップ表示設定
             this.limitWidth = true;
@@ -52,7 +52,7 @@ phina.define("qft.Stage10", {
         });
 
         //入り口まで
-        this.add(360, function() {
+        this.add(330, function() {
             this.player.autoKey.right =　false;
         });
 
