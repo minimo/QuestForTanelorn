@@ -21,6 +21,9 @@ phina.define("qft.MapObject.npc", {
     //移動フラグ
     isMove: true,
 
+    //不動フラグ
+    toFix: false,
+
     init: function(parentScene, options) {
         options = (options || {}).$extend({width: 24, height: 20});
         this.superInit(parentScene, options);
@@ -38,6 +41,10 @@ phina.define("qft.MapObject.npc", {
             this.ignoreCollision = true;
             this.gravity = 0;
             this.isMove = false;
+            this.toFix = true;
+            this.one('enterframe', () => {
+                this.setupFixedShadow();
+            });
         }
 
         this.setAnimation("walk");
@@ -152,5 +159,22 @@ phina.define("qft.MapObject.npc", {
         this.frame["stun"] = [ 18, 19, 20];
         this.index = 0;
         return this;
+    },
+
+    //固定影表示セットアップ
+    setupFixedShadow: function() {
+        var that = this;
+        var sc = this.width / 24;
+        if (sc < 1) sc += 0.2;
+        this.fixedShadowSprite = phina.display.Sprite("shadow", 24, 8)
+            .addChildTo(this.parentScene.shadowLayer)
+            .setAlpha(0.5)
+            .setScale(sc, 1.0);
+        this.fixedShadowSprite.update = function() {
+            this.alpha = 0.5;
+            if (that.alpha < 0.5) this.alpha = that.alpha;
+            this.x = that.x;
+            this.y = that.y + 16;
+        }
     },
 });
