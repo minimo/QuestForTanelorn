@@ -46,7 +46,7 @@ phina.define("qft.Stage10", {
             this.player.autoKey.up = true;
         });
 
-        this.add(225, function() {
+        this.add(224, function() {
             this.player.autoKey.up = false;
         });
 
@@ -120,6 +120,13 @@ phina.define("qft.Stage10", {
 
                 })
                 .moveBy(0, -600, 600);
+            var obj = this.stageController.findObject(17, 0, "enemy");
+            obj.setAnimation("up");
+        });
+
+        this.add(60, function() {
+            var obj = this.stageController.findObject(17, 0, "enemy");
+            obj.tweener.clear().moveBy(0, -300, 300);
         });
     },
 
