@@ -28,6 +28,9 @@ phina.define("qft.Stage10", {
         var tmx = phina.asset.AssetManager.get('tmx', "stage10");
         this.mapLayer[0] = this.createMap(tmx);
 
+        //プレイヤーダミースプライト
+        var pl = qft.PlayerDummy("player1")
+
         //初期処理
         this.add(1, function() {
             //開始メッセージ投入
@@ -38,17 +41,31 @@ phina.define("qft.Stage10", {
             this.limitHeight = true;
 
             this.player.speed = 2;
+            this.player.speedAscend = 2;
             this.player.isAuto = true;
+            this.player.autoKey.up = true;
+        });
+
+        this.add(225, function() {
+            this.player.autoKey.up = false;
+        });
+
+        this.add(60, function() {
             this.player.autoKey.right = true;
         });
 
         //石碑まで
         this.add(255, function() {
             this.player.autoKey.right = false;
-            this.player.setAnimation("up");
+            this.player.setAlpha(0);
+            pl.addChildTo(this.mapLayer.playerLayer);
+            pl.setPosition(this.player.x, this.player.y);
+            pl.setAnimation("up_stop");
         });
         this.add(120, function() {
             this.player.autoKey.right = true;
+            this.player.setAlpha(1.0);
+            pl.remove();
         });
 
         //入り口まで
@@ -73,7 +90,7 @@ phina.define("qft.Stage10", {
             this.player.tweener.clear().set({alpha: 0}).moveBy(0, -600, 600);
             this.player.gravity = 0;
 
-            var pl = qft.PlayerDummy("player1").addChildTo(this.mapLayer.playerLayer);
+            pl.addChildTo(this.mapLayer.playerLayer);
             pl.setPosition(this.player.x, this.player.y);
             pl.setAnimation("up");
             pl.tweener.setUpdateType('fps').clear()
