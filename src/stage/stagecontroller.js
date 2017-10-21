@@ -132,12 +132,22 @@ phina.define("qft.StageController", {
     },
 
     //IDからオブジェクト検索
-    findObject: function(id, layerNumber) {
+    findObject: function(id, layerNumber, layerName) {
         layerNumber = layerNumber || 0;
+        layerName = layerName || "object";
         var result = null;
-        this.mapLayer[layerNumber].objLayer.children.forEach(function(e) {
-            if (e.id == id) result = e;
-        }.bind(this));
+        switch (layerName) {
+            case "object":
+                this.mapLayer[layerNumber].objLayer.children.forEach(function(e) {
+                    if (e.id == id) result = e;
+                }.bind(this));
+                break;
+            case "enemy":
+                this.mapLayer[layerNumber].enemyLayer.children.forEach(function(e) {
+                    if (e.id == id) result = e;
+                }.bind(this));
+                break;
+        }
         return result;
     },
 
