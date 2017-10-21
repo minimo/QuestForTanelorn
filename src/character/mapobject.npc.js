@@ -50,13 +50,9 @@ phina.define("qft.MapObject.npc", {
         this.setAnimation("walk");
 
         this.waitTime = 0;
-    },
 
-    update: function() {
-        if (this.waitTime == 0) {
-            if (this.isMove) {
-                this.moveAlgorithm();
-            } else {
+        this.one('enterframe', () => {
+            if (!this.isMove) {
                 switch (this.direction) {
                     case 0:
                         this.setAnimation("walk");
@@ -73,6 +69,14 @@ phina.define("qft.MapObject.npc", {
                         this.setAnimation("up");
                         break;
                 }
+            }
+        });
+    },
+
+    update: function() {
+        if (this.waitTime == 0) {
+            if (this.isMove) {
+                this.moveAlgorithm();
             }
 
             //プレイヤー攻撃との当たり判定
