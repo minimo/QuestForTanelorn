@@ -8,6 +8,9 @@
 phina.define("qft.Character", {
     superClass: "phina.display.DisplayElement",
 
+    //マップオブジェクトID
+    id: -1,
+
     //加速度
     vx: 0,
     vy: 0,
@@ -117,6 +120,8 @@ phina.define("qft.Character", {
 
         this.options = options || {};
         this.setupAnimation();
+
+        this.id = options.id || -1;
 
         //当たり判定情報初期化
         if (!this.isMapAccessory) this.initCollision(options);
