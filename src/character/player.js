@@ -29,6 +29,9 @@ phina.define("qft.Player", {
     //移動速度
     speed: 5,
 
+    //登坂速度
+    speedAscend: 4,
+
     //下押し連続フレーム数
     downFrame: 0,
 
@@ -234,7 +237,7 @@ phina.define("qft.Player", {
             if (this.isCatchLadder) {
                 if (ct.up) {
                     this.vx = 0;
-                    this.vy = -4;
+                    this.vy = -this.speedAscend;
                     var c = this._collision[0];
                     if (!headLadder && this.checkMapCollision2(c.x, c.y-6, c.width, c.height)) {
                         this.vy = 0;
@@ -242,7 +245,7 @@ phina.define("qft.Player", {
                 }
                 if (ct.down) {
                     this.vx = 0;
-                    this.vy = 4;
+                    this.vy = this.speedAscend;
                 }
             } else {
                 //ジャンプボタンのみ
