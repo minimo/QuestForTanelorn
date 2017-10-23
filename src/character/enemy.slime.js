@@ -136,6 +136,17 @@ phina.define("qft.Enemy.Slime", {
         }
     },
 
+    randomAttack: function() {
+        this.stopTime = 30;
+        var vx = 1;
+        if (this.direction == 180) vx = -1;
+        for (var i = 0; i < this.level; i++) {
+            var b = this.parentScene.spawnEnemy(this.x, this.y, "WispBomb", {pattern: 2});
+            b.vy = -8;
+            b.vx = i * 2 * vx;
+        }
+    },
+
     setupAnimation: function() {
         this.spcialAnimation = false;
         this.frame = [];
