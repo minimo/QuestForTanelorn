@@ -1813,7 +1813,7 @@
     <property name="level" type="int" value="3"/>
    </properties>
   </object>
-  <object id="111" name="Wisp" type="enemy" x="236" y="2652" width="32" height="32">
+  <object id="111" name="Wisp" type="enemy" x="256" y="2788" width="32" height="32">
    <properties>
     <property name="level" type="int" value="3"/>
    </properties>
