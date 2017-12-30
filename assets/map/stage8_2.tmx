@@ -1962,7 +1962,7 @@
     <property name="vertical" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="148" name="Adventurer" type="enemy" x="316" y="1548" width="32" height="32">
+  <object id="148" name="Adventurer" type="enemy" x="248" y="1548" width="32" height="32">
    <properties>
     <property name="level" type="int" value="1"/>
     <property name="territory" type="int" value="128"/>
