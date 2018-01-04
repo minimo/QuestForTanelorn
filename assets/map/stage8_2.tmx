@@ -1669,7 +1669,7 @@
     <property name="moveSpeed" type="int" value="120"/>
    </properties>
   </object>
-  <object id="37" name="ArchKnight" type="enemy" x="432" y="1076" width="32" height="32">
+  <object id="37" name="ArchKnight" type="enemy" x="556" y="1048" width="32" height="32">
    <properties>
     <property name="dead" value="this.parentScene.fireStageEvent(&quot;key&quot;);"/>
     <property name="level" type="int" value="0"/>
