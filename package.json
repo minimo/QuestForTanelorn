@@ -1,0 +1,22 @@
+{
+  "name": "qft",
+  "version": "1.0.0",
+  "description": "[ゲームをプレイする](https://minimo.github.io/QuestForTanelorn/)",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/minimo/QuestForTanelorn.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/minimo/QuestForTanelorn/issues"
+  },
+  "homepage": "https://github.com/minimo/QuestForTanelorn#readme",
+  "dependencies": {
+    "http-server": "^0.11.1"
+  }
+}
