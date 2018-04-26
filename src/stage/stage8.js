@@ -38,12 +38,43 @@ phina.define("qft.Stage8", {
             this.limitHeight = true;
         });
 
-        this.add(60, function() {
+        //鍵出現
+        this.addEvent("key", () => {
+            var kx = 670;
+            var ky = 853;
+            var key = qft.Item(this.parentScene, {properties: {kind: "key"}})
+                .addChildTo(this.parentScene.mapLayer.objLayer)
+                .setPosition(kx, ky);
+            key.vy = -5;
+            this.parentScene.pauseScene = true;
+            this.parentScene.centerPlayer = false;
+            this.parentScene.camera.setPosition(this.parentScene.player.x, this.parentScene.player.y);
+            this.parentScene.camera.tweener.clear()
+                .call(function() {
+                    app.playSE("holy1");
+                })
+                .moveTo(kx, ky, 30, "easeInOutSine")
+                .wait(30)
+                .call(function() {
+                    this.parentScene.pauseScene = false;
+                    this.moveFrom.x = kx;
+                    this.moveFrom.y = ky;
+                    this.moveRaio = 0;
+                    this.moveLerp = true;
+                    this.moveToPlayer = true;
+                }.bind(this.parentScene.camera))
+                .to({moveRatio: 1}, 30, "easeInOutSine")
+                .call(function() {
+                    this.parentScene.centerPlayer = true;
+                    this.moveLerp = false;
+                }.bind(this.parentScene.camera));
         });
     },
 
     //ステージクリア条件判定
     checkStageClearCondition: function() {
+        var keys = this.player.keys;
+        if (keys.length < 1) return false;
         return true;
     },
 
@@ -61,11 +92,11 @@ phina.define("qft.Stage8", {
             .call(function() {
                 pl.setAnimation("walk");
                 pl.tweener.clear()
-                    .moveTo(560, 304-16, 500)
+                    .moveTo(784, 176-16, 500)
                     .call(function() {
                         pl.setAnimation("up");
                     })
-                    .moveTo(560, -32, 5000)
+                    .moveTo(784, -32, 5000)
                     .call(function() {
                         pl.animation = false;
                     })
