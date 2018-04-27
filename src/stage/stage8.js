@@ -74,7 +74,7 @@ phina.define("qft.Stage8", {
     //ステージクリア条件判定
     checkStageClearCondition: function() {
         var keys = this.player.keys;
-        if (keys.length < 1) return false;
+//        if (keys.length < 1) return false;
         return true;
     },
 
@@ -92,11 +92,11 @@ phina.define("qft.Stage8", {
             .call(function() {
                 pl.setAnimation("walk");
                 pl.tweener.clear()
-                    .moveTo(784, 176-16, 500)
+                    .moveTo(784+16, 304-16, 500)
                     .call(function() {
                         pl.setAnimation("up");
                     })
-                    .moveTo(784, -32, 5000)
+                    .moveTo(784+16, -32, 5000)
                     .call(function() {
                         pl.animation = false;
                     })

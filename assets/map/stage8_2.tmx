@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="right-down" width="80" height="300" tilewidth="16" tileheight="16" infinite="0" nextobjectid="159">
+<map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="right-down" width="80" height="300" tilewidth="16" tileheight="16" infinite="0" nextobjectid="163">
  <tileset firstgid="1" name="A1" tilewidth="16" tileheight="16" tilecount="768" columns="32">
   <image source="TileA1.png" width="512" height="384"/>
  </tileset>
@@ -1634,7 +1634,7 @@
   <object id="151" x="80" y="844" width="8" height="60"/>
  </objectgroup>
  <objectgroup name="event">
-  <object id="5" name="mapswitch" type="gate" x="352" y="4576" width="32" height="63">
+  <object id="5" name="mapswitch" type="gate" x="576.035" y="85.2307" width="32" height="63">
    <properties>
     <property name="fade" type="bool" value="true"/>
     <property name="lock" type="bool" value="false"/>
