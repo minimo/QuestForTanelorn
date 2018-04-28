@@ -1468,11 +1468,6 @@
   </object>
   <object id="111" name="bag" type="itembox" x="1548" y="3056" width="32" height="32"/>
   <object id="112" name="jewel" type="itembox" x="1480" y="1872" width="32" height="32"/>
-  <object id="114" name="start" type="player" x="1500" y="624" width="32" height="32">
-   <properties>
-    <property name="direction" type="int" value="0"/>
-   </properties>
-  </object>
   <object id="117" name="Slime" type="enemy" x="128" y="1424" width="32" height="32">
    <properties>
     <property name="level" type="int" value="0"/>

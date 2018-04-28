@@ -12,7 +12,7 @@ phina.define("qft.MainScene", {
     stageNumber: 1,
 
     //最大ステージ番号
-    stageNumberMax: 8,
+    stageNumberMax: 9,
 
     //残り時間（フレーム単位）
     timeLimit: 120,
