@@ -66,6 +66,10 @@ window.onload = function() {
             app.domElement.removeEventListener('touchend', dummy);
         });
     }
+    app.domElement.addEventListener('click', function dummy() {
+        var context = phina.asset.Sound.getAudioContext();
+        context.resume();
+    });
 
     app.run();
 //    app.enableStats();
