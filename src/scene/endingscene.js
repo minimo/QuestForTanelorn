@@ -43,7 +43,7 @@ phina.define("qft.EndingScene", {
             .addChildTo(this)
             .setPosition(SC_W*0.5, SC_H*0.4);
 
-        phina.display.Label({text: "This game is a test version."}.$safe(labelParam))
+        phina.display.Label({text: "This game is over"}.$safe(labelParam))
             .addChildTo(this)
             .setPosition(SC_W*0.5, SC_H*0.5);
 
