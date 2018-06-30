@@ -8,50 +8,50 @@
 //phina.globalize();
 
 //デバッグフラグ
-DEBUG = false;
-DEBUG_COLLISION = false;
-DEBUG_EYESIGHT = false;
-DEBUG_MOBILE = false;
+const DEBUG = false;
+const DEBUG_COLLISION = false;
+const DEBUG_EYESIGHT = false;
+const DEBUG_MOBILE = false;
 
 //定数
-SC_W = 576;
-SC_H = 324;
+const SC_W = 576;
+const SC_H = 324;
 // SC_W = 480;
 // SC_H = 320;
 
-FPS = 30;
+const FPS = 30;
 
 //アイテムＩＤ
-ITEM_SHORTSWORD = 0;
-ITEM_LONGSWORD = 1;
-ITEM_AX = 2;
-ITEM_SPEAR = 3;
-ITEM_BOW = 4;
-ITEM_ROD = 5;
-ITEM_BOOK = 6;
-ITEM_SHIELD = 7;
-ITEM_ARMOR = 8;
-ITEM_HAT = 9;
-ITEM_BOOTS = 10;
-ITEM_GROVE = 11;
-ITEM_RING = 12;
-ITEM_SCROLL = 13;
-ITEM_LETTER = 14;
-ITEM_CARD = 15;
-ITEM_KEY = 16;
-ITEM_COIN = 17;
-ITEM_BAG = 18;
-ITEM_ORB = 19;
-ITEM_STONE = 20;
-ITEM_JEWEL = 21;
-ITEM_JEWELBOX = 22;
-ITEM_APPLE = 24;
-ITEM_HARB = 25;
-ITEM_MEAT = 26;
-ITEM_POTION = 27;
+const ITEM_SHORTSWORD = 0;
+const ITEM_LONGSWORD = 1;
+const ITEM_AX = 2;
+const ITEM_SPEAR = 3;
+const ITEM_BOW = 4;
+const ITEM_ROD = 5;
+const ITEM_BOOK = 6;
+const ITEM_SHIELD = 7;
+const ITEM_ARMOR = 8;
+const ITEM_HAT = 9;
+const ITEM_BOOTS = 10;
+const ITEM_GROVE = 11;
+const ITEM_RING = 12;
+const ITEM_SCROLL = 13;
+const ITEM_LETTER = 14;
+const ITEM_CARD = 15;
+const ITEM_KEY = 16;
+const ITEM_COIN = 17;
+const ITEM_BAG = 18;
+const ITEM_ORB = 19;
+const ITEM_STONE = 20;
+const ITEM_JEWEL = 21;
+const ITEM_JEWELBOX = 22;
+const ITEM_APPLE = 24;
+const ITEM_HARB = 25;
+const ITEM_MEAT = 26;
+const ITEM_POTION = 27;
 
 //インスタンス
-var app;
+let app;
 
 window.onload = function() {
     app = qft.Application();
