@@ -197,7 +197,7 @@ phina.define("qft.Enemy.Titan", {
         this.isAttack = true;
         this.stopTime = 30;
 
-        qft.Character.balloon({pattern: "anger2"}).addChildTo(this).setPosition(0, -this.height/2-10);
+        qft.Balloon({pattern: "anger2"}).addChildTo(this).setPosition(0, -this.height/2-10);
     },
 
     setupAnimation: function() {

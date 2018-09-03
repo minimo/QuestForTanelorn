@@ -137,7 +137,7 @@ phina.define("qft.Character", {
             if (this.lastBalloonPattern == e.pattern && !e.force) return;
             if (this.balloon) this.balloon.remove();
             e.$safe({x: 0, y: -this.height/2-10});
-            this.balloon = qft.Character.balloon({pattern: e.pattern, lifeSpan: e.lifeSpan, animationInterval: e.animationInterval})
+            this.balloon = qft.Balloon({pattern: e.pattern, lifeSpan: e.lifeSpan, animationInterval: e.animationInterval})
                 .addChildTo(this)
                 .setPosition(e.x, e.y);
             this.balloon.on('removed', e => {
@@ -158,7 +158,7 @@ phina.define("qft.Character", {
         this.on('stun', e => {
             this.isStun = true;
             this.stopTime = e.power * 10;
-            this.balloon = qft.Character.balloon({pattern: "stun", lifeSpan: this.stopTime})
+            this.balloon = qft.Balloon({pattern: "stun", lifeSpan: this.stopTime})
                 .addChildTo(this)
                 .setPosition(0, -this.height/2-10);
             this.lastBalloon = e.pattern;

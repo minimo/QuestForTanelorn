@@ -1,11 +1,11 @@
 /*
- *  character.balloon.js
+ *  balloon.js
  *  2017/04/26
  *  @auther minimo  
  *  This Program is MIT license.
  */
 
-phina.define("qft.Character.balloon", {
+phina.define("qft.Balloon", {
     superClass: "phina.display.Sprite",
 
     //寿命フレーム
