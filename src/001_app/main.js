@@ -55,12 +55,12 @@ let app;
 
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js')
-      .then(() => {
-          console.log('Service worker registered!');
-      })
-      .reject(() => {
-        console.log('Service worker rejected!');
-    });
+        .then(e => {
+            console.log('Service worker registered!');
+        },
+        e => {
+            console.log('Service worker rejected!');
+        });
 }
 
 window.onload = function() {
