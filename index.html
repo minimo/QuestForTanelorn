@@ -19,6 +19,16 @@
 
     <script src='./libs/phina.js'></script>
     <script src='./build/qft.js'></script>
+    <script>
+      //service-worker
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('sw.js')
+            .then(e => console.log('Service worker registered!', e))
+            .catch( e => console.log('Service worker rejected!', e))
+        });
+      }
+    </script>
   </head>
   <body>
     <canvas id='world'></canvas>

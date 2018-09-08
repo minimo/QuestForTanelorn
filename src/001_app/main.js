@@ -53,16 +53,6 @@ const ITEM_POTION = 27;
 //インスタンス
 let app;
 
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js')
-        .then(e => {
-            console.log('Service worker registered!');
-        },
-        e => {
-            console.log('Service worker rejected!');
-        });
-}
-
 window.onload = function() {
     app = qft.Application();
     app.replaceScene(qft.SceneFlow());

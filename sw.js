@@ -1,63 +1,61 @@
-// キャッシュにバージョンを付けておくと、古いキャッシュを消す時に便利
-var CACHE_STATIC_VERSION = 'static-v1';
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.4.1/workbox-sw.js');
 
-// サービスワーカーのインストール
-self.addEventListener('install', function(event) {
-  console.log('[Service Worker] Installing Service Worker...');
+if (workbox) {
+  // デバッグ用設定を有効化
+  workbox.setConfig({ debug: true });
 
-  // キャッシュできるまで次の処理を待つ
-  event.waitUntil(
-    caches.open(CACHE_STATIC_VERSION)
-      .then(function(cache) {
-        console.log('[Service Worker] Precaching App...');
-        cache.addAll([
-          '/',
-          '/qft.js',
-        ]);
-      })
+  // Force production builds
+  //workbox.setConfig({ debug: false });
+
+  console.log("Workbox loaded.");
+  
+  // htmlをキャッシュ登録  
+  // workbox.routing.registerRoute(
+  //   new RegExp('/'),
+  //   workbox.strategies.networkFirst()
+  // );
+  workbox.routing.registerRoute(
+    new RegExp('.*\.html'),
+    workbox.strategies.networkFirst()
   );
-});
-
-self.addEventListener('fetch', function(event) {
-  console.log('[Service Worker] Fetching something ...');
-  event.respondWith(
-    // キャッシュの存在チェック
-    caches.match(event.request)
-      .then(function(response) {
-        if (response) {
-          return response;
-        } else {
-          // キャッシュがなければリクエストを投げて、レスポンスをキャッシュに入れる
-          return fetch(event.request)
-            .then(function(res) {
-              return caches.open(CACHE_DYNAMIC_VERSION)
-                .then(function(cache) {
-                  // 最後に res を返せるように、ここでは clone() する必要がある
-                  cache.put(event.request.url, res.clone());
-                  return res;
-                })
-            })
-            .catch(function() {
-              // エラーが発生しても何もしない
-            });
-        }
-      })
+ 
+  // jsをキャッシュ登録
+  workbox.routing.registerRoute(
+    new RegExp('.*\.js'),
+    workbox.strategies.networkFirst()
   );
-});
 
-self.addEventListener('activate', function(event) {
-  console.log('[Service Worker] Activating Service Worker...');
-  event.waitUntil(
-    caches.keys()
-      .then(function(keyList) {
-        return Promise.all(keyList.map(function(key) {
-          if (key !== CACHE_STATIC_VERSION && key !== CACHE_DYNAMIC_VERSION) {
-            console.log('[Service Worker] Removing old cache...');
-            return caches.delete(key);
-          }
-        }));
-      })
+  // cssをキャッシュ登録
+  workbox.routing.registerRoute(
+    // Cache CSS files
+    /.*\.css/,
+    // Use cache but update in the background ASAP
+    workbox.strategies.staleWhileRevalidate({
+      // Use a custom cache name
+      cacheName: 'css-cache',
+    })
   );
-  return self.clients.claim();
-});
 
+  // アセットファイルをキャッシュ登録
+  workbox.routing.registerRoute(
+    // Cache image files
+    /.*\.(?:png|jpg|mp3|tmss|tmx|ttf)/,
+
+    // Use the cache if it's available
+    workbox.strategies.cacheFirst({
+      // Use a custom cache name
+      cacheName: 'asset-cache',
+      plugins: [
+        new workbox.expiration.Plugin({
+          // Cache only 20 images
+          maxEntries: 100,
+          // Cache for a maximum of a week
+          maxAgeSeconds: 7 * 24 * 60 * 60,
+        })
+      ],
+    })
+  );
+
+} else {
+  console.log("Workbox didn't load");
+}
