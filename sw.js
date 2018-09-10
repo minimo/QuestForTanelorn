@@ -9,11 +9,11 @@ if (workbox) {
 
   console.log("Workbox loaded.");
   
-  // htmlをキャッシュ登録  
-  workbox.routing.registerRoute(
-    new RegExp('/'),
-    workbox.strategies.networkFirst()
-  );
+  workbox.precaching.precacheAndRoute([
+    { url: '/index.html', revision: '383676' },
+  ]);
+  
+  // htmlをキャッシュ登録
   workbox.routing.registerRoute(
     new RegExp('.*\.html'),
     workbox.strategies.networkFirst()
